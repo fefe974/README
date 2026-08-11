@@ -1,0 +1,943 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#FBFBFA">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Accountant I · W0.2 County Document Corpus</title>
+<style>
+/* ── Same system as W0.1: warm monochrome, spot navy, flat surfaces, 1px borders. ──
+   Documents render in their own typography — serif, tabular, page-numbered — because
+   a facsimile that reads like app UI teaches the learner to recognize the wrong thing. */
+:root{
+  --canvas:#FBFBFA; --surface:#FFFFFF; --ink:#191918; --ink-2:#787774;
+  --line:#EAEAEA; --navy:#1E40AF; --navy-press:#16308A; --on-navy:#FFFFFF;
+  --pale-blue:#E1F3FE; --blue-text:#1F6C9F;
+  --pale-green:#EDF3EC; --green-text:#346538;
+  --pale-yellow:#FBF3DB; --yellow-text:#956400;
+  --pale-red:#FDEBEC; --red-text:#9F2F2D;
+  --serif:'Newsreader','Iowan Old Style',Georgia,'Times New Roman',serif;
+  --sans:'SF Pro Display','Helvetica Neue','Segoe UI',system-ui,sans-serif;
+  --mono:'SF Mono','Geist Mono',ui-monospace,'Cascadia Mono',Menlo,monospace;
+  --pad-safe-b:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+button,a,select,input,summary,.tap{touch-action:manipulation}
+:focus-visible{outline:2px solid var(--navy);outline-offset:2px;border-radius:4px}
+html,body{margin:0}
+body{background:var(--canvas);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}
+.app{max-width:560px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column}
+
+.top{position:sticky;top:0;z-index:30;background:rgba(251,251,250,.92);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top,0px)) 20px 10px;
+  display:flex;align-items:center;gap:12px;min-height:56px}
+.top .back{border:1px solid var(--line);background:var(--surface);border-radius:8px;width:40px;height:40px;
+  display:grid;place-items:center;cursor:pointer;flex:none;padding:0;color:var(--ink)}
+.top .back:active{transform:scale(.96)}
+.top h2{font-size:16px;font-weight:600;margin:0;letter-spacing:-.01em;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .env{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--pale-yellow);color:var(--yellow-text);border-radius:9999px;padding:4px 10px;flex:none}
+
+main{flex:1;padding:20px 20px calc(24px + var(--pad-safe-b))}
+.screen{display:none}
+.screen.active{display:block}
+
+h1{font-family:var(--serif);font-weight:500;font-size:30px;line-height:1.12;letter-spacing:-.02em;margin:0 0 8px}
+.sub{color:var(--ink-2);font-size:14.5px;margin:0 0 24px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);margin:0 0 10px}
+.section-label{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);margin:26px 0 10px}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:12px}
+.card.tap{cursor:pointer;transition:box-shadow .2s,transform .1s}
+.card.tap:active{transform:scale(.985)}
+.rowline{display:flex;align-items:center;gap:14px}
+.rowline .grow{flex:1;min-width:0}
+.rowline h3{margin:0;font-size:15.5px;font-weight:600;letter-spacing:-.01em}
+.rowline p{margin:3px 0 0;font-size:13.5px;color:var(--ink-2);line-height:1.45}
+.chev{flex:none;color:var(--ink-2)}
+
+.tag{display:inline-flex;align-items:center;gap:5px;border-radius:9999px;padding:3px 10px;font-size:10.5px;
+  font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.tag.blue{background:var(--pale-blue);color:var(--blue-text)}
+.tag.green{background:var(--pale-green);color:var(--green-text)}
+.tag.yellow{background:var(--pale-yellow);color:var(--yellow-text)}
+.tag.red{background:var(--pale-red);color:var(--red-text)}
+.tag.gray{background:var(--canvas);color:var(--ink-2);border:1px solid var(--line)}
+
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:52px;border-radius:8px;
+  border:0;background:var(--navy);color:var(--on-navy);font-family:var(--sans);font-size:16px;font-weight:600;
+  cursor:pointer;letter-spacing:-.01em;transition:background .15s}
+.btn:active{transform:scale(.98);background:var(--navy-press)}
+.btn[disabled]{background:#C9CDD6;cursor:not-allowed}
+.btn.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:active{background:var(--canvas)}
+.actionbar{position:sticky;bottom:0;margin:16px -20px calc(-24px - var(--pad-safe-b));padding:12px 20px calc(12px + var(--pad-safe-b));
+  background:rgba(251,251,250,.94);backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;gap:10px}
+
+label.f{display:block;font-size:12.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-2);margin:0 0 6px}
+input.f,select.f{width:100%;min-height:52px;border:1px solid var(--line);border-radius:8px;background:var(--surface);
+  padding:0 14px;font-size:16px;font-family:var(--sans);color:var(--ink);outline:none;appearance:none}
+input.f:focus,select.f:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(30,64,175,.12)}
+.field{margin-bottom:16px}
+.selwrap{position:relative}
+.selwrap:after{content:"";position:absolute;right:16px;top:50%;width:8px;height:8px;border-right:1.75px solid var(--ink-2);
+  border-bottom:1.75px solid var(--ink-2);transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+
+/* corpus manifest */
+.meter{height:6px;border-radius:9999px;background:var(--canvas);border:1px solid var(--line);overflow:hidden;margin:12px 0 4px}
+.meter i{display:block;height:100%;background:var(--navy)}
+.docrow{display:flex;gap:13px;align-items:flex-start;width:100%;text-align:left;border:0;background:none;padding:14px 0;
+  border-bottom:1px solid var(--line);cursor:pointer;font-family:var(--sans);color:var(--ink)}
+.docrow:last-child{border-bottom:0}
+.docrow .ico{width:34px;height:42px;border:1px solid var(--line);border-radius:3px;flex:none;background:var(--canvas);
+  position:relative;display:grid;place-items:end center;padding-bottom:5px}
+.docrow .ico:before{content:"";position:absolute;top:0;right:0;border-width:0 9px 9px 0;border-style:solid;
+  border-color:var(--surface) var(--surface) var(--line) var(--line)}
+.docrow .ico span{font-family:var(--mono);font-size:7.5px;letter-spacing:.04em;color:var(--ink-2)}
+.docrow .grow{flex:1;min-width:0}
+.docrow b{display:block;font-size:14.5px;font-weight:600;letter-spacing:-.01em;line-height:1.3}
+.docrow em{display:block;font-style:normal;font-size:12.5px;color:var(--ink-2);margin-top:2px}
+.docrow .meta{font-family:var(--mono);font-size:10.5px;color:var(--ink-2);margin-top:5px;letter-spacing:.01em}
+
+/* ══ DOCUMENT FACSIMILE ══
+   Its own typographic world. Wide statements scroll inside .scroller only —
+   the page body never scrolls sideways. */
+.doc{background:#FFFFFF;border:1px solid #D8D8D6;border-radius:2px;padding:26px 20px 34px;
+  font-family:var(--serif);font-size:14px;line-height:1.5;color:#111;margin-bottom:14px}
+.doc .runhead{text-align:center;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:#555;border-bottom:.5px solid #999;padding-bottom:8px;margin-bottom:18px;font-family:var(--sans)}
+.doc h3{text-align:center;font-size:13.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin:0 0 3px;line-height:1.35}
+.doc h4{text-align:center;font-size:12px;font-weight:400;font-style:italic;color:#333;margin:0 0 18px}
+.doc h5{font-size:13px;font-weight:700;margin:20px 0 6px;letter-spacing:.01em}
+.doc p{margin:0 0 11px;text-align:justify;hyphens:auto}
+.doc .lead{text-indent:1.6em}
+.doc .sig{margin-top:22px;font-size:13px}
+.doc .sig b{display:block;font-family:var(--serif);font-weight:600;border-top:.5px solid #111;padding-top:5px;width:62%;margin-top:26px}
+.doc .pagenum{text-align:center;font-family:var(--sans);font-size:10px;color:#777;margin-top:26px;
+  border-top:.5px solid #DDD;padding-top:8px}
+.doc ol,.doc ul{margin:0 0 11px;padding-left:22px}
+.doc li{margin-bottom:6px}
+.doc .note-h{font-weight:700;font-size:13px;margin:18px 0 5px}
+.scroller{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -4px}
+table.fs{width:100%;min-width:280px;border-collapse:collapse;font-size:12px;font-family:var(--serif)}
+table.fs.wide{min-width:440px}
+table.fs th{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;text-align:right;
+  padding:0 6px 5px;border-bottom:.5px solid #111;vertical-align:bottom;font-family:var(--sans);color:#333}
+table.fs th.l{text-align:left}
+table.fs td{padding:3px 6px;vertical-align:top}
+table.fs td.amt{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+table.fs tr.ind td:first-child{padding-left:18px}
+table.fs tr.ind2 td:first-child{padding-left:32px}
+table.fs tr.grp td{font-weight:700;padding-top:11px}
+table.fs tr.sum td{border-top:.5px solid #111;font-weight:600}
+table.fs tr.tot td{border-top:.5px solid #111;border-bottom:3px double #111;font-weight:700}
+table.fs caption{caption-side:top;text-align:left;font-size:10.5px;color:#666;padding-bottom:6px;font-family:var(--sans)}
+.doc .kv{display:grid;grid-template-columns:auto 1fr;gap:3px 14px;font-size:12.5px;margin:0 0 14px}
+.doc .kv dt{font-family:var(--sans);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#555;padding-top:3px}
+.doc .kv dd{margin:0;font-weight:600}
+.doc .stamp{border:1.5px solid #9F2F2D;color:#9F2F2D;font-family:var(--sans);font-size:9.5px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;padding:5px 9px;display:inline-block;transform:rotate(-1.5deg);margin-bottom:14px}
+.doc .agenda-item{display:flex;gap:11px;margin-bottom:11px;font-size:13px}
+.doc .agenda-item .n{font-weight:700;flex:none;min-width:20px}
+.doc .banner{background:#F2F1EE;border:.5px solid #CCC;padding:10px 12px;font-size:11.5px;font-family:var(--sans);
+  color:#333;margin-bottom:16px;line-height:1.5}
+
+/* TOC */
+.toc{display:flex;width:100%;text-align:left;gap:12px;align-items:baseline;border:0;background:none;
+  padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer;font-family:var(--sans);color:var(--ink)}
+.toc:last-child{border-bottom:0}
+.toc .n{font-family:var(--mono);font-size:11px;color:var(--ink-2);flex:none;width:42px}
+.toc .t{flex:1;font-size:14.5px;font-weight:500;letter-spacing:-.01em}
+.toc .p{font-family:var(--mono);font-size:11px;color:var(--ink-2);flex:none}
+
+/* spot-check */
+.q-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.q-head .n{font-family:var(--mono);font-size:11px;color:var(--ink-2);letter-spacing:.06em;text-transform:uppercase}
+.q-text{font-family:var(--serif);font-size:19px;line-height:1.32;letter-spacing:-.01em;margin:0 0 6px;text-wrap:balance}
+.q-hint{font-size:13px;color:var(--ink-2);margin:0 0 18px}
+.opt{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;border:1px solid var(--line);
+  background:var(--surface);border-radius:10px;padding:14px;margin-bottom:8px;cursor:pointer;
+  font-family:var(--sans);font-size:14.5px;color:var(--ink);line-height:1.4;min-height:52px}
+.opt:active{transform:scale(.99)}
+.opt.sel{border-color:var(--navy);box-shadow:0 0 0 2px rgba(30,64,175,.15)}
+.opt .mark{width:20px;height:20px;border-radius:9999px;border:1.75px solid var(--line);flex:none;margin-top:1px}
+.opt.sel .mark{border-color:var(--navy);background:var(--navy);box-shadow:inset 0 0 0 3.5px #fff}
+.verdict{border-radius:10px;padding:14px 16px;margin-bottom:12px;font-size:14px;line-height:1.5}
+.verdict.ok{background:var(--pale-green);color:var(--green-text)}
+.verdict.no{background:var(--pale-red);color:var(--red-text)}
+.verdict b{display:block;margin-bottom:3px}
+.progress-dots{display:flex;gap:5px;margin-bottom:20px;flex-wrap:wrap}
+.progress-dots i{width:100%;max-width:26px;height:4px;border-radius:9999px;background:var(--line);flex:1}
+.progress-dots i.ok{background:var(--green-text)}
+.progress-dots i.now{background:var(--navy)}
+
+.toast{position:fixed;left:50%;bottom:calc(84px + var(--pad-safe-b));transform:translate(-50%,16px);z-index:60;
+  background:var(--ink);color:#fff;font-size:13.5px;line-height:1.45;padding:12px 18px;border-radius:12px;opacity:0;
+  pointer-events:none;transition:opacity .25s,transform .25s;width:max-content;max-width:min(88vw,340px)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+.reveal{opacity:0;transform:translateY(12px);animation:in .6s cubic-bezier(.16,1,.3,1) forwards}
+.reveal:nth-child(2){animation-delay:.05s}.reveal:nth-child(3){animation-delay:.1s}
+.reveal:nth-child(4){animation-delay:.15s}.reveal:nth-child(5){animation-delay:.2s}
+.reveal:nth-child(6){animation-delay:.25s}
+@keyframes in{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top" id="topbar">
+    <button class="back" id="btn-back" aria-label="Back">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <h2 id="top-title">Document corpus</h2>
+    <span class="env">Training</span>
+  </div>
+
+  <main>
+    <!-- ── CORPUS MANIFEST ── -->
+    <section class="screen active" id="s-corpus">
+      <div class="reveal">
+        <p class="eyebrow">W0.2 · County document corpus</p>
+        <h1>The corpus</h1>
+        <p class="sub">Every document the Verifier retrieves from. Nothing an agent tells you about county policy comes from anywhere else — if it is not in here, the honest answer is that we do not have it.</p>
+      </div>
+      <div class="card reveal">
+        <div class="rowline">
+          <div class="grow">
+            <h3>Ingest status</h3>
+            <p id="ingest-line">—</p>
+          </div>
+        </div>
+        <div class="meter"><i id="ingest-meter" style="width:100%"></i></div>
+        <p class="num" style="font-size:11px;color:var(--ink-2);margin:6px 0 0">INDEXED 2026-08-09 14:22 CDT · RETRIEVAL BUILD r7 · OCR CONFIDENCE 0.98</p>
+      </div>
+      <div id="corpus-groups"></div>
+      <div class="card reveal" style="border-color:var(--navy)">
+        <div class="rowline">
+          <div class="grow">
+            <h3>Acceptance check</h3>
+            <p>Ten spot-check questions against the loaded corpus. All ten must return the correct answer <i>and</i> the correct source document.</p>
+          </div>
+        </div>
+        <div class="progress-dots" id="corpus-dots" style="margin:14px 0 12px"></div>
+        <button class="btn" id="btn-start-check">Run the spot-check</button>
+      </div>
+    </section>
+
+    <!-- ── DOCUMENT TOC ── -->
+    <section class="screen" id="s-toc">
+      <div class="reveal" id="toc-head"></div>
+      <div class="card reveal" id="toc-list" style="padding:6px 20px"></div>
+    </section>
+
+    <!-- ── DOCUMENT PAGE ── -->
+    <section class="screen" id="s-page">
+      <div id="page-body"></div>
+      <div class="actionbar">
+        <button class="btn ghost" id="btn-page-prev">Previous</button>
+        <button class="btn ghost" id="btn-page-next">Next</button>
+      </div>
+    </section>
+
+    <!-- ── SPOT-CHECK ── -->
+    <section class="screen" id="s-check">
+      <div class="progress-dots" id="check-dots"></div>
+      <div id="check-body"></div>
+    </section>
+
+    <!-- ── RESULT ── -->
+    <section class="screen" id="s-result">
+      <div id="result-body"></div>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+'use strict';
+/* ══════════════════════════════════════════════════════════════════════
+   PALO DURO COUNTY, TEXAS — synthetic training corpus.
+   A fictional Texas county. Structure, terminology, statement formats and
+   regulatory citations are real; every name and figure is invented.
+   Figures tie to the W0.1 ERP sandbox: grant expenditures on the project
+   accounting report equal the SEFA amounts, as they would in the real system.
+   FACTS TABLE v0.2 · 2026-08-11
+   ══════════════════════════════════════════════════════════════════════ */
+const FACTS_VERSION = 'v0.2 · 2026-08-11';
+const COUNTY = 'PALO DURO COUNTY, TEXAS';
+
+/* ── document bodies ───────────────────────────────────────────────── */
+function runhead(t){ return '<div class="runhead">' + t + '</div>'; }
+function pg(n){ return '<div class="pagenum">' + n + '</div>'; }
+
+const D_TRANSMITTAL =
+  runhead(COUNTY + ' &middot; Introductory Section') +
+  '<p style="text-align:right;font-size:12.5px;margin-bottom:16px">March 18, 2026</p>' +
+  '<p>To the Honorable County Judge, Members of the Commissioners Court,<br>and the Citizens of Palo Duro County, Texas:</p>' +
+  '<p class="lead">State law requires that every general-purpose local government publish within six months of the close of each fiscal year a complete set of financial statements presented in conformity with accounting principles generally accepted in the United States of America and audited in accordance with generally accepted auditing standards by a firm of licensed certified public accountants. Pursuant to that requirement, we hereby issue the Annual Comprehensive Financial Report of Palo Duro County, Texas, for the fiscal year ended September 30, 2025.</p>' +
+  '<p class="lead">This report consists of management&rsquo;s representations concerning the finances of the County. Consequently, management assumes full responsibility for the completeness and reliability of all of the information presented in this report. To provide a reasonable basis for making these representations, management of the County has established a comprehensive internal control framework that is designed both to protect the County&rsquo;s assets from loss, theft, or misuse and to compile sufficient reliable information for the preparation of these financial statements in conformity with GAAP.</p>' +
+  '<h5>Profile of the County</h5>' +
+  '<p class="lead">Palo Duro County was organized in 1876 and operates under the Texas Constitution and the general laws of the State of Texas. The Commissioners Court, composed of the County Judge elected at large and four County Commissioners elected from single-member precincts, serves as the governing body. The County Auditor is appointed by the district judges having jurisdiction in the County pursuant to Chapter 84 of the Texas Local Government Code, and is responsible for the general oversight of the books and records of all County officers.</p>' +
+  '<p class="lead">The County provides a full range of services including law enforcement and jail operations, the construction and maintenance of roads and bridges, judicial and clerical services of the courts, elections administration, tax assessment and collection, public health services, and a county-owned water utility serving unincorporated areas. The estimated population of the County as of September 30, 2025 was 198,400.</p>' +
+  '<h5>Budgetary Control</h5>' +
+  '<p class="lead">An annual budget is adopted by the Commissioners Court in accordance with Chapter 111 of the Texas Local Government Code. The legal level of budgetary control is the department level within each fund. Budget amendments transferring appropriations between departments require approval of the Commissioners Court by recorded vote in an open meeting.</p>' +
+  '<div class="sig">Respectfully submitted,<b>Elaine R. Ferris, CPA<br>County Auditor</b></div>' + pg('iii');
+
+const D_OFFICIALS =
+  runhead(COUNTY + ' &middot; Principal Officials') +
+  '<h3>Principal Officials</h3><h4>As of September 30, 2025</h4>' +
+  '<h5>Elected</h5>' +
+  '<div class="scroller"><table class="fs"><tbody>' +
+  '<tr><td>County Judge</td><td class="amt">Marisol Vega Ruiz</td></tr>' +
+  '<tr><td>Commissioner, Precinct 1</td><td class="amt">Dwight A. Kessler</td></tr>' +
+  '<tr><td>Commissioner, Precinct 2</td><td class="amt">Ana Beltr&aacute;n</td></tr>' +
+  '<tr><td>Commissioner, Precinct 3</td><td class="amt">Roy T. Nakamura</td></tr>' +
+  '<tr><td>Commissioner, Precinct 4</td><td class="amt">Charlene Boyd Pruitt</td></tr>' +
+  '<tr><td>County Clerk</td><td class="amt">Patricia Mendoza</td></tr>' +
+  '<tr><td>District Clerk</td><td class="amt">Howard Lin</td></tr>' +
+  '<tr><td>County Treasurer</td><td class="amt">Samuel O. Adeyemi</td></tr>' +
+  '<tr><td>Tax Assessor-Collector</td><td class="amt">Deborah Klein</td></tr>' +
+  '<tr><td>Sheriff</td><td class="amt">Victor Ramos Cantu</td></tr>' +
+  '</tbody></table></div>' +
+  '<h5>Appointed</h5>' +
+  '<div class="banner">The County Auditor is <b>appointed by the district judges</b> having jurisdiction in the County, not by the Commissioners Court and not by election. Texas Local Government Code &sect;84.002. This separation is the reason the Auditor can decline to approve a claim presented by an elected official.</div>' +
+  '<div class="scroller"><table class="fs"><tbody>' +
+  '<tr><td>County Auditor</td><td class="amt">Elaine R. Ferris, CPA</td></tr>' +
+  '<tr><td>First Assistant County Auditor</td><td class="amt">Gregory Whitfield, CPA</td></tr>' +
+  '<tr><td>Purchasing Agent</td><td class="amt">Neena Shah</td></tr>' +
+  '<tr><td>Director of Public Works</td><td class="amt">Thomas Eagleton Ford</td></tr>' +
+  '</tbody></table></div>' + pg('v');
+
+const D_NOTE1 =
+  runhead(COUNTY + ' &middot; Notes to the Basic Financial Statements') +
+  '<h3>Note 1 &mdash; Summary of Significant Accounting Policies</h3>' +
+  '<h4>September 30, 2025</h4>' +
+  '<div class="note-h">A. Reporting Entity</div>' +
+  '<p>Palo Duro County is a public corporation and political subdivision of the State of Texas. The Commissioners Court is the governing body. The accompanying financial statements present the County and its component units, entities for which the County is considered financially accountable.</p>' +
+  '<div class="note-h">B. Measurement Focus and Basis of Accounting</div>' +
+  '<p>The government-wide financial statements are reported using the economic resources measurement focus and the accrual basis of accounting. Revenues are recorded when earned and expenses are recorded when a liability is incurred, regardless of the timing of related cash flows.</p>' +
+  '<p>Governmental fund financial statements are reported using the current financial resources measurement focus and the modified accrual basis of accounting. Revenues are recognized as soon as they are both measurable and available. <b>Revenues are considered to be available when they are collectible within the current period or soon enough thereafter to pay liabilities of the current period. For this purpose, the County considers revenues to be available if they are collected within 60 days of the end of the current fiscal period.</b> Expenditures generally are recorded when a liability is incurred, as under accrual accounting; however, debt service expenditures, as well as expenditures related to compensated absences and claims and judgments, are recorded only when payment is due.</p>' +
+  '<div class="note-h">C. Capital Assets</div>' +
+  '<p><b>Capital assets, which include property, plant, equipment, and infrastructure assets, are defined by the County as assets with an initial individual cost of $5,000 or more and an estimated useful life in excess of one year.</b> Such assets are recorded at historical cost or estimated historical cost if purchased or constructed. Donated capital assets are recorded at acquisition value at the date of donation.</p>' +
+  '<p>Capital assets are depreciated using the straight-line method over the following estimated useful lives:</p>' +
+  '<div class="scroller"><table class="fs"><tbody>' +
+  '<tr><td>Buildings and improvements</td><td class="amt">40 years</td></tr>' +
+  '<tr><td>Infrastructure &mdash; roads and bridges</td><td class="amt">20&ndash;50 years</td></tr>' +
+  '<tr><td>Water utility plant</td><td class="amt">30 years</td></tr>' +
+  '<tr><td>Machinery and equipment</td><td class="amt">5&ndash;10 years</td></tr>' +
+  '<tr><td>Vehicles</td><td class="amt">5 years</td></tr>' +
+  '</tbody></table></div>' +
+  '<div class="note-h">D. Fund Balance</div>' +
+  '<p>Fund balances of governmental funds are classified as nonspendable, restricted, committed, assigned, or unassigned. The Commissioners Court is the County&rsquo;s highest level of decision-making authority and establishes committed fund balance by order adopted in an open meeting prior to fiscal year end. The Commissioners Court has by order delegated to the County Auditor the authority to assign fund balance.</p>' +
+  '<p>The County&rsquo;s adopted fund balance policy provides that the unassigned fund balance of the General Fund at fiscal year end should be maintained at not less than 25 percent of the subsequent year&rsquo;s adopted General Fund expenditure budget.</p>' +
+  '<div class="note-h">E. New Accounting Pronouncements</div>' +
+  '<p>For the fiscal year ended September 30, 2025, the County adopted GASB Statement No. 101, <i>Compensated Absences</i>, and GASB Statement No. 102, <i>Certain Risk Disclosures</i>. The adoption of Statement No. 101 changed the measurement of the County&rsquo;s compensated absences liability and did not require restatement of beginning net position.</p>' + pg('42');
+
+const D_NETPOS =
+  runhead(COUNTY + ' &middot; Basic Financial Statements') +
+  '<h3>Statement of Net Position</h3><h4>September 30, 2025</h4>' +
+  '<div class="scroller"><table class="fs wide"><caption>Amounts in whole dollars</caption>' +
+  '<thead><tr><th class="l">&nbsp;</th><th>Governmental<br>Activities</th><th>Business-type<br>Activities</th><th>Total</th></tr></thead><tbody>' +
+  '<tr class="grp"><td>ASSETS</td><td class="amt"></td><td class="amt"></td><td class="amt"></td></tr>' +
+  '<tr class="ind"><td>Cash and cash equivalents</td><td class="amt">41,208,633</td><td class="amt">6,841,204</td><td class="amt">48,049,837</td></tr>' +
+  '<tr class="ind"><td>Investments</td><td class="amt">62,750,000</td><td class="amt">4,100,000</td><td class="amt">66,850,000</td></tr>' +
+  '<tr class="ind"><td>Receivables, net</td><td class="amt">14,982,455</td><td class="amt">3,351,069</td><td class="amt">18,333,524</td></tr>' +
+  '<tr class="ind"><td>Capital assets, not being depreciated</td><td class="amt">28,410,000</td><td class="amt">2,150,000</td><td class="amt">30,560,000</td></tr>' +
+  '<tr class="ind"><td>Capital assets, net of depreciation</td><td class="amt">241,884,300</td><td class="amt">86,437,500</td><td class="amt">328,321,800</td></tr>' +
+  '<tr class="sum"><td>Total assets</td><td class="amt">389,235,388</td><td class="amt">102,879,773</td><td class="amt">492,115,161</td></tr>' +
+  '<tr class="grp"><td>DEFERRED OUTFLOWS OF RESOURCES</td><td class="amt"></td><td class="amt"></td><td class="amt"></td></tr>' +
+  '<tr class="ind"><td>Deferred outflows related to pensions</td><td class="amt">9,412,700</td><td class="amt">1,088,300</td><td class="amt">10,501,000</td></tr>' +
+  '<tr class="grp"><td>LIABILITIES</td><td class="amt"></td><td class="amt"></td><td class="amt"></td></tr>' +
+  '<tr class="ind"><td>Accounts payable and accrued liabilities</td><td class="amt">8,604,512</td><td class="amt">1,241,880</td><td class="amt">9,846,392</td></tr>' +
+  '<tr class="ind"><td>Long-term liabilities, due within one year</td><td class="amt">7,150,000</td><td class="amt">1,320,000</td><td class="amt">8,470,000</td></tr>' +
+  '<tr class="ind"><td>Long-term liabilities, due in more than one year</td><td class="amt">71,240,000</td><td class="amt">18,905,000</td><td class="amt">90,145,000</td></tr>' +
+  '<tr class="sum"><td>Total liabilities</td><td class="amt">86,994,512</td><td class="amt">21,466,880</td><td class="amt">108,461,392</td></tr>' +
+  '<tr class="grp"><td>DEFERRED INFLOWS OF RESOURCES</td><td class="amt"></td><td class="amt"></td><td class="amt"></td></tr>' +
+  '<tr class="ind"><td>Deferred inflows related to pensions</td><td class="amt">3,880,400</td><td class="amt">402,600</td><td class="amt">4,283,000</td></tr>' +
+  '<tr class="grp"><td>NET POSITION</td><td class="amt"></td><td class="amt"></td><td class="amt"></td></tr>' +
+  '<tr class="ind"><td>Net investment in capital assets</td><td class="amt">198,904,300</td><td class="amt">70,362,500</td><td class="amt">269,266,800</td></tr>' +
+  '<tr class="ind"><td>Restricted</td><td class="amt">31,447,900</td><td class="amt">2,100,000</td><td class="amt">33,547,900</td></tr>' +
+  '<tr class="ind"><td>Unrestricted</td><td class="amt">77,420,976</td><td class="amt">9,636,093</td><td class="amt">87,057,069</td></tr>' +
+  '<tr class="tot"><td>Total net position</td><td class="amt">307,773,176</td><td class="amt">82,098,593</td><td class="amt">389,871,769</td></tr>' +
+  '</tbody></table></div>' +
+  '<p style="font-size:11px;color:#666;margin-top:12px">The accompanying notes are an integral part of these financial statements.</p>' + pg('18');
+
+const D_BALSHEET =
+  runhead(COUNTY + ' &middot; Basic Financial Statements') +
+  '<h3>Balance Sheet &mdash; Governmental Funds</h3><h4>September 30, 2025</h4>' +
+  '<div class="scroller"><table class="fs wide">' +
+  '<thead><tr><th class="l">&nbsp;</th><th>General</th><th>Road and<br>Bridge</th><th>Capital<br>Projects</th><th>Other<br>Governmental</th><th>Total</th></tr></thead><tbody>' +
+  '<tr class="grp"><td>ASSETS</td><td class="amt"></td><td class="amt"></td><td class="amt"></td><td class="amt"></td><td class="amt"></td></tr>' +
+  '<tr class="ind"><td>Cash and cash equivalents</td><td class="amt">24,821,350</td><td class="amt">6,912,440</td><td class="amt">7,205,000</td><td class="amt">2,269,843</td><td class="amt">41,208,633</td></tr>' +
+  '<tr class="ind"><td>Taxes receivable, net</td><td class="amt">11,134,400</td><td class="amt">1,208,335</td><td class="amt">&mdash;</td><td class="amt">418,278</td><td class="amt">12,761,013</td></tr>' +
+  '<tr class="ind"><td>Due from other governments</td><td class="amt">1,406,442</td><td class="amt">742,105</td><td class="amt">&mdash;</td><td class="amt">72,895</td><td class="amt">2,221,442</td></tr>' +
+  '<tr class="sum"><td>Total assets</td><td class="amt">37,362,192</td><td class="amt">8,862,880</td><td class="amt">7,205,000</td><td class="amt">2,761,016</td><td class="amt">56,191,088</td></tr>' +
+  '<tr class="grp"><td>LIABILITIES</td><td class="amt"></td><td class="amt"></td><td class="amt"></td><td class="amt"></td><td class="amt"></td></tr>' +
+  '<tr class="ind"><td>Vouchers payable</td><td class="amt">6,045,124</td><td class="amt">1,182,400</td><td class="amt">766,000</td><td class="amt">210,988</td><td class="amt">8,204,512</td></tr>' +
+  '<tr class="grp"><td>DEFERRED INFLOWS OF RESOURCES</td><td class="amt"></td><td class="amt"></td><td class="amt"></td><td class="amt"></td><td class="amt"></td></tr>' +
+  '<tr class="ind"><td>Unavailable revenue &mdash; property taxes</td><td class="amt">4,930,000</td><td class="amt">612,000</td><td class="amt">&mdash;</td><td class="amt">148,300</td><td class="amt">5,690,300</td></tr>' +
+  '<tr class="grp"><td>FUND BALANCES</td><td class="amt"></td><td class="amt"></td><td class="amt"></td><td class="amt"></td><td class="amt"></td></tr>' +
+  '<tr class="ind"><td>Restricted</td><td class="amt">&mdash;</td><td class="amt">7,068,480</td><td class="amt">6,439,000</td><td class="amt">2,401,728</td><td class="amt">15,909,208</td></tr>' +
+  '<tr class="ind"><td>Committed</td><td class="amt">3,200,000</td><td class="amt">&mdash;</td><td class="amt">&mdash;</td><td class="amt">&mdash;</td><td class="amt">3,200,000</td></tr>' +
+  '<tr class="ind"><td>Assigned</td><td class="amt">1,800,000</td><td class="amt">&mdash;</td><td class="amt">&mdash;</td><td class="amt">&mdash;</td><td class="amt">1,800,000</td></tr>' +
+  '<tr class="ind"><td>Unassigned</td><td class="amt">21,387,068</td><td class="amt">&mdash;</td><td class="amt">&mdash;</td><td class="amt">&mdash;</td><td class="amt">21,387,068</td></tr>' +
+  '<tr class="sum"><td>Total fund balances</td><td class="amt">26,387,068</td><td class="amt">7,068,480</td><td class="amt">6,439,000</td><td class="amt">2,401,728</td><td class="amt">42,296,276</td></tr>' +
+  '<tr class="tot"><td>Total liabilities, deferred inflows, and fund balances</td><td class="amt">37,362,192</td><td class="amt">8,862,880</td><td class="amt">7,205,000</td><td class="amt">2,761,016</td><td class="amt">56,191,088</td></tr>' +
+  '</tbody></table></div>' +
+  '<div class="banner">Funds presented in separate columns above are the County&rsquo;s <b>major funds</b>. All other governmental funds are aggregated in the Other Governmental column and are presented individually in the combining statements in the supplementary section.</div>' + pg('22');
+
+const D_RSI =
+  runhead(COUNTY + ' &middot; Required Supplementary Information') +
+  '<h3>Budgetary Comparison Schedule &mdash; General Fund</h3><h4>For the Fiscal Year Ended September 30, 2025</h4>' +
+  '<div class="scroller"><table class="fs wide">' +
+  '<thead><tr><th class="l">&nbsp;</th><th>Original<br>Budget</th><th>Final<br>Budget</th><th>Actual</th><th>Variance with<br>Final Budget</th></tr></thead><tbody>' +
+  '<tr class="grp"><td>REVENUES</td><td class="amt"></td><td class="amt"></td><td class="amt"></td><td class="amt"></td></tr>' +
+  '<tr class="ind"><td>Property taxes</td><td class="amt">64,100,000</td><td class="amt">64,100,000</td><td class="amt">64,680,000</td><td class="amt">580,000</td></tr>' +
+  '<tr class="ind"><td>Sales taxes</td><td class="amt">18,400,000</td><td class="amt">18,400,000</td><td class="amt">17,942,300</td><td class="amt">(457,700)</td></tr>' +
+  '<tr class="ind"><td>Fees of office</td><td class="amt">9,850,000</td><td class="amt">9,850,000</td><td class="amt">10,104,880</td><td class="amt">254,880</td></tr>' +
+  '<tr class="ind"><td>Intergovernmental</td><td class="amt">4,200,000</td><td class="amt">4,612,000</td><td class="amt">4,584,190</td><td class="amt">(27,810)</td></tr>' +
+  '<tr class="ind"><td>Investment earnings</td><td class="amt">900,000</td><td class="amt">900,000</td><td class="amt">1,142,600</td><td class="amt">242,600</td></tr>' +
+  '<tr class="sum"><td>Total revenues</td><td class="amt">97,450,000</td><td class="amt">97,862,000</td><td class="amt">98,453,970</td><td class="amt">591,970</td></tr>' +
+  '<tr class="grp"><td>EXPENDITURES</td><td class="amt"></td><td class="amt"></td><td class="amt"></td><td class="amt"></td></tr>' +
+  '<tr class="ind"><td>General government</td><td class="amt">22,800,000</td><td class="amt">23,014,000</td><td class="amt">22,878,700</td><td class="amt">135,300</td></tr>' +
+  '<tr class="ind"><td>Judicial</td><td class="amt">14,200,000</td><td class="amt">14,200,000</td><td class="amt">14,051,220</td><td class="amt">148,780</td></tr>' +
+  '<tr class="ind"><td>Public safety</td><td class="amt">41,600,000</td><td class="amt">41,998,000</td><td class="amt">41,884,300</td><td class="amt">113,700</td></tr>' +
+  '<tr class="ind"><td>Health and welfare</td><td class="amt">9,400,000</td><td class="amt">9,400,000</td><td class="amt">9,206,440</td><td class="amt">193,560</td></tr>' +
+  '<tr class="ind"><td>Capital outlay</td><td class="amt">3,100,000</td><td class="amt">3,100,000</td><td class="amt">3,041,880</td><td class="amt">58,120</td></tr>' +
+  '<tr class="sum"><td>Total expenditures</td><td class="amt">91,100,000</td><td class="amt">91,712,000</td><td class="amt">91,062,540</td><td class="amt">649,460</td></tr>' +
+  '<tr class="tot"><td>Net change in fund balance</td><td class="amt">6,350,000</td><td class="amt">6,150,000</td><td class="amt">7,391,430</td><td class="amt">1,241,430</td></tr>' +
+  '</tbody></table></div>' +
+  '<div class="banner">The budget is adopted on a basis consistent with generally accepted accounting principles. The legal level of budgetary control is the department level within each fund; the schedule above is presented at the function level as required by GASB.</div>' + pg('68');
+
+const D_ACFR24 =
+  runhead('PALO DURO COUNTY, TEXAS &middot; Fiscal Year 2024') +
+  '<h3>Annual Comprehensive Financial Report</h3><h4>For the Fiscal Year Ended September 30, 2024</h4>' +
+  '<div class="banner">Prior-year report retained in the corpus for comparative work. The accounting policies in Note 1 are unchanged from fiscal year 2025 with the exception of GASB Statements No. 101 and 102, which were adopted in fiscal year 2025.</div>' +
+  '<h5>Selected Comparative Figures</h5>' +
+  '<div class="scroller"><table class="fs wide"><thead><tr><th class="l">&nbsp;</th><th>FY 2024</th><th>FY 2025</th><th>Change</th></tr></thead><tbody>' +
+  '<tr><td>Total net position &mdash; primary government</td><td class="amt">371,204,880</td><td class="amt">389,871,769</td><td class="amt">18,666,889</td></tr>' +
+  '<tr><td>General Fund revenues</td><td class="amt">93,880,410</td><td class="amt">98,453,970</td><td class="amt">4,573,560</td></tr>' +
+  '<tr><td>General Fund expenditures</td><td class="amt">88,204,190</td><td class="amt">91,062,540</td><td class="amt">2,858,350</td></tr>' +
+  '<tr><td>General Fund unassigned fund balance</td><td class="amt">18,204,638</td><td class="amt">21,387,068</td><td class="amt">3,182,430</td></tr>' +
+  '<tr><td>Total federal awards expended</td><td class="amt">3,612,940</td><td class="amt">4,182,640</td><td class="amt">569,700</td></tr>' +
+  '<tr class="tot"><td>Adopted tax rate per $100 valuation</td><td class="amt">0.4188</td><td class="amt">0.4106</td><td class="amt">(0.0082)</td></tr>' +
+  '</tbody></table></div>' +
+  '<div class="banner"><b>Note on terminology.</b> Reports issued for fiscal years prior to 2023 are titled &ldquo;Comprehensive Annual Financial Report.&rdquo; GASB Statement No. 98 replaced that term with &ldquo;Annual Comprehensive Financial Report.&rdquo; The content and required contents of the report did not change.</div>' + pg('1');
+
+const D_BUDGET_MSG =
+  runhead('PALO DURO COUNTY, TEXAS &middot; Adopted Budget FY 2026') +
+  '<h3>Budget Message</h3><h4>Fiscal Year Beginning October 1, 2025 and Ending September 30, 2026</h4>' +
+  '<div class="banner">This budget will raise more total property taxes than last year&rsquo;s budget by $3,184,220, or 4.6 percent, and of that amount $1,092,400 is tax revenue to be raised from new property added to the tax roll this year. <i>Statement required by Texas Local Government Code &sect;111.068.</i></div>' +
+  '<p class="lead">Members of the Commissioners Court and Citizens of Palo Duro County:</p>' +
+  '<p class="lead">The adopted budget for fiscal year 2026 totals $164,880,000 across all funds, an increase of 3.9 percent over the fiscal year 2025 adopted budget. The budget funds 1,284.5 full-time equivalent positions, a net increase of 14.0 positions, of which 9.0 are detention officers required to maintain the staffing ratio mandated by the Texas Commission on Jail Standards.</p>' +
+  '<p class="lead">The adopted tax rate of $0.4106 per $100 of taxable value is below the voter-approval rate and does not require an election. The rate is composed of a maintenance and operations rate of $0.3421 and an interest and sinking rate of $0.0685.</p>' +
+  '<div class="sig">Respectfully submitted,<b>Marisol Vega Ruiz<br>County Judge and Budget Officer</b></div>' + pg('1');
+
+const D_TAXRATE =
+  runhead('PALO DURO COUNTY, TEXAS &middot; Adopted Budget FY 2026') +
+  '<h3>Tax Rate Calculation and Adoption</h3><h4>Tax Year 2025 &middot; Fiscal Year 2026</h4>' +
+  '<div class="scroller"><table class="fs"><tbody>' +
+  '<tr><td>Total certified taxable value</td><td class="amt">18,742,900,415</td></tr>' +
+  '<tr><td>No-new-revenue tax rate</td><td class="amt">0.3998</td></tr>' +
+  '<tr><td>No-new-revenue M&amp;O rate</td><td class="amt">0.3364</td></tr>' +
+  '<tr><td>Voter-approval tax rate</td><td class="amt">0.4212</td></tr>' +
+  '<tr class="grp"><td>ADOPTED RATE</td><td class="amt"></td></tr>' +
+  '<tr class="ind"><td>Maintenance and operations (M&amp;O)</td><td class="amt">0.3421</td></tr>' +
+  '<tr class="ind"><td>Interest and sinking (I&amp;S) &mdash; debt service</td><td class="amt">0.0685</td></tr>' +
+  '<tr class="tot"><td>Total adopted rate per $100 valuation</td><td class="amt">0.4106</td></tr>' +
+  '</tbody></table></div>' +
+  '<div class="banner">Rates calculated under Chapter 26 of the Texas Tax Code. Because the adopted rate exceeds the no-new-revenue rate, the Commissioners Court held two public hearings and adopted the rate by record vote as required by &sect;26.05 and &sect;26.06. The adopted rate does not exceed the voter-approval rate, so no election was required.</div>' +
+  '<h5>Fund Summary &mdash; Adopted FY 2026</h5>' +
+  '<div class="scroller"><table class="fs wide"><thead><tr><th class="l">Fund</th><th>Revenues</th><th>Expenditures</th><th>Net</th></tr></thead><tbody>' +
+  '<tr><td>100 General Fund</td><td class="amt">102,400,000</td><td class="amt">101,880,000</td><td class="amt">520,000</td></tr>' +
+  '<tr><td>201 Road and Bridge Fund</td><td class="amt">19,600,000</td><td class="amt">19,450,000</td><td class="amt">150,000</td></tr>' +
+  '<tr><td>301 Capital Projects Fund</td><td class="amt">12,000,000</td><td class="amt">18,400,000</td><td class="amt">(6,400,000)</td></tr>' +
+  '<tr><td>401 Water Utility Fund</td><td class="amt">14,200,000</td><td class="amt">13,850,000</td><td class="amt">350,000</td></tr>' +
+  '<tr><td>Debt service and other funds</td><td class="amt">11,600,000</td><td class="amt">11,300,000</td><td class="amt">300,000</td></tr>' +
+  '<tr class="tot"><td>All funds</td><td class="amt">159,800,000</td><td class="amt">164,880,000</td><td class="amt">(5,080,000)</td></tr>' +
+  '</tbody></table></div>' + pg('14');
+
+const D_COA =
+  runhead('PALO DURO COUNTY, TEXAS &middot; Chart of Accounts') +
+  '<h3>Chart of Accounts &mdash; Segment Structure</h3><h4>Effective October 1, 2025 &middot; ERP release SBX-18.2</h4>' +
+  '<p>All accounting entries are coded to a five-segment string. The Auditor&rsquo;s office maintains the chart; new values are requested on form CA-1 and are not created by departments.</p>' +
+  '<div class="scroller"><table class="fs wide"><thead><tr><th class="l">Segment</th><th class="l">Digits</th><th class="l">Meaning</th><th class="l">Example</th></tr></thead><tbody>' +
+  '<tr><td>Fund</td><td>3</td><td>Fiscal and accounting entity</td><td>100</td></tr>' +
+  '<tr><td>Department</td><td>4</td><td>Legal level of budgetary control</td><td>3110</td></tr>' +
+  '<tr><td>Account</td><td>4</td><td>Asset, liability, equity, revenue, expenditure</td><td>5201</td></tr>' +
+  '<tr><td>Project</td><td>10</td><td>Grant or capital project; blank if none</td><td>GR-2025-04</td></tr>' +
+  '<tr><td>Activity</td><td>4</td><td>Optional cost tracking</td><td>0000</td></tr>' +
+  '</tbody></table></div>' +
+  '<h5>Account Series</h5>' +
+  '<div class="scroller"><table class="fs"><tbody>' +
+  '<tr><td>1000&ndash;1999</td><td>Assets</td></tr>' +
+  '<tr><td>2000&ndash;2999</td><td>Liabilities</td></tr>' +
+  '<tr><td>2600&ndash;2699</td><td>Deferred inflows of resources</td></tr>' +
+  '<tr><td>3000&ndash;3999</td><td>Fund balance and net position</td></tr>' +
+  '<tr><td>4000&ndash;4999</td><td>Revenues</td></tr>' +
+  '<tr><td>5000&ndash;5999</td><td>Expenditures and expenses</td></tr>' +
+  '</tbody></table></div>' +
+  '<div class="banner">A full coding string reads <b>100-3110-5201-GR-2025-04-0000</b>. Grant expenditures must carry the project segment; an expenditure charged to a grant department without the project segment will not appear on the grant reimbursement request and will not reach the SEFA.</div>' + pg('1');
+
+const D_FUNDLIST =
+  runhead('PALO DURO COUNTY, TEXAS &middot; Fund List') +
+  '<h3>Schedule of Funds</h3><h4>Fiscal Year 2026 &middot; Maintained by the County Auditor</h4>' +
+  '<div class="scroller"><table class="fs wide"><thead><tr><th class="l">No.</th><th class="l">Fund</th><th class="l">Type</th><th class="l">Major</th><th class="l">Authority</th></tr></thead><tbody>' +
+  '<tr><td>100</td><td>General Fund</td><td>General</td><td>Yes</td><td>LGC 111</td></tr>' +
+  '<tr><td>201</td><td>Road and Bridge</td><td>Special revenue</td><td>Yes</td><td>Transp. Code 251</td></tr>' +
+  '<tr><td>205</td><td>Law Library</td><td>Special revenue</td><td>No</td><td>LGC 323</td></tr>' +
+  '<tr><td>207</td><td>Records Management</td><td>Special revenue</td><td>No</td><td>LGC 203</td></tr>' +
+  '<tr><td>209</td><td>County Attorney Forfeiture</td><td>Special revenue</td><td>No</td><td>CCP 59</td></tr>' +
+  '<tr><td>212</td><td>American Rescue Plan (SLFRF)</td><td>Special revenue</td><td>No</td><td>Court order 2021-118</td></tr>' +
+  '<tr><td>301</td><td>Capital Projects</td><td>Capital projects</td><td>Yes</td><td>Court order 2023-042</td></tr>' +
+  '<tr><td>310</td><td>Debt Service</td><td>Debt service</td><td>No</td><td>Tax Code 26</td></tr>' +
+  '<tr><td>401</td><td>Water Utility</td><td>Enterprise</td><td>Yes</td><td>LGC 412</td></tr>' +
+  '<tr><td>501</td><td>Self-Insurance</td><td>Internal service</td><td>n/a</td><td>Court order 2019-077</td></tr>' +
+  '<tr><td>701</td><td>Tax Assessor-Collector Agency</td><td>Custodial</td><td>n/a</td><td>Tax Code 31</td></tr>' +
+  '<tr><td>705</td><td>District Clerk Registry</td><td>Custodial</td><td>n/a</td><td>Gov. Code 117</td></tr>' +
+  '</tbody></table></div>' +
+  '<div class="banner">Four funds are reported as major in the fiscal year 2025 basic financial statements: the General Fund, Road and Bridge, Capital Projects, and the Water Utility Fund. Custodial and internal service funds are never reported as major funds; the major fund test does not apply to them.</div>' + pg('1');
+
+const D_SEFA =
+  runhead('PALO DURO COUNTY, TEXAS &middot; Single Audit Report FY 2025') +
+  '<h3>Schedule of Expenditures of Federal Awards</h3><h4>For the Fiscal Year Ended September 30, 2025</h4>' +
+  '<div class="scroller"><table class="fs wide"><thead><tr><th class="l">Federal Program</th><th class="l">ALN</th><th class="l">Pass-Through Identifying No.</th><th>Expenditures</th></tr></thead><tbody>' +
+  '<tr class="grp"><td colspan="4">U.S. DEPARTMENT OF THE TREASURY &mdash; Direct</td></tr>' +
+  '<tr class="ind"><td>Coronavirus State and Local Fiscal Recovery Funds</td><td>21.027</td><td>&mdash;</td><td class="amt">1,842,500</td></tr>' +
+  '<tr class="grp"><td colspan="4">U.S. DEPARTMENT OF HOMELAND SECURITY</td></tr>' +
+  '<tr class="ind"><td colspan="4"><i>Passed through the Texas Division of Emergency Management</i></td></tr>' +
+  '<tr class="ind2"><td>Hazard Mitigation Grant Program</td><td>97.039</td><td>DR-4781-TX-0114</td><td class="amt">889,740</td></tr>' +
+  '<tr class="grp"><td colspan="4">U.S. DEPARTMENT OF TRANSPORTATION</td></tr>' +
+  '<tr class="ind"><td colspan="4"><i>Passed through the Texas Department of Transportation</i></td></tr>' +
+  '<tr class="ind2"><td>Highway Planning and Construction</td><td>20.205</td><td>CSJ 0914-06-118</td><td class="amt">684,100</td></tr>' +
+  '<tr class="grp"><td colspan="4">U.S. DEPARTMENT OF HOUSING AND URBAN DEVELOPMENT</td></tr>' +
+  '<tr class="ind"><td colspan="4"><i>Passed through the Texas General Land Office</i></td></tr>' +
+  '<tr class="ind2"><td>Community Development Block Grants/State&rsquo;s Program</td><td>14.228</td><td>B-24-DC-48-0001</td><td class="amt">412,300</td></tr>' +
+  '<tr class="grp"><td colspan="4">U.S. DEPARTMENT OF AGRICULTURE</td></tr>' +
+  '<tr class="ind"><td colspan="4"><i>Passed through the Texas Department of State Health Services</i></td></tr>' +
+  '<tr class="ind2"><td>WIC Special Supplemental Nutrition Program</td><td>10.557</td><td>2025-054321</td><td class="amt">354,000</td></tr>' +
+  '<tr class="tot"><td colspan="3">Total federal awards expended</td><td class="amt">4,182,640</td></tr>' +
+  '</tbody></table></div>' +
+  '<h5>Notes to the Schedule of Expenditures of Federal Awards</h5>' +
+  '<p><b>Note A &mdash; Basis of Presentation.</b> The accompanying schedule includes the federal award activity of Palo Duro County under programs of the federal government for the year ended September 30, 2025, and is presented on the modified accrual basis of accounting. The information is presented in accordance with the requirements of Title 2 U.S. Code of Federal Regulations Part 200, <i>Uniform Administrative Requirements, Cost Principles, and Audit Requirements for Federal Awards</i>.</p>' +
+  '<p><b>Note B &mdash; Indirect Cost Rate.</b> The County has elected to use the de minimis indirect cost rate of 15 percent of modified total direct costs as permitted under 2 CFR &sect;200.414(f). The County does not have a federally negotiated indirect cost rate agreement.</p>' + pg('12');
+
+const D_AUDRESULTS =
+  runhead('PALO DURO COUNTY, TEXAS &middot; Single Audit Report FY 2025') +
+  '<h3>Schedule of Findings and Questioned Costs</h3><h4>Section I &mdash; Summary of Auditor&rsquo;s Results</h4>' +
+  '<h5>Financial Statements</h5>' +
+  '<div class="scroller"><table class="fs"><tbody>' +
+  '<tr><td>Type of auditor&rsquo;s report issued</td><td class="amt">Unmodified</td></tr>' +
+  '<tr><td>Material weaknesses identified?</td><td class="amt">No</td></tr>' +
+  '<tr><td>Significant deficiencies identified?</td><td class="amt">Yes</td></tr>' +
+  '<tr><td>Noncompliance material to financial statements noted?</td><td class="amt">No</td></tr>' +
+  '</tbody></table></div>' +
+  '<h5>Federal Awards</h5>' +
+  '<div class="scroller"><table class="fs"><tbody>' +
+  '<tr><td>Material weaknesses identified?</td><td class="amt">No</td></tr>' +
+  '<tr><td>Significant deficiencies identified?</td><td class="amt">Yes</td></tr>' +
+  '<tr><td>Type of report on compliance for major programs</td><td class="amt">Unmodified</td></tr>' +
+  '<tr><td>Audit findings required to be reported under 2 CFR &sect;200.516(a)?</td><td class="amt">Yes</td></tr>' +
+  '<tr class="sum"><td><b>Dollar threshold used to distinguish between Type A and Type B programs</b></td><td class="amt"><b>$1,000,000</b></td></tr>' +
+  '<tr><td>Auditee qualified as low-risk auditee?</td><td class="amt">Yes</td></tr>' +
+  '</tbody></table></div>' +
+  '<h5>Identification of Major Programs</h5>' +
+  '<div class="scroller"><table class="fs wide"><thead><tr><th class="l">ALN</th><th class="l">Name of Federal Program</th><th>Expenditures</th></tr></thead><tbody>' +
+  '<tr><td>21.027</td><td>Coronavirus State and Local Fiscal Recovery Funds</td><td class="amt">1,842,500</td></tr>' +
+  '</tbody></table></div>' +
+  '<div class="banner"><b>Single audit determination.</b> The County expended $4,182,640 in federal awards during the fiscal year ended September 30, 2025, exceeding the <b>$1,000,000</b> threshold in 2 CFR &sect;200.501(a) as revised effective for fiscal years beginning on or after October 1, 2024. A single audit was therefore required. The prior threshold of $750,000 does not apply to this fiscal year.</div>' +
+  '<h5>Section III &mdash; Federal Award Findings</h5>' +
+  '<p><b>Finding 2025-001 &mdash; Subrecipient Monitoring (Significant Deficiency).</b> ALN 21.027. <i>Criteria:</i> 2 CFR &sect;200.332 requires a pass-through entity to evaluate each subrecipient&rsquo;s risk of noncompliance and to monitor the subrecipient&rsquo;s activities. <i>Condition:</i> For two of five subawards tested, the County did not document a risk assessment prior to issuing the subaward. <i>Cause:</i> The subaward checklist in use did not include a risk assessment step. <i>Effect:</i> The County cannot demonstrate that monitoring was commensurate with subrecipient risk. <i>Recommendation:</i> Revise the subaward checklist and retain documented risk assessments in the grant file.</p>' + pg('58');
+
+const D_MGMTLETTER =
+  runhead('PALO DURO COUNTY, TEXAS &middot; Management Letter FY 2025') +
+  '<p style="text-align:right;font-size:12.5px">March 18, 2026</p>' +
+  '<p>To the Honorable County Judge and Members of the<br>Commissioners Court of Palo Duro County, Texas</p>' +
+  '<p class="lead">In planning and performing our audit of the financial statements of Palo Duro County, Texas as of and for the year ended September 30, 2025, in accordance with auditing standards generally accepted in the United States of America, we considered the County&rsquo;s internal control over financial reporting as a basis for designing our auditing procedures. During our audit we noted certain matters involving internal control and other operational matters that are presented below for your consideration.</p>' +
+  '<h5>ML 2025-A &mdash; Timeliness of Bank Reconciliations</h5>' +
+  '<p><i>Observation.</i> Bank reconciliations for four of the County&rsquo;s eleven depository accounts were completed more than 45 days after month end for six of the twelve months tested. <i>Recommendation.</i> Complete all reconciliations within 30 days of month end and require review and signature by the First Assistant County Auditor. <i>Management response.</i> Concur. Effective October 2026 the Auditor&rsquo;s office will reassign reconciliation duties and report completion status to the Commissioners Court quarterly.</p>' +
+  '<h5>ML 2025-B &mdash; Capital Asset Additions Below Threshold</h5>' +
+  '<p><i>Observation.</i> Eleven items with unit costs between $1,200 and $4,800 were coded to capital outlay object codes and added to the capital asset system, though each falls below the County&rsquo;s $5,000 capitalization threshold. <i>Recommendation.</i> Retrain department coders and add a system edit rejecting capital object codes below the threshold. <i>Management response.</i> Concur.</p>' +
+  '<h5>ML 2025-C &mdash; Grant Coding Without Project Segment</h5>' +
+  '<p><i>Observation.</i> Expenditures totaling $41,880 were charged to grant departments without the project segment and were omitted from the initial reimbursement request. <i>Recommendation.</i> Require the project segment on all entries to grant departments. <i>Management response.</i> Concur; the edit will be implemented in the fiscal year 2027 ERP release.</p>' +
+  '<div class="sig">Very truly yours,<b>Harlan, Ochoa &amp; Reyes, LLP<br>Certified Public Accountants</b></div>' + pg('1');
+
+const D_GRANT_CDBG =
+  runhead('GRANT FILE GR-2025-04 &middot; Federal Award Identification') +
+  '<div class="stamp">Active &mdash; period of performance open</div>' +
+  '<h3>Notice of Subaward</h3><h4>Texas General Land Office &mdash; Community Development Block Grant</h4>' +
+  '<dl class="kv">' +
+  '<dt>Subrecipient</dt><dd>Palo Duro County, Texas</dd>' +
+  '<dt>UEI</dt><dd>K7M2QX4NPB63</dd>' +
+  '<dt>County project no.</dt><dd>GR-2025-04</dd>' +
+  '<dt>Federal award (FAIN)</dt><dd>B-24-DC-48-0001</dd>' +
+  '<dt>Assistance Listing (ALN)</dt><dd>14.228</dd>' +
+  '<dt>Federal awarding agency</dt><dd>U.S. Dept. of Housing and Urban Development</dd>' +
+  '<dt>Pass-through entity</dt><dd>Texas General Land Office</dd>' +
+  '<dt>Federal award date</dt><dd>September 12, 2024</dd>' +
+  '<dt>Period of performance</dt><dd>October 1, 2024 &ndash; September 30, 2027</dd>' +
+  '<dt>Amount obligated</dt><dd>$750,000</dd>' +
+  '<dt>Indirect cost rate</dt><dd>De minimis, 15% of modified total direct costs (2 CFR &sect;200.414(f))</dd>' +
+  '<dt>Research and development</dt><dd>No</dd>' +
+  '</dl>' +
+  '<h5>Project Description</h5>' +
+  '<p>Removal of architectural barriers and construction of ADA-compliant sidewalk connections along Farm-to-Market 1783 between Canyon Springs Elementary and the Palo Duro County Annex, serving a low- and moderate-income service area as documented by the survey on file.</p>' +
+  '<h5>Selected Terms and Conditions</h5>' +
+  '<ol>' +
+  '<li><b>Equipment.</b> Property acquired under this award with a unit cost at or above the lower of $10,000 or the Subrecipient&rsquo;s own capitalization threshold is subject to the equipment requirements of 2 CFR &sect;&sect;200.313 and 200.439. The Subrecipient&rsquo;s capitalization threshold governs where it is lower.</li>' +
+  '<li><b>Reporting.</b> Quarterly performance and financial reports are due 30 days after the end of each federal fiscal quarter. Reimbursement requests are submitted on GLO Form 4-A with supporting expenditure detail from the general ledger.</li>' +
+  '<li><b>Procurement.</b> Procurements are subject to 2 CFR &sect;&sect;200.317&ndash;200.327 and, where more restrictive, Chapter 262 of the Texas Local Government Code.</li>' +
+  '<li><b>Closeout.</b> Final reports and the final reimbursement request are due no later than 120 days after the end of the period of performance (2 CFR &sect;200.344).</li>' +
+  '</ol>' + pg('1');
+
+const D_GRANT_HMGP =
+  runhead('GRANT FILE GR-2024-11 &middot; Federal Award Identification') +
+  '<div class="stamp">Active &mdash; period of performance open</div>' +
+  '<h3>Notice of Subaward</h3><h4>Texas Division of Emergency Management &mdash; Hazard Mitigation Grant Program</h4>' +
+  '<dl class="kv">' +
+  '<dt>Subrecipient</dt><dd>Palo Duro County, Texas</dd>' +
+  '<dt>County project no.</dt><dd>GR-2024-11</dd>' +
+  '<dt>Federal award (FAIN)</dt><dd>DR-4781-TX-0114</dd>' +
+  '<dt>Assistance Listing (ALN)</dt><dd>97.039</dd>' +
+  '<dt>Federal awarding agency</dt><dd>U.S. Dept. of Homeland Security / FEMA</dd>' +
+  '<dt>Pass-through entity</dt><dd>Texas Division of Emergency Management</dd>' +
+  '<dt>Period of performance</dt><dd>August 15, 2024 &ndash; August 14, 2027</dd>' +
+  '<dt>Total project cost</dt><dd>$1,600,000</dd>' +
+  '<dt>Federal share (75%)</dt><dd>$1,200,000</dd>' +
+  '<dt>Local match (25%)</dt><dd>$400,000</dd>' +
+  '<dt>Indirect cost rate</dt><dd>De minimis, 15% of modified total direct costs</dd>' +
+  '</dl>' +
+  '<h5>Project Description</h5>' +
+  '<p>Replacement of eleven undersized low-water crossings and culverts on county-maintained roads in Precincts 2 and 4 identified in the adopted Hazard Mitigation Action Plan as repetitive-loss locations.</p>' +
+  '<h5>Selected Terms and Conditions</h5>' +
+  '<ol>' +
+  '<li><b>Cost share.</b> The 25 percent non-federal share must be from eligible non-federal sources and must be documented in the same manner as federal share costs. In-kind contributions require prior written approval.</li>' +
+  '<li><b>Reporting.</b> Quarterly progress reports and the Federal Financial Report (SF-425) are required. Reimbursement is on a cost-reimbursement basis; advances are not permitted under this subaward.</li>' +
+  '<li><b>Period of performance.</b> Costs incurred outside the period of performance are unallowable. Extension requests must be submitted to TDEM no later than 60 days before the period end date.</li>' +
+  '</ol>' + pg('1');
+
+const D_AGENDA =
+  runhead('COMMISSIONERS COURT OF PALO DURO COUNTY, TEXAS') +
+  '<h3>Notice of Meeting</h3><h4>Regular Meeting &mdash; Monday, July 13, 2026 &middot; 9:00 a.m.</h4>' +
+  '<div class="banner">Notice is hereby given that a Regular Meeting of the Commissioners Court of Palo Duro County, Texas will be held in the Commissioners Courtroom, Palo Duro County Courthouse, 100 Courthouse Square, Canyon Springs, Texas. This notice is posted in compliance with Chapter 551 of the Texas Government Code. Posted July 9, 2026 at 4:15 p.m.</div>' +
+  '<div class="agenda-item"><span class="n">1.</span><span>Call to order; invocation; pledges of allegiance to the United States and Texas flags.</span></div>' +
+  '<div class="agenda-item"><span class="n">2.</span><span>Public comment. Persons wishing to address the Court on matters not on the agenda are limited to three minutes. The Court may not deliberate on a subject not listed on this agenda.</span></div>' +
+  '<h5>Consent Agenda</h5>' +
+  '<p style="font-size:12px;color:#555">Items 3 through 7 are considered routine and will be enacted by one motion. Any member of the Court may remove an item for separate consideration.</p>' +
+  '<div class="agenda-item"><span class="n">3.</span><span>Approve minutes of the Regular Meeting of June 22, 2026.</span></div>' +
+  '<div class="agenda-item"><span class="n">4.</span><span>Approve county payroll and accounts payable claims in the amount of $4,812,447.19 as presented and approved by the County Auditor.</span></div>' +
+  '<div class="agenda-item"><span class="n">5.</span><span>Approve monthly reports of the County Treasurer, Tax Assessor-Collector, District Clerk, and Justices of the Peace.</span></div>' +
+  '<div class="agenda-item"><span class="n">6.</span><span>Approve surplus declaration and disposal of the equipment listed on Exhibit A pursuant to Local Government Code &sect;263.152.</span></div>' +
+  '<div class="agenda-item"><span class="n">7.</span><span>Approve line-item transfers within departments not exceeding $5,000 as listed on Exhibit B.</span></div>' +
+  '<h5>Regular Agenda</h5>' +
+  '<div class="agenda-item"><span class="n">8.</span><span>Discuss and take action on <b>Budget Amendment 2026-11</b> transferring $184,000 from Road and Bridge Fund 201, Department 4210 (Precinct 2 Maintenance), object 5310, to Department 4230 (Bridge Program), object 5620, for the local match on project GR-2024-11.</span></div>' +
+  '<div class="agenda-item"><span class="n">9.</span><span>Discuss and take action on award of Bid 2026-14, culvert replacement, Precincts 2 and 4, to the lowest responsible bidder.</span></div>' +
+  '<div class="agenda-item"><span class="n">10.</span><span>Discuss and take action on an interlocal agreement with the City of Canyon Springs for shared dispatch services.</span></div>' +
+  '<div class="agenda-item"><span class="n">11.</span><span>Receive the quarterly investment report as required by the Public Funds Investment Act, Chapter 2256, Texas Government Code.</span></div>' +
+  '<h5>Executive Session</h5>' +
+  '<div class="agenda-item"><span class="n">12.</span><span>The Commissioners Court may convene in closed session under Texas Government Code &sect;551.071 (consultation with attorney), &sect;551.072 (deliberation regarding real property), and &sect;551.074 (personnel matters), and may take action in open session on any matter deliberated in closed session.</span></div>' +
+  '<div class="agenda-item"><span class="n">13.</span><span>Adjourn.</span></div>' + pg('1');
+
+const D_AGENDA_INDEX =
+  runhead('COMMISSIONERS COURT &middot; Agenda Archive') +
+  '<h3>Posted Agendas &mdash; Trailing Twelve Months</h3><h4>August 2025 through July 2026</h4>' +
+  '<div class="scroller"><table class="fs wide"><thead><tr><th class="l">Meeting date</th><th class="l">Type</th><th class="l">Items</th><th class="l">Budget amendments</th></tr></thead><tbody>' +
+  '<tr><td>July 13, 2026</td><td>Regular</td><td>13</td><td>2026-11</td></tr>' +
+  '<tr><td>June 22, 2026</td><td>Regular</td><td>16</td><td>2026-09, 2026-10</td></tr>' +
+  '<tr><td>May 26, 2026</td><td>Regular</td><td>14</td><td>2026-08</td></tr>' +
+  '<tr><td>April 27, 2026</td><td>Regular</td><td>19</td><td>2026-06, 2026-07</td></tr>' +
+  '<tr><td>March 23, 2026</td><td>Regular</td><td>15</td><td>2026-05</td></tr>' +
+  '<tr><td>February 23, 2026</td><td>Regular</td><td>12</td><td>2026-04</td></tr>' +
+  '<tr><td>January 26, 2026</td><td>Regular</td><td>17</td><td>2026-02, 2026-03</td></tr>' +
+  '<tr><td>December 15, 2025</td><td>Regular</td><td>11</td><td>2026-01</td></tr>' +
+  '<tr><td>November 24, 2025</td><td>Regular</td><td>14</td><td>&mdash;</td></tr>' +
+  '<tr><td>October 27, 2025</td><td>Regular</td><td>18</td><td>&mdash;</td></tr>' +
+  '<tr><td>September 22, 2025</td><td>Special &mdash; tax rate</td><td>4</td><td>&mdash;</td></tr>' +
+  '<tr><td>August 25, 2025</td><td>Regular &mdash; budget adoption</td><td>21</td><td>&mdash;</td></tr>' +
+  '</tbody></table></div>' +
+  '<div class="banner">Agendas are the record of what the Court authorized. A budget amendment that does not appear on a posted agenda was not lawfully adopted, whatever the ERP shows.</div>' + pg('1');
+
+/* ── corpus manifest ───────────────────────────────────────────────── */
+const DOCS = {
+  acfr25:{cat:'ACFR', short:'ACFR FY2025', title:'Annual Comprehensive Financial Report', sub:'Fiscal year ended September 30, 2025',
+    pages:312, size:'14.2 MB', ingested:'2026-08-09', sections:[
+      {n:'iii', t:'Letter of transmittal', h:D_TRANSMITTAL},
+      {n:'v',   t:'Principal officials', h:D_OFFICIALS},
+      {n:'18',  t:'Statement of Net Position', h:D_NETPOS},
+      {n:'22',  t:'Balance Sheet — Governmental Funds', h:D_BALSHEET},
+      {n:'42',  t:'Note 1 — Summary of Significant Accounting Policies', h:D_NOTE1},
+      {n:'68',  t:'RSI — Budgetary Comparison Schedule', h:D_RSI}]},
+  acfr24:{cat:'ACFR', short:'ACFR FY2024', title:'Annual Comprehensive Financial Report', sub:'Fiscal year ended September 30, 2024',
+    pages:298, size:'13.6 MB', ingested:'2026-08-09', sections:[
+      {n:'1', t:'Report summary and comparative figures', h:D_ACFR24}]},
+  budget26:{cat:'Budget', short:'Adopted Budget FY2026', title:'Adopted Annual Budget', sub:'Fiscal year ending September 30, 2026',
+    pages:184, size:'7.8 MB', ingested:'2026-08-09', sections:[
+      {n:'1',  t:'Budget message', h:D_BUDGET_MSG},
+      {n:'14', t:'Tax rate calculation and fund summary', h:D_TAXRATE}]},
+  coa:{cat:'Chart', short:'Chart of accounts', title:'Chart of Accounts', sub:'Effective October 1, 2025',
+    pages:46, size:'1.1 MB', ingested:'2026-08-09', sections:[
+      {n:'1', t:'Segment structure and account series', h:D_COA}]},
+  fundlist:{cat:'Chart', short:'Fund list', title:'Schedule of Funds', sub:'Fiscal year 2026',
+    pages:3, size:'0.2 MB', ingested:'2026-08-09', sections:[
+      {n:'1', t:'All funds with type and authority', h:D_FUNDLIST}]},
+  singleaudit:{cat:'Audit', short:'Single Audit FY2025', title:'Single Audit Report', sub:'Fiscal year ended September 30, 2025',
+    pages:64, size:'2.9 MB', ingested:'2026-08-09', sections:[
+      {n:'12', t:'Schedule of Expenditures of Federal Awards', h:D_SEFA},
+      {n:'58', t:'Summary of auditor’s results and findings', h:D_AUDRESULTS}]},
+  mgmtletter:{cat:'Audit', short:'Management letter FY2025', title:'Management Letter', sub:'Fiscal year ended September 30, 2025',
+    pages:4, size:'0.3 MB', ingested:'2026-08-09', sections:[
+      {n:'1', t:'Observations and management responses', h:D_MGMTLETTER}]},
+  grant04:{cat:'Grants', short:'GR-2025-04 (CDBG)', title:'Grant File GR-2025-04', sub:'CDBG · ALN 14.228 · via Texas GLO',
+    pages:38, size:'2.2 MB', ingested:'2026-08-09', sections:[
+      {n:'1', t:'Notice of subaward and terms', h:D_GRANT_CDBG}]},
+  grant11:{cat:'Grants', short:'GR-2024-11 (HMGP)', title:'Grant File GR-2024-11', sub:'HMGP · ALN 97.039 · via TDEM',
+    pages:52, size:'3.4 MB', ingested:'2026-08-09', sections:[
+      {n:'1', t:'Notice of subaward and terms', h:D_GRANT_HMGP}]},
+  agendas:{cat:'Agendas', short:'Commissioners Court agendas', title:'Commissioners Court Agendas', sub:'Trailing twelve months, Aug 2025 – Jul 2026',
+    pages:246, size:'5.1 MB', ingested:'2026-08-09', sections:[
+      {n:'—', t:'Archive index — 12 meetings', h:D_AGENDA_INDEX},
+      {n:'1', t:'Regular meeting, July 13, 2026', h:D_AGENDA}]}
+};
+const GROUPS = [
+  {cat:'ACFR',   label:'Last two ACFRs',                     ids:['acfr25','acfr24']},
+  {cat:'Budget', label:'Current adopted budget',             ids:['budget26']},
+  {cat:'Chart',  label:'Chart of accounts and fund list',    ids:['coa','fundlist']},
+  {cat:'Audit',  label:'Last single audit and management letter', ids:['singleaudit','mgmtletter']},
+  {cat:'Grants', label:'Two active grant award files',       ids:['grant04','grant11']},
+  {cat:'Agendas',label:'12 months of Commissioners Court agendas', ids:['agendas']}
+];
+const SOURCE_OPTS = Object.keys(DOCS).map(k => ({v:k, l:DOCS[k].short}))
+  .concat([{v:'none', l:'Not in the loaded corpus'}]);
+
+/* ── the ten spot-checks ───────────────────────────────────────────── */
+const CHECKS = [
+  {q:'What is the County’s fiscal year end?', hint:'The date every statement in the corpus is dated to.',
+   type:'choice', opts:['September 30','December 31','August 31','June 30'], a:'September 30', src:'acfr25',
+   why:'Stated on the face of every statement and in the transmittal letter. Texas counties commonly use an October–September year; do not assume December.'},
+  {q:'What dollar amount is the County’s capitalization threshold?', hint:'An asset below this is expensed, not capitalized.',
+   type:'money', a:5000, src:'acfr25',
+   why:'Note 1(C) of the FY2025 ACFR. This is a County policy choice, not a rule from the standards — which is exactly why no agent may state it from memory.'},
+  {q:'How many days is the County’s availability period for revenue recognition in governmental funds?', hint:'Modified accrual. Measurable and available.',
+   type:'days', a:60, src:'acfr25',
+   why:'Note 1(B). Sixty days is common but it is a policy choice. The learner must know the County’s, not the textbook default.'},
+  {q:'What were total federal awards expended in fiscal year 2025?', hint:'One figure, from one schedule.',
+   type:'money', a:4182640, src:'singleaudit',
+   why:'The total line of the Schedule of Expenditures of Federal Awards. The SEFA is the authoritative figure, not the general ledger summary.'},
+  {q:'What expenditure threshold triggered the requirement for a single audit for this fiscal year?', hint:'Careful — this number changed recently.',
+   type:'money', a:1000000, src:'singleaudit',
+   why:'2 CFR §200.501(a) as revised, effective for fiscal years beginning on or after October 1, 2024. The former $750,000 threshold does not apply to FY2025. This is why thresholds live in a dated facts table.'},
+  {q:'What is the Assistance Listing Number of the County’s only major federal program?', hint:'Section I of the schedule of findings identifies it.',
+   type:'choice', opts:['21.027','97.039','14.228','20.205'], a:'21.027', src:'singleaudit',
+   why:'Coronavirus State and Local Fiscal Recovery Funds, $1,842,500 — the only program above the $1,000,000 Type A threshold.'},
+  {q:'Who appoints the County Auditor?', hint:'Not the answer most people guess.',
+   type:'choice', opts:['The district judges','The Commissioners Court','The County Judge','The voters, at election'],
+   a:'The district judges', src:'acfr25',
+   why:'Texas Local Government Code §84.002. This independence is the reason the Auditor can refuse to approve a claim from an elected official.'},
+  {q:'What is the total adopted tax rate per $100 of valuation for fiscal year 2026?', hint:'M&O plus I&S. Four decimal places.',
+   type:'rate', a:0.4106, src:'budget26',
+   why:'$0.3421 M&O plus $0.0685 I&S. Below the voter-approval rate of $0.4212, so no election was required.'},
+  {q:'A department buys a $6,200 item of equipment under grant GR-2025-04. Which threshold controls whether it is treated as equipment?',
+   hint:'Two documents. The award terms point back at County policy.',
+   type:'choice', opts:['The County’s $5,000 threshold','The federal $10,000 threshold','Whichever the department elects','Neither — grant purchases are always expensed'],
+   a:'The County’s $5,000 threshold', src:'grant04', srcAlt:'acfr25',
+   why:'The award terms adopt the Uniform Guidance rule: the lower of $10,000 or the recipient’s own capitalization threshold. The County’s $5,000 is lower, so it governs and the item is equipment.'},
+  {q:'What is the maximum stated maturity permitted for County investments?', hint:'Answer honestly about what is loaded.',
+   type:'choice', opts:['Not in the loaded corpus — escalate','Two years','Five years','397 days'],
+   a:'Not in the loaded corpus — escalate', src:'none',
+   why:'The investment policy adopted under the Public Funds Investment Act is not in the corpus. The quarterly investment report is referenced in a Court agenda, but the policy itself was never loaded. The correct behavior is to say so and log the gap — not to produce a number someone would act on.'}
+];
+
+/* ── state ─────────────────────────────────────────────────────────── */
+const store = {
+  load(){ try{ return JSON.parse(localStorage.getItem('acct1') || '{}'); }catch(e){ return {}; } },
+  save(s){ try{ localStorage.setItem('acct1', JSON.stringify(s)); }catch(e){} }
+};
+let S = Object.assign({user:null, runs:[], jes:[], w02:{verified:[], attempts:0}}, store.load());
+if(!S.w02) S.w02 = {verified:[], attempts:0};
+const w02met = () => S.w02.verified.length === CHECKS.length;
+
+/* ── helpers ───────────────────────────────────────────────────────── */
+const $ = s => document.querySelector(s);
+const money = v => v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('show'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('show'),3000); }
+function replay(el){ el.querySelectorAll('.reveal').forEach(n=>{ n.style.animation='none'; void n.offsetWidth; n.style.animation=''; }); }
+
+const TITLES = {corpus:'Document corpus', toc:'', page:'', check:'Corpus spot-check', result:'Verification result'};
+let current='corpus', openDoc=null, openSec=0, qIndex=0, qAnswer=null, qSource='', qShown=false;
+
+function go(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const el=$('#s-'+name); el.classList.add('active'); replay(el);
+  $('#top-title').textContent = TITLES[name] || (openDoc ? DOCS[openDoc].short : '');
+  $('#btn-back').style.visibility = (name==='corpus') ? 'hidden' : 'visible';
+  current=name; window.scrollTo({top:0});
+  if(name==='corpus') renderCorpus();
+}
+$('#btn-back').addEventListener('click', ()=>{
+  if(current==='page') go('toc');
+  else if(current==='toc') go(qShown ? 'check' : 'corpus');
+  else if(current==='check') go('corpus');
+  else go('corpus');
+});
+
+/* ── corpus manifest ───────────────────────────────────────────────── */
+function renderCorpus(){
+  const ids=Object.keys(DOCS);
+  const pages=ids.reduce((a,k)=>a+DOCS[k].pages,0);
+  $('#ingest-line').textContent = ids.length + ' documents · ' + pages.toLocaleString('en-US') + ' pages · all indexed and retrievable';
+  const wrap=$('#corpus-groups'); wrap.innerHTML='';
+  GROUPS.forEach(g=>{
+    const card=document.createElement('div');
+    card.className='card reveal';
+    card.innerHTML = '<div class="rowline" style="margin-bottom:4px"><div class="grow"><h3>'+g.label+
+      '</h3></div><span class="tag green">Loaded</span></div>' +
+      g.ids.map(id=>{
+        const d=DOCS[id];
+        return '<button class="docrow" data-doc="'+id+'">' +
+          '<span class="ico"><span>PDF</span></span>' +
+          '<span class="grow"><b>'+d.title+'</b><em>'+d.sub+'</em>' +
+          '<span class="meta">'+d.pages+' pp · '+d.size+' · ingested '+d.ingested+'</span></span>' +
+          '<svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-top:12px"><path d="M9 6l6 6-6 6"/></svg></button>';
+      }).join('');
+    wrap.appendChild(card);
+  });
+  wrap.querySelectorAll('[data-doc]').forEach(b=>b.addEventListener('click',()=>openDocument(b.dataset.doc)));
+  // dots
+  $('#corpus-dots').innerHTML = CHECKS.map((c,i)=>'<i class="'+(S.w02.verified.includes(i)?'ok':'')+'"></i>').join('');
+  $('#btn-start-check').textContent = w02met() ? 'Spot-check passed — review'
+    : (S.w02.verified.length ? 'Resume the spot-check ('+S.w02.verified.length+' of 10 verified)' : 'Run the spot-check');
+}
+
+/* ── document reader ───────────────────────────────────────────────── */
+function openDocument(id){
+  openDoc=id;
+  const d=DOCS[id];
+  $('#toc-head').innerHTML='<p class="eyebrow">'+d.cat+'</p><h1>'+d.title+'</h1><p class="sub">'+d.sub+
+    ' · '+d.pages+' pages. Indexed sections below; the full document is retrievable by the Verifier.</p>';
+  $('#toc-list').innerHTML = d.sections.map((s,i)=>
+    '<button class="toc" data-sec="'+i+'"><span class="n">'+(s.n==='—'?'—':'p. '+s.n)+'</span><span class="t">'+s.t+'</span>'+
+    '<svg class="chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button>').join('');
+  $('#toc-list').querySelectorAll('[data-sec]').forEach(b=>b.addEventListener('click',()=>openSection(+b.dataset.sec)));
+  go('toc');
+}
+function openSection(i){
+  openSec=i;
+  const d=DOCS[openDoc];
+  $('#page-body').innerHTML='<div class="doc reveal">'+d.sections[i].h+'</div>';
+  $('#btn-page-prev').disabled = i===0;
+  $('#btn-page-next').disabled = i===d.sections.length-1;
+  $('#top-title').textContent = d.short;
+  go('page');
+}
+$('#btn-page-prev').addEventListener('click',()=>{ if(openSec>0) openSection(openSec-1); });
+$('#btn-page-next').addEventListener('click',()=>{ if(openSec<DOCS[openDoc].sections.length-1) openSection(openSec+1); });
+
+/* ── spot-check ────────────────────────────────────────────────────── */
+$('#btn-start-check').addEventListener('click',()=>{
+  qIndex = CHECKS.findIndex((c,i)=>!S.w02.verified.includes(i));
+  if(qIndex<0) qIndex=0;
+  qShown=true; renderCheck();
+});
+function renderCheck(){
+  const c=CHECKS[qIndex];
+  qAnswer=null; qSource='';
+  $('#check-dots').innerHTML = CHECKS.map((x,i)=>
+    '<i class="'+(S.w02.verified.includes(i)?'ok':(i===qIndex?'now':''))+'"></i>').join('');
+  let input='';
+  if(c.type==='choice'){
+    input = '<div id="opts">' + c.opts.map((o,i)=>
+      '<button class="opt" data-opt="'+i+'"><span class="mark"></span><span>'+o+'</span></button>').join('') + '</div>';
+  } else {
+    const ph = c.type==='rate' ? '0.0000' : (c.type==='days' ? 'Number of days' : '0.00');
+    const pre = c.type==='money' ? '<span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--ink-2);font-size:16px">$</span>' : '';
+    input = '<div class="field"><label class="f" for="q-num">Answer</label><div style="position:relative">'+pre+
+      '<input class="f num" id="q-num" inputmode="decimal" placeholder="'+ph+'" '+
+      (c.type==='money'?'style="padding-left:28px"':'')+' autocomplete="off"></div></div>';
+  }
+  $('#check-body').innerHTML =
+    '<div class="reveal"><div class="q-head"><span class="n">Spot-check '+(qIndex+1)+' of '+CHECKS.length+'</span></div>'+
+    '<p class="q-text">'+c.q+'</p><p class="q-hint">'+c.hint+'</p></div>'+
+    '<div class="reveal">'+input+'</div>'+
+    '<div class="field reveal"><label class="f" for="q-src">Source document</label><div class="selwrap">'+
+    '<select class="f" id="q-src"><option value="">Where did you find it?</option>'+
+    SOURCE_OPTS.map(o=>'<option value="'+o.v+'">'+o.l+'</option>').join('')+'</select></div></div>'+
+    '<div class="reveal"><button class="btn ghost" id="btn-open-corpus">Open the corpus</button></div>'+
+    '<div id="q-verdict"></div>'+
+    '<div class="actionbar"><button class="btn" id="btn-submit-q" disabled>Submit</button></div>';
+
+  const upd=()=>{ $('#btn-submit-q').disabled = !(qAnswer!==null && qAnswer!=='' && qSource); };
+  if(c.type==='choice'){
+    $('#opts').querySelectorAll('[data-opt]').forEach(b=>b.addEventListener('click',()=>{
+      $('#opts').querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));
+      b.classList.add('sel'); qAnswer=c.opts[+b.dataset.opt]; upd();
+    }));
+  } else {
+    $('#q-num').addEventListener('input',e=>{ qAnswer=e.target.value.replace(/[^0-9.]/g,''); e.target.value=qAnswer; upd(); });
+  }
+  $('#q-src').addEventListener('change',e=>{ qSource=e.target.value; upd(); });
+  $('#btn-open-corpus').addEventListener('click',()=>go('corpus'));
+  $('#btn-submit-q').addEventListener('click',submitCheck);
+  go('check');
+}
+function submitCheck(){
+  const c=CHECKS[qIndex];
+  let answerOK;
+  if(c.type==='choice') answerOK = qAnswer===c.a;
+  else {
+    const v=parseFloat(qAnswer);
+    answerOK = isFinite(v) && (c.type==='rate' ? Math.abs(v-c.a)<0.00005 : v===c.a);
+  }
+  const srcOK = qSource===c.src || (c.srcAlt && qSource===c.srcAlt);
+  S.w02.attempts++;
+  const box=$('#q-verdict');
+  if(answerOK && srcOK){
+    if(!S.w02.verified.includes(qIndex)) S.w02.verified.push(qIndex);
+    store.save(S);
+    box.innerHTML='<div class="verdict ok"><b>Verified.</b>'+c.why+'</div>';
+    $('#btn-submit-q').textContent = (S.w02.verified.length===CHECKS.length) ? 'See the result' : 'Next spot-check';
+    $('#btn-submit-q').onclick = ()=>{
+      if(S.w02.verified.length===CHECKS.length) return renderResult();
+      const nxt=CHECKS.findIndex((x,i)=>!S.w02.verified.includes(i));
+      qIndex = nxt<0 ? qIndex : nxt; renderCheck();
+    };
+    $('#check-dots').innerHTML = CHECKS.map((x,i)=>'<i class="'+(S.w02.verified.includes(i)?'ok':'')+'"></i>').join('');
+  } else {
+    store.save(S);
+    let msg;
+    if(!answerOK && !srcOK) msg='The answer and the source are both wrong. Go read the document before answering again.';
+    else if(!answerOK) msg='Right document, wrong answer. It is in there — find the line.';
+    else msg='The answer is right but the source is wrong. Knowing it is not the same as being able to show where it came from, and on this job you will be asked to show it.';
+    box.innerHTML='<div class="verdict no"><b>Not verified.</b>'+msg+'</div>';
+  }
+  box.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+/* ── result ────────────────────────────────────────────────────────── */
+function renderResult(){
+  $('#result-body').innerHTML =
+    '<div class="reveal"><p class="eyebrow">W0.2 · Acceptance</p><h1>Corpus verified</h1>'+
+    '<p class="sub">Ten of ten spot-checks returned the correct answer from the correct source document. W0.2 is met.</p></div>'+
+    '<div class="card reveal"><div class="r-row" style="display:flex;justify-content:space-between;padding:4px 0">'+
+    '<div><b style="font-size:14.5px">Spot-checks verified</b></div><div class="num" style="font-weight:600">10 / 10</div></div>'+
+    '<div style="display:flex;justify-content:space-between;padding:8px 0 4px;border-top:1px solid var(--line);margin-top:10px">'+
+    '<div><b style="font-size:14.5px">Submissions</b></div><div class="num" style="font-weight:600">'+S.w02.attempts+'</div></div></div>'+
+    '<div class="card reveal"><h3 style="margin:0 0 6px;font-size:15.5px">What this does not cover</h3>'+
+    '<p style="margin:0;font-size:13.5px;color:var(--ink-2);line-height:1.5">Spot-check 10 found a real gap: the County investment policy is not in the corpus. That is logged as a retrieval escalation, not a wrong answer. A rising count of these in one topic means a document is missing — which is a five-minute upload, not a training problem.</p></div>'+
+    '<div class="card reveal" style="border-color:var(--navy)"><h3 style="margin:0 0 6px;font-size:15.5px">Next: W0.3</h3>'+
+    '<p style="margin:0;font-size:13.5px;color:var(--ink-2);line-height:1.5">Every value you just confirmed — the $5,000 capitalization threshold, the 60-day availability period, the $1,000,000 single audit threshold — gets written into the dated facts table with its source. Nothing an agent says comes from memory.</p></div>'+
+    '<div class="actionbar"><button class="btn" id="btn-result-done">Back to the corpus</button></div>';
+  $('#btn-result-done').addEventListener('click',()=>{ qShown=false; go('corpus'); });
+  go('result');
+  toast('W0.2 met — corpus loaded and verified against 10 spot-checks.');
+}
+
+renderCorpus();
+</script>
+</body>
+</html>

@@ -132,9 +132,9 @@ input.f:focus,select.f:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(
 .sheet-veil{position:fixed;inset:0;background:rgba(25,25,24,.32);z-index:40;opacity:0;pointer-events:none;transition:opacity .25s}
 .sheet-veil.open{opacity:1;pointer-events:auto}
 .sheet{position:fixed;left:0;right:0;bottom:0;z-index:41;background:var(--surface);border-radius:16px 16px 0 0;
-  max-width:560px;margin:0 auto;max-height:78dvh;display:flex;flex-direction:column;
-  transform:translateY(103%);transition:transform .3s cubic-bezier(.16,1,.3,1)}
-.sheet.open{transform:none}
+  max-width:560px;margin:0 auto;max-height:78dvh;display:flex;flex-direction:column;visibility:hidden;
+  transform:translateY(103%);transition:transform .3s cubic-bezier(.16,1,.3,1),visibility .3s}
+.sheet.open{transform:none;visibility:visible}
 .sheet .grab{width:36px;height:4px;border-radius:9999px;background:var(--line);margin:10px auto 4px}
 .sheet header{padding:8px 20px 12px;border-bottom:1px solid var(--line)}
 .sheet header h3{margin:0;font-size:16px;font-weight:600}
@@ -195,7 +195,7 @@ kbd{font-family:var(--mono);font-size:12px;border:1px solid var(--line);border-b
     <section class="screen" id="s-login">
       <div class="login-hero reveal">
         <div class="seal">P</div>
-        <p class="eyebrow">Plattsburgh County · Finance ERP</p>
+        <p class="eyebrow">Palo Duro County · Finance ERP</p>
         <h1>Sandbox sign-in</h1>
         <p class="sub">Training environment. Synthetic data only — nothing here touches the live ledger, and journal entries can never post.</p>
       </div>
@@ -424,8 +424,10 @@ const REPORTS = [
   {id:'pa',  name:'Project accounting — standard',   desc:'Budget vs. actual vs. encumbrance by project.', fund:false, tag:'Projects'},
 ];
 const W0 = [
-  {id:'W0.1', t:'ERP sandbox access', d:'Inquiry, unposted JE entry, report writer; AR, fixed assets, project accounting standard reports.', acc:'Learner can log in and run one standard report unaided.'},
-  {id:'W0.2', t:'County document corpus loaded', d:'Two ACFRs, adopted budget, chart of accounts, fund list, single audit + management letter, two grant files, 12 months of Commissioners Court agendas.', acc:'Verifier retrieval returns correct answers on 10 spot-check questions.'},
+  {id:'W0.1', t:'ERP sandbox access', d:'Inquiry, unposted JE entry, report writer; AR, fixed assets, project accounting standard reports.', acc:'Learner can log in and run one standard report unaided.',
+   screen:'erp', met:()=>w01met()},
+  {id:'W0.2', t:'County document corpus loaded', d:'Two ACFRs, adopted budget, chart of accounts, fund list, single audit + management letter, two grant files, 12 months of Commissioners Court agendas.', acc:'Verifier retrieval returns correct answers on 10 spot-check questions.',
+   href:'w0-2-corpus.html', met:()=>!!(S.w02 && S.w02.verified && S.w02.verified.length===10)},
   {id:'W0.3', t:'Facts table v1 published and dated', d:'Every threshold a learner would act on, in one dated file.', acc:'All thresholds sourced; no value from memory.'},
   {id:'W0.4', t:'Answer-key path resolved', d:'Connect access, or Reviewer agent keyed, or restricted item set.', acc:'Every assigned exercise has a verifiable expected result.'},
   {id:'W0.5', t:'Excel with Power Query; error journal initialized', d:'Current Excel build; the error journal starts empty and fills from day one.', acc:'—'},
@@ -483,26 +485,27 @@ $('#btn-logout')?.addEventListener('click', ()=>{ S.user=null; store.save(S); go
 function renderW0(){
   const list = $('#w0-list'); list.innerHTML='';
   W0.forEach((it,i)=>{
-    const isW01 = it.id==='W0.1';
-    const done = isW01 && w01met();
+    const built = !!(it.screen || it.href);      // module exists and is openable
+    const done = built && it.met && it.met();
     const card = document.createElement('div');
-    card.className = 'card reveal' + (isW01 ? ' tap' : '');
+    card.className = 'card reveal' + (built ? ' tap' : '');
     card.innerHTML = `
       <div class="check-item">
-        <div class="check-dot ${done?'done':(isW01?'active':'')}">${done?
+        <div class="check-dot ${done?'done':(built?'active':'')}">${done?
           '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>':''}</div>
         <div class="grow">
           <span class="check-id">${it.id}</span>
           <h3 style="margin:2px 0 4px;font-size:15.5px;font-weight:600">${it.t}
             ${done?'<span class="tag green" style="vertical-align:2px">Done</span>':
-              (isW01?'<span class="tag blue" style="vertical-align:2px">In progress</span>':
+              (built?'<span class="tag blue" style="vertical-align:2px">In progress</span>':
                      '<span class="tag gray" style="vertical-align:2px">Pending</span>')}</h3>
           <p style="margin:0;font-size:13.5px;color:var(--ink-2);line-height:1.5">${it.d}</p>
           <div class="acc"><b style="color:var(--ink)">Acceptance.</b> ${it.acc}</div>
         </div>
-        ${isW01?'<svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-top:14px"><path d="M9 6l6 6-6 6"/></svg>':''}
+        ${built?'<svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-top:14px"><path d="M9 6l6 6-6 6"/></svg>':''}
       </div>`;
-    if(isW01) card.addEventListener('click', ()=>go('erp'));
+    if(it.screen) card.addEventListener('click', ()=>go(it.screen));
+    else if(it.href) card.addEventListener('click', ()=>{ location.href = it.href; });
     list.appendChild(card);
   });
 }
@@ -680,7 +683,7 @@ $('#btn-report-done').addEventListener('click', ()=>go('reports'));
 
 function head(title, params){
   return `<div class="report-head reveal">
-    <p class="eyebrow" style="margin-bottom:6px">Plattsburgh County · Finance ERP — Sandbox</p>
+    <p class="eyebrow" style="margin-bottom:6px">Palo Duro County · Finance ERP — Sandbox</p>
     <h1 style="font-size:24px">${title}</h1>
     <p class="num" style="margin:6px 0 0">${params} · generated ${new Date().toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})} · facts ${FACTS_VERSION}</p>
   </div>`;
