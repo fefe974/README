@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#FBFBFA">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Accountant I · W1 Lessons</title>
+<style>
+:root{
+  --canvas:#FBFBFA; --surface:#FFFFFF; --ink:#191918; --ink-2:#787774;
+  --line:#EAEAEA; --navy:#1E40AF; --navy-press:#16308A; --on-navy:#FFFFFF;
+  --pale-blue:#E1F3FE; --blue-text:#1F6C9F;
+  --pale-green:#EDF3EC; --green-text:#346538;
+  --pale-yellow:#FBF3DB; --yellow-text:#956400;
+  --pale-red:#FDEBEC; --red-text:#9F2F2D;
+  --serif:'Newsreader','Iowan Old Style',Georgia,'Times New Roman',serif;
+  --sans:'SF Pro Display','Helvetica Neue','Segoe UI',system-ui,sans-serif;
+  --mono:'SF Mono','Geist Mono',ui-monospace,'Cascadia Mono',Menlo,monospace;
+  --pad-safe-b:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+button,a,select,input,summary,.tap{touch-action:manipulation}
+:focus-visible{outline:2px solid var(--navy);outline-offset:2px;border-radius:4px}
+html,body{margin:0}
+body{background:var(--canvas);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}
+.app{max-width:560px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column}
+
+.top{position:sticky;top:0;z-index:30;background:rgba(251,251,250,.92);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top,0px)) 20px 10px;
+  display:flex;align-items:center;gap:12px;min-height:56px}
+.top .back{border:1px solid var(--line);background:var(--surface);border-radius:8px;width:40px;height:40px;
+  display:grid;place-items:center;cursor:pointer;flex:none;padding:0;color:var(--ink)}
+.top .back:active{transform:scale(.96)}
+.top h2{font-size:16px;font-weight:600;margin:0;letter-spacing:-.01em;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .env{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--pale-blue);color:var(--blue-text);border-radius:9999px;padding:4px 10px;flex:none}
+
+main{flex:1;padding:20px 20px calc(24px + var(--pad-safe-b))}
+.screen{display:none}
+.screen.active{display:block}
+
+h1{font-family:var(--serif);font-weight:500;font-size:30px;line-height:1.12;letter-spacing:-.02em;margin:0 0 8px;text-wrap:balance}
+.sub{color:var(--ink-2);font-size:14.5px;margin:0 0 24px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);margin:0 0 10px}
+.section-label{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);margin:26px 0 10px}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:12px}
+.card.tap{cursor:pointer;transition:transform .1s}
+.card.tap:active{transform:scale(.985)}
+.rowline{display:flex;align-items:center;gap:14px}
+.rowline .grow{flex:1;min-width:0}
+.rowline h3{margin:0;font-size:15.5px;font-weight:600;letter-spacing:-.01em}
+.rowline p{margin:3px 0 0;font-size:13.5px;color:var(--ink-2);line-height:1.45}
+.chev{flex:none;color:var(--ink-2)}
+
+.tag{display:inline-flex;align-items:center;border-radius:9999px;padding:3px 10px;font-size:10.5px;
+  font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.tag.blue{background:var(--pale-blue);color:var(--blue-text)}
+.tag.green{background:var(--pale-green);color:var(--green-text)}
+.tag.gray{background:var(--canvas);color:var(--ink-2);border:1px solid var(--line)}
+
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:52px;border-radius:8px;
+  border:0;background:var(--navy);color:var(--on-navy);font-family:var(--sans);font-size:16px;font-weight:600;
+  cursor:pointer;letter-spacing:-.01em;transition:background .15s}
+.btn:active{transform:scale(.98);background:var(--navy-press)}
+.btn[disabled]{background:#C9CDD6;cursor:not-allowed}
+.btn.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.actionbar{position:sticky;bottom:0;margin:16px -20px calc(-24px - var(--pad-safe-b));padding:12px 20px calc(12px + var(--pad-safe-b));
+  background:rgba(251,251,250,.94);backdrop-filter:blur(14px);border-top:1px solid var(--line)}
+
+/* lesson body type */
+.lesson-h{font-family:var(--serif);font-size:25px;line-height:1.16;letter-spacing:-.02em;margin:0 0 12px;font-weight:500;text-wrap:balance}
+.lesson-p{font-size:15.5px;line-height:1.6;margin:0 0 14px;max-width:62ch}
+.lesson-p b{font-weight:600}
+.pull{border-left:2px solid var(--navy);padding:2px 0 2px 14px;margin:0 0 16px;font-size:15px;line-height:1.55;color:var(--ink)}
+.keyline{border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:14px 16px;margin:0 0 16px}
+.keyline b{display:block;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-2);margin-bottom:5px}
+.keyline p{margin:0;font-size:14.5px;line-height:1.5}
+
+/* ══ FIGURES ══ one figure, one claim; SVG scales with the column ══ */
+figure.fig{margin:0 0 18px;border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:16px 14px 12px;overflow:hidden}
+figure.fig svg{display:block;width:100%;max-width:100%;height:auto}
+figure.fig figcaption{font-size:12.5px;line-height:1.5;color:var(--ink-2);margin-top:12px;
+  border-top:1px solid var(--line);padding-top:10px}
+figure.fig figcaption b{color:var(--ink);font-weight:600}
+.svg-box{fill:var(--surface);stroke:var(--ink);stroke-width:1.1}
+.svg-box-soft{fill:var(--canvas);stroke:var(--line);stroke-width:1.1}
+.svg-fill-blue{fill:var(--pale-blue);stroke:var(--blue-text);stroke-width:1.1}
+.svg-fill-green{fill:var(--pale-green);stroke:var(--green-text);stroke-width:1.1}
+.svg-fill-red{fill:var(--pale-red);stroke:var(--red-text);stroke-width:1.1}
+.svg-fill-yellow{fill:var(--pale-yellow);stroke:var(--yellow-text);stroke-width:1.1}
+.svg-t{fill:var(--ink);font-family:var(--sans);font-size:11.5px;font-weight:600}
+.svg-t-sm{fill:var(--ink-2);font-family:var(--sans);font-size:9.5px;font-weight:500}
+.svg-t-lbl{fill:var(--ink-2);font-family:var(--mono);font-size:9px;letter-spacing:.09em}
+.svg-t-red{fill:var(--red-text);font-family:var(--sans);font-size:9.5px;font-weight:600}
+.svg-line{stroke:var(--ink);stroke-width:1.2;fill:none}
+.svg-line-soft{stroke:var(--line);stroke-width:1}
+.svg-line-red{stroke:var(--red-text);stroke-width:1.4;fill:none}
+
+/* checks */
+.opt{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;border:1px solid var(--line);
+  background:var(--surface);border-radius:10px;padding:14px;margin-bottom:8px;cursor:pointer;
+  font-family:var(--sans);font-size:14.5px;color:var(--ink);line-height:1.4;min-height:52px}
+.opt.sel{border-color:var(--navy);box-shadow:0 0 0 2px rgba(30,64,175,.15)}
+.opt.right{border-color:var(--green-text);background:var(--pale-green)}
+.opt.wrong{border-color:var(--red-text);background:var(--pale-red)}
+.opt .mark{width:20px;height:20px;border-radius:9999px;border:1.75px solid var(--line);flex:none;margin-top:1px}
+.opt.sel .mark{border-color:var(--navy);background:var(--navy);box-shadow:inset 0 0 0 3.5px #fff}
+.verdict{border-radius:10px;padding:14px 16px;margin:12px 0 0;font-size:14px;line-height:1.5}
+.verdict.ok{background:var(--pale-green);color:var(--green-text)}
+.verdict.no{background:var(--pale-red);color:var(--red-text)}
+.verdict b{display:block;margin-bottom:3px}
+
+.rail{display:flex;gap:4px;margin-bottom:22px}
+.rail i{flex:1;height:3px;border-radius:9999px;background:var(--line)}
+.rail i.done{background:var(--navy)}
+.rail i.now{background:var(--navy)}
+
+.toast{position:fixed;left:50%;bottom:calc(84px + var(--pad-safe-b));transform:translate(-50%,16px);z-index:60;
+  background:var(--ink);color:#fff;font-size:13.5px;line-height:1.45;padding:12px 18px;border-radius:12px;opacity:0;
+  pointer-events:none;transition:opacity .25s,transform .25s;width:max-content;max-width:min(88vw,340px)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+.reveal{opacity:0;transform:translateY(12px);animation:in .55s cubic-bezier(.16,1,.3,1) forwards}
+.reveal:nth-child(2){animation-delay:.05s}.reveal:nth-child(3){animation-delay:.1s}
+.reveal:nth-child(4){animation-delay:.15s}.reveal:nth-child(5){animation-delay:.2s}
+@keyframes in{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <button class="back" id="btn-back" aria-label="Back">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <h2 id="top-title">Week 1 · Lessons</h2>
+    <span class="env" id="top-badge">Week 1</span>
+    <button class="back" id="btn-exit" aria-label="Leave lesson" hidden>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <main>
+    <section class="screen active" id="s-library">
+      <div class="reveal">
+        <p class="eyebrow">Week 1 · Funds and the reporting model</p>
+        <h1>Lessons</h1>
+        <p class="sub">Seven screens each, about eight minutes. One objective per lesson, a diagram for the part that prose alone does badly, a worked example, then three checks.</p>
+      </div>
+      <div id="lesson-list"></div>
+    </section>
+    <section class="screen" id="s-lesson">
+      <div class="rail" id="rail"></div>
+      <div id="lesson-body"></div>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+'use strict';
+/* ══════════════════════════════════════════════════════════════════════
+   Week 1 lessons. Figures are hand-authored inline SVG — no network, no
+   raster, themed from the same palette variables as the rest of the app.
+   Each figure carries one claim and is reused wherever that concept
+   recurs across the 16 weeks.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── FIG 1 ── Why the money cannot move.
+   The claim: a business holds one pool of fungible resources; a county
+   holds several pools that statute forbids moving between. ── */
+const FIG_POOLS = {
+  aria:'A business holds one pool of resources that flows freely; a county holds separate legally fenced pools, and money cannot be moved between them.',
+  cap:'<b>The whole difference in one picture.</b> A business holds one pool and moves money anywhere management decides. A county holds several, each opened by a different law for a different purpose — and the wall between them is the reason road money cannot fix the jail roof.',
+  svg:
+  '<svg viewBox="0 0 300 236" role="img" aria-label="AL">' +
+  // ── commercial: one pool, money flows through ──
+  '<text class="svg-t-lbl" x="0" y="9">COMMERCIAL ENTITY</text>' +
+  '<rect class="svg-box-soft" x="0" y="20" width="58" height="30" rx="4"/>' +
+  '<text class="svg-t" x="29" y="39" text-anchor="middle">Owners</text>' +
+  '<line class="svg-line" x1="58" y1="35" x2="92" y2="35" marker-end="url(#ar)"/>' +
+  '<text class="svg-t-sm" x="75" y="29" text-anchor="middle">invest</text>' +
+  '<rect class="svg-fill-blue" x="96" y="16" width="100" height="38" rx="4"/>' +
+  '<text class="svg-t" x="146" y="32" text-anchor="middle">One pool of</text>' +
+  '<text class="svg-t" x="146" y="45" text-anchor="middle">resources</text>' +
+  '<line class="svg-line" x1="196" y1="35" x2="232" y2="35" marker-end="url(#ar)"/>' +
+  '<text class="svg-t-sm" x="214" y="29" text-anchor="middle">profit</text>' +
+  '<rect class="svg-box-soft" x="236" y="20" width="64" height="30" rx="4"/>' +
+  '<text class="svg-t" x="268" y="39" text-anchor="middle">Owners</text>' +
+  '<line class="svg-line-soft" x1="0" y1="64" x2="300" y2="64"/>' +
+  // ── county: several pools, walls between them ──
+  '<text class="svg-t-lbl" x="0" y="84">COUNTY GOVERNMENT</text>' +
+  '<rect class="svg-box-soft" x="0" y="146" width="56" height="32" rx="4"/>' +
+  '<text class="svg-t" x="28" y="166" text-anchor="middle">Citizens</text>' +
+  '<text class="svg-t-sm" x="28" y="192" text-anchor="middle">taxes</text>' +
+  '<path class="svg-line" d="M56 162 L68 162 M68 116 L68 208"/>' +
+  '<line class="svg-line" x1="68" y1="116" x2="78" y2="116" marker-end="url(#ar)"/>' +
+  '<line class="svg-line" x1="68" y1="162" x2="78" y2="162" marker-end="url(#ar)"/>' +
+  '<line class="svg-line" x1="68" y1="208" x2="78" y2="208" marker-end="url(#ar)"/>' +
+  '<rect class="svg-fill-green" x="82" y="100" width="218" height="32" rx="4"/>' +
+  '<text class="svg-t" x="92" y="115">General Fund</text>' +
+  '<text class="svg-t-sm" x="92" y="127">any lawful county purpose</text>' +
+  '<rect class="svg-fill-yellow" x="82" y="146" width="218" height="32" rx="4"/>' +
+  '<text class="svg-t" x="92" y="161">Road &amp; Bridge Fund</text>' +
+  '<text class="svg-t-sm" x="92" y="173">roads and bridges only</text>' +
+  '<rect class="svg-fill-blue" x="82" y="192" width="218" height="32" rx="4"/>' +
+  '<text class="svg-t" x="92" y="207">Grant Fund</text>' +
+  '<text class="svg-t-sm" x="92" y="219">the awarded scope only</text>' +
+  // the walls — the claim the figure exists to make
+  '<g><circle cx="152" cy="139" r="7" fill="var(--surface)" stroke="var(--red-text)" stroke-width="1.4"/>' +
+  '<line class="svg-line-red" x1="148" y1="143" x2="156" y2="135"/></g>' +
+  '<text class="svg-t-red" x="165" y="143">no transfer</text>' +
+  '<g><circle cx="152" cy="185" r="7" fill="var(--surface)" stroke="var(--red-text)" stroke-width="1.4"/>' +
+  '<line class="svg-line-red" x1="148" y1="189" x2="156" y2="181"/></g>' +
+  '<text class="svg-t-red" x="165" y="189">no transfer</text>' +
+  '<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">' +
+  '<path d="M0 0 L10 5 L0 10 z" fill="var(--ink)"/></marker></defs>' +
+  '</svg>'
+};
+
+/* ── FIG 2 ── Interperiod equity as a timing picture.
+   The claim: the question is whether the people who got the service are
+   the people who paid for it. ── */
+const FIG_EQUITY = {
+  aria:'Two scenarios across two fiscal years. In the first, services delivered in 2025 are paid for by 2025 taxpayers. In the second, part of the cost is pushed into 2026, so 2026 taxpayers pay for services they did not receive.',
+  cap:'<b>Interperiod equity is a timing question, not a balance question.</b> Both budgets below balanced. Only the top one charged the cost to the people who got the service.',
+  svg:
+  '<svg viewBox="0 0 300 232" role="img" aria-label="AL">' +
+  '<text class="svg-t-lbl" x="60" y="9" text-anchor="middle">FISCAL 2025</text>' +
+  '<text class="svg-t-lbl" x="228" y="9" text-anchor="middle">FISCAL 2026</text>' +
+  '<line class="svg-line-soft" x1="156" y1="14" x2="156" y2="200" stroke-dasharray="4 3"/>' +
+  '<text class="svg-t-sm" x="160" y="212">year end</text>' +
+  // scenario A
+  '<text class="svg-t" x="0" y="30">Equity holds</text>' +
+  '<rect class="svg-fill-blue" x="0" y="38" width="152" height="20" rx="3"/>' +
+  '<text class="svg-t-sm" x="8" y="52">services delivered</text>' +
+  '<rect class="svg-fill-green" x="0" y="62" width="152" height="20" rx="3"/>' +
+  '<text class="svg-t-sm" x="8" y="76">paid by 2025 taxpayers</text>' +
+  '<text class="svg-t-sm" x="164" y="66">cost and benefit</text>' +
+  '<text class="svg-t-sm" x="164" y="78">land in the same year</text>' +
+  '<line class="svg-line-soft" x1="0" y1="98" x2="300" y2="98"/>' +
+  // scenario B
+  '<text class="svg-t" x="0" y="120">Burden shifted</text>' +
+  '<rect class="svg-fill-blue" x="0" y="128" width="152" height="20" rx="3"/>' +
+  '<text class="svg-t-sm" x="8" y="142">services delivered</text>' +
+  '<rect class="svg-fill-green" x="0" y="152" width="66" height="20" rx="3"/>' +
+  '<text class="svg-t-sm" x="6" y="166">paid now</text>' +
+  '<rect class="svg-fill-red" x="170" y="152" width="126" height="20" rx="3"/>' +
+  '<text class="svg-t-sm" x="178" y="166">paid by 2026 taxpayers</text>' +
+  '<path class="svg-line-red" d="M70 162 C 110 162, 130 162, 166 162" marker-end="url(#arR2)"/>' +
+  '<text class="svg-t-red" x="118" y="157" text-anchor="middle">deferred</text>' +
+  '<text class="svg-t-red" x="0" y="192">2026 pays for services it never received.</text>' +
+  '<defs><marker id="arR2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">' +
+  '<path d="M0 0 L10 5 L0 10 z" fill="var(--red-text)"/></marker></defs>' +
+  '</svg>'
+};
+
+/* ── FIG 3 ── The eleven fund types, grouped by what actually varies:
+   measurement focus and basis of accounting. ── */
+const FIG_FUNDS = {
+  aria:'Eleven fund types in three categories. The five governmental fund types use the current financial resources measurement focus and modified accrual basis. The two proprietary and four fiduciary types use the economic resources focus and full accrual basis.',
+  cap:'<b>Group them by basis, not by name.</b> The five governmental types are the odd ones out — they alone use the current financial resources focus and modified accrual, measuring whether this year’s resources covered this year’s claims. Proprietary and fiduciary funds account the way a business does.',
+  svg:
+  '<svg viewBox="0 0 300 330" role="img" aria-label="AL">' +
+  // governmental — five types, the only block on modified accrual
+  '<rect class="svg-box-soft" x="0" y="0" width="300" height="112" rx="6"/>' +
+  '<text class="svg-t" x="12" y="22">GOVERNMENTAL</text>' +
+  '<circle cx="282" cy="17" r="10" fill="var(--pale-yellow)" stroke="var(--yellow-text)" stroke-width="1.1"/>' +
+  '<text x="282" y="21" text-anchor="middle" style="fill:var(--yellow-text);font-family:var(--sans);font-size:11px;font-weight:700">5</text>' +
+  '<text class="svg-t-sm" x="12" y="37">current financial resources &middot; modified accrual</text>' +
+  '<rect class="svg-fill-yellow" x="12" y="46" width="65" height="24" rx="3"/><text class="svg-t" x="44" y="62" text-anchor="middle">General</text>' +
+  '<rect class="svg-fill-yellow" x="85" y="46" width="112" height="24" rx="3"/><text class="svg-t" x="141" y="62" text-anchor="middle">Special Revenue</text>' +
+  '<rect class="svg-fill-yellow" x="205" y="46" width="78" height="24" rx="3"/><text class="svg-t" x="244" y="62" text-anchor="middle">Permanent</text>' +
+  '<rect class="svg-fill-yellow" x="12" y="76" width="118" height="24" rx="3"/><text class="svg-t" x="71" y="92" text-anchor="middle">Capital Projects</text>' +
+  '<rect class="svg-fill-yellow" x="138" y="76" width="94" height="24" rx="3"/><text class="svg-t" x="185" y="92" text-anchor="middle">Debt Service</text>' +
+  // proprietary
+  '<rect class="svg-box-soft" x="0" y="124" width="300" height="82" rx="6"/>' +
+  '<text class="svg-t" x="12" y="146">PROPRIETARY</text>' +
+  '<circle cx="282" cy="141" r="10" fill="var(--pale-blue)" stroke="var(--blue-text)" stroke-width="1.1"/>' +
+  '<text x="282" y="145" text-anchor="middle" style="fill:var(--blue-text);font-family:var(--sans);font-size:11px;font-weight:700">2</text>' +
+  '<text class="svg-t-sm" x="12" y="161">economic resources &middot; full accrual</text>' +
+  '<rect class="svg-fill-blue" x="12" y="170" width="82" height="24" rx="3"/><text class="svg-t" x="53" y="186" text-anchor="middle">Enterprise</text>' +
+  '<rect class="svg-fill-blue" x="102" y="170" width="118" height="24" rx="3"/><text class="svg-t" x="161" y="186" text-anchor="middle">Internal Service</text>' +
+  // fiduciary
+  '<rect class="svg-box-soft" x="0" y="218" width="300" height="112" rx="6"/>' +
+  '<text class="svg-t" x="12" y="240">FIDUCIARY</text>' +
+  '<circle cx="282" cy="235" r="10" fill="var(--pale-green)" stroke="var(--green-text)" stroke-width="1.1"/>' +
+  '<text x="282" y="239" text-anchor="middle" style="fill:var(--green-text);font-family:var(--sans);font-size:11px;font-weight:700">4</text>' +
+  '<text class="svg-t-sm" x="12" y="255">economic resources &middot; full accrual &middot; held for others</text>' +
+  '<rect class="svg-fill-green" x="12" y="264" width="98" height="24" rx="3"/><text class="svg-t" x="61" y="280" text-anchor="middle">Pension trust</text>' +
+  '<rect class="svg-fill-green" x="118" y="264" width="116" height="24" rx="3"/><text class="svg-t" x="176" y="280" text-anchor="middle">Investment trust</text>' +
+  '<rect class="svg-fill-green" x="12" y="294" width="146" height="24" rx="3"/><text class="svg-t" x="85" y="310" text-anchor="middle">Private-purpose trust</text>' +
+  '<rect class="svg-fill-green" x="166" y="294" width="76" height="24" rx="3"/><text class="svg-t" x="204" y="310" text-anchor="middle">Custodial</text>' +
+  '</svg>'
+};
+
+/* ── lessons ───────────────────────────────────────────────────────── */
+const LESSONS = [
+ {id:'W1.L1', min:9, src:'LO1-1 · Q 1-1', t:'Why governments account differently',
+  obj:'Say why government accounting differs from commercial accounting, in terms a non-accountant will accept.',
+  screens:[
+   {k:'text', h:'Three differences, and only three',
+    p:'<p class="lesson-p">Private-sector accountants arriving in government usually assume the rules were made complicated on purpose. They were not. Nearly everything that looks strange follows from three facts about what a county is.</p>'+
+      '<div class="keyline"><b>One — no profit motive</b><p>There is no bottom line to manage toward. A county that spends every dollar it collects has not failed.</p></div>'+
+      '<div class="keyline"><b>Two — resources arrive with legal strings</b><p>Money is raised under a specific statute for a specific purpose, and that purpose binds it.</p></div>'+
+      '<div class="keyline"><b>Three — accountability runs to citizens</b><p>Not to owners. Nobody holds a residual claim on a county, and nobody can sell their share.</p></div>'},
+   {k:'fig', h:'What that looks like', fig:FIG_POOLS,
+    p:'<p class="lesson-p">The second difference is the one that reshapes the accounting. Because each pool of money is fenced by the law that created it, the county cannot keep one set of books and report a single number. It has to account for each pool separately — and that is what a <b>fund</b> is.</p>'},
+   {k:'text', h:'So what replaces profit?',
+    p:'<p class="lesson-p">If there is no net income to report, the question a government&rsquo;s financial statements must answer becomes a different one:</p>'+
+      '<div class="pull">Did this government raise and spend resources the way it was authorized to, and did it deliver the services it promised?</div>'+
+      '<p class="lesson-p">That is <b>accountability</b>, and it is the stated objective of governmental financial reporting. Everything downstream — fund accounting, budgetary comparison schedules, the two sets of statements you are about to meet — exists to answer it.</p>'},
+   {k:'ex', h:'Worked example',
+    p:'<div class="keyline"><b>The situation</b><p>The jail roof is leaking. The Road and Bridge Fund is holding $7.1 million. A commissioner asks the Auditor to move $400,000 across to cover the repair. A citizen at the meeting asks why that is even a question.</p></div>'+
+      '<p class="lesson-p"><b>The answer that works:</b> the Road and Bridge Fund is money the state collected from motor fuel and vehicle registration and sent to the county for roads. The statute that raised it says what it is for. It is not the county&rsquo;s general money that happens to be sitting in a different account — it is somebody else&rsquo;s decision about what that money is for, and the county is holding it under that condition.</p>'+
+      '<p class="lesson-p">The jail roof gets fixed out of the General Fund, or out of a fund opened for that purpose. Notice you never had to say the word <i>accrual</i> to answer the question.</p>'},
+   {k:'check', q:'A citizen asks the clearest single reason the county cannot move Road and Bridge money to the jail. Which answer is right?',
+    opts:['The revenue was raised under a statute that restricts what it can be spent on',
+          'The Road and Bridge Fund is in a different bank account',
+          'Moving it would make the budget fail to balance',
+          'The Commissioners Court has not voted to allow it'],
+    a:0, why:'The constraint is legal and it attached when the revenue was raised. A separate bank account is a consequence of the restriction, not the reason for it — and a vote of the Court cannot lift a restriction the Court did not impose.'},
+   {k:'check', q:'With no profit figure to report, what do a government&rsquo;s financial statements primarily demonstrate?',
+    opts:['Whether resources were raised and used as authorized, and services delivered',
+          'Whether the government grew its net position year over year',
+          'Whether the government collected more revenue than the prior year',
+          'Whether departments spent their full appropriations'],
+    a:0, why:'Accountability is the stated objective of governmental financial reporting. Growth in net position is not a goal for a government, and spending a full appropriation is neither good nor bad on its own.'},
+   {k:'check', q:'Who are the primary users a county&rsquo;s external financial reports are written for?',
+    opts:['Citizens and their elected representatives, along with creditors and oversight bodies',
+          'The county&rsquo;s department heads',
+          'Shareholders and potential investors',
+          'The state comptroller, exclusively'],
+    a:0, why:'Citizens hold no residual claim and cannot sell a share, so they cannot vote with their money the way an investor can. External reporting is how they hold the government to account instead.'}
+  ]},
+
+ {id:'W1.L2', min:8, src:'Q 1-5', t:'Interperiod equity',
+  obj:'Explain interperiod equity in plain language and recognize when a decision violates it.',
+  screens:[
+   {k:'text', h:'The question behind the concept',
+    p:'<p class="lesson-p">Interperiod equity asks one thing:</p>'+
+      '<div class="pull">Did this year&rsquo;s taxpayers pay for this year&rsquo;s services — or did the government push some of that cost onto the people who come after them?</div>'+
+      '<p class="lesson-p">It is a fairness test across time. It is also the reason a balanced budget is not, by itself, evidence that a government is being run responsibly. A budget can balance beautifully while quietly billing the future.</p>'},
+   {k:'fig', h:'Two years, two outcomes', fig:FIG_EQUITY,
+    p:'<p class="lesson-p">Both rows below represent a balanced year. The difference is <i>when</i> the cost lands relative to <i>when</i> the service was consumed.</p>'},
+   {k:'text', h:'How governments shift the burden',
+    p:'<p class="lesson-p">The mechanisms are ordinary and rarely look dramatic at the time:</p>'+
+      '<div class="keyline"><b>Borrowing for operations</b><p>Issuing debt to cover recurring costs — salaries, fuel, routine maintenance. The service is consumed now; the payments fall on later taxpayers.</p></div>'+
+      '<div class="keyline"><b>Debt outliving the asset</b><p>Fifteen-year debt on equipment with a seven-year life. For eight years, taxpayers pay for something they no longer have.</p></div>'+
+      '<div class="keyline"><b>Deferring what accrues</b><p>Underfunding pensions or skipping maintenance. The obligation grows whether or not it is paid, and the bill arrives later and larger.</p></div>'},
+   {k:'ex', h:'Worked example',
+    p:'<div class="keyline"><b>The proposal</b><p>Palo Duro County wants a new emergency radio system: $4.2 million, useful life about seven years. The proposal is to fund it with fifteen-year certificates of obligation, which keeps the annual payment low enough to avoid a tax rate increase.</p></div>'+
+      '<p class="lesson-p"><b>Does it violate interperiod equity?</b> Yes, in its second half. For roughly seven years, taxpayers pay for a radio system they use — that part is fine, and financing a long-lived asset over its life is exactly what debt is for. For the remaining eight years, they pay for equipment that has already been replaced or retired.</p>'+
+      '<p class="lesson-p">This is not an accounting error and nobody is doing anything unlawful. It is a policy choice with a cost that the fund-level statements will not show you, which is precisely why the concept has a name.</p>'},
+   {k:'check', q:'Which of these best states what interperiod equity measures?',
+    opts:['Whether current-year revenues were sufficient to pay for current-year services',
+          'Whether the budget was balanced as adopted',
+          'Whether revenues grew at least as fast as expenditures',
+          'Whether each fund stayed within its appropriation'],
+    a:0, why:'It is a matching question across time — cost of services against the resources raised in the same period. Budget balance, revenue growth, and appropriation compliance are all separate tests, and a government can pass every one of them while shifting burden forward.'},
+   {k:'check', q:'Which decision most clearly shifts burden onto future taxpayers?',
+    opts:['Issuing fifteen-year debt to buy equipment with a seven-year useful life',
+          'Issuing twenty-year debt to build a bridge with a fifty-year life',
+          'Paying cash for a new patrol vehicle out of current revenues',
+          'Building an unassigned fund balance above the policy minimum'],
+    a:0, why:'Debt outliving the asset is the classic violation: payments continue after the benefit is gone. Financing a fifty-year bridge over twenty years does the opposite — it spreads cost across users who benefit.'},
+   {k:'check', q:'True or false: a General Fund that ends the year with revenues exceeding expenditures has demonstrated interperiod equity.',
+    opts:['False — modified accrual does not capture the full long-term cost of the year&rsquo;s services',
+          'True — an operating surplus is exactly what the concept measures',
+          'True, provided the surplus is unassigned',
+          'False — only a government-wide deficit can show it'],
+    a:0, why:'Governmental funds report on the current financial resources focus, so costs that accrue without a current claim — pension obligations, compensated absences, deferred maintenance — never reach the fund statements. A fund surplus can coexist with a growing long-term burden. The government-wide statements are where you look.'}
+  ]},
+
+ {id:'W1.L4', min:10, src:'LO2-3 · Q 2-5', t:'The eleven fund types',
+  obj:'Name the three fund categories and all eleven types, and assign any county fund to its type.',
+  screens:[
+   {k:'text', h:'Three categories before eleven types',
+    p:'<p class="lesson-p">People try to memorize eleven fund types as a flat list and lose them within a week. Learn the three categories first. The categories are the part that carries meaning, because <b>the category determines how the fund accounts</b> — and that is what you will actually be asked to reason about for the next fifteen weeks.</p>'+
+      '<p class="lesson-p">The eleven names are then just labels hanging off three ideas: money that does government work, money that runs a business, and money that is not the county&rsquo;s at all.</p>'},
+   {k:'fig', h:'All eleven, grouped by how they account', fig:FIG_FUNDS,
+    p:'<p class="lesson-p">Read the second line of each block before the names. The split between the top block and the bottom two is the single most important line in this diagram.</p>'},
+   {k:'text', h:'The tell for each category',
+    p:'<div class="keyline"><b>Governmental — is it tax-supported?</b><p>Financed by taxes and other nonexchange revenue to do the things governments do. Five types.</p></div>'+
+      '<div class="keyline"><b>Proprietary — does someone pay a fee for the service?</b><p>Run on a fee-for-service basis, like a business. Enterprise serves outside customers; Internal Service serves other county departments.</p></div>'+
+      '<div class="keyline"><b>Fiduciary — is it the county&rsquo;s money at all?</b><p>The county holds it for someone else. Fiduciary funds never appear in the government-wide statements, because those resources cannot be used for county programs.</p></div>'},
+   {k:'ex', h:'Worked example — Palo Duro County',
+    p:'<p class="lesson-p">Take five funds straight off the county&rsquo;s own fund list and assign them.</p>'+
+      '<div class="keyline"><b>201 Road and Bridge</b><p>Motor fuel and registration revenue restricted to roads. Governmental &rarr; <b>Special Revenue</b>.</p></div>'+
+      '<div class="keyline"><b>401 Water Utility</b><p>Sells water to residents and bills them for it. Proprietary &rarr; <b>Enterprise</b>.</p></div>'+
+      '<div class="keyline"><b>501 Self-Insurance</b><p>Charges premiums to other county departments, not the public. Proprietary &rarr; <b>Internal Service</b>.</p></div>'+
+      '<div class="keyline"><b>701 Tax Assessor-Collector Agency</b><p>Collects taxes belonging to cities and school districts and remits them. Fiduciary &rarr; <b>Custodial</b>.</p></div>'+
+      '<div class="keyline"><b>310 Debt Service</b><p>Accumulates the I&amp;S levy to pay principal and interest. Governmental &rarr; <b>Debt Service</b>.</p></div>'},
+   {k:'check', q:'How many fund types are in the governmental category?',
+    opts:['Five','Three','Four','Six'],
+    a:0, why:'General, Special Revenue, Capital Projects, Debt Service, and Permanent. Five governmental, two proprietary, four fiduciary — eleven in total.'},
+   {k:'check', q:'The Water Utility Fund bills residents monthly for water service. Which type is it?',
+    opts:['Enterprise','Special Revenue','Internal Service','Custodial'],
+    a:0, why:'It charges outside customers a fee for service, which makes it proprietary; serving the public rather than other departments makes it Enterprise rather than Internal Service. It accounts on the full accrual basis, like a business.'},
+   {k:'check', q:'The Tax Assessor-Collector collects property taxes owed to three school districts and remits them monthly. Which type of fund holds those collections?',
+    opts:['Custodial','Special Revenue','Private-purpose trust','Enterprise'],
+    a:0, why:'The money is never the county&rsquo;s to spend, so it is fiduciary; a simple pass-through with no trust agreement makes it Custodial. This is why fiduciary funds are excluded from the government-wide statements — those resources cannot support county programs.'}
+  ]},
+
+ {id:'W1.L3', min:10, src:'Q 1-6 · LO2-1', t:'Fiscal vs. operational accountability', stub:true},
+ {id:'W1.L5', min:8,  src:'Q 2-7', t:'Deferred outflows and deferred inflows', stub:true},
+ {id:'W1.L6', min:9,  src:'Q 2-9 · LO2-3', t:'Fund balance classifications', stub:true}
+];
+
+/* ── state ─────────────────────────────────────────────────────────── */
+const store = {
+  load(){ try{ return JSON.parse(localStorage.getItem('acct1') || '{}'); }catch(e){ return {}; } },
+  save(s){ try{ localStorage.setItem('acct1', JSON.stringify(s)); }catch(e){} }
+};
+let S = Object.assign({user:null, runs:[], jes:[], lessons:{}}, store.load());
+if(!S.lessons) S.lessons = {};
+
+const $ = s => document.querySelector(s);
+function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('show'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('show'),3000); }
+function replay(el){ el.querySelectorAll('.reveal').forEach(n=>{ n.style.animation='none'; void n.offsetWidth; n.style.animation=''; }); }
+function figure(f){
+  return '<figure class="fig">' + f.svg.replace('aria-label="AL"','aria-label="'+f.aria+'"') +
+         '<figcaption>' + f.cap + '</figcaption></figure>';
+}
+
+let current='library', L=null, si=0, picked=null, answered=false;
+function go(n){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const el=$('#s-'+n); el.classList.add('active'); replay(el);
+  $('#btn-back').style.visibility = n==='library' ? 'hidden' : 'visible';
+  $('#top-badge').hidden = n!=='library';
+  $('#btn-exit').hidden = n!=='lesson';   // back steps one screen; ✕ leaves the lesson
+  current=n; window.scrollTo({top:0});
+  if(n==='library') renderLibrary();
+}
+$('#btn-back').addEventListener('click',()=>{
+  if(current==='lesson'){ if(si>0){ si--; renderScreen(); } else go('library'); }
+  else go('library');
+});
+$('#btn-exit').addEventListener('click',()=>go('library'));
+
+function renderLibrary(){
+  $('#top-title').textContent='Week 1 · Lessons';
+  const wrap=$('#lesson-list'); wrap.innerHTML='';
+  LESSONS.forEach(l=>{
+    const done=!!S.lessons[l.id];
+    const c=document.createElement('div');
+    c.className='card reveal'+(l.stub?'':' tap');
+    c.innerHTML='<div class="rowline"><div class="grow">'+
+      '<span class="eyebrow" style="margin:0 0 5px;display:block">'+l.id+' · '+l.src+'</span>'+
+      '<h3>'+l.t+' '+(l.stub?'<span class="tag gray">Not built</span>':(done?'<span class="tag green">Done</span>':'<span class="tag blue">'+l.min+' min</span>'))+'</h3>'+
+      (l.obj?'<p>'+l.obj+'</p>':'<p>Planned for this week; not yet written.</p>')+
+      '</div>'+(l.stub?'':'<svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>')+'</div>';
+    if(!l.stub) c.addEventListener('click',()=>{ L=l; si=0; renderScreen(); });
+    wrap.appendChild(c);
+  });
+}
+
+function renderScreen(){
+  const sc=L.screens[si];
+  picked=null; answered=false;
+  $('#top-title').textContent = L.id;
+  $('#rail').innerHTML = L.screens.map((x,i)=>'<i class="'+(i<si?'done':(i===si?'now':''))+'"></i>').join('');
+  let html='';
+  if(sc.k==='check'){
+    html = '<div class="reveal"><p class="eyebrow">Check '+(L.screens.slice(0,si+1).filter(x=>x.k==='check').length)+' of 3</p>'+
+      '<h2 class="lesson-h">'+sc.q+'</h2></div><div class="reveal" id="opts">'+
+      sc.opts.map((o,i)=>'<button class="opt" data-i="'+i+'"><span class="mark"></span><span>'+o+'</span></button>').join('')+
+      '</div><div id="verdict"></div>'+
+      '<div class="actionbar"><button class="btn" id="btn-next" disabled>Check answer</button></div>';
+  } else {
+    html = '<div class="reveal">'+
+      (si===0 ? '<p class="eyebrow">'+L.id+' · '+L.src+'</p>' : '') +
+      '<h2 class="lesson-h">'+sc.h+'</h2>'+
+      (si===0 ? '<div class="keyline" style="border-color:var(--navy)"><b>Objective</b><p>'+L.obj+'</p></div>' : '')+
+      '</div>'+
+      (sc.fig ? '<div class="reveal">'+figure(sc.fig)+'</div>' : '')+
+      '<div class="reveal">'+sc.p+'</div>'+
+      '<div class="actionbar"><button class="btn" id="btn-next">Continue</button></div>';
+  }
+  $('#lesson-body').innerHTML=html;
+  if(sc.k==='check'){
+    const opts=$('#opts');
+    opts.querySelectorAll('[data-i]').forEach(b=>b.addEventListener('click',()=>{
+      if(answered) return;
+      opts.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));
+      b.classList.add('sel'); picked=+b.dataset.i; $('#btn-next').disabled=false;
+    }));
+    $('#btn-next').addEventListener('click',()=>{
+      if(!answered){
+        answered=true;
+        const right = picked===sc.a;
+        opts.querySelectorAll('.opt').forEach((x,i)=>{
+          x.classList.remove('sel');
+          if(i===sc.a) x.classList.add('right');
+          else if(i===picked) x.classList.add('wrong');
+        });
+        $('#verdict').innerHTML='<div class="verdict '+(right?'ok':'no')+'"><b>'+(right?'Right.':'Not right.')+'</b>'+sc.why+'</div>';
+        $('#btn-next').textContent = si===L.screens.length-1 ? 'Finish lesson' : 'Next';
+      } else advance();
+    });
+  } else {
+    $('#btn-next').addEventListener('click',advance);
+  }
+  go('lesson');
+}
+function advance(){
+  if(si===L.screens.length-1){
+    S.lessons[L.id]=true; store.save(S);
+    go('library');
+    toast(L.id+' complete. '+Object.keys(S.lessons).length+' of 6 Week 1 lessons done.');
+  } else { si++; renderScreen(); }
+}
+renderLibrary();
+</script>
+</body>
+</html>
