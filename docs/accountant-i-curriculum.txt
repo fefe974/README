@@ -1,0 +1,1354 @@
+
+===== PAGE 1 =====
+Accountant I — Detailed Curriculum
+County Finance Department · Application-first, textbook-
+driven, mobile-delivered, agent-coached
+Source text: Reck, Lowensohn & Neely, Accounting for Governmental & Nonprofit Entities,
+18th ed. — cited as [GNP]. Companion documents: v1 (design logic), v2 (assignment
+mapping), v3 (mobile architecture), v4 (agent layer), Coach Agent Behavior Spec.
+This is the build document. Every unit is named, numbered, sourced, and timed.
+How to read this
+Unit ID scheme. W3.L2 = Week 3, Lesson 2. Formats: L lesson (7–10 min, phone), P
+practice (12–20 min, phone), C case (8–12 min, phone), V voice explain (2–3 min each,
+phone), D drill (3–5 min ×2 daily, phone), M milestone (60–120 min, off-phone).
+Source column. E/P 4-20 = Exercise/Problem 4-20 from the text. Q 4-10 = Question
+4-10. Case 4-13 = Case 4-13. LO4-1 = the chapter’s own learning objective.
+★ marks a graded milestone. ⚑ marks a currency patch — content where the 2019 text is
+superseded and the lesson must correct it.
+Weekly load: ~75 min on phone + one off-phone milestone of 60–120 min + reading. Total
+~6.5–8 hrs inside a normal work week.
+Program totals: 16 weeks · 58 lessons · 91 practice sets · 16 cases · 47 voice items · 16
+milestones · 604 drill cards · 11 graded milestones + 1 capstone.
+Week 0 — Environment and orientation
+Nothing is taught. Everything is assembled. Do not start Week 1 until all six are done.
+ID Item Acceptance
+ERP sandbox access: inquiry, unposted JE entry, report writer,
+Learner can log in
+and run one
+
+===== PAGE 2 =====
+W0.1AR, fixed assets, project accounting standard report
+unaided
+W0.2
+County document corpus loaded: last two ACFRs, current
+adopted budget, chart of accounts, fund list, last single audit
++ management letter, two active grant award files, 12 months
+of Commissioners Court agendas
+Verifier retrieval
+returns correct
+answers on 10
+spot-check
+questions
+W0.3Facts table v1 published and dated
+All thresholds
+sourced, no value
+from memory
+W0.4Answer-key path resolved (Connect access, or Reviewer agent
+keyed, or restricted item set)
+Every assigned
+exercise has a
+verifiable
+expected result
+W0.5Excel current version with Power Query; error journal initialized—
+W0.6County map deliverable — one page: fund structure, elected
+officials, reporting lines, revenue sources, fiscal year end
+Presented
+verbally in 5
+minutes to the
+Manager agent
+PHASE 1 — LEDGER FLUENCY (Weeks 1–4)
+Competencies C1 (reconciliation), C2 (journal entries), J (judgment), X (tooling)
+Week 1 — Funds, the reporting model, and the chart of
+accounts
+[GNP] Ch. 1 and Ch. 2 · LO1-1 → 1-4, LO2-1 → 2-4 · (skip LO1-5 federal, LO1-6 NFP)
+Objectives. Distinguish government from commercial accounting and say why the
+difference exists. Name the three fund categories and all eleven fund types. Apply the major
+fund test. Locate any account in the county’s chart by fund and type.
+ID Format Content SourceMin
+
+===== PAGE 3 =====
+W1.L1Lesson
+Why governments account differently: absence of
+a profit motive, legal restrictions on resources,
+accountability to citizens rather than owners
+LO1-1,
+Q 1-1 9
+W1.L2Lesson
+Interperiod equity — has this year’s government
+pushed the cost of this year’s services onto next
+year’s taxpayers?
+Q 1-58
+W1.L3Lesson
+Fiscal accountability vs. operational
+accountability, and why that split produces two
+sets of statements
+Q 1-6,
+LO2-110
+W1.L4Lesson The eleven fund types across three categories;
+what each is for
+LO2-3,
+Q 2-510
+W1.L5Lesson Deferred outflows and deferred inflows — the two
+elements that aren’t assets or liabilitiesQ 2-78
+W1.L6Lesson Fund balance classifications: nonspendable,
+restricted, committed, assigned, unassigned
+Q 2-9,
+LO2-39
+W1.P1PracticeMatching fund types to fund categoriesE/P
+2-17 12
+W1.P2PracticeMatching funds and characteristics to fund vs.
+government-wide statements
+E/P
+2-18 15
+W1.P3PracticeMatching funds with transactions E/P
+2-19 15
+W1.P4PracticeFund balance classification sorter E/P
+2-20 12
+W1.P5PracticeMajor fund determination, two data sets
+E/P
+2-21,
+2-22
+18
+W1.P6PracticeComparing government, NFP, and commercial
+statements
+E/P
+1-18,
+1-20,
+1-21
+15
+W1.CCase Evaluating a city’s basic financial statementsCase
+2-12 12
+W1.VVoice ×3 Q 1-5 (interperiod equity), Q 2-8 (expenses vs.
+expenditures), Q 2-6 (why funds exist) 8
+
+===== PAGE 4 =====
+W1.MMilestone
+E/P 1-17 + E/P 2-15 against the county’s own
+ACFR. Deliverable: annotated fund map — every
+county fund, its type, legal authority, revenue
+sources, and major-fund determination shown
+with the 2-21 method applied to real numbers
+E/P
+1-17,
+2-15
+90
+W1.DDrill
++42 cards: fund type definitions ×11, fund
+category assignment ×11, deferred inflow/outflow
+×6, fund balance classification ×5, major fund
+criteria ×4, vocabulary ×5
+—
+⚑ Currency patch W1: “CAFR” is now ACFR (GASB 98). The text uses the old term
+throughout — every occurrence the learner reads must be mentally renamed. Also confirm
+GASB 84 fiduciary criteria as covered (this edition was rewritten for it).
+Check. The learner explains to a non-accountant, in under two minutes, why the county
+cannot spend road-and-bridge money on the jail. If they reach for the word “fund” as an
+explanation rather than as a mechanism, they don’t have it.
+Expected errors. Category 1 dominates — the vocabulary is entirely new. Do not read high
+Category 1 rates this week as a problem.
+Week 2 — Budgetary accounting and classification
+[GNP] Ch. 3 · LO3-1 → 3-5 · (skip LO3-6, school districts)
+Objectives. Distinguish appropriations, expenditures, encumbrances, and expenses without
+hesitation. Record a budget, an encumbrance, and its liquidation. Classify any revenue as
+program or general, and any expenditure by character and function.
+ID Format Content SourceMin
+W2.L1Lesson The budget as law: appropriation is legal
+spending authority, not a plan
+LO3-5,
+Q 3-79
+W2.L2Lesson The encumbrance cycle — commit, receive,
+liquidate — and why governments do this at all
+Q 3-9,
+LO3-510
+W2.L3Lesson Program revenue vs. general revenue, and why
+the statement of activities is built that way
+Q 3-6,
+LO3-110
+W2.L4Lesson Revenues vs. other financing sources;
+expenditures vs. other financing uses
+Q 3-5,
+LO3-2
+9
+
+===== PAGE 5 =====
+W2.L5Lesson Expenditure classification: character, function,
+organization unit, object LO3-49
+W2.P1PracticeClassifying program and general revenuesE/P
+3-17 12
+W2.P2PracticeClassifying expenditures by character E/P
+3-18 12
+W2.P3PracticeClassifying revenues E/P
+3-19 12
+W2.P4PracticeRecording the budget and ending fund balancesE/P
+3-20 15
+W2.P5PracticeBudgetary control over expenditures E/P
+3-21 15
+W2.P6PracticeRecording encumbrances E/P
+3-23 15
+W2.P7PracticeSubsidiary ledgers E/P
+3-25 15
+W2.P8
+★ PracticeRecording General Fund operating budget and
+operating transactions
+★E/P
+3-24 25
+W2.CCase Budgetary comparison statements: budget basis
+vs. GAAP basis
+Case
+3-12 12
+W2.VVoice ×3
+Q 3-9 (the four-term distinction), Q 3-6 (program
+vs. general), Q 3-8 (which funds need budgetary
+comparison)
+8
+W2.MMilestone
+E/P 3-15 on the county ACFR, then reproduce
+E/P 3-26 (Departmental Budgetary Comparison
+Report) using one real county department’s
+current-year ERP data
+E/P
+3-15,
+3-26
+100
+W2.DDrill
++38 cards: budgetary account definitions ×8,
+encumbrance sequence ×6, revenue
+classification reflexes ×12, expenditure character
+×8, OFS/OFU ×4. Spaced in: Week 1 pool. Quiz:
+none yet
+—
+
+===== PAGE 6 =====
+⚑ Currency patch W2 (GASB 103). The budgetary comparison schedule is now presented
+as required supplementary information, not as a basic financial statement, and carries an
+added column showing the change from original to final budget. The text’s format predates
+this. Show both formats side by side; the learner must be able to produce the current one.
+Check. Q 3-9 answered cold and aloud. This vocabulary is load-bearing for everything
+after.
+Week 3 — Operating transactions: recording
+[GNP] Ch. 4 · LO4-1, 4-4 → 4-7 · Two-week chapter. Do not compress.
+Objectives. Record any routine operating transaction at both levels. Recognize when the
+two levels diverge and when they don’t. Apply the availability criterion correctly and only
+where it applies.
+ID Format Content Source Min
+W3.L1Lesson
+Exchange vs. nonexchange; the four
+nonexchange classes (derived tax, imposed
+nonexchange, government-mandated,
+voluntary)
+LO4-7, Q
+4-10 10
+W3.L2Lesson The property tax levy: gross levy, estimated
+uncollectible, net revenue
+Q 4-5,
+illustrative
+case
+10
+W3.L3Lesson
+Deferred Inflows — Unavailable Revenues,
+and the availability period. The single most
+consequential concept in the chapter
+Q 4-11 +
+county
+policy
+note
+10
+W3.L4Lesson Interfund transfers vs. interfund loans vs.
+reimbursements vs. services providedLO4-5 10
+W3.L5Lesson Special revenue funds and voluntary
+nonexchange revenue LO4-4 8
+W3.P1PracticeRecording encumbrances and expenditures, 4
+steps E/P 4-1815
+W3.P2PracticeAccounting for property taxes, 5 stepsE/P 4-1918
+Practice
+
+===== PAGE 7 =====
+W3.P3
+— Dual-
+Track
+Toggle
+×8
+Property taxes: General Fund vs.
+governmental activities. The signature
+exercise of the program
+E/P 4-2022
+W3.P4PracticeTax anticipation note sizing, issuance,
+repayment E/P 4-2118
+W3.P5PracticeInterfund and inter-activity transactionsE/P 4-2518
+W3.P6PracticeSpecial revenue fund, voluntary nonexchangeE/P 4-2315
+W3.P7PracticeInventory: purchases method vs. consumption
+method E/P 4-2615
+W3.CCase Volatility of taxable property values Case
+4-13 12
+W3.VVoice ×3
+Q 4-4 (why some transactions differ between
+levels), Q 4-6 (why tax revenue differs
+between levels), Q 4-7 (inventory methods)
+8
+W3.MMilestone
+Trace the county’s property tax cycle end
+to end — levy, collection by the tax assessor-
+collector, distribution to taxing units,
+delinquency, deferred inflow. Reconcile one
+month of tax distributions to the GL
+County
+work 120
+W3.DDrill
++46 cards: nonexchange classes ×8,
+availability rule ×10, dual-track pairs ×16,
+interfund types ×8, TAN mechanics ×4. Quiz:
+MC 3-16 (last week’s chapter)
+—
+⚑ Currency patch W3. Locate the county’s own availability period in the significant
+accounting policies note of the ACFR. Read it aloud. It is commonly 60 days but is a policy
+choice, and the learner must know theirs, not a textbook default.
+Expected errors. Category 2 spikes here and should. E/P 4-20 transaction 5
+(reclassification to delinquent, not collectible within 60 days) reliably produces the
+deferred-inflow-on-both-tracks error. See the Coach Agent Spec §8 for the full handled
+dialogue. Three Dual-Track Toggle injections per occurrence.
+Week 4 — Operating transactions: closing, reporting, and error
+
+===== PAGE 8 =====
+handling
+[GNP] Ch. 4 · LO4-2, 4-3, 4-8
+Objectives. Close a General Fund. Produce year-end fund statements and a budgetary
+comparison schedule. Classify an error correctly and choose the right escalation.
+ID Format Content Source Min
+W4.L1Lesson Closing budgetary accounts and operating
+accounts — two separate closings, and whyLO4-2 10
+W4.L2Lesson The year-end fund financial statements:
+what goes on each LO4-3 10
+W4.L3Lesson Interim reporting — why a government that
+reports only annually is less accountable
+Q 4-8,
+LO4-8 8
+W4.L4
+⚑ Lesson
+GASB 100: change in principle vs. change in
+estimate vs. change to the reporting entity
+vs. correction of an error — and the
+different disclosure each triggers
+Outside text10
+W4.L5Lesson Escalation judgment: fix silently, fix and
+notify, or stop and escalate
+J
+competency9
+W4.P1PracticeAdjusting and closing entries E/P 4-22 20
+W4.P2
+★ PracticeTransactions and budgetary comparison
+schedule ★E/P 4-2425
+W4.P3PracticePermanent fund and related special revenue
+fund transactions E/P 4-28 18
+W4.P4Practice
+Correcting-entry sorter — 8 planted
+errors: misclassified expenditure, wrong
+fund, wrong fiscal year, duplicate payment,
+reversed sign, wrong grant, charge to a
+closed project, coding error changing a
+budgetary line
+Authored 20
+W4.CCase
+Reporting grant transactions of local
+government recipients — first item in the
+grants thread; extend by asking what
+changes if the grant is federal pass-through
+rather than state
+★Case
+4-15 15
+
+===== PAGE 9 =====
+W4.VVoice ×3
+Q 4-1 (revenue sources and which fund), Q
+4-2 (statement of revenues, expenditures,
+changes in fund balance), Q 4-9 (permanent
+funds vs. public-purpose trusts)
+8
+W4.M
+★
+Milestone
+— PHASE
+GATE
+★E/P 4-27 Operating Transactions and
+Financial Statements, cold and timed. Then
+the escalation memo exercise: five
+discovered errors, five 5-line memos
+choosing fix-silently / fix-and-notify / stop-
+and-escalate. Manager agent responds in
+role to each choice, including responding
+badly to a bad call
+★E/P 4-27120
+W4.DDrill
++34 cards: closing sequence ×6, statement
+contents ×10, GASB 100 categories ×8,
+error-type recognition ×10. Quiz: MC 4-17
+(delivered Week 5)
+—
+★ PHASE 1 GATE. Advance on Level 2 or better on C2 (journal entries) and C1 (ledger
+integrity). A Level 1 on either means repeating Weeks 3–4 with substituted exercises (4-24
+in place of 4-27, fresh error set).
+Escalation calls in either direction are the most common failure of a new Accountant I.
+Score W4.M’s memos harder than the journal entries.
+PHASE 2 — ASSETS, PROJECTS, AND OBLIGATIONS
+(Weeks 5–9)
+Competencies C6 (capital assets and projects), C3 (revenue cycle), C4 (contract
+review)
+Week 5 — General capital assets
+[GNP] Ch. 5 · LO5-1, 5-2
+Objectives. Distinguish capital assets from controlled property. Record acquisition,
+depreciation, impairment, and disposition at both levels. Review an asset transfer form and
+know what makes one invalid.
+
+===== PAGE 10 =====
+ID Format Content SourceMin
+W5.L1Lesson What makes an asset a general capital asset, and
+why it appears at only one level
+LO5-1,
+Q 5-1 10
+W5.L2Lesson Capitalization threshold vs. controlled property
+— the $4,800 laptop problem Q 5-38
+W5.L3Lesson Depreciation, and the modified approach for
+infrastructure
+Q 5-6,
+LO5-210
+W5.L4Lesson Impairment: identifying it, measuring it, reporting
+it LO5-29
+W5.L5
+⚑ Lesson GASB 87 leases — the single right-of-use model
+that replaced the text’s operating/capital split
+Outside
+text 10
+W5.L6
+⚑ Lesson GASB 96 SBITAs and GASB 104 capital asset
+disclosures
+Outside
+text 9
+W5.P1PracticeGeneral capital assets: acquisition through
+disposition
+E/P
+5-18 20
+W5.P2PracticeCapital asset disclosures E/P
+5-19 15
+W5.P3Practice
+Capital assets acquired under lease agreements
+— work as written, then rework under GASB
+87. The contrast is the lesson
+E/P
+5-20 25
+W5.P4PracticeAsset impairment E/P
+5-21 15
+W5.CCase
+Standard setting for lease accounting — the
+“recently adopted” standard in this case is GASB
+87
+Case
+5-12 12
+W5.VVoice ×3 Q 5-2 (required disclosures), Q 5-4 (entries in
+both journals), Q 5-5 (intangibles) 8
+W5.MMilestone
+Review 10 real electronic asset transfer
+forms; reject three with written reasons. Build
+the county’s capital asset roll-forward —
+beginning, additions, disposals, transfers,
+ending, accumulated depreciation — and tie it to
+the GL
+County
+work 110
+
+===== PAGE 11 =====
+W5.DDrill
++40 cards: capital vs. controlled ×6,
+capitalization threshold ×4, depreciation vs.
+modified approach ×6, impairment indicators ×6,
+GASB 87 lease terms ×10, SBITA criteria ×8.
+Quiz: MC 4-17
+—
+Week 6 — Capital projects and work authorizations
+[GNP] Ch. 5 · LO5-3, 5-4, 5-5
+Objectives. Record a capital project from bond issuance through closeout. Handle
+encumbrances at year end. Tie a project ledger to the GL and to the contract file.
+ID Format Content SourceMin
+W6.L1Lesson The capital projects fund: purpose, life cycle, and
+closeout
+LO5-3,
+Q 5-710
+W6.L2Lesson Bond proceeds as an other financing source;
+premiums, discounts, and where they goLO5-410
+W6.L3Lesson Retainage, and why it is a payable rather than a
+reduction of expenditure LO5-48
+W6.L4Lesson Encumbrances outstanding at year end — the
+treatment choice and its disclosure Q 5-79
+W6.L5Lesson Bond anticipation notes: current or long-term? Q 5-98
+W6.L6Lesson
+Work authorizations, change orders, and
+amendments — the contract layer above the
+ledger
+County
+/ C6 10
+W6.P1PracticeRecording capital projects fund transactionsE/P
+5-22 20
+W6.P2PracticeRecording bond transactions E/P
+5-23 18
+W6.P3PracticeStatement of revenues, expenditures, and
+changes in fund balances
+E/P
+5-24 18
+W6.P4
+★ PracticeMultiple-project fund transactions ★E/P
+5-25 25
+
+===== PAGE 12 =====
+W6.P5
+★ PracticeCapital projects transactions ★E/P
+5-26 25
+W6.CCase Recording and reporting damaged capital assetsCase
+5-14 12
+W6.VVoice ×2 Q 5-8 (special assessments), Q 5-10 (service
+concession arrangements) 6
+W6.MMilestone
+Build a project cost ledger for one live county
+capital project: budget vs. commitments vs.
+expenditures vs. remaining, reconciled to the GL
+and the contract file, with every work
+authorization and change order tied to a
+Commissioners Court action date. Interview the
+project manager first
+County
+work 120
+W6.DDrill
++32 cards: capital project sequence ×8, OFS vs.
+revenue ×6, retainage ×4, encumbrance year-end
+treatment ×6, BAN classification ×4, change
+order routing ×4. Quiz: MC 5-17
+—
+Check. Given a change order, the learner determines: is there budget, which fund and
+account, does it need Court approval, and what changes in the project ledger. All four,
+unprompted.
+Week 7 — Long-term liabilities and debt service
+[GNP] Ch. 6 · LO6-1 → 6-5
+Objectives. Distinguish general long-term liabilities from fund liabilities. Record debt
+service. Produce a legal debt margin and an overlapping debt schedule.
+ID Format Content SourceMin
+W7.L1Lesson What makes a liability general long-term — and
+why it never appears in a governmental fund
+LO6-1,
+Q 6-1 10
+W7.L2Lesson The debt service fund: purpose, and whether it
+needs a budget
+Q 6-3,
+LO6-39
+W7.L3Lesson Serial vs. term bonds; why governments favor
+one
+Q 6-8,
+LO6-49
+
+===== PAGE 13 =====
+W7.L4Lesson Debt limits, legal debt margin, and overlapping
+debt — the citizen’s-eye view
+Q 6-6,
+Q 6-7,
+LO6-2
+10
+W7.L5
+⚑ Lesson
+GASB 101 compensated absences — a long-
+term liability the text still measures under the
+superseded GASB 16 model
+Outside
+text 10
+W7.P1PracticeLong-term liability transactions E/P
+6-18 20
+W7.P2PracticeBudgeted and actual debt service transactionsE/P
+6-19 18
+W7.P3PracticeLegal debt margin and direct and overlapping
+debt
+E/P
+6-21 18
+W7.P4PracticeDebt service fund trial balance E/P
+6-22 15
+W7.P5
+★ PracticeComprehensive capital assets / serial bond
+problem
+★E/P
+6-25 30
+W7.CCase Assessing general obligation debt burdenCase
+6-14 12
+W7.VVoice ×3 Q 6-2 (note disclosures), Q 6-9 (issuance costs
+at both levels), Q 6-10 (advance refunding) 8
+W7.MMilestone
+E/P 6-16 on the county ACFR (long-term debt
+note and schedules), then reproduce the
+county’s own legal debt margin and direct-
+and-overlapping-debt schedule from source
+data, without looking at the published statistical
+section until finished
+E/P
+6-16 +
+county
+100
+W7.DDrill
++30 cards: general long-term vs. fund liability
+×6, debt service mechanics ×6, serial vs. term
+×4, debt margin calculation steps ×6,
+compensated absences under GASB 101 ×8.
+Quiz: MC 5-17
+—
+Week 8 — Proprietary funds and internal billing
+
+===== PAGE 14 =====
+[GNP] Ch. 7 · LO7-1 → 7-5 · (LO7-6 appendix optional)
+This week carries the C3 revenue cycle competency, because internal service billing is the
+direct analogue of the “creates and bills monthly and quarterly invoices” duty.
+ID Format Content SourceMin
+W8.L1Lesson Proprietary funds: full accrual, economic
+resources, and why dual-track doesn’t apply
+Q 7-1,
+Q 7-7,
+LO7-1
+10
+W8.L2Lesson Internal service vs. enterprise — the customer
+test LO7-48
+W8.L3Lesson The three net position components Q 7-6,
+LO7-59
+W8.L4Lesson Restricted assets in an enterprise fundQ 7-5 8
+W8.L5Lesson Internal service fund rate-setting: cost pool →
+allocation base → department charge
+Outside
+text 10
+W8.P1PracticeCharacteristics of proprietary funds E/P
+7-18 12
+W8.P2PracticeInformation technology internal service fundE/P
+7-19 20
+W8.P3PracticeCentral garage internal service fund E/P
+7-20 20
+W8.P4PracticeInternal service fund statement of cash flowsE/P
+7-21 20
+W8.P5PracticeNet position classifications, two data sets
+E/P
+7-23,
+7-26
+15
+W8.P6
+★ PracticeEnterprise fund journal entries and financial
+statements
+★E/P
+7-25 30
+W8.CCase Internal service fund reporting Case
+7-12 12
+W8.VVoice ×3
+Q 7-3 (should an internal service fund submit a
+budget?), Q 7-8 (internal balances), Q 7-11
+(dissolving an internal service fund)
+8
+
+===== PAGE 15 =====
+W8.MMilestone
+E/P 7-16 on the county ACFR. Then: for one
+county internal service fund (fleet, IT, or self-
+insurance) trace the billing rate from cost pool to
+department charge, and reconcile one month of
+internal billings. Produce the AR aging and a
+past-due follow-up log with three escalation
+letters drafted
+E/P
+7-16 +
+county
+110
+W8.DDrill
++34 cards: proprietary characteristics ×6, ISF
+vs. enterprise ×6, net position components ×6,
+cash flow categories ×8, restricted assets ×4,
+rate-setting steps ×4. Quiz: MC 6-17
+—
+Check. For any invoice the county issues, the learner can name which paragraph of which
+agreement entitles the county to the money.
+Week 9 — Fiduciary and custodial funds
+[GNP] Ch. 8 · LO8-1 → 8-5 · (8-6 OPEB and 8-7 investments: read, don’t drill)
+Disproportionately important in a Texas county, where the tax assessor-collector collects for
+multiple taxing units and the county holds registry, bond, and trust funds.
+ID Format Content SourceMin
+W9.L1Lesson The GASB 84 fiduciary criteria — control, and for
+whose benefit
+Q 8-1,
+LO8-110
+W9.L2Lesson Custodial funds vs. trust funds; which statements
+each gets
+Q 8-2,
+Q 8-5,
+LO8-2
+10
+W9.L3Lesson Tax custodial funds: collecting for other taxing
+units, and the problems that arise
+Q 8-4,
+LO8-210
+W9.L4Lesson Pass-through custodial funds — when the
+treatment is appropriate and when it isn’t
+Q 8-6,
+LO8-29
+W9.L5Lesson Pension trust funds and the employer’s side of
+pension accounting
+Q
+8-10,
+LO8-5
+10
+W9.P1 ★E/P
+
+===== PAGE 16 =====
+★ PracticeTax custodial fund 8-19 22
+W9.P2PracticeSpecial assessment debt E/P
+8-20 18
+W9.P3PracticeIdentification of fiduciary funds E/P
+8-21 15
+W9.P4
+★ PracticePass-through custodial funds ★E/P
+8-23 20
+W9.P5PracticeFiduciary financial statements, two data sets
+E/P
+8-24,
+8-25
+22
+W9.CCase Evaluating the new fiduciary activities standard
+(GASB 84)
+Case
+8-15 12
+W9.VVoice ×3
+Q 8-3 (trust fund types), Q 8-7 (external
+investment pools), Q 8-8 (private-purpose
+trusts)
+8
+W9.MMilestone
+E/P 8-16 on the county ACFR. Then: list every
+custodial and trust fund the county holds, name
+the beneficiary of each, and confirm each against
+the GASB 84 criteria. Flag any that shouldn’t be
+fiduciary
+E/P
+8-16 +
+county
+100
+W9.DDrill
++30 cards: GASB 84 criteria ×8, custodial vs.
+trust ×6, fiduciary statement contents ×4, tax
+custodial mechanics ×6, pass-through conditions
+×6. Quiz: MC 7-17
+—
+★ PHASE 2 GATE. Level 2+ on C6 (capital assets and projects) and C3 (revenue cycle).
+Evidence: W6.M project ledger and W8.M billing reconciliation.
+PHASE 3 — REPORTING AND CONVERSION (Weeks
+10–12)
+Competencies C7 (close and year-end), C8 (reporting and analysis)
+
+===== PAGE 17 =====
+Week 10 — The reporting entity and the statements
+[GNP] Ch. 9 · LO9-1 → 9-3
+ID Format Content SourceMin
+W10.L1Lesson Primary government, component unit, financial
+reporting entity
+Q 9-1,
+Q 9-3,
+Q 9-4,
+LO9-1
+10
+W10.L2Lesson Blended vs. discretely presented component
+units, and when each applies
+Q 9-5,
+LO9-210
+W10.L3Lesson The nine required statements and what each is
+for
+Q 9-7,
+LO9-410
+W10.L4Lesson The three sections of an ACFR: introductory,
+financial, statistical
+Q 1-8,
+Q 9-6,
+LO9-3
+9
+W10.L5
+⚑ Lesson GASB 103 MD&A content requirements and the
+proprietary fund presentation changes
+Outside
+text 10
+W10.P1PracticePrimary governments E/P
+9-18 15
+W10.P2PracticeFinancial reporting E/P
+9-19 15
+W10.P3PracticeNet position classification E/P
+9-23 15
+W10.P4PracticeGovernmental fund financial statementsE/P
+9-25 22
+W10.P5PracticeGovernment-wide financial statementsE/P
+9-26 22
+W10.CCase
+Identification of component units — then apply
+it: which of the county’s related entities qualify,
+and why?
+Case
+9-12 15
+W10.VVoice ×3
+Q 9-6 (ACFR vs. general purpose external
+reports), Q 9-10 (popular reporting), Q 9-11 (the
+financial reporting model project)
+8
+
+===== PAGE 18 =====
+W10.MMilestone
+E/P 9-16 on the county ACFR, plus: identify
+every component unit in the county’s reporting
+entity, state whether it is blended or discrete,
+and cite the criterion that produced that answer
+E/P
+9-16 90
+W10.DDrill
++30 cards: component unit criteria ×8, blended
+vs. discrete ×6, the nine statements ×9, ACFR
+sections ×3, MD&A required elements ×4. Quiz:
+MC 8-17 and 8-18
+—
+Week 11 — Reconciliation and conversion
+[GNP] Ch. 9 + Appendix A · LO9-4, 9-5 · The highest-value week in the program
+Read Appendix A (Converting Accounting Information from the Modified Accrual to the
+Accrual Basis) — ten pages, more directly useful to this role than any other section of the
+book.
+ID Format Content SourceMin
+W11.L1Lesson Why two reconciliations are required, and what
+they’re reconciling
+Q 9-8,
+LO9-410
+W11.L2Lesson
+The five recurring reconciling items: capital
+assets, long-term debt, deferred
+inflows/outflows, internal service funds, accrued
+items
+Q 9-9,
+App. A10
+W11.L3Lesson The conversion worksheet: mechanics, order of
+operations, and where it breaks App. A10
+W11.L4Lesson Intra-entity transactions and their eliminationLO9-49
+W11.P1PracticeReconciliation of the governmental funds
+balance sheet to the statement of net position
+E/P
+9-21 22
+W11.P2PracticeOperating statements reconciliation E/P
+9-22 22
+W11.P3PracticeChange in net position of governmental activitiesE/P
+9-24 18
+W11.P4
+Practice
+Converting from modified accrual to accrual★E/P
+30
+
+===== PAGE 19 =====
+★ accounting 9-27
+W11.P5
+★ PracticeComprehensive set of transactions ★E/P
+9-20 35
+W11.CCase ×2
+Analyzing reconciliation of financial reports
+(Case 9-14); MD&A and statistical tables using
+the Denver MD&A in Appendix B as the model
+(Case 9-13)
+Cases
+9-13,
+9-14
+20
+W11.VVoice ×2
+Q 9-8 (why reconciliations are required), and:
+explain without notes why a grant receivable can
+exist at the government-wide level while nothing
+is recognized as revenue in the fund
+8
+W11.M
+★
+Milestone
+— PHASE
+GATE
+Rebuild the county’s own two required
+reconciliations from last year’s ACFR, from
+the trial balances, without looking at the
+published answer. Then compare and account
+for every difference
+County
+work 120
+W11.DDrill
++36 cards: reconciling item types ×10,
+conversion adjustment direction ×12, intra-entity
+eliminations ×6, dual-track re-injection ×8. Quiz:
+MC 9-17 (delivered Week 12)
+—
+★ PHASE 3 GATE. Level 2+ on C7. Evidence: E/P 9-27, E/P 9-20, and the county
+reconciliation rebuild. This is the hardest gate in the program. A learner who clears it can
+do the job.
+Week 12 — Analysis and interpretation
+[GNP] Ch. 10 · LO10-1 → 10-5
+ID Format Content SourceMin
+W12.L1Lesson Financial position, financial condition, economic
+condition — three different questions
+Q 10-1,
+LO10-210
+W12.L2Lesson The four types of solvency (cash, budgetary,
+long-run, service-level)
+Q 10-3,
+LO10-210
+The ratio set: what each measures and whatLO10-4,
+
+===== PAGE 20 =====
+W12.L3Lesson each misses Q 10-810
+W12.L4Lesson Why fund-only ratios mislead Q 10-58
+W12.L5Lesson Benchmarking and bond rating factors
+Q
+10-10,
+Q
+10-11,
+LO10-5
+9
+W12.P1PracticeFinancial condition E/P
+10-18 18
+W12.P2PracticeBenchmarks E/P
+10-19 18
+W12.P3
+★ PracticeFinancial analysis ★E/P
+10-20 25
+W12.P4PracticeComparative ratios E/P
+10-21 18
+W12.CCase ×2 Financial analysis (Case 10-14); financial trends
+(Case 10-15)
+Cases
+10-14,
+10-15
+20
+W12.VVoice ×3
+Q 10-7 (should citizens worry about declining
+pension funding?), Q 10-9 (EMMA), Q 10-2
+(Financial Trend Monitoring System)
+8
+W12.MMilestone
+E/P 10-16 on the county ACFR. Compute the
+full ratio set for the county across three years.
+Write a one-page narrative for a non-
+accountant reader
+E/P
+10-16 100
+W12.DDrill
++28 cards: solvency types ×4, ratio formulas
+×12, ratio interpretation ×8, rating factors ×4.
+Quiz: MC 9-17
+—
+Check. The narrative contains at least one insight the ratios don’t state outright, and no
+sentence a commissioner would need an accountant to interpret.
+
+===== PAGE 21 =====
+PHASE 4 — COMPLIANCE AND CAPSTONE (Weeks
+13–16)
+Competencies C5 (grants), C4 (contract review), C8 (communication)
+Week 13 — Auditing and the single audit
+[GNP] Ch. 11 · LO11-1 → 11-4
+ID Format Content SourceMin
+W13.L1Lesson The financial audit: purpose, standard setters,
+and the opinion
+Q 11-1,
+LO11-110
+W13.L2Lesson Opinion units — why a government gets many
+opinions, not one Q 11-49
+W13.L3Lesson GAGAS vs. GAAS; the three service types
+Q 11-2,
+Q 11-8,
+LO11-2
+10
+W13.L4Lesson Independence and nonaudit services Q 11-9,
+LO11-29
+W13.L5
+⚑ Lesson
+The single audit: current thresholds.
+$1,000,000 expended triggers it; Type A
+threshold $1,000,000 for entities up to $34M
+total federal expenditures — effective for fiscal
+years beginning on or after October 1, 2024.
+The text’s numbers are superseded
+Q
+11-10 +
+facts
+table
+12
+W13.L6Lesson Major program determination and the risk-based
+approach LO11-310
+W13.P1PracticeContinuing professional education requirementsE/P
+11-2012
+W13.P2PracticeAllowable nonaudit services E/P
+11-21 15
+W13.P3PracticeGAAS vs. GAGAS E/P
+11-2415
+
+===== PAGE 22 =====
+W13.P4PracticeAudit report E/P
+11-2515
+W13.P5
+★ Practice
+Single audit — work as written, then rework
+under current thresholds. The contrast
+teaches the rule better than either version alone
+★E/P
+11-22,
+11-23
+30
+W13.CCase ×2 Research case — single audit (Case 11-14);
+auditing a federal program (Case 11-15)
+Cases
+11-14,
+11-15
+20
+W13.VVoice ×3
+Q 11-7 (how a government audit report differs),
+Q 11-10 (Type A vs. Type B), Q 11-5 (the GAAP
+hierarchy)
+8
+W13.MMilestone
+E/P 11-18 on the county ACFR, plus the
+county’s most recent single audit report and
+management letter. For each prior-year
+finding: what changed, and who owns it now?
+E/P
+11-18 +
+county
+110
+W13.DDrill
++32 cards: opinion units ×4, GAGAS/GAAS
+differences ×6, independence threats ×6, single
+audit thresholds ×6, major program
+determination steps ×6, SEFA contents ×4.
+Quiz: MC 10-17
+—
+Week 14 — Budgeting and grant cost issues
+[GNP] Ch. 12 · LO12-1 → 12-6, weighted heavily to LO12-6, budget and cost issues in
+grant accounting
+ID Format Content SourceMin
+W14.L1Lesson Budgeting approaches: incremental, zero-
+based, performance, outcome
+Q 12-2,
+LO12-210
+W14.L2Lesson The annual budget process and its calendarQ 12-5,
+LO12-39
+W14.L3Lesson Service efforts and accomplishments: inputs,
+outputs, outcomes
+Q 12-7,
+Q 12-8,
+LO12-4
+10
+
+===== PAGE 23 =====
+W14.L4
+⚑ Lesson Allowable costs under 2 CFR 200: §200.403
+factors affecting allowability, §200.405
+allocability, §200.414 indirect costs
+Q
+12-10,
+LO12-6
+12
+W14.L5
+⚑ Lesson
+The 2024 Uniform Guidance revision: de
+minimis indirect rate up to 15% of MTDC; only
+the first $50,000 of each subaward in MTDC;
+equipment benchmark $10,000. Check the
+award’s effective date before applying any
+rule
+Outside
+text 12
+W14.L6
+⚑ Lesson
+TxGMS v2.1 (Texas Comptroller, October 2025)
+and Texas Gov’t Code Ch. 783 — what applies
+to state pass-through awards
+Outside
+text 10
+W14.P1PracticePolice department budget E/P
+12-17 18
+W14.P2PracticeIllustrations within a budget documentE/P
+12-18 15
+W14.P3PracticeSEA reporting, two data sets
+E/P
+12-19,
+12-21
+20
+W14.P4PracticeActivity-based costing in a governmentE/P
+12-2018
+W14.P5
+★ PracticeAllowable costs under federal grants ★E/P
+12-2225
+W14.CCase ×2 Allowable costs under a federal grant (★Case
+12-14); budget calendars (Case 12-13)
+Cases
+12-14,
+12-13
+20
+W14.VVoice ×3
+Q 12-1 (are budgets required?), Q 12-4
+(stakeholder tensions in the budget), Q 12-10
+(grant cost concerns)
+8
+W14.MMilestone
+E/P 12-15 Examine the Budget — using the
+county’s own adopted budget. Then: build the
+contract review checklist (appropriation
+exists? which fund and account? does the not-
+to-exceed fit remaining budget? term inside the
+fiscal year? funding source and its strings?
+payment terms, retainage, invoicing enforceable
+E/P
+12-15 +
+county
+120
+
+===== PAGE 24 =====
+as written? who certifies performance before
+payment?) and apply it to five real county
+contracts. Find at least one real problem
+W14.DDrill
++34 cards: budgeting approaches ×4, SEA
+measure types ×6, allowability factors ×8,
+indirect cost rules ×6, UG thresholds ×6,
+TxGMS applicability ×4. Quiz: MC 11-19
+—
+Week 15 — Grants consolidation
+No new chapter. The book distributes grant content across Chapters 4, 11, and 12; the job
+treats it as one standalone duty. This week reassembles it.
+ID Format Content Source Min
+W15.L1Lesson
+The grant lifecycle: award, period of
+performance, matching, drawdown,
+reporting, closeout
+2 CFR
+200 10
+W15.L2Lesson
+Post-award requirements: §200.302
+financial management, §200.303 internal
+controls, §200.305 payment
+2 CFR
+200 12
+W15.L3Lesson §200.313 equipment and §200.328–.329
+monitoring and reporting
+2 CFR
+200 10
+W15.L4Lesson §200.501–.502 what counts as expended;
+§200.510 the SEFA
+2 CFR
+200 10
+W15.L5Lesson Reading a Compliance Supplement
+program section OMB CS10
+W15.P1Practice
+Rework, in sequence: Case 4-15
+(recognition) → E/P 4-23 (voluntary
+nonexchange)
+4-15,
+4-23 20
+W15.P2Practice Case 12-14 → E/P 12-22 (allowable costs),
+second pass
+12-14,
+12-22 22
+W15.P3Practice E/P 11-22, 11-23 (single audit), second
+pass under current thresholds
+11-22,
+11-23 22
+Allowable / unallowable / need-more-
+
+===== PAGE 25 =====
+W15.P4Practice information sorter — 15 real charge
+descriptions, each requiring a cited
+section
+Authored25
+W15.CCase
+A grantor requests a revised report after
+the period closed. What are the options,
+and who decides?
+Authored12
+W15.V
+×6
+Counterparty
+roleplay
+Live voice, six personas: department head
+who thinks their budget was cut; unpaid
+vendor; citizen asking what the county
+spent on a road project; grantor
+requesting a revised report; project
+manager disputing a coding;
+commissioner’s aide wanting a number by
+3 p.m.
+C8 35
+W15.M
+★ Milestone
+For one live county award: grant file
+map, period grant report (FFR/SF-425 or
+grantor form), reimbursement drawdown
+request with supporting expenditure
+detail, grant-to-GL reconciliation, and the
+SEFA line item with its Assistance Listing
+number
+County
+work 120
+W15.DDrill
++28 cards: lifecycle stages ×5, post-
+award citations ×10, SEFA elements ×6,
+closeout requirements ×4, period-of-
+performance rules ×3. Quiz: MC 12-16
+—
+Roleplay scoring. Accuracy, traceability to a source document, plain-language clarity, and
+whether the learner correctly routes anything belonging to the public information officer
+rather than answering it.
+Week 16 — Capstone
+No new material. Three days.
+Day 1 — Integration, cold and timed
+ID Item Conditions Min
+
+===== PAGE 26 =====
+W16.A1★E/P 4-27 Operating Transactions and Financial
+Statements
+Closed book,
+timed
+60
+W16.A2★E/P 9-20 Comprehensive Set of TransactionsClosed book,
+timed 75
+W16.A3★E/P 9-27 Converting from Modified Accrual to
+Accrual
+Closed book,
+timed 45
+These three cover the full arc — record, close, report, convert. Performance here is the best
+single predictor of on-the-job capability.
+Day 2–3 — Simulated audit
+ID Item Conditions
+W16.B
+PBC package. The Manager agent selects 10 real transactions
+across funds, grants, capital assets, and payroll. Learner produces
+support, workpapers, and a memo for each
+3 business
+days
+W16.C
+45-minute live defense. Manager agent as audit senior: presses
+on weak answers, requests documents not in the package, asks why
+a judgment was made
+Voice,
+unscripted
+Scoring
+Full rubric across all eight competencies plus X and J. Targets:
+Competency Ta rg e t
+C1 Ledger integrity & reconciliation Level 3
+C2 Journal entries Level 3
+C3 Revenue cycle & receivables Level 3
+C7 Close, cut-off & year-end Level 3
+C4 Contract, agenda & budget review Level 2–3
+C5 Grants management Level 2–3
+C6 Capital assets & projects Level 2–3
+C8 Reporting & communication Level 2–3
+
+===== PAGE 27 =====
+Level 4 anywhere is a promotion signal toward Accountant II. A human signs the final
+certification.
+Standing threads — every week, all 16
+Thread CadenceContent
+Commissioners
+Court agenda
+Weekly,
+from
+Week 7
+Read the current agenda before the meeting; file a one-
+page abstraction log — every item with a financial effect,
+classified as contract / work authorization / change order /
+interlocal / grant acceptance / budget amendment, with
+amount, fund, project, and the accounting action it triggers.
+Compare against what the Manager agent flagged. This
+becomes a permanent job habit, not an exercise.
+Excel ladder15 min
+daily
+Wks 1–4: absolute/relative refs, XLOOKUP, SUMIFS, text-
+to-columns, TRIM/CLEAN on ERP exports, conditional
+formatting, sorting a trial balance without breaking it. Wks
+5–10: PivotTables, list-vs-list reconciliation, date functions
+for cut-off, data validation, building a reusable template,
+macro recording. Wks 11–16: Power Query to clean and
+merge monthly ERP extracts, a refreshable reconciliation
+workbook, workbook controls (checksums, tie-out cells that
+turn red), documentation that survives the learner leaving.
+ERP ladder Weekly
+Inquiry and drill-down → standard reports → custom report
+in the report writer → how each module posts to the GL (AP,
+AR, payroll, purchasing, fixed assets, projects) → what the
+system cannot do, which is where the manual workpapers
+come from
+Error journalEvery
+item
+Four categories. Category 2 auto-injects 3 dual-track reps
+into the next Drill. Chart Category 2 rate weekly — its
+decline is the honest progress metric
+Standards
+watch
+30 min
+monthlyWhat changed at GASB; facts table review
+Master assignment index
+County-ACFR transfer thread (in order): 1-17 → 2-15 → 3-15 → 4-16 → 5-16 → 6-16 →
+
+===== PAGE 28 =====
+7-16 → 8-16 → 9-16 → 10-16 → 11-18 → 12-15 (budget)
+Graded milestones: 3-24, 4-24, ★4-27, 5-25, 5-26, 6-25, 7-25, 8-19, 8-23, ★9-20,
+★9-27, 10-20, 11-22, 11-23, 12-22
+Spaced retrieval quizzes (delivered one week late): 1-19, 2-16, 3-16, 4-17, 5-17, 6-17,
+7-17, 8-17, 8-18, 9-17, 10-17, 11-19, 12-16
+Grants thread: Case 4-15 → E/P 4-23 → Case 12-14 → E/P 12-22 → Cases 11-14, 11-15 →
+E/P 11-22, 11-23 → Week 15 consolidation
+Dual-track drills (extra reps when Category 2 persists): 4-20, 4-25, 5-18, 5-22, 6-18,
+9-21, 9-22, 9-24, 9-27
+Texas-relevant set: 4-19, 4-20, 4-21 (property taxes, TANs), 8-19, 8-23 (tax custodial,
+pass-through), 6-21 (legal debt margin), 5-22, 5-25, 5-26 (capital projects)
+Excluded: Ch. 13 (assign only if the county passes funds to nonprofit subrecipients — then
+Q’s on state and federal regulation as subrecipient-risk background); Ch. 14, 15, 17 (skip);
+Ch. 16 becomes required and replaces Week 8 if the county has a hospital district or
+hospital component unit.
+Currency patch schedule
+WkPatch
+1 GASB 98 — ACFR renaming; navigating gasb.org
+2 GASB 103 — MD&A, budgetary comparison as RSI
+3 County availability period policy
+4 GASB 100 — error corrections vs. changes
+5 GASB 87 leases; GASB 96 SBITAs; GASB 104
+6 County capitalization policy and project closeout procedure
+7 GASB 101 compensated absences
+8 Internal service rate-setting in practice
+9 Tex. Local Gov’t Code Ch. 113 & 115 — claims, requisitions, the county auditor ’s
+examination authority
+
+===== PAGE 29 =====
+10GASB 102 certain risk disclosures
+11 The county’s own close calendar and conversion workpapers
+12 Peer county ACFRs; GFOA Certificate of Achievement criteria
+132024 Uniform Guidance — thresholds
+14TxGMS v2.1; Tex. Gov’t Code Ch. 783
+15 OMB Compliance Supplement structure
+16GASB 105 subsequent events (FYs beginning after June 15, 2026)
+If time is shorter than 16 weeks
+Cut in this order:
+1. Week 8 (proprietary) to W8.P2 and W8.P6 only — reinstate immediately if the county
+has significant enterprise operations
+2. Week 12 (analysis) to cases only
+3. Week 14 to LO12-6 and the grants items only
+4. Week 7 to E/P 6-18 and 6-25 only
+Never cut: Weeks 3–4 (Chapter 4), Week 11 (Appendix A and the conversion problems), the
+county-ACFR thread, or the grants thread. Those four are the job.
+After Week 16
+Horizon Activity
+Months 5–
+12
+One complete fiscal cycle — budget adoption, tax roll certification, Q1
+close, mid-year amendment, year-end close, external audit, single audit,
+ACFR issuance — with a written debrief after each
+Month 6
+Begin a certification. GFOAT CGFO (Texas-specific, administered by TML)
+or GFOA CPFO (7 exams, 80% to pass, ~$1,200 for two years, ~500 study
+hours). The text’s Ch. 1–12 is what the authors themselves identify as the
+relevant span
+
+===== PAGE 30 =====
+Ongoing
+TACA Fall Conference and On-the-Road Area Training; V.G. Young County
+Auditors Institute (~21 CPE hours, built for county auditors and their
+assistants); GFOAT programs
+Sustainment2 hrs/week: Drill continues, agenda abstraction continues, standards watch
+continues
+Standards, thresholds, and effective dates reflect information available as of August 2026
+and belong in the versioned facts table, not in lesson prose. Verify at gasb.org and ecfr.gov
+before encoding any threshold into content.
