@@ -59,6 +59,7 @@ h1{font-family:var(--serif);font-weight:500;font-size:30px;line-height:1.12;lett
 .tag.blue{background:var(--pale-blue);color:var(--blue-text)}
 .tag.green{background:var(--pale-green);color:var(--green-text)}
 .tag.gray{background:var(--canvas);color:var(--ink-2);border:1px solid var(--line)}
+.tag.yellow{background:var(--pale-yellow);color:var(--yellow-text)}
 
 .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:52px;border-radius:8px;
   border:0;background:var(--navy);color:var(--on-navy);font-family:var(--sans);font-size:16px;font-weight:600;
@@ -298,6 +299,55 @@ const FIG_FUNDS = {
   '</svg>'
 };
 
+/* ── FIG 4 ── Two questions, two sets of statements.
+   The claim: the same government reports twice because the public asks it
+   two different questions. This figure is the ancestor of the dual-track
+   model in Weeks 3 through 8 — same palette, same left/right sides. ── */
+const FIG_ACCOUNT = {
+  aria:'One government produces two categories of basic financial statements. Fund statements answer whether it complied with budgetary decisions, on the current financial resources focus and modified accrual basis. Government-wide statements answer whether it used resources efficiently to meet objectives, on the economic resources focus and full accrual basis.',
+  cap:'<b>Two questions, so two reports.</b> The split is not bureaucratic duplication — each side answers a question the other cannot. Keep the sides straight now: from Week 3 you will record the same transaction on both of them. (Within the fund statements, proprietary and fiduciary funds use full accrual; the modified accrual column describes governmental funds.)',
+  svg:
+  '<svg viewBox="0 0 300 250" role="img" aria-label="AL">' +
+  '<rect class="svg-box" x="70" y="0" width="160" height="28" rx="4"/>' +
+  '<text class="svg-t" x="150" y="18" text-anchor="middle">One government</text>' +
+  '<path class="svg-line" d="M150 28 L150 40 M75 40 L225 40"/>' +
+  '<line class="svg-line" x1="75" y1="40" x2="75" y2="52" marker-end="url(#ar2)"/>' +
+  '<line class="svg-line" x1="225" y1="40" x2="225" y2="52" marker-end="url(#ar2)"/>' +
+  // left — fund statements / fiscal accountability
+  '<rect class="svg-fill-yellow" x="0" y="56" width="146" height="186" rx="5"/>' +
+  '<text class="svg-t" x="10" y="76">Fund statements</text>' +
+  '<text class="svg-t-sm" x="10" y="89">governmental funds</text>' +
+  '<line class="svg-line-soft" x1="10" y1="98" x2="136" y2="98"/>' +
+  '<text class="svg-t-sm" x="10" y="114">Did we comply with</text>' +
+  '<text class="svg-t-sm" x="10" y="126">the budget?</text>' +
+  '<line class="svg-line-soft" x1="10" y1="136" x2="136" y2="136"/>' +
+  '<text class="svg-t-lbl" x="10" y="152">FISCAL</text>' +
+  '<text class="svg-t-lbl" x="10" y="164">ACCOUNTABILITY</text>' +
+  '<line class="svg-line-soft" x1="10" y1="174" x2="136" y2="174"/>' +
+  '<text class="svg-t-sm" x="10" y="190">current financial</text>' +
+  '<text class="svg-t-sm" x="10" y="202">resources</text>' +
+  '<text class="svg-t-sm" x="10" y="218">modified accrual</text>' +
+  '<text class="svg-t-sm" x="10" y="234">one budget year</text>' +
+  // right — government-wide / operational accountability
+  '<rect class="svg-fill-blue" x="154" y="56" width="146" height="186" rx="5"/>' +
+  '<text class="svg-t" x="164" y="76">Government-wide</text>' +
+  '<text class="svg-t-sm" x="164" y="89">the whole entity</text>' +
+  '<line class="svg-line-soft" x1="164" y1="98" x2="290" y2="98"/>' +
+  '<text class="svg-t-sm" x="164" y="114">Did we use resources</text>' +
+  '<text class="svg-t-sm" x="164" y="126">efficiently?</text>' +
+  '<line class="svg-line-soft" x1="164" y1="136" x2="290" y2="136"/>' +
+  '<text class="svg-t-lbl" x="164" y="152">OPERATIONAL</text>' +
+  '<text class="svg-t-lbl" x="164" y="164">ACCOUNTABILITY</text>' +
+  '<line class="svg-line-soft" x1="164" y1="174" x2="290" y2="174"/>' +
+  '<text class="svg-t-sm" x="164" y="190">economic</text>' +
+  '<text class="svg-t-sm" x="164" y="202">resources</text>' +
+  '<text class="svg-t-sm" x="164" y="218">full accrual</text>' +
+  '<text class="svg-t-sm" x="164" y="234">long term</text>' +
+  '<defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">' +
+  '<path d="M0 0 L10 5 L0 10 z" fill="var(--ink)"/></marker></defs>' +
+  '</svg>'
+};
+
 /* ── lessons ───────────────────────────────────────────────────────── */
 const LESSONS = [
  {id:'W1.L1', min:9, src:'LO1-1 · Q 1-1', t:'Why governments account differently',
@@ -338,7 +388,7 @@ const LESSONS = [
     a:0, why:'Citizens hold no residual claim and cannot sell a share, so they cannot vote with their money the way an investor can. External reporting is how they hold the government to account instead.'}
   ]},
 
- {id:'W1.L2', min:8, src:'Q 1-5', t:'Interperiod equity',
+ {id:'W1.L2', min:8, src:'LO1-3 · Q 1-5', t:'Interperiod equity',
   obj:'Explain interperiod equity in plain language and recognize when a decision violates it.',
   screens:[
    {k:'text', h:'The question behind the concept',
@@ -376,7 +426,7 @@ const LESSONS = [
     a:0, why:'Governmental funds report on the current financial resources focus, so costs that accrue without a current claim — pension obligations, compensated absences, deferred maintenance — never reach the fund statements. A fund surplus can coexist with a growing long-term burden. The government-wide statements are where you look.'}
   ]},
 
- {id:'W1.L4', min:10, src:'LO2-3 · Q 2-5', t:'The eleven fund types',
+ {id:'W1.L4', min:10, src:'LO2-3 · Q 2-5', t:'The eleven fund types', unverified:true,
   obj:'Name the three fund categories and all eleven types, and assign any county fund to its type.',
   screens:[
    {k:'text', h:'Three categories before eleven types',
@@ -406,10 +456,48 @@ const LESSONS = [
     a:0, why:'The money is never the county&rsquo;s to spend, so it is fiduciary; a simple pass-through with no trust agreement makes it Custodial. This is why fiduciary funds are excluded from the government-wide statements — those resources cannot support county programs.'}
   ]},
 
- {id:'W1.L3', min:10, src:'Q 1-6 · LO2-1', t:'Fiscal vs. operational accountability', stub:true},
+ {id:'W1.L3', min:10, src:'LO1-4 · Q 1-6, Q 1-8', t:'Fiscal vs. operational accountability',
+  obj:'Say what each category of statements is for, and name which one answers which accountability question.',
+  screens:[
+   {k:'text', h:'Why a county reports twice',
+    p:'<p class="lesson-p">The first time you open a set of county statements you will find what look like two complete and disagreeing reports. Nothing is wrong. The public asks a government two questions that no single report can answer at once, so the reporting model answers them separately.</p>'+
+      '<div class="keyline"><b>Question one — the budget question</b><p>Did this government raise and spend money the way it was authorized to, this year?</p></div>'+
+      '<div class="keyline"><b>Question two — the whole-entity question</b><p>Did this government use its resources efficiently to meet its objectives, over the long run?</p></div>'+
+      '<p class="lesson-p">The first is <b>fiscal accountability</b>. The second is <b>operational accountability</b>. Getting these two names attached to the right statements is most of Week 1.</p>'},
+   {k:'fig', h:'Which statements answer which question', fig:FIG_ACCOUNT,
+    p:'<p class="lesson-p">Read the two columns downward. The measurement focus and the basis of accounting are not arbitrary choices — each was picked because it answers that column&rsquo;s question well.</p>'+
+      '<p class="lesson-p">A one-year budget question needs a short-term measure, so governmental funds count only <b>current financial resources</b> and use <b>modified accrual</b>. An efficiency question about the whole entity needs the long-run measure a business uses, so the government-wide statements use <b>economic resources</b> and <b>full accrual</b>.</p>'},
+   {k:'text', h:'Where these live in the report',
+    p:'<p class="lesson-p">Both categories sit inside the basic financial statements, which sit inside the annual report. Three sections, in order:</p>'+
+      '<div class="keyline"><b>Introductory section</b><p>Title page, contents, letter of transmittal, description of the government. Unaudited.</p></div>'+
+      '<div class="keyline"><b>Financial section</b><p>The auditor&rsquo;s report, MD&amp;A, the basic financial statements — government-wide and fund — the notes, and required supplementary information.</p></div>'+
+      '<div class="keyline"><b>Statistical section</b><p>Ten-year trend tables: net position, tax rates, principal taxpayers, debt ratios, demographics.</p></div>'+
+      '<div class="pull">⚑ The text calls this report the <b>CAFR</b>. GASB Statement 98 renamed it the <b>ACFR</b> — Annual Comprehensive Financial Report. Same content, same requirements, new name. Rename it silently every time you read it, and never write CAFR in county work.</div>'},
+   {k:'ex', h:'Worked example',
+    p:'<div class="keyline"><b>The question</b><p>A commissioner asks: our General Fund shows a healthy surplus, so why does the county-wide statement show our net position went down?</p></div>'+
+      '<p class="lesson-p">Both are true, because they measure different things. The General Fund surplus says current financial resources coming in exceeded claims payable from current resources — the budget question, answered yes.</p>'+
+      '<p class="lesson-p">The government-wide decline says that once you count everything the fund statements leave out — depreciation on roads and buildings, the year&rsquo;s growth in pension and compensated absence liabilities, debt principal that came due but was refinanced — the county consumed more economic resources than it generated. The efficiency question, answered no.</p>'+
+      '<p class="lesson-p"><b>The useful reply:</b> we stayed inside the budget and we are getting poorer. Those are not in conflict, and the second one is the one worth acting on. That gap is exactly what interperiod equity was asking about in the last lesson.</p>'},
+   {k:'check', q:'Which category of statements is most useful for assessing <i>operational</i> accountability?',
+    opts:['Government-wide statements','Governmental fund statements','The budgetary comparison schedule','The statistical section'],
+    a:0, why:'Operational accountability asks whether resources were used efficiently and effectively to meet objectives, which needs the whole entity on the economic resources focus and accrual basis. Fund statements and the budgetary comparison schedule serve fiscal accountability instead.'},
+   {k:'check', q:'Why do governmental funds use the modified accrual basis rather than full accrual?',
+    opts:['Because a short-term focus on current financial resources fits the budgetary question they answer',
+          'Because full accrual is not permitted for government entities',
+          'Because governmental funds do not own capital assets',
+          'Because it is simpler to prepare'],
+    a:0, why:'The basis follows the question. Fiscal accountability is about compliance with spending decisions within roughly a one-year budget period, so the measure counts resources available to spend now. Governmental activities do own capital assets — they are reported government-wide, not in the funds.'},
+   {k:'check', q:'A citizen wants to know whether the county is complying with the public&rsquo;s decisions about raising and spending money this year. Which accountability concept is that, and where would you point them?',
+    opts:['Fiscal accountability — the fund statements and budgetary comparison schedule',
+          'Operational accountability — the government-wide statements',
+          'Fiscal accountability — the statistical section',
+          'Operational accountability — the notes to the financial statements'],
+    a:0, why:'Compliance with the public&rsquo;s raising-and-spending decisions inside a budget period is the definition of fiscal accountability, and the fund statements plus the budgetary comparison schedule are built to show it.'}
+  ]},
  {id:'W1.L5', min:8,  src:'Q 2-7', t:'Deferred outflows and deferred inflows', stub:true},
  {id:'W1.L6', min:9,  src:'Q 2-9 · LO2-3', t:'Fund balance classifications', stub:true}
 ];
+LESSONS.sort((a,b)=>a.id.localeCompare(b.id));
 
 /* ── state ─────────────────────────────────────────────────────────── */
 const store = {
@@ -452,8 +540,9 @@ function renderLibrary(){
     c.className='card reveal'+(l.stub?'':' tap');
     c.innerHTML='<div class="rowline"><div class="grow">'+
       '<span class="eyebrow" style="margin:0 0 5px;display:block">'+l.id+' · '+l.src+'</span>'+
-      '<h3>'+l.t+' '+(l.stub?'<span class="tag gray">Not built</span>':(done?'<span class="tag green">Done</span>':'<span class="tag blue">'+l.min+' min</span>'))+'</h3>'+
-      (l.obj?'<p>'+l.obj+'</p>':'<p>Planned for this week; not yet written.</p>')+
+      '<h3>'+l.t+' '+(l.stub?'<span class="tag gray">Not built</span>':(done?'<span class="tag green">Done</span>':'<span class="tag blue">'+l.min+' min</span>'))+
+        (l.unverified?' <span class="tag yellow">Ch. 2 not held</span>':'')+'</h3>'+
+      (l.obj?'<p>'+l.obj+'</p>':'<p>Planned for this week. Source chapter not in the corpus yet.</p>')+
       '</div>'+(l.stub?'':'<svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>')+'</div>';
     if(!l.stub) c.addEventListener('click',()=>{ L=l; si=0; renderScreen(); });
     wrap.appendChild(c);
