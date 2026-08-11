@@ -435,7 +435,7 @@ const W0 = [
 /* ════════ state ════════ */
 const store = {
   load(){ try{ return JSON.parse(localStorage.getItem('acct1') || '{}'); }catch(e){ return {}; } },
-  save(s){ localStorage.setItem('acct1', JSON.stringify(s)); }
+  save(s){ try{ localStorage.setItem('acct1', JSON.stringify(s)); }catch(e){ /* storage may be unavailable (private mode / sandbox) — session continues in memory */ } }
 };
 let S = Object.assign({user:null, runs:[], jes:[], helpFlag:false}, store.load());
 const w01met = () => !!S.user && S.runs.some(r => !r.aided);
