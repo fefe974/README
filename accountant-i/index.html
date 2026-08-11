@@ -1,0 +1,742 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#FBFBFA">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Accountant I · W0.1 ERP Sandbox</title>
+<style>
+/* ── Warm monochrome + spot navy. Flat surfaces, 1px borders, no gradients. ── */
+:root{
+  --canvas:#FBFBFA; --surface:#FFFFFF; --ink:#191918; --ink-2:#787774;
+  --line:#EAEAEA; --navy:#1E40AF; --navy-press:#16308A; --on-navy:#FFFFFF;
+  --pale-blue:#E1F3FE; --blue-text:#1F6C9F;
+  --pale-green:#EDF3EC; --green-text:#346538;
+  --pale-yellow:#FBF3DB; --yellow-text:#956400;
+  --pale-red:#FDEBEC; --red-text:#9F2F2D;
+  --serif:'Newsreader','Iowan Old Style',Georgia,serif;
+  --sans:'SF Pro Display','Helvetica Neue','Segoe UI',system-ui,sans-serif;
+  --mono:'SF Mono','Geist Mono',ui-monospace,'Cascadia Mono',Menlo,monospace;
+  --pad-safe-b:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+button,a,select,input,summary,.tap{touch-action:manipulation}
+:focus-visible{outline:2px solid var(--navy);outline-offset:2px;border-radius:4px}
+html,body{margin:0}
+body{background:var(--canvas);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}
+.app{max-width:560px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:30;background:rgba(251,251,250,.92);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top,0px)) 20px 10px;
+  display:flex;align-items:center;gap:12px;min-height:56px}
+.top .back{border:1px solid var(--line);background:var(--surface);border-radius:8px;width:40px;height:40px;
+  display:grid;place-items:center;cursor:pointer;flex:none;padding:0}
+.top .back:active{transform:scale(.96)}
+.top h2{font-size:16px;font-weight:600;margin:0;letter-spacing:-.01em;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .env{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--pale-yellow);color:var(--yellow-text);border-radius:9999px;padding:4px 10px;flex:none}
+
+main{flex:1;padding:20px 20px calc(24px + var(--pad-safe-b))}
+.screen{display:none}
+.screen.active{display:block}
+
+/* type */
+h1{font-family:var(--serif);font-weight:500;font-size:30px;line-height:1.12;letter-spacing:-.02em;margin:0 0 8px}
+.sub{color:var(--ink-2);font-size:14.5px;margin:0 0 24px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);margin:0 0 10px}
+.section-label{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);margin:28px 0 10px}
+
+/* cards */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:12px}
+.card.tap{cursor:pointer;transition:box-shadow .2s,transform .1s}
+.card.tap:active{transform:scale(.985)}
+.rowline{display:flex;align-items:center;gap:14px}
+.rowline .grow{flex:1;min-width:0}
+.rowline h3{margin:0;font-size:15.5px;font-weight:600;letter-spacing:-.01em}
+.rowline p{margin:3px 0 0;font-size:13.5px;color:var(--ink-2);line-height:1.45}
+.icon-tile{width:44px;height:44px;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center;flex:none;background:var(--canvas)}
+.chev{flex:none;color:var(--ink-2)}
+
+/* tags */
+.tag{display:inline-flex;align-items:center;gap:5px;border-radius:9999px;padding:3px 10px;font-size:10.5px;
+  font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.tag.blue{background:var(--pale-blue);color:var(--blue-text)}
+.tag.green{background:var(--pale-green);color:var(--green-text)}
+.tag.yellow{background:var(--pale-yellow);color:var(--yellow-text)}
+.tag.red{background:var(--pale-red);color:var(--red-text)}
+.tag.gray{background:var(--canvas);color:var(--ink-2);border:1px solid var(--line)}
+
+/* buttons */
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:52px;border-radius:8px;
+  border:0;background:var(--navy);color:var(--on-navy);font-family:var(--sans);font-size:16px;font-weight:600;
+  cursor:pointer;letter-spacing:-.01em;transition:background .15s}
+.btn:active{transform:scale(.98);background:var(--navy-press)}
+.btn[disabled]{background:#C9CDD6;cursor:not-allowed}
+.btn.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:active{background:var(--canvas)}
+.actionbar{position:sticky;bottom:0;margin:16px -20px calc(-24px - var(--pad-safe-b));padding:12px 20px calc(12px + var(--pad-safe-b));
+  background:rgba(251,251,250,.94);backdrop-filter:blur(14px);border-top:1px solid var(--line)}
+
+/* forms */
+label.f{display:block;font-size:12.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-2);margin:0 0 6px}
+input.f,select.f{width:100%;min-height:52px;border:1px solid var(--line);border-radius:8px;background:var(--surface);
+  padding:0 14px;font-size:16px;font-family:var(--sans);color:var(--ink);outline:none;appearance:none}
+input.f:focus,select.f:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(30,64,175,.12)}
+.field{margin-bottom:16px}
+.selwrap{position:relative}
+.selwrap:after{content:"";position:absolute;right:16px;top:50%;width:8px;height:8px;border-right:1.75px solid var(--ink-2);
+  border-bottom:1.75px solid var(--ink-2);transform:translateY(-70%) rotate(45deg);pointer-events:none}
+
+/* mono figures */
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+
+/* checklist */
+.check-item{display:flex;gap:14px;align-items:flex-start}
+.check-dot{width:26px;height:26px;border-radius:9999px;border:1.75px solid var(--line);flex:none;display:grid;place-items:center;margin-top:2px;background:var(--surface)}
+.check-dot.done{background:var(--pale-green);border-color:var(--pale-green);color:var(--green-text)}
+.check-dot.active{border-color:var(--navy)}
+.check-id{font-family:var(--mono);font-size:11px;color:var(--ink-2)}
+.acc{font-size:12.5px;color:var(--ink-2);border-top:1px solid var(--line);margin-top:12px;padding-top:10px;line-height:1.5}
+
+/* report rows */
+.r-row{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.r-row:last-child{border-bottom:0}
+.r-row .l{min-width:0}
+.r-row .l b{display:block;font-size:14.5px;font-weight:600;letter-spacing:-.01em}
+.r-row .l span{font-size:12.5px;color:var(--ink-2)}
+.r-row .v{text-align:right;flex:none}
+.r-row .v b{display:block;font-size:14.5px;font-weight:600}
+.r-row .v span{font-size:12px;color:var(--ink-2)}
+.r-total{display:flex;justify-content:space-between;padding:14px 0 2px;font-weight:700;font-size:15px}
+.report-head{border-bottom:1px solid var(--ink);padding-bottom:14px;margin-bottom:6px}
+.report-head .num{font-size:12px;color:var(--ink-2)}
+
+/* JE builder */
+.je-line{border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:10px;background:var(--surface)}
+.je-line .acct{font-size:14.5px;font-weight:600;letter-spacing:-.01em}
+.je-line .code{font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+.je-grid{display:flex;gap:10px;margin-top:10px;align-items:center}
+.side-toggle{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;flex:none}
+.side-toggle button{border:0;background:var(--surface);padding:0 16px;min-height:44px;font-size:14px;font-weight:600;color:var(--ink-2);cursor:pointer}
+.side-toggle button.sel{background:var(--ink);color:#fff}
+.je-amt{flex:1;min-width:0}
+.balance-strip{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);
+  border-radius:10px;padding:12px 16px;background:var(--surface);margin:4px 0 12px}
+.balance-strip.ok{background:var(--pale-green);border-color:var(--pale-green)}
+.balance-strip.bad{background:var(--pale-red);border-color:var(--pale-red)}
+.balance-strip .num{font-size:14px;font-weight:600}
+
+/* sheet (account picker) */
+.sheet-veil{position:fixed;inset:0;background:rgba(25,25,24,.32);z-index:40;opacity:0;pointer-events:none;transition:opacity .25s}
+.sheet-veil.open{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:41;background:var(--surface);border-radius:16px 16px 0 0;
+  max-width:560px;margin:0 auto;max-height:78dvh;display:flex;flex-direction:column;
+  transform:translateY(103%);transition:transform .3s cubic-bezier(.16,1,.3,1)}
+.sheet.open{transform:none}
+.sheet .grab{width:36px;height:4px;border-radius:9999px;background:var(--line);margin:10px auto 4px}
+.sheet header{padding:8px 20px 12px;border-bottom:1px solid var(--line)}
+.sheet header h3{margin:0;font-size:16px;font-weight:600}
+.sheet .body{overflow:auto;padding:8px 20px calc(20px + var(--pad-safe-b))}
+.pick-row{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:0;background:none;
+  padding:13px 0;border-bottom:1px solid var(--line);cursor:pointer;font-family:var(--sans)}
+.pick-row:last-child{border-bottom:0}
+.pick-row .code{font-family:var(--mono);font-size:12px;color:var(--ink-2);width:64px;flex:none}
+.pick-row .nm{font-size:14.5px;font-weight:500;flex:1;color:var(--ink)}
+
+/* help disclosure */
+details.help{border:1px solid var(--line);border-radius:10px;background:var(--surface);margin-bottom:16px}
+details.help summary{list-style:none;cursor:pointer;padding:14px 16px;font-size:14px;font-weight:600;display:flex;justify-content:space-between;align-items:center}
+details.help summary::-webkit-details-marker{display:none}
+details.help summary:after{content:"+";font-family:var(--mono);font-size:16px;color:var(--ink-2)}
+details.help[open] summary:after{content:"–"}
+details.help .body{padding:0 16px 14px;font-size:13.5px;color:var(--ink-2);line-height:1.55}
+details.help .body ol{margin:0;padding-left:18px}
+.help-note{font-size:12px;color:var(--yellow-text);background:var(--pale-yellow);border-radius:8px;padding:8px 12px;margin-top:10px}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:calc(84px + var(--pad-safe-b));transform:translate(-50%,16px);z-index:60;
+  background:var(--ink);color:#fff;font-size:13.5px;line-height:1.45;padding:12px 18px;border-radius:12px;opacity:0;pointer-events:none;
+  transition:opacity .25s,transform .25s;width:max-content;max-width:min(88vw,340px);text-align:left}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* entry animation */
+.reveal{opacity:0;transform:translateY(12px);animation:in .6s cubic-bezier(.16,1,.3,1) forwards}
+.reveal:nth-child(2){animation-delay:.06s}.reveal:nth-child(3){animation-delay:.12s}
+.reveal:nth-child(4){animation-delay:.18s}.reveal:nth-child(5){animation-delay:.24s}
+.reveal:nth-child(6){animation-delay:.3s}.reveal:nth-child(7){animation-delay:.36s}
+@keyframes in{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  .reveal{opacity:1;transform:none}
+}
+
+/* login */
+.login-hero{padding:48px 0 8px}
+.login-hero .seal{width:56px;height:56px;border-radius:12px;background:var(--ink);color:#fff;display:grid;place-items:center;
+  font-family:var(--serif);font-size:24px;margin-bottom:24px}
+kbd{font-family:var(--mono);font-size:12px;border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;background:var(--canvas);padding:2px 6px}
+.meta-line{font-family:var(--mono);font-size:11px;color:var(--ink-2);margin-top:20px;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top" id="topbar" hidden>
+    <button class="back" id="btn-back" aria-label="Back">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <h2 id="top-title">Week 0</h2>
+    <span class="env">Sandbox</span>
+  </div>
+
+  <main>
+    <!-- ─────────── LOGIN ─────────── -->
+    <section class="screen" id="s-login">
+      <div class="login-hero reveal">
+        <div class="seal">P</div>
+        <p class="eyebrow">Plattsburgh County · Finance ERP</p>
+        <h1>Sandbox sign-in</h1>
+        <p class="sub">Training environment. Synthetic data only — nothing here touches the live ledger, and journal entries can never post.</p>
+      </div>
+      <form id="login-form" class="reveal">
+        <div class="field">
+          <label class="f" for="login-name">Your name</label>
+          <input class="f" id="login-name" autocomplete="name" placeholder="As it should appear on the error journal" required>
+        </div>
+        <div class="field">
+          <label class="f" for="login-role">Role</label>
+          <div class="selwrap"><select class="f" id="login-role">
+            <option>Accountant I (trainee)</option>
+            <option>Accountant I</option>
+          </select></div>
+        </div>
+        <button class="btn" type="submit">Sign in to sandbox</button>
+        <p class="meta-line">FACTS TABLE v0.1 · 2026-08-11<br>ERP build SBX-18.2 · offline · data resets never</p>
+      </form>
+    </section>
+
+    <!-- ─────────── WEEK 0 HOME ─────────── -->
+    <section class="screen" id="s-home">
+      <div class="reveal">
+        <p class="eyebrow">Week 0 · Environment and orientation</p>
+        <h1>Nothing is taught.<br>Everything is assembled.</h1>
+        <p class="sub">Six setup items. Week 1 does not start until all six are done. You're working <span class="num">W0.1</span> now.</p>
+      </div>
+      <div id="w0-list"></div>
+    </section>
+
+    <!-- ─────────── ERP MENU (W0.1) ─────────── -->
+    <section class="screen" id="s-erp">
+      <div class="reveal">
+        <p class="eyebrow">W0.1 · ERP sandbox access</p>
+        <h1>County ERP</h1>
+        <p class="sub" id="erp-acceptance-line">Acceptance: run one standard report unaided.</p>
+      </div>
+      <div class="card tap reveal" data-go="inquiry">
+        <div class="rowline">
+          <div class="icon-tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></div>
+          <div class="grow"><h3>Account inquiry</h3><p>Look up any account by fund. Balances as of today.</p></div>
+          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+        </div>
+      </div>
+      <div class="card tap reveal" data-go="je">
+        <div class="rowline">
+          <div class="icon-tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg></div>
+          <div class="grow"><h3>Journal entry <span class="tag yellow" style="vertical-align:2px">Unposted</span></h3><p>Draft an entry against the chart. Entries stay unposted in the sandbox.</p></div>
+          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+        </div>
+      </div>
+      <div class="card tap reveal" data-go="reports">
+        <div class="rowline">
+          <div class="icon-tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/></svg></div>
+          <div class="grow"><h3>Report writer</h3><p>AR aging, fixed assets, project accounting. This is the W0.1 item.</p></div>
+          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+        </div>
+      </div>
+      <p class="section-label">Session</p>
+      <div class="card reveal">
+        <div class="r-row"><div class="l"><b id="sess-user">—</b><span>Signed in · sandbox</span></div>
+        <div class="v"><button class="btn ghost" style="min-height:44px;width:auto;padding:0 16px" id="btn-logout">Sign out</button></div></div>
+      </div>
+    </section>
+
+    <!-- ─────────── INQUIRY ─────────── -->
+    <section class="screen" id="s-inquiry">
+      <div class="reveal">
+        <p class="eyebrow">Inquiry</p>
+        <h1>Account inquiry</h1>
+        <p class="sub">Pick a fund, then an account. Figures are synthetic but internally consistent.</p>
+      </div>
+      <div class="field reveal">
+        <label class="f" for="inq-fund">Fund</label>
+        <div class="selwrap"><select class="f" id="inq-fund"></select></div>
+      </div>
+      <div id="inq-accounts" class="card reveal" style="padding:6px 20px"></div>
+      <div id="inq-detail"></div>
+    </section>
+
+    <!-- ─────────── JOURNAL ENTRY ─────────── -->
+    <section class="screen" id="s-je">
+      <div class="reveal">
+        <p class="eyebrow">Journal entry · unposted</p>
+        <h1>New entry</h1>
+        <p class="sub">Accounts come from the chart — no free text. The grader is a rule: debits must equal credits.</p>
+      </div>
+      <div class="field reveal">
+        <label class="f" for="je-desc">Description</label>
+        <input class="f" id="je-desc" placeholder="What happened?" maxlength="80">
+      </div>
+      <div id="je-lines"></div>
+      <button class="btn ghost reveal" id="btn-add-line" style="margin-bottom:14px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        Add line
+      </button>
+      <div class="balance-strip" id="je-balance">
+        <span style="font-size:13px;font-weight:600">Dr <span class="num" id="je-dr">0.00</span> · Cr <span class="num" id="je-cr">0.00</span></span>
+        <span class="num" id="je-diff">out of balance</span>
+      </div>
+      <div class="actionbar"><button class="btn" id="btn-save-je" disabled>Save as unposted</button></div>
+    </section>
+
+    <!-- ─────────── REPORT WRITER ─────────── -->
+    <section class="screen" id="s-reports">
+      <div class="reveal">
+        <p class="eyebrow">Report writer</p>
+        <h1>Standard reports</h1>
+        <p class="sub">Run any one of the three, start to finish, without opening the walkthrough — that meets W0.1.</p>
+      </div>
+      <details class="help reveal" id="report-help">
+        <summary>Walkthrough (counts as assisted)</summary>
+        <div class="body">
+          <ol>
+            <li>Pick a report below.</li>
+            <li>Set the parameters — fund and as-of date. Defaults are fine.</li>
+            <li>Tap <b>Run report</b> and wait for the output header to show your parameters.</li>
+          </ol>
+          <p class="help-note">Opening this walkthrough marks the next run as assisted. Close it, run another report on your own, and W0.1 still clears today.</p>
+        </div>
+      </details>
+      <div id="report-cards"></div>
+      <p class="section-label" id="runs-label" hidden>Run history</p>
+      <div id="runs-list"></div>
+    </section>
+
+    <!-- ─────────── REPORT PARAMS ─────────── -->
+    <section class="screen" id="s-params">
+      <div class="reveal">
+        <p class="eyebrow">Parameters</p>
+        <h1 id="params-title">Report</h1>
+        <p class="sub" id="params-sub"></p>
+      </div>
+      <div class="field reveal" id="params-fund-wrap">
+        <label class="f" for="params-fund">Fund</label>
+        <div class="selwrap"><select class="f" id="params-fund"></select></div>
+      </div>
+      <div class="field reveal">
+        <label class="f" for="params-date">As of</label>
+        <input class="f" id="params-date" type="date">
+      </div>
+      <div class="actionbar"><button class="btn" id="btn-run-report">Run report</button></div>
+    </section>
+
+    <!-- ─────────── REPORT OUTPUT ─────────── -->
+    <section class="screen" id="s-output">
+      <div id="report-out"></div>
+      <div class="actionbar"><button class="btn ghost" id="btn-report-done">Done — back to reports</button></div>
+    </section>
+  </main>
+</div>
+
+<!-- account picker sheet -->
+<div class="sheet-veil" id="veil"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Pick an account">
+  <div class="grab"></div>
+  <header><h3 id="sheet-title">Pick an account</h3></header>
+  <div class="body" id="sheet-body"></div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+'use strict';
+/* ════════ FACTS — versioned synthetic data. v0.1 · 2026-08-11 ════════
+   Synthetic taxonomy modeled on a county fund structure. No live data. */
+const FACTS_VERSION = 'v0.1 · 2026-08-11';
+const FUNDS = [
+  {id:'100', name:'General Fund',            cat:'Governmental'},
+  {id:'201', name:'Road & Bridge Fund',      cat:'Governmental · Special revenue'},
+  {id:'301', name:'Capital Projects Fund',   cat:'Governmental'},
+  {id:'401', name:'Water Utility Fund',      cat:'Proprietary · Enterprise'},
+];
+const ACCOUNTS = [ // code, name, fund, type, balance (Dr positive)
+  {c:'101', n:'Cash and Cash Equivalents',                    f:'100', t:'Asset',     b: 4821350.22},
+  {c:'112', n:'Taxes Receivable—Current',                     f:'100', t:'Asset',     b: 1266400.00},
+  {c:'113', n:'Allowance for Uncollectible Current Taxes',    f:'100', t:'Contra',    b: -132000.00},
+  {c:'121', n:'Accounts Receivable',                          f:'100', t:'Asset',     b:  418277.90},
+  {c:'201', n:'Vouchers Payable',                             f:'100', t:'Liability', b: -604512.35},
+  {c:'223', n:'Deferred Inflows—Unavailable Revenues',        f:'100', t:'Def. inflow',b:-493000.00},
+  {c:'301', n:'Fund Balance—Unassigned',                      f:'100', t:'Equity',    b:-3187215.77},
+  {c:'401', n:'Revenues—Property Taxes',                      f:'100', t:'Revenue',   b:-6468000.00},
+  {c:'501', n:'Expenditures—General Government',              f:'100', t:'Expenditure',b:4378700.00},
+  {c:'101', n:'Cash and Cash Equivalents',                    f:'201', t:'Asset',     b:  912440.15},
+  {c:'121', n:'Accounts Receivable',                          f:'201', t:'Asset',     b:  120833.50},
+  {c:'401', n:'Revenues—Motor Fuel Tax',                      f:'201', t:'Revenue',   b:-1450210.00},
+  {c:'501', n:'Expenditures—Road Maintenance',                f:'201', t:'Expenditure',b:1287460.60},
+  {c:'101', n:'Cash and Cash Equivalents',                    f:'301', t:'Asset',     b: 2205000.00},
+  {c:'501', n:'Expenditures—Capital Outlay',                  f:'301', t:'Expenditure',b:3914000.00},
+  {c:'101', n:'Cash and Cash Equivalents',                    f:'401', t:'Asset',     b:  684120.45},
+  {c:'121', n:'Customer Accounts Receivable',                 f:'401', t:'Asset',     b:  335106.88},
+  {c:'150', n:'Utility Plant in Service',                     f:'401', t:'Asset',     b:12750000.00},
+  {c:'155', n:'Accumulated Depreciation—Utility Plant',       f:'401', t:'Contra',    b:-4106250.00},
+];
+const AR_AGING = { // by fund: rows of {name, current, d30, d60, d90}
+  '100':[
+    {n:'Dept. of Social Services — state reimbursements', cur:96500.00, d30:41200.00, d60:0,       d90:0},
+    {n:'Municipal court fines receivable',                cur:22410.90, d30:18337.00, d60:9950.00, d90:6480.00},
+    {n:'Parks — facility rental billings',                cur:8140.00,  d30:3560.00,  d60:1240.00, d90:0},
+    {n:'Interfund billing — Water Utility (401)',         cur:210500.00,d30:0,        d60:0,       d90:0},
+  ],
+  '201':[
+    {n:'State DOT — county road agreement',               cur:74210.50, d30:31623.00, d60:15000.00,d90:0},
+  ],
+  '401':[
+    {n:'Customer utility accounts — cycle 1–4',           cur:198320.14,d30:87404.74, d60:31090.00,d90:18292.00},
+  ],
+};
+const FIXED_ASSETS = [ // countywide register (governmental activities + enterprise)
+  {n:'County administration building',  cls:'Buildings',        cost:6400000, dep:2560000, f:'100'},
+  {n:'Road grader — CAT 140 (unit 12)', cls:'Machinery & equip.',cost:412000,  dep:164800,  f:'201'},
+  {n:'Bridge 7 rehabilitation (2024)',  cls:'Infrastructure',   cost:2875000, dep:143750,  f:'301'},
+  {n:'Sheriff patrol fleet (9 units)',  cls:'Vehicles',          cost:531000,  dep:318600,  f:'100'},
+  {n:'Water treatment plant expansion', cls:'Utility plant',     cost:9200000, dep:2760000, f:'401'},
+  {n:'SCADA telemetry system',          cls:'Utility plant',     cost:640000,  dep:256000,  f:'401'},
+];
+const PROJECTS = [ // project accounting: budget / actual / encumbrance
+  {n:'CDBG sidewalk accessibility grant', num:'GR-2025-04', f:'100', bud:750000,  act:412300,  enc:118200},
+  {n:'FEMA hazard mitigation — culverts', num:'GR-2024-11', f:'201', bud:1200000, act:889740,  enc:203500},
+  {n:'Courthouse annex construction',     num:'CP-2023-02', f:'301', bud:5100000, act:3914000, enc:766000},
+  {n:'AMI meter replacement program',     num:'EN-2025-01', f:'401', bud:1400000, act:512960,  enc:301000},
+];
+const REPORTS = [
+  {id:'ar',  name:'AR aging — standard',            desc:'Receivables by age bucket for a fund.', fund:true,  tag:'AR'},
+  {id:'fa',  name:'Fixed asset register — standard', desc:'Cost, accumulated depreciation, net book value.', fund:false, tag:'Fixed assets'},
+  {id:'pa',  name:'Project accounting — standard',   desc:'Budget vs. actual vs. encumbrance by project.', fund:false, tag:'Projects'},
+];
+const W0 = [
+  {id:'W0.1', t:'ERP sandbox access', d:'Inquiry, unposted JE entry, report writer; AR, fixed assets, project accounting standard reports.', acc:'Learner can log in and run one standard report unaided.'},
+  {id:'W0.2', t:'County document corpus loaded', d:'Two ACFRs, adopted budget, chart of accounts, fund list, single audit + management letter, two grant files, 12 months of Commissioners Court agendas.', acc:'Verifier retrieval returns correct answers on 10 spot-check questions.'},
+  {id:'W0.3', t:'Facts table v1 published and dated', d:'Every threshold a learner would act on, in one dated file.', acc:'All thresholds sourced; no value from memory.'},
+  {id:'W0.4', t:'Answer-key path resolved', d:'Connect access, or Reviewer agent keyed, or restricted item set.', acc:'Every assigned exercise has a verifiable expected result.'},
+  {id:'W0.5', t:'Excel with Power Query; error journal initialized', d:'Current Excel build; the error journal starts empty and fills from day one.', acc:'—'},
+  {id:'W0.6', t:'County map deliverable', d:'One page: fund structure, elected officials, reporting lines, revenue sources, fiscal year end.', acc:'Presented verbally in 5 minutes to the Manager agent.'},
+];
+
+/* ════════ state ════════ */
+const store = {
+  load(){ try{ return JSON.parse(localStorage.getItem('acct1') || '{}'); }catch(e){ return {}; } },
+  save(s){ localStorage.setItem('acct1', JSON.stringify(s)); }
+};
+let S = Object.assign({user:null, runs:[], jes:[], helpFlag:false}, store.load());
+const w01met = () => !!S.user && S.runs.some(r => !r.aided);
+
+/* ════════ helpers ════════ */
+const $ = s => document.querySelector(s);
+const fmt = v => Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmt0 = v => Math.abs(v).toLocaleString('en-US',{maximumFractionDigits:0});
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('show'),2600); }
+function replay(el){ el.querySelectorAll('.reveal').forEach(n=>{ n.style.animation='none'; void n.offsetWidth; n.style.animation=''; }); }
+
+/* ════════ navigation ════════ */
+const TITLES = {home:'Week 0', erp:'County ERP — sandbox', inquiry:'Account inquiry', je:'Journal entry',
+  reports:'Report writer', params:'Report parameters', output:'Report output', login:''};
+const PARENT = {erp:'home', inquiry:'erp', je:'erp', reports:'erp', params:'reports', output:'reports'};
+let current = 'login';
+function go(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const el = $('#s-'+name); el.classList.add('active'); replay(el);
+  $('#topbar').hidden = (name==='login');
+  $('#top-title').textContent = TITLES[name] || '';
+  $('#btn-back').style.visibility = (name==='home'||name==='login') ? 'hidden' : 'visible';
+  current = name; window.scrollTo({top:0});
+  if(name==='home') renderW0();
+  if(name==='erp'){ $('#sess-user').textContent = S.user ? S.user.name : '—'; renderAcceptanceLine(); }
+  if(name==='inquiry') renderInquiry();
+  if(name==='je') renderJE();
+  if(name==='reports') renderReports();
+}
+$('#btn-back').addEventListener('click', ()=> go(PARENT[current] || 'home'));
+document.querySelectorAll('[data-go]').forEach(el=> el.addEventListener('click', ()=> go(el.dataset.go)));
+
+/* ════════ login ════════ */
+$('#login-form').addEventListener('submit', e=>{
+  e.preventDefault();
+  const name = $('#login-name').value.trim();
+  if(!name) return;
+  S.user = {name, role: $('#login-role').value, ts: Date.now()};
+  store.save(S);
+  go('home');
+});
+$('#btn-logout')?.addEventListener('click', ()=>{ S.user=null; store.save(S); go('login'); });
+
+/* ════════ Week 0 checklist ════════ */
+function renderW0(){
+  const list = $('#w0-list'); list.innerHTML='';
+  W0.forEach((it,i)=>{
+    const isW01 = it.id==='W0.1';
+    const done = isW01 && w01met();
+    const card = document.createElement('div');
+    card.className = 'card reveal' + (isW01 ? ' tap' : '');
+    card.innerHTML = `
+      <div class="check-item">
+        <div class="check-dot ${done?'done':(isW01?'active':'')}">${done?
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>':''}</div>
+        <div class="grow">
+          <span class="check-id">${it.id}</span>
+          <h3 style="margin:2px 0 4px;font-size:15.5px;font-weight:600">${it.t}
+            ${done?'<span class="tag green" style="vertical-align:2px">Done</span>':
+              (isW01?'<span class="tag blue" style="vertical-align:2px">In progress</span>':
+                     '<span class="tag gray" style="vertical-align:2px">Pending</span>')}</h3>
+          <p style="margin:0;font-size:13.5px;color:var(--ink-2);line-height:1.5">${it.d}</p>
+          <div class="acc"><b style="color:var(--ink)">Acceptance.</b> ${it.acc}</div>
+        </div>
+        ${isW01?'<svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-top:14px"><path d="M9 6l6 6-6 6"/></svg>':''}
+      </div>`;
+    if(isW01) card.addEventListener('click', ()=>go('erp'));
+    list.appendChild(card);
+  });
+}
+function renderAcceptanceLine(){
+  $('#erp-acceptance-line').innerHTML = w01met()
+    ? 'Acceptance met — you ran a standard report unaided. W0.1 is done.'
+    : 'Acceptance: run one standard report unaided. Signed in ✓ — one report to go.';
+}
+
+/* ════════ Inquiry ════════ */
+function fundOptions(sel, all){
+  sel.innerHTML = FUNDS.map(f=>`<option value="${f.id}">${f.id} — ${f.name}</option>`).join('');
+  if(all) sel.insertAdjacentHTML('afterbegin', `<option value="*">All funds — countywide</option>`);
+}
+function renderInquiry(){
+  fundOptions($('#inq-fund'), false);
+  drawAccounts();
+}
+function drawAccounts(){
+  const f = $('#inq-fund').value || '100';
+  const rows = ACCOUNTS.filter(a=>a.f===f);
+  $('#inq-accounts').innerHTML = rows.map((a,i)=>`
+    <button class="pick-row" data-i="${ACCOUNTS.indexOf(a)}">
+      <span class="code">${a.c}</span><span class="nm">${a.n}</span>
+      <span class="num" style="font-size:13px;color:${a.b<0?'var(--ink-2)':'var(--ink)'}">${a.b<0?'(':''}${fmt(a.b)}${a.b<0?')':''}</span>
+    </button>`).join('');
+  $('#inq-detail').innerHTML='';
+  $('#inq-accounts').querySelectorAll('.pick-row').forEach(b=>b.addEventListener('click',()=>{
+    const a = ACCOUNTS[+b.dataset.i];
+    const fund = FUNDS.find(x=>x.id===a.f);
+    $('#inq-detail').innerHTML = `
+      <div class="card reveal">
+        <span class="tag blue">${a.t}</span>
+        <h3 style="margin:10px 0 2px;font-size:17px;font-weight:600">${a.n}</h3>
+        <p style="margin:0 0 12px;font-size:13px;color:var(--ink-2)" class="num">${a.f}-${a.c} · ${fund.name}</p>
+        <div class="r-row"><div class="l"><b>Balance as of today</b><span>${a.b<0?'Credit':'Debit'} normal presentation</span></div>
+          <div class="v"><b class="num">${a.b<0?'(':''}${fmt(a.b)}${a.b<0?')':''}</b><span>USD</span></div></div>
+        <div class="r-row"><div class="l"><b>Fund category</b></div><div class="v"><b style="font-weight:500;font-size:13.5px">${fund.cat}</b></div></div>
+      </div>`;
+    $('#inq-detail').scrollIntoView({behavior:'smooth',block:'nearest'});
+  }));
+}
+$('#inq-fund').addEventListener('change', drawAccounts);
+
+/* ════════ Journal entry ════════ */
+let jeLines = [];
+function renderJE(){
+  if(!jeLines.length) jeLines = [mkLine('dr'), mkLine('cr')];
+  drawJE();
+}
+function mkLine(side){ return {acct:null, side, amt:''}; }
+function drawJE(){
+  const wrap = $('#je-lines'); wrap.innerHTML='';
+  jeLines.forEach((ln,i)=>{
+    const el = document.createElement('div');
+    el.className='je-line reveal';
+    el.innerHTML = `
+      <button class="pick-row" style="border:0;padding:0" data-pick="${i}">
+        ${ln.acct
+          ? `<span class="grow" style="text-align:left"><span class="acct">${ln.acct.n}</span><br><span class="code">${ln.acct.f}-${ln.acct.c} · ${FUNDS.find(f=>f.id===ln.acct.f).name}</span></span>`
+          : `<span class="grow" style="text-align:left;color:var(--ink-2);font-size:14.5px">Pick an account…</span>`}
+        <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+      <div class="je-grid">
+        <div class="side-toggle" role="group" aria-label="Debit or credit">
+          <button type="button" data-side="dr" class="${ln.side==='dr'?'sel':''}">Dr</button>
+          <button type="button" data-side="cr" class="${ln.side==='cr'?'sel':''}">Cr</button>
+        </div>
+        <input class="f je-amt num" inputmode="decimal" placeholder="0.00" value="${ln.amt}" aria-label="Amount">
+        ${jeLines.length>2?`<button class="back" data-del="${i}" aria-label="Remove line" style="border:1px solid var(--line);background:var(--surface);border-radius:8px;width:44px;height:44px;display:grid;place-items:center;cursor:pointer;flex:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>`:''}
+      </div>`;
+    el.querySelector('[data-pick]').addEventListener('click', ()=>openPicker(a=>{ ln.acct=a; drawJE(); }));
+    el.querySelectorAll('[data-side]').forEach(b=>b.addEventListener('click',()=>{ ln.side=b.dataset.side; drawJE(); }));
+    const amt = el.querySelector('.je-amt');
+    amt.addEventListener('input',()=>{ ln.amt = amt.value.replace(/[^0-9.]/g,''); calcJE(); });
+    amt.addEventListener('blur',()=>{ const v=parseFloat(ln.amt); ln.amt = isFinite(v)&&v>0 ? fmt(v).replace(/,/g,'') : ''; amt.value = ln.amt ? fmt(v) : ''; calcJE(); });
+    const del = el.querySelector('[data-del]');
+    if(del) del.addEventListener('click',()=>{ jeLines.splice(i,1); drawJE(); });
+    wrap.appendChild(el);
+  });
+  calcJE();
+}
+function calcJE(){
+  let dr=0, cr=0;
+  jeLines.forEach(l=>{ const v=parseFloat(l.amt)||0; if(l.side==='dr') dr+=v; else cr+=v; });
+  $('#je-dr').textContent = fmt(dr); $('#je-cr').textContent = fmt(cr);
+  const diff = Math.round((dr-cr)*100)/100;
+  const strip = $('#je-balance');
+  const complete = jeLines.every(l=>l.acct && (parseFloat(l.amt)||0)>0);
+  if(dr===0&&cr===0){ strip.className='balance-strip'; $('#je-diff').textContent='enter amounts'; }
+  else if(diff===0){ strip.className='balance-strip ok'; $('#je-diff').textContent='in balance'; }
+  else { strip.className='balance-strip bad'; $('#je-diff').textContent=(diff>0?'Dr over ':'Cr over ')+fmt(diff); }
+  $('#btn-save-je').disabled = !(diff===0 && dr>0 && complete);
+}
+$('#btn-add-line').addEventListener('click',()=>{ jeLines.push(mkLine('dr')); drawJE(); });
+$('#btn-save-je').addEventListener('click',()=>{
+  const num = 'JE-'+String(1000 + S.jes.length + 1);
+  S.jes.push({num, desc:$('#je-desc').value.trim(), lines:jeLines.map(l=>({a:`${l.acct.f}-${l.acct.c}`, n:l.acct.n, s:l.side, v:parseFloat(l.amt)})), ts:Date.now(), posted:false});
+  store.save(S);
+  jeLines=[]; $('#je-desc').value='';
+  toast(num+' saved as unposted. Sandbox entries never post.');
+  go('erp');
+});
+
+/* account picker sheet */
+let pickCb = null;
+function openPicker(cb){
+  pickCb = cb;
+  const body = $('#sheet-body'); body.innerHTML='';
+  FUNDS.forEach(f=>{
+    body.insertAdjacentHTML('beforeend', `<p class="section-label" style="margin:16px 0 2px">${f.id} — ${f.name}</p>`);
+    ACCOUNTS.filter(a=>a.f===f.id).forEach(a=>{
+      const b=document.createElement('button');
+      b.className='pick-row'; b.innerHTML=`<span class="code">${a.c}</span><span class="nm">${a.n}</span><span class="tag gray">${a.t}</span>`;
+      b.addEventListener('click',()=>{ closePicker(); pickCb&&pickCb(a); });
+      body.appendChild(b);
+    });
+  });
+  $('#veil').classList.add('open'); $('#sheet').classList.add('open');
+}
+function closePicker(){ $('#veil').classList.remove('open'); $('#sheet').classList.remove('open'); }
+$('#veil').addEventListener('click', closePicker);
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closePicker(); });
+
+/* ════════ Reports ════════ */
+let pendingReport = null;
+function renderReports(){
+  const wrap = $('#report-cards'); wrap.innerHTML='';
+  REPORTS.forEach(r=>{
+    const el=document.createElement('div');
+    el.className='card tap reveal';
+    el.innerHTML=`<div class="rowline">
+      <div class="grow"><span class="tag blue">${r.tag}</span>
+        <h3 style="margin:8px 0 3px">${r.name}</h3><p style="margin:0;font-size:13.5px;color:var(--ink-2)">${r.desc}</p></div>
+      <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>`;
+    el.addEventListener('click',()=>{
+      pendingReport = r;
+      $('#params-title').textContent = r.name;
+      $('#params-sub').textContent = r.fund ? 'Scope the report to one fund, then run it.' : 'Countywide report. Set the as-of date and run it.';
+      $('#params-fund-wrap').style.display = r.fund ? '' : 'none';
+      if(r.fund) fundOptions($('#params-fund'), false);
+      $('#params-date').value = new Date().toISOString().slice(0,10);
+      go('params');
+    });
+    wrap.appendChild(el);
+  });
+  // run history
+  const runs = S.runs.slice().reverse();
+  $('#runs-label').hidden = !runs.length;
+  $('#runs-list').innerHTML = runs.map(r=>`
+    <div class="card" style="padding:14px 20px"><div class="r-row" style="border:0;padding:4px 0">
+      <div class="l"><b>${r.name}</b><span>${new Date(r.ts).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}</span></div>
+      <div class="v">${r.aided?'<span class="tag yellow">Assisted</span>':'<span class="tag green">Unaided</span>'}</div>
+    </div></div>`).join('');
+}
+/* Opening the walkthrough marks the NEXT run assisted; the flag is consumed by
+   that run. If the walkthrough is still open when running, it counts again. */
+$('#report-help').addEventListener('toggle', e=>{ if(e.target.open){ S.helpFlag = true; store.save(S); } });
+
+$('#btn-run-report').addEventListener('click', ()=>{
+  const r = pendingReport; if(!r) return;
+  const fund = r.fund ? $('#params-fund').value : null;
+  const asof = $('#params-date').value;
+  const aided = !!S.helpFlag || $('#report-help').open;
+  const firstUnaided = !w01met() && !aided;
+  S.runs.push({id:r.id, name:r.name, fund, asof, aided, ts:Date.now()});
+  S.helpFlag = $('#report-help').open; // still open → next run is assisted too
+  store.save(S);
+  renderOutput(r, fund, asof);
+  go('output');
+  if(firstUnaided) setTimeout(()=>toast('That meets W0.1 — logged in, one standard report, unaided.'), 700);
+  else if(aided) setTimeout(()=>toast('Run recorded as assisted. Run one on your own to clear W0.1.'), 700);
+});
+$('#btn-report-done').addEventListener('click', ()=>go('reports'));
+
+function head(title, params){
+  return `<div class="report-head reveal">
+    <p class="eyebrow" style="margin-bottom:6px">Plattsburgh County · Finance ERP — Sandbox</p>
+    <h1 style="font-size:24px">${title}</h1>
+    <p class="num" style="margin:6px 0 0">${params} · generated ${new Date().toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})} · facts ${FACTS_VERSION}</p>
+  </div>`;
+}
+function renderOutput(r, fund, asof){
+  const out = $('#report-out'); let html='';
+  if(r.id==='ar'){
+    const f = FUNDS.find(x=>x.id===fund);
+    const rows = AR_AGING[fund] || [];
+    html = head('AR aging — standard', `Fund ${fund} — ${f.name} · as of ${asof}`);
+    if(!rows.length){
+      html += `<div class="card reveal"><p style="margin:0;color:var(--ink-2)">No open receivables in this fund as of ${asof}. That's a real result, not an error — try the General Fund (100) to see a populated aging.</p></div>`;
+    } else {
+      let t={cur:0,d30:0,d60:0,d90:0};
+      html += `<div class="card reveal">` + rows.map(x=>{
+        t.cur+=x.cur; t.d30+=x.d30; t.d60+=x.d60; t.d90+=x.d90;
+        const tot=x.cur+x.d30+x.d60+x.d90;
+        return `<div class="r-row"><div class="l"><b>${x.n}</b>
+          <span class="num">cur ${fmt0(x.cur)} · 31–60 ${fmt0(x.d30)} · 61–90 ${fmt0(x.d60)} · 90+ ${fmt0(x.d90)}</span></div>
+          <div class="v"><b class="num">${fmt(tot)}</b>${x.d90>0?'<span class="tag red" style="margin-top:4px">90+ balance</span>':''}</div></div>`;
+      }).join('') +
+      `<div class="r-total"><span>Total receivables</span><span class="num">${fmt(t.cur+t.d30+t.d60+t.d90)}</span></div></div>`;
+    }
+  }
+  if(r.id==='fa'){
+    html = head('Fixed asset register — standard', `Countywide · as of ${asof}`);
+    let cost=0, dep=0;
+    html += `<div class="card reveal">` + FIXED_ASSETS.map(a=>{
+      cost+=a.cost; dep+=a.dep;
+      return `<div class="r-row"><div class="l"><b>${a.n}</b><span>${a.cls} · fund ${a.f}</span></div>
+        <div class="v"><b class="num">${fmt0(a.cost-a.dep)}</b><span class="num">cost ${fmt0(a.cost)} − A/D ${fmt0(a.dep)}</span></div></div>`;
+    }).join('') +
+    `<div class="r-total"><span>Net book value</span><span class="num">${fmt(cost-dep)}</span></div></div>`;
+  }
+  if(r.id==='pa'){
+    html = head('Project accounting — standard', `Budget · actual · encumbrance — as of ${asof}`);
+    html += PROJECTS.map(p=>{
+      const avail = p.bud - p.act - p.enc;
+      const pct = Math.min(100, Math.round((p.act+p.enc)/p.bud*100));
+      return `<div class="card reveal">
+        <span class="tag ${avail<0?'red':(pct>85?'yellow':'green')}">${pct}% committed</span>
+        <h3 style="margin:8px 0 2px;font-size:15.5px;font-weight:600">${p.n}</h3>
+        <p class="num" style="margin:0 0 10px;font-size:12px;color:var(--ink-2)">${p.num} · fund ${p.f}</p>
+        <div style="height:6px;border-radius:9999px;background:var(--canvas);border:1px solid var(--line);overflow:hidden">
+          <div style="height:100%;width:${pct}%;background:var(--navy)"></div></div>
+        <div class="r-row" style="border:0;padding:12px 0 0">
+          <div class="l"><span class="num">Budget ${fmt0(p.bud)} · Actual ${fmt0(p.act)} · Enc. ${fmt0(p.enc)}</span></div>
+          <div class="v"><b class="num" style="color:${avail<0?'var(--red-text)':'var(--ink)'}">${avail<0?'(':''}${fmt0(avail)}${avail<0?')':''}</b><span>available</span></div></div>
+      </div>`;
+    }).join('');
+  }
+  out.innerHTML = html;
+}
+
+/* ════════ boot ════════ */
+go(S.user ? 'home' : 'login');
+</script>
+</body>
+</html>
