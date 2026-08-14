@@ -173,15 +173,22 @@ h2{font-size:21px;margin:26px 2px 12px}
 .bottom button.on{color:var(--green)}
 
 .toast{position:fixed;left:50%;bottom:98px;transform:translateX(-50%);background:var(--green-deep);color:#f2f6ee;padding:12px 16px;border-radius:13px;display:none;z-index:50;max-width:88%;text-align:center;line-height:1.4}
-.modal{position:fixed;inset:0;background:rgba(10,32,25,.55);z-index:60;display:none;align-items:flex-end;justify-content:center}
-.modal.open{display:flex}
+.toast.show{display:block;animation:toastUp .25s cubic-bezier(.2,.8,.3,1)}
+.modal{position:fixed;inset:0;background:rgba(10,32,25,.55);z-index:60;display:none;align-items:flex-end;justify-content:center;outline:none}
+.modal.open{display:flex;animation:fadeIn .2s ease-out}
+.modal.open .modalCard{animation:sheetUp .28s cubic-bezier(.2,.8,.3,1)}
+@keyframes fadeIn{from{opacity:0}}
+@keyframes sheetUp{from{transform:translateY(28px);opacity:.6}}
+@keyframes toastUp{from{transform:translate(-50%,10px);opacity:0}}
+.jgrid select.invalid,.jgrid input.invalid{border-color:var(--bad);background:var(--badbg)}
+.sideToggle.invalid{border-color:var(--bad)}
 .modalCard{width:min(660px,100%);background:var(--card);border-radius:24px 24px 0 0;padding:24px 18px calc(24px + env(safe-area-inset-bottom));max-height:85vh;overflow:auto}
 .modalCard h2{margin-top:0}
 .certificate{text-align:center;padding:25px 16px;border:2px solid #cbb26a;border-radius:20px;background:#fdf9ec}
 .certificate .seal{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;margin:auto;background:#efdda2;font-size:32px}
 .certificate h2{font-size:26px;margin:14px 0 7px}
 
-@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto}}
 @media(max-width:380px){
   .hero h1,.labhero h1{font-size:26px}
   .conceptGrid{grid-template-columns:1fr}
@@ -277,8 +284,8 @@ h2{font-size:21px;margin:26px 2px 12px}
   <button data-go="lab" onclick="openCurrentLab()"><span>✎</span>Practice</button>
   <button data-go="glossary" onclick="go('glossary')"><span>≡</span>Glossary</button>
 </nav>
-<div class="toast" id="toast" role="status"></div>
-<div class="modal" id="modal"><div class="modalCard" id="modalCard"></div></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="modal" id="modal" role="dialog" aria-modal="true" tabindex="-1"><div class="modalCard" id="modalCard"></div></div>
 
 <script>
 const ACCOUNTS={
@@ -419,7 +426,7 @@ let currentLesson=0,selectedAnswer=null,quizChecked=false,currentLab=0;
 
 function loadState(){try{return Object.assign({},defaultState,JSON.parse(localStorage.getItem('budgetLabGov')||'{}'))}catch(e){return {...defaultState}}}
 function save(){localStorage.setItem('budgetLabGov',JSON.stringify(state));updateAll()}
-function go(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.bottom button').forEach(x=>x.classList.toggle('on',x.dataset.go===id));if(id==='path')renderPath();if(id==='glossary')renderGlossary();window.scrollTo({top:0,left:0,behavior:'instant'})}
+function go(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.bottom button').forEach(x=>{const on=x.dataset.go===id;x.classList.toggle('on',on);if(on)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});if(id==='path')renderPath();if(id==='glossary')renderGlossary();window.scrollTo({top:0,left:0,behavior:'instant'})}
 function unlocked(i){return i===0||state.labs.includes(i-1)}
 function nextIndex(){for(let i=0;i<units.length;i++)if(!state.labs.includes(i))return i;return units.length-1}
 function continueLearning(){const i=nextIndex();if(!state.lessons.includes(i))openLesson(i);else openLab(i)}
@@ -452,7 +459,7 @@ function renderLesson(){
   ${u.compare?compareHTML(u.compare):''}
   ${ledgerHTML(u.entry)}
   <h3 class="quizTitle">Check your understanding</h3><p>${u.quiz.q}</p>
-  <div class="choices">${u.quiz.opts.map((o,i)=>`<button class="${selectedAnswer===i?'selected':''}" onclick="chooseAnswer(${i})">${o}</button>`).join('')}</div>
+  <div class="choices">${u.quiz.opts.map((o,i)=>`<button class="${selectedAnswer===i?'selected':''}" aria-pressed="${selectedAnswer===i}" onclick="chooseAnswer(${i})">${o}</button>`).join('')}</div>
   ${quizChecked?`<div class="feedback ${selectedAnswer===u.quiz.correct?'good':'badfb'}">${selectedAnswer===u.quiz.correct?'Correct. ':'Review the concept. '}${u.quiz.why}</div>`:''}
   <div class="actions">
     <button class="button" onclick="checkLessonQuiz()">${quizChecked&&selectedAnswer===u.quiz.correct?'Go record the entry':'Check answer'}</button>
@@ -464,8 +471,13 @@ function checkLessonQuiz(){
   const u=units[currentLesson];
   if(selectedAnswer===null)return toast('Select an answer.');
   if(quizChecked&&selectedAnswer===u.quiz.correct)return openLab(currentLesson);
-  state.quizAttempts++;quizChecked=true;
-  if(selectedAnswer===u.quiz.correct){state.quizCorrect++;if(!state.lessons.includes(currentLesson)){state.lessons.push(currentLesson);state.xp+=10}}
+  quizChecked=true;
+  const right=selectedAnswer===u.quiz.correct,firstTime=right&&!state.lessons.includes(currentLesson);
+  state={...state,
+    quizAttempts:state.quizAttempts+1,
+    quizCorrect:state.quizCorrect+(right?1:0),
+    lessons:firstTime?[...state.lessons,currentLesson]:state.lessons,
+    xp:state.xp+(firstTime?10:0)};
   save();renderLesson();
 }
 function renderPath(){
@@ -494,11 +506,11 @@ function renderLab(){
     ${Array.from({length:n},(_,i)=>`
       <div class="jgrid" data-row="${i}">
         <div class="sideToggle" role="group" aria-label="Side of line ${i+1}">
-          <button type="button" data-side="D" onclick="setSide(${i},'D')">Debit</button>
-          <button type="button" data-side="C" onclick="setSide(${i},'C')">Credit</button>
+          <button type="button" data-side="D" aria-pressed="false" onclick="setSide(${i},'D')">Debit</button>
+          <button type="button" data-side="C" aria-pressed="false" onclick="setSide(${i},'C')">Credit</button>
         </div>
-        <select id="acct${i}" aria-label="Account for line ${i+1}">${accountOptions('')}</select>
-        <input id="amt${i}" inputmode="numeric" autocomplete="off" placeholder="0" aria-label="Amount for line ${i+1}">
+        <select id="acct${i}" aria-label="Account for line ${i+1}" onchange="this.classList.remove('invalid')">${accountOptions('')}</select>
+        <input id="amt${i}" inputmode="numeric" autocomplete="off" placeholder="0" aria-label="Amount for line ${i+1}" oninput="this.classList.remove('invalid')">
       </div>`).join('')}
     <button class="button" onclick="checkEntry()">Post entry</button>
     <button class="button secondary small" onclick="toggleHint()">I need a hint</button>
@@ -508,18 +520,22 @@ function renderLab(){
   labSides=Array(n).fill(null);
 }
 let labSides=[];
-function setSide(i,s){labSides[i]=s;document.querySelectorAll(`[data-row="${i}"] .sideToggle button`).forEach(b=>b.classList.toggle('on',b.dataset.side===s))}
+function setSide(i,s){labSides[i]=s;const g=document.querySelector(`[data-row="${i}"] .sideToggle`);g.classList.remove('invalid');g.querySelectorAll('button').forEach(b=>{const on=b.dataset.side===s;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)})}
 function toggleHint(){document.getElementById('hint').classList.toggle('open')}
 function parseAmt(v){const d=(v||'').replace(/[^\d]/g,'');return d?parseInt(d,10):0}
 
 function checkEntry(){
   const u=units[currentLab],lab=u.lab,n=lab.lines.length,box=document.getElementById('labResult');
-  const rows=[];
+  const rows=[];let firstInvalid=null;
   for(let i=0;i<n;i++){
-    const a=document.getElementById('acct'+i).value,m=parseAmt(document.getElementById('amt'+i).value),s=labSides[i];
-    if(!s||!a||!m){box.innerHTML='<div class="feedback badfb">Complete every line: side, account, and amount.</div>';return}
+    const sel=document.getElementById('acct'+i),inp=document.getElementById('amt'+i),tog=document.querySelector(`[data-row="${i}"] .sideToggle`);
+    const a=sel.value,m=parseAmt(inp.value),s=labSides[i];
+    if(!s){tog.classList.add('invalid');firstInvalid=firstInvalid||tog.querySelector('button')}
+    if(!a){sel.classList.add('invalid');firstInvalid=firstInvalid||sel}
+    if(!m){inp.classList.add('invalid');firstInvalid=firstInvalid||inp}
     rows.push({s,a,m});
   }
+  if(firstInvalid){box.innerHTML='<div class="feedback badfb">Complete the highlighted fields: every line needs a side, an account, and an amount.</div>';firstInvalid.focus();return}
   const td=rows.filter(r=>r.s==='D').reduce((x,r)=>x+r.m,0),tc=rows.filter(r=>r.s==='C').reduce((x,r)=>x+r.m,0);
   if(td!==tc){box.innerHTML=`<div class="feedback badfb"><b>The entry doesn't balance.</b><br>Debits ${money(td)} vs credits ${money(tc)}. In every journal entry, debits = credits.</div>`;return}
   const wrongAcct=rows.find(r=>!lab.lines.some(l=>l.a===r.a));
@@ -534,7 +550,7 @@ function checkEntry(){
   box.innerHTML=`<div class="successBox"><h3>✓ Entry is correct</h3><p>${lab.success}</p></div>
   ${ledgerHTML({caption:u.entry.caption,lines:lab.lines})}
   ${currentLab===units.length-1?`<button class="button" onclick="showCertificate()">See your achievement</button>`:`<button class="button" onclick="openLesson(${currentLab+1})">Continue to unit ${currentLab+2}</button>`}`;
-  if(!state.labs.includes(currentLab)){state.labs.push(currentLab);state.xp+=20+(currentLab*5);save();toast('Entry posted. Nice work!')}
+  if(!state.labs.includes(currentLab)){state={...state,labs:[...state.labs,currentLab],xp:state.xp+20+(currentLab*5)};save();toast('Entry posted. Nice work!')}
   box.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
@@ -567,18 +583,21 @@ function showCertificate(){
   <div class="conceptGrid" style="text-align:left"><div class="concept"><b>${state.xp} XP</b><span>experience earned</span></div><div class="concept"><b>${state.quizAttempts?Math.round(state.quizCorrect/state.quizAttempts*100):100}%</b><span>quiz accuracy</span></div></div>
   <p class="muted">Next step: encumbrances in detail and the fund financial statements.</p></div>
   <button class="button" onclick="closeModal()">Close</button>`;
-  document.getElementById('modal').classList.add('open');
+  openModal();
 }
 function confirmReset(){
   document.getElementById('modalCard').innerHTML=`<h2>Reset the lesson?</h2><p class="muted">Lessons, entries, XP, and accuracy saved on this phone will be erased.</p>
   <button class="button danger" onclick="resetProgress()">Yes, erase progress</button>
   <button class="button secondary" onclick="closeModal()">Cancel</button>`;
-  document.getElementById('modal').classList.add('open');
+  openModal();
 }
 function resetProgress(){state={...defaultState,lessons:[],labs:[]};save();closeModal();go('home');toast('Progress reset.')}
-function closeModal(){document.getElementById('modal').classList.remove('open')}
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.style.display='none',2400)}
+let lastFocus=null;
+function openModal(){const m=document.getElementById('modal');lastFocus=document.activeElement;m.classList.add('open');m.focus()}
+function closeModal(){document.getElementById('modal').classList.remove('open');if(lastFocus&&document.contains(lastFocus))lastFocus.focus();lastFocus=null}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),2400)}
 document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+document.getElementById('modal').addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 updateAll();renderGlossary();
 </script>
 </body>
