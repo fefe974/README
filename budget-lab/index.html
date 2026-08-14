@@ -34,12 +34,11 @@ h1{text-wrap:balance}
 .brand small{display:block;color:var(--muted);margin-top:1px}
 .xp{border:0;border-radius:13px;padding:10px 12px;background:var(--card);font-weight:800;color:var(--brass);box-shadow:0 5px 14px rgba(23,80,63,.07);cursor:pointer}
 
-/* Screens */
 .screen{display:none}
 .screen.active{display:block}
 .eyebrow{font-size:11.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
 
-/* Hero */
+/* Hero + banners */
 .hero{background:linear-gradient(150deg,var(--green-deep),#1d6a52);color:#f2f6ee;padding:26px 24px;border-radius:26px;box-shadow:0 18px 42px rgba(12,53,42,.28)}
 .hero .eyebrow{color:#cfe3c8}
 .hero h1{font-size:31px;line-height:1.08;margin:10px 0}
@@ -47,6 +46,10 @@ h1{text-wrap:balance}
 .progressline{display:flex;justify-content:space-between;font-size:13px;margin:19px 0 8px}
 .bar{height:10px;background:rgba(255,255,255,.2);border-radius:99px;overflow:hidden}
 .fill{height:100%;width:0;background:#d8b95c;transition:width .35s}
+.banner{background:var(--green-soft);border:1px solid #cfdfcf;border-radius:24px;padding:22px}
+.banner h1{font-size:28px;line-height:1.1;margin:10px 0 7px}
+.banner p{color:#4c6153;line-height:1.5;margin:0}
+
 .button{width:100%;min-height:54px;border:0;border-radius:16px;margin-top:15px;background:var(--green);color:#f2f6ee;font-weight:800;font-size:16px;cursor:pointer;font-family:var(--sans)}
 .button:active{transform:scale(.99)}
 .button.secondary{background:var(--card);color:var(--green);border:1.5px solid var(--line)}
@@ -72,11 +75,13 @@ h2{font-size:21px;margin:26px 2px 12px}
 .concept b{display:block;margin-bottom:4px;font-size:14.5px}
 .concept span{color:var(--muted);font-size:13.5px;line-height:1.42;display:block}
 
-/* Path */
-.banner{background:var(--green-soft);border:1px solid #cfdfcf;border-radius:24px;padding:22px}
-.banner h1{font-size:28px;line-height:1.1;margin:10px 0 7px}
-.banner p{color:#4c6153;line-height:1.5;margin:0}
-.moduleHead{display:flex;justify-content:space-between;align-items:end;margin:26px 2px 12px}
+/* Segmented control */
+.seg{display:grid;grid-auto-flow:column;background:#e9ede4;border-radius:14px;padding:4px;gap:4px;margin:14px 0}
+.seg button{border:0;border-radius:11px;padding:10px 4px;font-weight:800;font-size:13px;color:var(--muted);background:none;cursor:pointer;font-family:var(--sans)}
+.seg button.on{background:var(--card);color:var(--green);box-shadow:0 2px 8px rgba(23,80,63,.12)}
+
+/* Units / list rows */
+.moduleHead{display:flex;justify-content:space-between;align-items:end;margin:20px 2px 12px}
 .moduleHead h2{margin:0}
 .moduleHead span{font-size:13px;color:var(--muted)}
 .unit{display:grid;grid-template-columns:49px 1fr auto;align-items:center;gap:12px;cursor:pointer}
@@ -86,6 +91,7 @@ h2{font-size:21px;margin:26px 2px 12px}
 .unit.current{border:2px solid var(--green)}
 .unitStatus{font-size:11.5px;font-weight:800;letter-spacing:.06em;color:var(--muted);text-align:right}
 .unitStatus.ok{color:var(--ok)}
+.pillTag{display:inline-block;padding:3px 8px;border-radius:99px;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:var(--green-soft);color:var(--green)}
 
 /* Lesson */
 .lessonTop{display:flex;gap:12px;align-items:center;margin-bottom:14px}
@@ -102,7 +108,7 @@ h2{font-size:21px;margin:26px 2px 12px}
 .mission b{color:var(--brass);font-size:11.5px;letter-spacing:.09em}
 .mission p{color:#655532;margin:7px 0 0;line-height:1.5}
 
-/* Ledger paper — the journal entry component */
+/* Ledger paper — journal entry */
 .ledger{margin-top:16px;border:1px solid var(--rule);border-radius:14px;overflow:hidden;background:
   linear-gradient(to right,transparent 13px,var(--margin-rule) 13px,var(--margin-rule) 14.5px,transparent 14.5px),
   repeating-linear-gradient(to bottom,var(--paper),var(--paper) 41px,var(--rule) 41px,var(--rule) 42px);
@@ -117,6 +123,23 @@ h2{font-size:21px;margin:26px 2px 12px}
 .lrow.ltotal .amt{border-bottom:3px double var(--ink);font-weight:700}
 .lcaption{padding:9px 12px 11px 24px;font-size:12.5px;color:var(--muted);font-style:italic}
 
+/* T-accounts */
+.taccount{background:var(--paper);border:1px solid var(--rule);border-radius:14px;padding:12px 0 10px;margin-bottom:12px}
+.tname{text-align:center;font-family:var(--serif);font-weight:700;font-size:15.5px;padding-bottom:8px;border-bottom:2px solid var(--ink);margin:0 14px}
+.tname small{display:block;font-family:var(--sans);font-weight:600;color:var(--muted);font-size:11px;letter-spacing:.04em}
+.tbody{display:grid;grid-template-columns:1fr 1fr;min-height:52px}
+.tcol{padding:7px 12px 4px}
+.tcol.dr{border-right:1.5px solid var(--ink)}
+.trow{display:flex;justify-content:space-between;gap:6px;font-size:12px;padding:2.5px 0;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.trow .ref{color:var(--muted);font-family:var(--sans);font-weight:700;font-size:10.5px}
+.tbal{display:grid;grid-template-columns:1fr 1fr;margin:6px 14px 0;border-top:1px solid var(--line);padding-top:5px;font-weight:700;font-size:12.5px;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.tbal span{text-align:right}
+.tbal .has{border-bottom:3px double var(--ink)}
+.glsection{margin:22px 2px 10px;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.glstat{display:grid;grid-template-columns:1fr auto;gap:4px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
+.glstat:last-child{border-bottom:0}
+.glstat b{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
 /* Comparison table */
 .tableWrap{overflow-x:auto;margin-top:15px;border:1px solid var(--line);border-radius:15px}
 .tableWrap table{border-collapse:collapse;width:100%;background:var(--card);font-size:13.5px}
@@ -124,6 +147,7 @@ h2{font-size:21px;margin:26px 2px 12px}
 .tableWrap th{background:#eef2ea;color:#4c6153;font-size:12px;letter-spacing:.05em;text-transform:uppercase}
 .tableWrap td.num,.tableWrap th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
 .tableWrap tr:last-child td{border-bottom:0}
+.tableWrap tr.total td{border-top:1.5px solid var(--ink);font-weight:700}
 .pill{display:inline-block;padding:4px 9px;border-radius:99px;font-size:11.5px;font-weight:800}
 .pill.ok{background:var(--okbg);color:var(--ok)}
 .pill.bad{background:var(--badbg);color:var(--bad)}
@@ -137,19 +161,23 @@ h2{font-size:21px;margin:26px 2px 12px}
 .badfb{background:var(--badbg);color:var(--bad)}
 .actions{margin-top:auto;padding-top:12px}
 
-/* Lab */
+/* Lab hero */
 .labhero{background:linear-gradient(150deg,var(--green-deep),var(--green));color:#f2f6ee;border-radius:24px;padding:22px}
 .labhero .eyebrow{color:#cfe3c8}
 .labhero h1{font-size:27px;line-height:1.12;margin:9px 0}
 .labhero p{color:#d7e5d4;line-height:1.55;margin:0}
 .labmeta{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
 .tag{font-size:12px;padding:7px 10px;border-radius:99px;background:rgba(255,255,255,.14);color:#e8f0e4}
+
+/* Journal builder */
 .sideToggle{display:grid;grid-template-columns:1fr 1fr;border:1.5px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
 .sideToggle button{border:0;background:none;padding:11px 0;font-weight:800;font-size:12.5px;color:var(--muted);cursor:pointer}
 .sideToggle button.on{background:var(--green);color:#f2f6ee}
 .jgrid{display:grid;grid-template-columns:96px 1fr 128px;gap:8px;align-items:center;margin-bottom:9px}
 .jgrid select{width:100%;min-height:46px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);padding:0 10px;font-size:14.5px;font-family:var(--sans);appearance:none;-webkit-appearance:none}
 .jgrid input{width:100%;min-height:46px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);padding:0 12px;font-size:15px;font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+.jgrid select.invalid,.jgrid input.invalid{border-color:var(--bad);background:var(--badbg)}
+.sideToggle.invalid{border-color:var(--bad)}
 .jlabels{display:grid;grid-template-columns:96px 1fr 128px;gap:8px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:14px 0 7px;padding:0 2px}
 .hint{display:none;background:var(--brassbg);border:1px solid #ead9a4;border-radius:14px;padding:13px;margin-top:10px;color:#655532;line-height:1.5}
 .hint.open{display:block}
@@ -157,18 +185,46 @@ h2{font-size:21px;margin:26px 2px 12px}
 .successBox h3{margin:0;color:var(--ok)}
 .successBox p{color:#47624f}
 
-/* Glossary */
+/* Simulator */
+.meters{display:grid;gap:10px;margin-top:14px}
+.meter{display:grid;grid-template-columns:112px 1fr 44px;gap:10px;align-items:center;font-size:13px}
+.meter .mbar{height:9px;background:var(--line);border-radius:99px;overflow:hidden}
+.meter .mfill{height:100%;border-radius:99px;background:var(--green);transition:width .3s}
+.meter .mfill.warn{background:var(--brass)}
+.meter .mfill.crit{background:var(--bad)}
+.meter b{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;font-size:12.5px}
+.simfx{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.fx{font-size:12px;font-weight:800;padding:5px 9px;border-radius:99px}
+.fx.up{background:var(--okbg);color:var(--ok)}
+.fx.down{background:var(--badbg);color:var(--bad)}
+.fx.flat{background:#eef1ea;color:var(--muted)}
+
+/* Micro cards */
+.microcard{min-height:480px;display:flex;flex-direction:column}
+.microcard h1{font-size:27px;margin:8px 0}
+.microcard .def{font-size:16px;color:#465a4c;line-height:1.55;margin:4px 0 0}
+.points{margin:14px 0 0;padding:0;list-style:none}
+.points li{padding:9px 0 9px 26px;position:relative;color:var(--muted);line-height:1.45;border-bottom:1px solid var(--line);font-size:14.5px}
+.points li:last-child{border-bottom:0}
+.points li::before{content:'▸';position:absolute;left:4px;color:var(--brass)}
+
+/* Case stepper */
+.step{display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:center;cursor:pointer}
+.stepdot{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;background:var(--green-soft);color:var(--green);font-family:var(--serif)}
+.step.done .stepdot{background:var(--okbg);color:var(--ok)}
+.step.locked{opacity:.5;cursor:not-allowed}
+.step.current{border:2px solid var(--green)}
+
 .glossSearch{width:100%;border:1.5px solid var(--line);border-radius:14px;padding:14px;font-size:16px;outline:none;background:var(--card);color:var(--ink);font-family:var(--sans)}
 .term{padding:15px 2px;border-bottom:1px solid var(--line)}
 .term:last-child{border-bottom:0}
 .term b{color:var(--green)}
-.term small{color:var(--brass);font-weight:700;margin-left:6px}
 .term p{margin:5px 0 0;color:var(--muted);line-height:1.45}
 .muted{color:var(--muted)}
 
 /* Bottom nav */
-.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(660px,100%);display:grid;grid-template-columns:repeat(4,1fr);padding:8px 9px calc(8px + env(safe-area-inset-bottom));background:var(--card);border-top:1px solid var(--line);z-index:30}
-.bottom button{border:0;background:none;color:var(--muted);font-weight:800;padding:8px 2px;font-size:12px;cursor:pointer;font-family:var(--sans)}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(660px,100%);display:grid;grid-template-columns:repeat(5,1fr);padding:8px 6px calc(8px + env(safe-area-inset-bottom));background:var(--card);border-top:1px solid var(--line);z-index:30}
+.bottom button{border:0;background:none;color:var(--muted);font-weight:800;padding:8px 2px;font-size:11px;cursor:pointer;font-family:var(--sans)}
 .bottom button span{display:block;font-size:19px;margin-bottom:2px}
 .bottom button.on{color:var(--green)}
 
@@ -180,8 +236,6 @@ h2{font-size:21px;margin:26px 2px 12px}
 @keyframes fadeIn{from{opacity:0}}
 @keyframes sheetUp{from{transform:translateY(28px);opacity:.6}}
 @keyframes toastUp{from{transform:translate(-50%,10px);opacity:0}}
-.jgrid select.invalid,.jgrid input.invalid{border-color:var(--bad);background:var(--badbg)}
-.sideToggle.invalid{border-color:var(--bad)}
 .modalCard{width:min(660px,100%);background:var(--card);border-radius:24px 24px 0 0;padding:24px 18px calc(24px + env(safe-area-inset-bottom));max-height:85vh;overflow:auto}
 .modalCard h2{margin-top:0}
 .certificate{text-align:center;padding:25px 16px;border:2px solid #cbb26a;border-radius:20px;background:#fdf9ec}
@@ -195,6 +249,7 @@ h2{font-size:21px;margin:26px 2px 12px}
   .unitStatus{display:none}
   .jgrid,.jlabels{grid-template-columns:88px 1fr 104px}
   .lrow{grid-template-columns:1fr 78px 78px}
+  .seg button{font-size:12px}
 }
 </style>
 </head>
@@ -202,106 +257,159 @@ h2{font-size:21px;margin:26px 2px 12px}
 <div class="app">
 <header class="top">
   <div class="brand" onclick="go('home')"><div class="logo">BL</div><div><b>Budget Lab</b><small>Governmental accounting</small></div></div>
-  <button class="xp" onclick="toast('You earn XP for every correct check and journal entry.')">⚡ <span id="xp">0</span></button>
+  <button class="xp" onclick="toast('You earn XP in every mode: lessons, drills, the simulator, and the case study.')">⚡ <span id="xp">0</span></button>
 </header>
 
+<!-- HOME -->
 <section id="home" class="screen active">
   <div class="hero">
     <div class="eyebrow">Video lesson · General Fund</div>
     <h1>Estimated Revenues &amp; Expenditures</h1>
-    <p>Learn how a government records its budget in the books, recognizes actual revenues and expenditures, and closes the cycle at year end.</p>
-    <div class="progressline"><span>Lesson progress</span><b id="homePct">0%</b></div>
+    <p>Master the governmental budgetary cycle five ways: micro-lessons, entry drills, a live general ledger, a controller simulator, and a year-long case study.</p>
+    <div class="progressline"><span>Overall progress</span><b id="homePct">0%</b></div>
     <div class="bar"><div class="fill" id="homeFill"></div></div>
-    <button class="button" onclick="continueLearning()" id="continueBtn">Start lesson</button>
+    <button class="button" onclick="continueLearning()" id="continueBtn">Start learning</button>
   </div>
 
-  <h2>Next step</h2>
-  <div class="card next" onclick="continueLearning()">
-    <div class="icon" id="nextIcon">01</div>
-    <div><h3 id="nextTitle">The budget is law</h3><p id="nextDesc">Why the budget is posted to the ledger.</p></div>
+  <h2>Modes</h2>
+  <div class="card next" onclick="go('learn')">
+    <div class="icon">◉</div>
+    <div><h3>Learn</h3><p id="homeLearn">Core path 0/6 · Concepts 0/14</p></div>
+    <div class="chev">›</div>
+  </div>
+  <div class="card next" onclick="go('practice')">
+    <div class="icon">✎</div>
+    <div><h3>Practice</h3><p id="homePractice">Entry drills · Controller simulator</p></div>
+    <div class="chev">›</div>
+  </div>
+  <div class="card next" onclick="go('case')">
+    <div class="icon">⚑</div>
+    <div><h3>Case study</h3><p id="homeCase">City of Maplewood, one full fiscal year — 0/10 events</p></div>
+    <div class="chev">›</div>
+  </div>
+  <div class="card next" onclick="go('ledger')">
+    <div class="icon">⊤</div>
+    <div><h3>General Ledger</h3><p id="homeLedger">Live T-accounts, fed by the case study</p></div>
     <div class="chev">›</div>
   </div>
 
-  <h2>Your progress</h2>
+  <h2>Your numbers</h2>
   <div class="stats">
-    <div class="card stat"><b id="lessonCount">0/6</b><small>lessons</small></div>
-    <div class="card stat"><b id="labCount">0/6</b><small>entries</small></div>
-    <div class="card stat"><b id="accuracy">—</b><small>accuracy</small></div>
+    <div class="card stat"><b id="statStreak">0</b><small>best drill streak</small></div>
+    <div class="card stat"><b id="statAccuracy">—</b><small>quiz accuracy</small></div>
+    <div class="card stat"><b id="statXp">0</b><small>XP earned</small></div>
   </div>
 
-  <h2>What you'll master</h2>
-  <div class="card">
-    <h3>The complete budgetary cycle</h3>
-    <p>From the budget adoption entry to the closing entry, with the year's real transactions in between.</p>
-    <div class="conceptGrid">
-      <div class="concept"><b>4 key accounts</b><span>Estimated Revenues, Appropriations, Revenues, and Expenditures</span></div>
-      <div class="concept"><b>6 journal entries</b><span>that you will record yourself, line by line</span></div>
-      <div class="concept"><b>1 balancing account</b><span>Budgetary Fund Balance, with surplus and deficit cases</span></div>
-      <div class="concept"><b>1 statement</b><span>the budget-to-actual comparison</span></div>
-    </div>
-  </div>
   <a class="card linkrow" href="https://youtu.be/fi1LYjtgsDc" target="_blank" rel="noopener">
     <div class="icon">▶</div>
-    <div><h3>Original video</h3><p>Estimated Revenues &amp; Expenditures — Governmental Accounting. This lesson summarizes and practices its content.</p></div>
+    <div><h3>Original video</h3><p>Estimated Revenues &amp; Expenditures — Governmental Accounting. This app practices its content.</p></div>
     <div class="chev">›</div>
   </a>
-  <div class="card"><h3>Practice figures</h3><p>The governments and amounts in this app (Riverside, Maplewood, Granite County) are teaching examples, not real data.</p></div>
+  <div class="card"><h3>Practice figures</h3><p>The governments and amounts in this app are teaching examples, not real data.</p></div>
+  <button class="button danger" onclick="confirmReset()">Reset all progress</button>
 </section>
 
-<section id="path" class="screen">
+<!-- LEARN -->
+<section id="learn" class="screen">
   <div class="banner">
-    <div class="eyebrow" style="color:var(--green)">Path · 6 units</div>
+    <div class="eyebrow" style="color:var(--green)">Learn</div>
     <h1>From plan to closing</h1>
-    <p>Each unit has a short lesson, a quick check, and a journal entry that you record yourself.</p>
+    <p>Six guided units, fourteen concept micro-lessons, and the full glossary.</p>
   </div>
-  <div class="moduleHead"><h2>Budgetary cycle</h2><span id="pathPct">0% complete</span></div>
-  <div id="unitList"></div>
+  <div class="seg" role="tablist">
+    <button id="segPath" class="on" onclick="setLearnSeg('path')">Core path</button>
+    <button id="segConcepts" onclick="setLearnSeg('concepts')">Concepts</button>
+    <button id="segGlossary" onclick="setLearnSeg('glossary')">Glossary</button>
+  </div>
+  <div id="learnPath">
+    <div class="moduleHead"><h2>Budgetary cycle</h2><span id="pathPct">0% complete</span></div>
+    <div id="unitList"></div>
+  </div>
+  <div id="learnConcepts" style="display:none">
+    <div class="moduleHead"><h2>Micro-lessons</h2><span id="microPct">0/14</span></div>
+    <div id="microList"></div>
+  </div>
+  <div id="learnGlossary" style="display:none">
+    <h2>Terms</h2>
+    <input class="glossSearch" id="glossSearch" placeholder="Search Appropriations, Revenues..." oninput="renderGlossary()">
+    <div class="card" id="glossList" style="margin-top:12px"></div>
+  </div>
 </section>
 
+<!-- LESSON (core path) -->
 <section id="lesson" class="screen">
-  <div class="lessonTop"><button class="back" onclick="go('path')" aria-label="Back to path">‹</button><div class="lessonProgress"><div id="lessonBar"></div></div><b id="lessonStep">1/6</b></div>
+  <div class="lessonTop"><button class="back" onclick="go('learn')" aria-label="Back to Learn">‹</button><div class="lessonProgress"><div id="lessonBar"></div></div><b id="lessonStep">1/6</b></div>
   <div id="lessonContent"></div>
 </section>
 
+<!-- LAB (core path) -->
 <section id="lab" class="screen"><div id="labContent"></div></section>
 
-<section id="glossary" class="screen">
-  <div class="banner">
-    <div class="eyebrow" style="color:var(--green)">Quick reference</div>
-    <h1>Glossary</h1>
-    <p>The official terms as they appear on exams and in financial statements, in plain English.</p>
-  </div>
-  <h2>Terms</h2>
-  <input class="glossSearch" id="glossSearch" placeholder="Search Appropriations, Revenues..." oninput="renderGlossary()">
-  <div class="card" id="glossList" style="margin-top:12px"></div>
-  <button class="button danger" onclick="confirmReset()">Reset all progress</button>
+<!-- MICRO-LESSON -->
+<section id="micro" class="screen">
+  <div class="lessonTop"><button class="back" onclick="go('learn')" aria-label="Back to Learn">‹</button><div class="lessonProgress"><div id="microBar"></div></div><b id="microStep">1/14</b></div>
+  <div id="microContent"></div>
 </section>
+
+<!-- PRACTICE -->
+<section id="practice" class="screen">
+  <div class="banner">
+    <div class="eyebrow" style="color:var(--green)">Practice</div>
+    <h1>Train your hands</h1>
+    <p>Randomized journal entry drills, and a simulator that puts you in the controller's chair.</p>
+  </div>
+  <div class="seg" role="tablist">
+    <button id="segDrills" class="on" onclick="setPracticeSeg('drills')">Entry drills</button>
+    <button id="segSim" onclick="setPracticeSeg('sim')">Controller sim</button>
+  </div>
+  <div id="practiceDrills"></div>
+  <div id="practiceSim" style="display:none"></div>
+</section>
+
+<!-- LEDGER -->
+<section id="ledger" class="screen">
+  <div class="banner">
+    <div class="eyebrow" style="color:var(--green)">General Ledger</div>
+    <h1>Maplewood's books, live</h1>
+    <p>Every entry you post in the case study lands here. Watch balances build through the year.</p>
+  </div>
+  <div id="ledgerContent"></div>
+</section>
+
+<!-- CASE STUDY -->
+<section id="case" class="screen"><div id="caseContent"></div></section>
+
 </div>
 
 <nav class="bottom" aria-label="Main navigation">
   <button data-go="home" class="on" onclick="go('home')"><span>⌂</span>Home</button>
-  <button data-go="path" onclick="go('path')"><span>◉</span>Path</button>
-  <button data-go="lab" onclick="openCurrentLab()"><span>✎</span>Practice</button>
-  <button data-go="glossary" onclick="go('glossary')"><span>≡</span>Glossary</button>
+  <button data-go="learn" onclick="go('learn')"><span>◉</span>Learn</button>
+  <button data-go="practice" onclick="go('practice')"><span>✎</span>Practice</button>
+  <button data-go="ledger" onclick="go('ledger')"><span>⊤</span>Ledger</button>
+  <button data-go="case" onclick="go('case')"><span>⚑</span>Case</button>
 </nav>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div class="modal" id="modal" role="dialog" aria-modal="true" tabindex="-1"><div class="modalCard" id="modalCard"></div></div>
 
 <script>
+/* ============ Shared data ============ */
 const ACCOUNTS={
   er:{name:'Estimated Revenues',sub:'budgetary · debit balance'},
   ap:{name:'Appropriations',sub:'budgetary · credit balance'},
   bfb:{name:'Budgetary Fund Balance',sub:'budgetary · balancing account'},
+  enc:{name:'Encumbrances',sub:'budgetary · commitment'},
+  rfe:{name:'Reserve for Encumbrances',sub:'budgetary · offset to encumbrances'},
   rev:{name:'Revenues',sub:'actual · credit balance'},
   exp:{name:'Expenditures',sub:'actual · debit balance'},
   txr:{name:'Taxes Receivable',sub:'asset'},
   cash:{name:'Cash',sub:'asset'},
   vp:{name:'Vouchers Payable',sub:'liability'},
-  fb:{name:'Fund Balance',sub:'actual · equity'},
-  enc:{name:'Encumbrances',sub:'budgetary · commitment'}
+  dfi:{name:'Deferred Inflows',sub:'liability-like · next year’s revenue'},
+  fb:{name:'Fund Balance',sub:'actual · equity'}
 };
-const money=n=>'$'+n.toLocaleString('en-US');
+const money=n=>(n<0?'−$':'$')+Math.abs(n).toLocaleString('en-US');
 
+/* ============ Core path (6 units) ============ */
 const units=[
 {
   id:'law',title:'The budget is law',short:'Why it is posted to the ledger',
@@ -399,6 +507,56 @@ const units=[
 }
 ];
 
+/* ============ Concept micro-lessons ============ */
+const CONCEPTS=[
+{id:'fund',tag:'Structure',term:'Fund',def:'A self-balancing set of accounts — its own assets, liabilities, and balances — used to segregate resources by purpose.',
+ points:['Each fund has its own accounting equation and its own books.','Governments run many funds at once; each answers for its own resources.','“Self-balancing” means every fund’s debits equal its credits on their own.'],
+ check:{q:'A fund is best described as…',opts:['A bank account','A self-balancing accounting entity','A department of the government'],correct:1,why:'A fund is an accounting entity with its own complete set of accounts — not merely a bank account or a department.'}},
+{id:'genfund',tag:'Structure',term:'General Fund',def:'The government’s main operating fund: police, fire, administration — everything not required to be accounted for elsewhere.',
+ points:['Every government has exactly one General Fund.','It is the fund where budgetary accounting matters most.','GASB requires a budget-to-actual presentation for it.'],
+ check:{q:'How many General Funds does a government have?',opts:['One','One per department','As many as the council wants'],correct:0,why:'By definition there is a single General Fund; other activities get their own special funds.'}},
+{id:'modaccrual',tag:'Basis',term:'Modified accrual',def:'The measurement basis of governmental funds: focus on current financial resources, not long-term economic income.',
+ points:['Revenues: when measurable and available.','Expenditures: when the liability is incurred (with limited exceptions).','No depreciation in governmental funds — capital outlays are expenditures.'],
+ check:{q:'Under modified accrual, governmental funds measure…',opts:['Economic income like a business','Flows of current financial resources','Only cash movements'],correct:1,why:'It sits between cash and full accrual: the question is what current resources came in and went out.'}},
+{id:'available',tag:'Basis',term:'Measurable & available',def:'The two-part test for recognizing revenues: quantifiable, and collectible in time to pay the current period’s bills.',
+ points:['“Available” usually means collected within the period or shortly after (commonly 60 days).','Taxes levied but collectible far in the future are deferred, not revenue.','This is the reason modified accrual differs most from business accounting.'],
+ check:{q:'A tax collectible 10 months after year end is…',opts:['Revenue now','A deferred inflow, revenue later','Never revenue'],correct:1,why:'It fails the “available” test today, so it waits as a deferred inflow until it can pay current obligations.'}},
+{id:'estrev',tag:'Budgetary',term:'Estimated Revenues',def:'The budgetary account holding the year’s revenue plan. Debit balance — the mirror of actual Revenues.',
+ points:['Debited once, when the budget is adopted.','Untouched by real events during the year.','Removed by the closing reversal at year end.'],
+ exampleEntry:{caption:'At adoption',lines:[{s:'D',a:'er',m:750000},{s:'C',a:'ap',m:750000}]},
+ check:{q:'Estimated Revenues normally carries a…',opts:['Credit balance','Debit balance','Zero balance all year'],correct:1,why:'It is the mirror image of Revenues (credit), so the estimate sits as a debit all year.'}},
+{id:'approp',tag:'Budgetary',term:'Appropriations',def:'The legal ceiling on spending, by the council’s authority. Credit balance — the mirror of Expenditures.',
+ points:['Spending above the appropriation is a violation of law, not just bad budgeting.','Compared all year against Expenditures plus Encumbrances.','Amendable only by the body that adopted it.'],
+ check:{q:'Exceeding an appropriation is…',opts:['Poor form but legal','A legal violation','Fine if revenue is up'],correct:1,why:'The appropriation is the law’s spending ceiling; exceeding it breaks legal budgetary control.'}},
+{id:'bfb',tag:'Budgetary',term:'Budgetary Fund Balance',def:'The balancing account of the budget entry: credited for a planned surplus, debited for a planned deficit.',
+ points:['Exists only while the budget lives in the books.','Never mixes with actual Fund Balance.','Its side tells you the plan’s bottom line at a glance.'],
+ check:{q:'A credit to Budgetary Fund Balance at adoption signals…',opts:['A planned surplus','A planned deficit','An error'],correct:0,why:'Estimated Revenues exceeded Appropriations, so the plan strengthens reserves.'}},
+{id:'rev',tag:'Actual',term:'Revenues',def:'The actual inflows recognized during the year — the real thing the estimate is compared against.',
+ points:['Credit balance, as in commercial accounting.','Recognized under the measurable-and-available test.','Closed to Fund Balance at year end.'],
+ check:{q:'Recording actual revenue touches Estimated Revenues…',opts:['Always','Never','Only at year end'],correct:1,why:'Plan and actual live in separate accounts; the estimate is never adjusted by real events.'}},
+{id:'exp',tag:'Actual',term:'Expenditures vs expenses',def:'Expenditures measure uses of current financial resources; expenses measure economic consumption. Governmental funds use expenditures.',
+ points:['Buying a truck: full expenditure now, no depreciation later.','Recognized when the liability is incurred.','Closed to Fund Balance at year end.'],
+ check:{q:'A governmental fund buys equipment for $80,000 cash. It records…',opts:['An asset, then depreciation','An expenditure of $80,000','Nothing until year end'],correct:1,why:'Capital outlays consume current financial resources, so the fund records the full expenditure now.'}},
+{id:'enc',tag:'Control',term:'Encumbrances',def:'Budget set aside when a purchase order is issued — a commitment, before any liability exists.',
+ points:['Debit Encumbrances, credit Reserve for Encumbrances at the PO.','Reversed when the goods or services arrive.','Keeps the “remaining authority” number honest mid-year.'],
+ exampleEntry:{caption:'Purchase order issued',lines:[{s:'D',a:'enc',m:40000},{s:'C',a:'rfe',m:40000}]},
+ check:{q:'An encumbrance is recorded when…',opts:['The invoice arrives','The purchase order is issued','The check is written'],correct:1,why:'The commitment begins at the PO; the expenditure comes later, when the goods arrive.'}},
+{id:'rfe',tag:'Control',term:'Reserve for Encumbrances',def:'The credit-side twin of Encumbrances: it shows how much fund balance is committed to open orders.',
+ points:['Rises and falls in lockstep with Encumbrances.','At year end, open amounts often carry into next year’s budget.','Zero when no purchase orders are outstanding.'],
+ check:{q:'When goods arrive, the encumbrance pair is…',opts:['Left in place','Reversed for the PO amount','Doubled'],correct:1,why:'The commitment is replaced by a real expenditure and liability, so the pair is reversed.'}},
+{id:'vp',tag:'Actual',term:'Vouchers Payable',def:'The liability recorded when an invoice is approved for payment — the government’s accounts payable.',
+ points:['Born together with the expenditure.','Cleared when the check is issued.','A control point: only approved vouchers get paid.'],
+ check:{q:'Paying an approved voucher debits…',opts:['Expenditures again','Vouchers Payable','Appropriations'],correct:1,why:'The expenditure was recorded at approval; payment just clears the liability against cash.'}},
+{id:'b2a',tag:'Reporting',term:'Budget-to-actual statement',def:'The required comparison of original budget, final budget, and actual results for the General Fund.',
+ points:['Variances are labeled favorable or unfavorable.','Actuals are shown on the budgetary basis for a fair comparison.','It is the public’s scoreboard for budget discipline.'],
+ check:{q:'A favorable expenditure variance means actual spending was…',opts:['Above appropriations','Below appropriations','Exactly on budget'],correct:1,why:'Spending under the legal ceiling is favorable; over it is unfavorable — and illegal.'}},
+{id:'close',tag:'Closing',term:'Closing entries',def:'Two jobs at year end: reverse the budget exactly, and close the actual accounts to Fund Balance.',
+ points:['Budgetary accounts leave by the exact reverse of adoption.','Revenues and Expenditures close to Fund Balance.','After closing, only real balance-sheet accounts remain.'],
+ exampleEntry:{caption:'Closing the actuals (revenues exceeded expenditures)',lines:[{s:'D',a:'rev',m:500000},{s:'C',a:'exp',m:460000},{s:'C',a:'fb',m:40000}]},
+ check:{q:'After all closing entries, Estimated Revenues shows…',opts:['The year’s variance','A zero balance','Next year’s estimate'],correct:1,why:'The reversal removes it completely; budgetary accounts never carry a balance across years.'}}
+];
+
+/* ============ Glossary ============ */
 const glossary=[
 ['Fund','A self-balancing accounting entity with its own books and its own accounting equation.'],
 ['General Fund','The main fund: it operates the government’s day-to-day services.'],
@@ -409,10 +567,12 @@ const glossary=[
 ['Revenues','The period’s actual recognized revenues. Credit balance.'],
 ['Expenditures','The actual use of current financial resources. Debit balance. No depreciation included.'],
 ['Encumbrance','Budget set aside for an issued purchase order, before the goods or services arrive.'],
+['Reserve for Encumbrances','Credit-side twin of Encumbrances; shows fund balance committed to open orders.'],
 ['Modified accrual','The accounting basis of governmental funds: revenues when measurable and available.'],
 ['Measurable & available','The revenue recognition test: quantifiable and collectible in time to pay current-period obligations.'],
 ['Taxes Receivable','The right to collect that arises when taxes are levied.'],
 ['Vouchers Payable','Liability for approved invoices awaiting payment.'],
+['Deferred Inflows','Resources received that belong to a future period — next year’s revenue, not this year’s.'],
 ['Fund Balance','Actual account: the fund’s accumulated net resources. Distinct from the budgetary version.'],
 ['Variance','The difference between budget and actual; favorable or unfavorable.'],
 ['Budget-to-actual','The comparative statement GASB requires for the General Fund.'],
@@ -420,20 +580,149 @@ const glossary=[
 ['GASB','Governmental Accounting Standards Board: sets accounting standards for U.S. state and local governments.']
 ];
 
-const defaultState={lessons:[],labs:[],quizAttempts:0,quizCorrect:0,xp:0};
+/* ============ Case study: City of Maplewood, one fiscal year ============ */
+const CASE=[
+{date:'January 1',title:'Adopt the budget',story:'The city council adopts the FY budget: estimated revenues of $1,000,000 and appropriations of $950,000. As controller, you open the year’s books by recording the plan.',
+ lines:[{s:'D',a:'er',m:1000000},{s:'C',a:'ap',m:950000},{s:'C',a:'bfb',m:50000}],
+ hint:'Debit the full estimate, credit the appropriation, and credit the $50,000 planned surplus to Budgetary Fund Balance.',
+ note:'The plan is on the books. Budgetary Fund Balance shows a planned surplus of $50,000.'},
+{date:'January 15',title:'Levy property taxes',story:'The annual property tax levy goes out: $900,000, all considered measurable and available.',
+ lines:[{s:'D',a:'txr',m:900000},{s:'C',a:'rev',m:900000}],
+ hint:'A receivable is born and actual revenue is recognized. The budgetary accounts are not touched.',
+ note:'Revenues (actual) now stands at $900,000 against a $1,000,000 estimate.'},
+{date:'February – June',title:'Collections come in',story:'Through spring, taxpayers pay $820,000 of the levy.',
+ lines:[{s:'D',a:'cash',m:820000},{s:'C',a:'txr',m:820000}],
+ hint:'Cash comes in and the receivable shrinks. No new revenue — it was recognized at the levy.',
+ note:'$80,000 of the levy is still outstanding in Taxes Receivable.'},
+{date:'March 10',title:'Fees and licenses',story:'Permit fees and business licenses bring in $120,000 in cash, recognized as revenue when received.',
+ lines:[{s:'D',a:'cash',m:120000},{s:'C',a:'rev',m:120000}],
+ hint:'Cash revenue: debit Cash, credit Revenues.',
+ note:'Total actual revenues reach $1,020,000 — already above the estimate.'},
+{date:'April 3',title:'Order the fire engine',story:'The fire department issues a purchase order for a new engine: $200,000. Nothing has been received yet, but the money must be set aside.',
+ lines:[{s:'D',a:'enc',m:200000},{s:'C',a:'rfe',m:200000}],
+ hint:'A purchase order creates an encumbrance, not an expenditure: debit Encumbrances, credit Reserve for Encumbrances.',
+ note:'Available authority drops: $950,000 appropriated − $200,000 committed.'},
+{date:'May 20',title:'The engine arrives',story:'The fire engine is delivered with an invoice for $198,000 — slightly under the PO. Reverse the $200,000 encumbrance and record the actual expenditure.',
+ lines:[{s:'D',a:'rfe',m:200000},{s:'C',a:'enc',m:200000},{s:'D',a:'exp',m:198000},{s:'C',a:'vp',m:198000}],
+ hint:'Four lines: reverse the encumbrance pair at the PO amount ($200,000), then record the expenditure and voucher at the invoice amount ($198,000).',
+ note:'The commitment became a real liability. The $2,000 difference returns to available authority.'},
+{date:'June – November',title:'Payroll and services',story:'Through the year, salaries and contracted services are paid directly in cash: $732,000 in total.',
+ lines:[{s:'D',a:'exp',m:732000},{s:'C',a:'cash',m:732000}],
+ hint:'Expenditures paid immediately: debit Expenditures, credit Cash.',
+ note:'Total expenditures: $930,000 of the $950,000 appropriated.'},
+{date:'July 10',title:'Pay the fire engine invoice',story:'The approved voucher for the fire engine is paid.',
+ lines:[{s:'D',a:'vp',m:198000},{s:'C',a:'cash',m:198000}],
+ hint:'The expenditure was already recorded at approval. Payment clears the liability against cash.',
+ note:'Vouchers Payable returns to zero.'},
+{date:'December 31',title:'Close the budget',story:'Year end. First closing job: remove the budgetary accounts with the exact reverse of the January 1 entry.',closing:true,
+ lines:[{s:'D',a:'ap',m:950000},{s:'D',a:'bfb',m:50000},{s:'C',a:'er',m:1000000}],
+ hint:'Every account switches sides from adoption, for the same original amounts.',
+ note:'The plan has left the books. Only actual accounts remain.'},
+{date:'December 31',title:'Close the actuals',story:'Second closing job: close Revenues ($1,020,000) and Expenditures ($930,000) to Fund Balance.',closing:true,
+ lines:[{s:'D',a:'rev',m:1020000},{s:'C',a:'exp',m:930000},{s:'C',a:'fb',m:90000}],
+ hint:'Debit Revenues to zero it, credit Expenditures to zero it, and credit the $90,000 difference to Fund Balance.',
+ note:'Fund Balance grows by $90,000 — better than the $50,000 the budget planned.'}
+];
+
+/* ============ Drills (randomized) ============ */
+const TOWNS=['Cedar Falls','Elk River','Port Union','Ashford','North Haven','Millbrook','Stone Ridge','Fair Oaks'];
+const rk=(min,max)=>Math.floor(min+Math.random()*(max-min+1));
+const town=()=>TOWNS[rk(0,TOWNS.length-1)];
+const DRILLS=[
+()=>{const x=rk(300,900)*1000,t=town();return{scenario:`The Village of ${t} adopts a balanced budget: estimated revenues of ${money(x)} and appropriations of ${money(x)}. Record the adoption.`,lines:[{s:'D',a:'er',m:x},{s:'C',a:'ap',m:x}],hint:'Balanced budget: debit Estimated Revenues and credit Appropriations for the same amount.'}},
+()=>{const a=rk(500,1200)*1000,d=rk(20,90)*1000,t=town();return{scenario:`The City of ${t} adopts estimated revenues of ${money(a)} and appropriations of ${money(a-d)}. Record the adoption.`,lines:[{s:'D',a:'er',m:a},{s:'C',a:'ap',m:a-d},{s:'C',a:'bfb',m:d}],hint:'A planned surplus: the difference is credited to Budgetary Fund Balance.'}},
+()=>{const a=rk(500,1200)*1000,d=rk(20,90)*1000,t=town();return{scenario:`${t} County estimates revenues of ${money(a)} but appropriates ${money(a+d)}, drawing on reserves. Record the adoption.`,lines:[{s:'D',a:'er',m:a},{s:'D',a:'bfb',m:d},{s:'C',a:'ap',m:a+d}],hint:'A planned deficit: Budgetary Fund Balance is debited for the difference.'}},
+()=>{const x=rk(200,900)*1000,t=town();return{scenario:`${t} levies property taxes of ${money(x)}, all measurable and available. Record the levy.`,lines:[{s:'D',a:'txr',m:x},{s:'C',a:'rev',m:x}],hint:'Debit the receivable, credit actual Revenues.'}},
+()=>{const x=rk(150,700)*1000,t=town();return{scenario:`${t} collects ${money(x)} of previously levied property taxes. Record the collection.`,lines:[{s:'D',a:'cash',m:x},{s:'C',a:'txr',m:x}],hint:'No new revenue — the levy already recognized it. Cash up, receivable down.'}},
+()=>{const x=rk(40,300)*1000,t=town();return{scenario:`${t} receives and approves an invoice of ${money(x)} for contracted services. Record it.`,lines:[{s:'D',a:'exp',m:x},{s:'C',a:'vp',m:x}],hint:'Debit Expenditures, credit Vouchers Payable.'}},
+()=>{const x=rk(40,300)*1000,t=town();return{scenario:`${t} pays a previously approved voucher of ${money(x)}. Record the payment.`,lines:[{s:'D',a:'vp',m:x},{s:'C',a:'cash',m:x}],hint:'The expenditure already exists. Clear the liability against cash.'}},
+()=>{const x=rk(50,400)*1000,t=town();return{scenario:`${t} pays ${money(x)} of payroll directly in cash. Record it.`,lines:[{s:'D',a:'exp',m:x},{s:'C',a:'cash',m:x}],hint:'An expenditure paid immediately: debit Expenditures, credit Cash.'}},
+()=>{const x=rk(30,250)*1000,t=town();return{scenario:`${t} issues a purchase order for equipment: ${money(x)}. Nothing received yet. Record it.`,lines:[{s:'D',a:'enc',m:x},{s:'C',a:'rfe',m:x}],hint:'A PO creates an encumbrance: debit Encumbrances, credit Reserve for Encumbrances.'}},
+()=>{const po=rk(50,250)*1000,inv=po-rk(1,8)*1000,t=town();return{scenario:`${t}'s equipment arrives. The PO was ${money(po)}; the invoice is ${money(inv)}. Reverse the encumbrance and record the expenditure (4 lines).`,lines:[{s:'D',a:'rfe',m:po},{s:'C',a:'enc',m:po},{s:'D',a:'exp',m:inv},{s:'C',a:'vp',m:inv}],hint:'Reverse the encumbrance pair at the PO amount, then record expenditure and voucher at the invoice amount.'}},
+()=>{const a=rk(500,1100)*1000,d=rk(20,80)*1000,t=town();return{scenario:`Year end in ${t}. Reverse the budget recorded at adoption: Estimated Revenues ${money(a)}, Appropriations ${money(a-d)}, Budgetary Fund Balance ${money(d)} credit.`,lines:[{s:'D',a:'ap',m:a-d},{s:'D',a:'bfb',m:d},{s:'C',a:'er',m:a}],hint:'Exact reverse of adoption: every account switches sides, same amounts.'}},
+()=>{const r=rk(600,1200)*1000,e=r-rk(30,120)*1000,t=town();return{scenario:`Close ${t}'s actual accounts: Revenues ${money(r)}, Expenditures ${money(e)}. Close both to Fund Balance.`,lines:[{s:'D',a:'rev',m:r},{s:'C',a:'exp',m:e},{s:'C',a:'fb',m:r-e}],hint:'Zero out Revenues (debit) and Expenditures (credit); the difference goes to Fund Balance.'}}
+];
+
+/* ============ Controller simulator ============ */
+const SIM=[
+{title:'The shortfall',story:'It is July. Sales tax receipts are tracking $60,000 below the estimate, and the trend looks persistent. The city manager asks what to do.',
+ opts:[
+  {label:'Recommend a budget amendment cutting appropriations by $60,000',fx:{c:8,t:6,r:0},verdict:'best',why:'Budgets are amendable law. Matching the spending ceiling to real resources is exactly what budgetary control is for.'},
+  {label:'Wait — the holiday quarter might recover it',fx:{c:-10,t:-8,r:-60000},verdict:'bad',why:'Hope is not a control. If the shortfall holds, spending authority now exceeds real resources, and reserves quietly absorb the gap.'},
+  {label:'Book an anticipated state grant that has not been awarded yet',fx:{c:-20,t:-5,r:-60000},verdict:'bad',why:'Not measurable, not available, not awarded — recognizing it violates modified accrual and invites an audit finding.'}]},
+{title:'The overtime request',story:'The police chief wants to exceed the department’s appropriation by $15,000 for overtime — “we’ll square it up later.”',
+ opts:[
+  {label:'Deny it until the council approves an amendment or transfer',fx:{c:8,t:2,r:0},verdict:'best',why:'Spending beyond an appropriation is a legal violation. The answer is authorization first, spending second.'},
+  {label:'Allow the overspend and fix it at year end',fx:{c:-15,t:-6,r:-15000},verdict:'bad',why:'“Fix it later” is how audit findings are born. The violation happens at the moment of overspending.'},
+  {label:'Process a budget transfer from an underspent line, per policy',fx:{c:6,t:4,r:0},verdict:'ok',why:'If policy delegates transfer authority, this is a legitimate, documented way to fund the need.'}]},
+{title:'The year-end purchase order',story:'December 28. A $40,000 purchase order for radios is still open — the goods will not arrive until February.',
+ opts:[
+  {label:'Carry it as an encumbrance and reappropriate next year',fx:{c:8,t:0,r:0},verdict:'best',why:'No goods, no liability, no expenditure. The encumbrance carries the commitment forward honestly.'},
+  {label:'Record the expenditure now to use this year’s budget',fx:{c:-12,t:0,r:0},verdict:'bad',why:'Recording an expenditure before the liability exists overstates this year and understates next.'},
+  {label:'Cancel the PO so the year ends looking thrifty',fx:{c:0,t:-8,r:0},verdict:'bad',why:'The radios are needed. Optics-driven cancellations damage operations and the council’s trust.'}]},
+{title:'The deficit budget',story:'For next year, the council proposes appropriations $80,000 above estimated revenues. Reserves stand at your current balance.',
+ opts:[
+  {label:'Record it as adopted, and formally flag the reserve drawdown',fx:{c:6,t:6,r:0},verdict:'best',why:'A planned deficit financed by reserves is legal. The controller records the adopted budget and advises transparently.'},
+  {label:'Refuse to record a deficit budget',fx:{c:-8,t:-10,r:0},verdict:'bad',why:'The controller does not veto the council. The budget as adopted is what goes in the books.'},
+  {label:'Quietly raise the revenue estimate so it looks balanced',fx:{c:-25,t:-10,r:0},verdict:'bad',why:'Inflating estimates is the cardinal sin of budgeting — it corrupts every control downstream.'}]},
+{title:'The early payments',story:'In December, several taxpayers prepay $25,000 of next year’s property taxes.',
+ opts:[
+  {label:'Credit Deferred Inflows — it is next year’s revenue',fx:{c:8,t:0,r:0},verdict:'best',why:'The resources belong to the period they are levied for. Deferred inflows hold them until then.'},
+  {label:'Recognize it as this year’s revenue',fx:{c:-12,t:0,r:0},verdict:'bad',why:'It fails the recognition test for this period and overstates this year’s results.'},
+  {label:'Hold the checks undeposited until January',fx:{c:-20,t:-10,r:0},verdict:'bad',why:'Undeposited receipts are a basic internal control failure, whatever the accounting intent.'}]},
+{title:'The January invoice',story:'On January 5, an invoice arrives for snow removal services performed December 18–22.',
+ opts:[
+  {label:'Accrue it as a December expenditure',fx:{c:8,t:0,r:0},verdict:'best',why:'The liability was incurred when the services were performed. Modified accrual recognizes it in December.'},
+  {label:'Record it in January, when it arrived',fx:{c:-10,t:0,r:0},verdict:'bad',why:'The invoice date does not control. December’s books would understate expenditures.'},
+  {label:'Split it between the years to be safe',fx:{c:-15,t:0,r:0},verdict:'bad',why:'Arbitrary splitting is not a basis of accounting. The services were December’s.'}]},
+{title:'The windfall',story:'Final tally: actual revenues beat the estimate by $30,000. The parks director already has ideas for it.',
+ opts:[
+  {label:'Report the favorable variance; let the council decide its use',fx:{c:6,t:6,r:30000},verdict:'best',why:'Extra revenue is not extra spending authority. It flows to fund balance until the council appropriates it.'},
+  {label:'Let parks spend it — the money is clearly there',fx:{c:-20,t:-8,r:0},verdict:'bad',why:'Cash without appropriation is still unauthorized. Spending it violates budgetary control.'},
+  {label:'Support a supplemental appropriation request for a one-time need',fx:{c:6,t:8,r:30000},verdict:'best',why:'The lawful route: the council appropriates, then the money moves. Trust grows both ways.'}]}
+];
+
+/* ============ State ============ */
+const defaultState={lessons:[],labs:[],micro:[],quizAttempts:0,quizCorrect:0,xp:0,caseStep:0,simDone:false,simBest:'',drills:{streak:0,best:0,total:0,correct:0}};
 let state=loadState();
 let currentLesson=0,selectedAnswer=null,quizChecked=false,currentLab=0;
+let currentMicro=0,microAnswer=null,microChecked=false;
+let learnSeg='path',practiceSeg='drills';
+let drill=null,drillMissed=false,drillSolved=false;
+let sim=null;
 
-function loadState(){try{return Object.assign({},defaultState,JSON.parse(localStorage.getItem('budgetLabGov')||'{}'))}catch(e){return {...defaultState}}}
+function loadState(){
+  try{
+    const raw=JSON.parse(localStorage.getItem('budgetLabGov')||'{}');
+    return {...defaultState,...raw,drills:{...defaultState.drills,...(raw.drills||{})}};
+  }catch(e){return {...defaultState}}
+}
 function save(){localStorage.setItem('budgetLabGov',JSON.stringify(state));updateAll()}
-function go(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.bottom button').forEach(x=>{const on=x.dataset.go===id;x.classList.toggle('on',on);if(on)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});if(id==='path')renderPath();if(id==='glossary')renderGlossary();window.scrollTo({top:0,left:0,behavior:'instant'})}
-function unlocked(i){return i===0||state.labs.includes(i-1)}
-function nextIndex(){for(let i=0;i<units.length;i++)if(!state.labs.includes(i))return i;return units.length-1}
-function continueLearning(){const i=nextIndex();if(!state.lessons.includes(i))openLesson(i);else openLab(i)}
-function openLesson(i){if(!unlocked(i))return toast('Complete the previous journal entry to unlock this unit.');currentLesson=i;selectedAnswer=null;quizChecked=false;renderLesson();go('lesson')}
-function openLab(i){if(!unlocked(i))return toast('This practice is still locked.');currentLab=i;renderLab();go('lab')}
-function openCurrentLab(){openLab(nextIndex())}
 
+/* ============ Navigation ============ */
+const SCREEN_TAB={home:'home',learn:'learn',lesson:'learn',lab:'learn',micro:'learn',practice:'practice',ledger:'ledger',case:'case'};
+function go(id){
+  document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const tab=SCREEN_TAB[id];
+  document.querySelectorAll('.bottom button').forEach(x=>{const on=x.dataset.go===tab;x.classList.toggle('on',on);if(on)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});
+  if(id==='learn')renderLearn();
+  if(id==='practice')renderPractice();
+  if(id==='ledger')renderLedger();
+  if(id==='case')renderCase();
+  window.scrollTo({top:0,left:0,behavior:'instant'});
+}
+function continueLearning(){
+  if(state.labs.length<units.length){const i=nextUnit();if(!state.lessons.includes(i))openLesson(i);else openLab(i);return}
+  if(state.caseStep<CASE.length)return go('case');
+  if(state.micro.length<CONCEPTS.length){go('learn');setLearnSeg('concepts');return}
+  if(!state.simDone){go('practice');setPracticeSeg('sim');return}
+  go('practice');
+}
+function nextUnit(){for(let i=0;i<units.length;i++)if(!state.labs.includes(i))return i;return units.length-1}
+function unlocked(i){return i===0||state.labs.includes(i-1)}
+
+/* ============ Shared renderers ============ */
 function ledgerHTML(entry){
   const debits=entry.lines.filter(l=>l.s==='D'),credits=entry.lines.filter(l=>l.s==='C');
   const td=debits.reduce((s,l)=>s+l.m,0),tc=credits.reduce((s,l)=>s+l.m,0);
@@ -446,6 +735,114 @@ function compareHTML(cmp){
   return `<div class="tableWrap"><table><thead><tr><th>Item</th><th class="num">Budget</th><th class="num">Actual</th><th>Variance</th></tr></thead><tbody>${rows}</tbody></table></div>`;
 }
 
+/* Journal entry builder (shared by path labs, drills, case) */
+const builders={};
+function accountOptions(){return `<option value="" selected disabled>Account…</option>`+Object.keys(ACCOUNTS).map(k=>`<option value="${k}">${ACCOUNTS[k].name}</option>`).join('')}
+function builderHTML(prefix,n){
+  builders[prefix]=Array(n).fill(null);
+  return `<div class="jlabels"><span>Side</span><span>Account</span><span>Amount</span></div>`+
+  Array.from({length:n},(_,i)=>`
+    <div class="jgrid" data-prow="${prefix}-${i}">
+      <div class="sideToggle" role="group" aria-label="Side of line ${i+1}">
+        <button type="button" data-side="D" aria-pressed="false" onclick="setSide('${prefix}',${i},'D')">Debit</button>
+        <button type="button" data-side="C" aria-pressed="false" onclick="setSide('${prefix}',${i},'C')">Credit</button>
+      </div>
+      <select id="${prefix}-acct-${i}" aria-label="Account for line ${i+1}" onchange="this.classList.remove('invalid')">${accountOptions()}</select>
+      <input id="${prefix}-amt-${i}" inputmode="numeric" autocomplete="off" placeholder="0" aria-label="Amount for line ${i+1}" oninput="this.classList.remove('invalid')">
+    </div>`).join('');
+}
+function setSide(p,i,s){builders[p][i]=s;const g=document.querySelector(`[data-prow="${p}-${i}"] .sideToggle`);g.classList.remove('invalid');g.querySelectorAll('button').forEach(b=>{const on=b.dataset.side===s;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)})}
+function parseAmt(v){const d=(v||'').replace(/[^\d]/g,'');return d?parseInt(d,10):0}
+function validateBuilder(prefix,expected,box){
+  const n=expected.length,rows=[];let firstInvalid=null;
+  for(let i=0;i<n;i++){
+    const sel=document.getElementById(`${prefix}-acct-${i}`),inp=document.getElementById(`${prefix}-amt-${i}`),tog=document.querySelector(`[data-prow="${prefix}-${i}"] .sideToggle`);
+    const a=sel.value,m=parseAmt(inp.value),s=builders[prefix][i];
+    if(!s){tog.classList.add('invalid');firstInvalid=firstInvalid||tog.querySelector('button')}
+    if(!a){sel.classList.add('invalid');firstInvalid=firstInvalid||sel}
+    if(!m){inp.classList.add('invalid');firstInvalid=firstInvalid||inp}
+    rows.push({s,a,m});
+  }
+  if(firstInvalid){box.innerHTML='<div class="feedback badfb">Complete the highlighted fields: every line needs a side, an account, and an amount.</div>';firstInvalid.focus();return 'incomplete'}
+  const td=rows.filter(r=>r.s==='D').reduce((x,r)=>x+r.m,0),tc=rows.filter(r=>r.s==='C').reduce((x,r)=>x+r.m,0);
+  if(td!==tc){box.innerHTML=`<div class="feedback badfb"><b>The entry doesn't balance.</b><br>Debits ${money(td)} vs credits ${money(tc)}. In every journal entry, debits = credits.</div>`;return false}
+  const wrongAcct=rows.find(r=>!expected.some(l=>l.a===r.a));
+  if(wrongAcct){box.innerHTML=`<div class="feedback badfb"><b>${ACCOUNTS[wrongAcct.a].name}</b> doesn't belong in this entry. Review which accounts the scenario involves.</div>`;return false}
+  const key=r=>r.s+'|'+r.a+'|'+r.m;
+  if(expected.map(key).sort().join(';')!==rows.map(key).sort().join(';')){
+    const sideIssue=rows.find(r=>expected.some(l=>l.a===r.a&&l.s!==r.s&&!expected.some(x=>x.a===r.a&&x.s===r.s)));
+    if(sideIssue){box.innerHTML=`<div class="feedback badfb"><b>${ACCOUNTS[sideIssue.a].name}</b> is on the wrong side. Remember each account's normal balance.</div>`;return false}
+    box.innerHTML='<div class="feedback badfb">The accounts and sides are right, but an <b>amount</b> doesn’t match the scenario. Check the figures.</div>';return false;
+  }
+  return true;
+}
+function toggleHint(id){document.getElementById(id).classList.toggle('open')}
+
+/* ============ Learn ============ */
+function setLearnSeg(s){learnSeg=s;renderLearn()}
+function renderLearn(){
+  ['Path','Concepts','Glossary'].forEach(x=>{document.getElementById('seg'+x).classList.toggle('on',learnSeg===x.toLowerCase());document.getElementById('learn'+x).style.display=learnSeg===x.toLowerCase()?'':'none'});
+  if(learnSeg==='path')renderPath();
+  if(learnSeg==='concepts')renderMicroList();
+  if(learnSeg==='glossary')renderGlossary();
+}
+function renderPath(){
+  const el=document.getElementById('unitList');if(!el)return;
+  el.innerHTML=units.map((u,i)=>{
+    const isDone=state.labs.includes(i),isCurrent=i===nextUnit()&&!isDone,isLocked=!unlocked(i);
+    return `<div class="card unit ${isDone?'done':''} ${isCurrent?'current':''} ${isLocked?'locked':''}" onclick="${isLocked?'lockedMsg()':`openLesson(${i})`}">
+      <div class="icon">${isDone?'✓':String(i+1).padStart(2,'0')}</div>
+      <div><h3>${u.title}</h3><p>${u.short}</p></div>
+      <div class="unitStatus ${isDone?'ok':''}">${isDone?'COMPLETE':isLocked?'LOCKED':state.lessons.includes(i)?'ENTRY':'LESSON'}</div></div>`}).join('');
+  document.getElementById('pathPct').textContent=Math.round((state.lessons.length+state.labs.length)/(units.length*2)*100)+'% complete';
+}
+function lockedMsg(){toast('Complete the previous unit first.')}
+
+function renderMicroList(){
+  document.getElementById('microPct').textContent=state.micro.length+'/'+CONCEPTS.length;
+  document.getElementById('microList').innerHTML=CONCEPTS.map((c,i)=>{
+    const done=state.micro.includes(c.id);
+    return `<div class="card unit ${done?'done':''}" onclick="openMicro(${i})">
+      <div class="icon">${done?'✓':String(i+1).padStart(2,'0')}</div>
+      <div><h3>${c.term}</h3><p><span class="pillTag">${c.tag}</span></p></div>
+      <div class="unitStatus ${done?'ok':''}">${done?'DONE':'2 MIN'}</div></div>`}).join('');
+}
+function openMicro(i){currentMicro=i;microAnswer=null;microChecked=false;renderMicro();go('micro')}
+function renderMicro(){
+  const c=CONCEPTS[currentMicro],done=state.micro.includes(c.id);
+  document.getElementById('microBar').style.width=((currentMicro+1)/CONCEPTS.length*100)+'%';
+  document.getElementById('microStep').textContent=(currentMicro+1)+'/'+CONCEPTS.length;
+  document.getElementById('microContent').innerHTML=`<article class="card microcard">
+  <div><span class="pillTag">${c.tag}</span> ${done?'<span class="pillTag" style="background:var(--okbg);color:var(--ok)">Done</span>':''}</div>
+  <h1>${c.term}</h1>
+  <p class="def">${c.def}</p>
+  <ul class="points">${c.points.map(p=>`<li>${p}</li>`).join('')}</ul>
+  ${c.exampleEntry?ledgerHTML(c.exampleEntry):''}
+  <h3 class="quizTitle">Quick check</h3><p>${c.check.q}</p>
+  <div class="choices">${c.check.opts.map((o,i)=>`<button class="${microAnswer===i?'selected':''}" aria-pressed="${microAnswer===i}" onclick="chooseMicro(${i})">${o}</button>`).join('')}</div>
+  ${microChecked?`<div class="feedback ${microAnswer===c.check.correct?'good':'badfb'}">${microAnswer===c.check.correct?'Correct. ':'Not quite. '}${c.check.why}</div>`:''}
+  <div class="actions">
+    <button class="button" onclick="checkMicro()">${microChecked&&microAnswer===c.check.correct?(currentMicro<CONCEPTS.length-1?'Next concept':'Back to concepts'):'Check answer'}</button>
+    <button class="button secondary" onclick="go('learn')">Back to concepts</button>
+  </div></article>`;
+}
+function chooseMicro(i){microAnswer=i;microChecked=false;renderMicro()}
+function checkMicro(){
+  const c=CONCEPTS[currentMicro];
+  if(microAnswer===null)return toast('Select an answer.');
+  if(microChecked&&microAnswer===c.check.correct){
+    if(currentMicro<CONCEPTS.length-1)return openMicro(currentMicro+1);
+    return go('learn');
+  }
+  microChecked=true;
+  const right=microAnswer===c.check.correct,firstTime=right&&!state.micro.includes(c.id);
+  state={...state,quizAttempts:state.quizAttempts+1,quizCorrect:state.quizCorrect+(right?1:0),micro:firstTime?[...state.micro,c.id]:state.micro,xp:state.xp+(firstTime?5:0)};
+  save();renderMicro();
+}
+
+/* ============ Core path lesson + lab ============ */
+function openLesson(i){if(!unlocked(i))return toast('Complete the previous journal entry to unlock this unit.');currentLesson=i;selectedAnswer=null;quizChecked=false;renderLesson();go('lesson')}
+function openLab(i){if(!unlocked(i))return toast('This practice is still locked.');currentLab=i;renderLab();go('lab')}
 function renderLesson(){
   const u=units[currentLesson];
   document.getElementById('lessonBar').style.width=((currentLesson+1)/units.length*100)+'%';
@@ -463,7 +860,7 @@ function renderLesson(){
   ${quizChecked?`<div class="feedback ${selectedAnswer===u.quiz.correct?'good':'badfb'}">${selectedAnswer===u.quiz.correct?'Correct. ':'Review the concept. '}${u.quiz.why}</div>`:''}
   <div class="actions">
     <button class="button" onclick="checkLessonQuiz()">${quizChecked&&selectedAnswer===u.quiz.correct?'Go record the entry':'Check answer'}</button>
-    <button class="button secondary" onclick="go('path')">Back to path</button>
+    <button class="button secondary" onclick="go('learn')">Back to path</button>
   </div></article>`;
 }
 function chooseAnswer(i){selectedAnswer=i;quizChecked=false;renderLesson()}
@@ -473,132 +870,316 @@ function checkLessonQuiz(){
   if(quizChecked&&selectedAnswer===u.quiz.correct)return openLab(currentLesson);
   quizChecked=true;
   const right=selectedAnswer===u.quiz.correct,firstTime=right&&!state.lessons.includes(currentLesson);
-  state={...state,
-    quizAttempts:state.quizAttempts+1,
-    quizCorrect:state.quizCorrect+(right?1:0),
-    lessons:firstTime?[...state.lessons,currentLesson]:state.lessons,
-    xp:state.xp+(firstTime?10:0)};
+  state={...state,quizAttempts:state.quizAttempts+1,quizCorrect:state.quizCorrect+(right?1:0),lessons:firstTime?[...state.lessons,currentLesson]:state.lessons,xp:state.xp+(firstTime?10:0)};
   save();renderLesson();
-}
-function renderPath(){
-  document.getElementById('unitList').innerHTML=units.map((u,i)=>{
-    const isDone=state.labs.includes(i),isCurrent=i===nextIndex(),isLocked=!unlocked(i);
-    return `<div class="card unit ${isDone?'done':''} ${isCurrent?'current':''} ${isLocked?'locked':''}" onclick="${isLocked?'lockedMsg()':`openLesson(${i})`}">
-      <div class="icon">${isDone?'✓':String(i+1).padStart(2,'0')}</div>
-      <div><h3>${u.title}</h3><p>${u.short}</p></div>
-      <div class="unitStatus ${isDone?'ok':''}">${isDone?'COMPLETE':isLocked?'LOCKED':state.lessons.includes(i)?'ENTRY':'LESSON'}</div></div>`}).join('');
-}
-function lockedMsg(){toast('Complete the previous unit first.')}
-
-function accountOptions(sel){
-  return `<option value="" ${sel?'':'selected'} disabled>Account…</option>`+Object.keys(ACCOUNTS).map(k=>`<option value="${k}" ${sel===k?'selected':''}>${ACCOUNTS[k].name}</option>`).join('');
 }
 function renderLab(){
   const u=units[currentLab],lab=u.lab,done=state.labs.includes(currentLab),n=lab.lines.length;
   document.getElementById('labContent').innerHTML=`
-  <div class="lessonTop"><button class="back" onclick="go('path')" aria-label="Back to path">‹</button><div class="lessonProgress"><div style="width:${(currentLab+1)/units.length*100}%"></div></div><b>${currentLab+1}/${units.length}</b></div>
+  <div class="lessonTop"><button class="back" onclick="go('learn')" aria-label="Back to path">‹</button><div class="lessonProgress"><div style="width:${(currentLab+1)/units.length*100}%"></div></div><b>${currentLab+1}/${units.length}</b></div>
   <div class="labhero"><div class="eyebrow">Entry ${String(currentLab+1).padStart(2,'0')}</div><h1>${lab.title}</h1><p>${lab.scenario}</p>
   <div class="labmeta"><span class="tag">General Fund</span><span class="tag">${n} lines</span><span class="tag">${20+(currentLab*5)} XP</span></div></div>
   <h2>Your journal entry</h2>
   <div class="card">
     <p style="margin-top:0">This entry uses <b>${n} lines</b>. Choose the side, account, and amount for each; order doesn't matter.</p>
-    <div class="jlabels"><span>Side</span><span>Account</span><span>Amount</span></div>
-    ${Array.from({length:n},(_,i)=>`
-      <div class="jgrid" data-row="${i}">
-        <div class="sideToggle" role="group" aria-label="Side of line ${i+1}">
-          <button type="button" data-side="D" aria-pressed="false" onclick="setSide(${i},'D')">Debit</button>
-          <button type="button" data-side="C" aria-pressed="false" onclick="setSide(${i},'C')">Credit</button>
-        </div>
-        <select id="acct${i}" aria-label="Account for line ${i+1}" onchange="this.classList.remove('invalid')">${accountOptions('')}</select>
-        <input id="amt${i}" inputmode="numeric" autocomplete="off" placeholder="0" aria-label="Amount for line ${i+1}" oninput="this.classList.remove('invalid')">
-      </div>`).join('')}
-    <button class="button" onclick="checkEntry()">Post entry</button>
-    <button class="button secondary small" onclick="toggleHint()">I need a hint</button>
-    <div class="hint" id="hint">💡 ${lab.hint}</div>
+    ${builderHTML('lab',n)}
+    <button class="button" onclick="checkLab()">Post entry</button>
+    <button class="button secondary small" onclick="toggleHint('labHint')">I need a hint</button>
+    <div class="hint" id="labHint">💡 ${lab.hint}</div>
   </div>
   <div id="labResult">${done?`<div class="successBox"><h3>✓ Entry already completed</h3><p>You can post it again for practice.</p></div>`:''}</div>`;
-  labSides=Array(n).fill(null);
 }
-let labSides=[];
-function setSide(i,s){labSides[i]=s;const g=document.querySelector(`[data-row="${i}"] .sideToggle`);g.classList.remove('invalid');g.querySelectorAll('button').forEach(b=>{const on=b.dataset.side===s;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)})}
-function toggleHint(){document.getElementById('hint').classList.toggle('open')}
-function parseAmt(v){const d=(v||'').replace(/[^\d]/g,'');return d?parseInt(d,10):0}
-
-function checkEntry(){
-  const u=units[currentLab],lab=u.lab,n=lab.lines.length,box=document.getElementById('labResult');
-  const rows=[];let firstInvalid=null;
-  for(let i=0;i<n;i++){
-    const sel=document.getElementById('acct'+i),inp=document.getElementById('amt'+i),tog=document.querySelector(`[data-row="${i}"] .sideToggle`);
-    const a=sel.value,m=parseAmt(inp.value),s=labSides[i];
-    if(!s){tog.classList.add('invalid');firstInvalid=firstInvalid||tog.querySelector('button')}
-    if(!a){sel.classList.add('invalid');firstInvalid=firstInvalid||sel}
-    if(!m){inp.classList.add('invalid');firstInvalid=firstInvalid||inp}
-    rows.push({s,a,m});
-  }
-  if(firstInvalid){box.innerHTML='<div class="feedback badfb">Complete the highlighted fields: every line needs a side, an account, and an amount.</div>';firstInvalid.focus();return}
-  const td=rows.filter(r=>r.s==='D').reduce((x,r)=>x+r.m,0),tc=rows.filter(r=>r.s==='C').reduce((x,r)=>x+r.m,0);
-  if(td!==tc){box.innerHTML=`<div class="feedback badfb"><b>The entry doesn't balance.</b><br>Debits ${money(td)} vs credits ${money(tc)}. In every journal entry, debits = credits.</div>`;return}
-  const wrongAcct=rows.find(r=>!lab.lines.some(l=>l.a===r.a));
-  if(wrongAcct){box.innerHTML=`<div class="feedback badfb"><b>${ACCOUNTS[wrongAcct.a].name}</b> doesn't belong in this entry. Review which accounts the scenario involves.</div>`;return}
-  const key=r=>r.s+'|'+r.a+'|'+r.m;
-  const want=lab.lines.map(key).sort().join(';'),got=rows.map(key).sort().join(';');
-  if(want!==got){
-    const sideIssue=rows.find(r=>lab.lines.some(l=>l.a===r.a&&l.s!==r.s&&!lab.lines.some(x=>x.a===r.a&&x.s===r.s)));
-    if(sideIssue){box.innerHTML=`<div class="feedback badfb"><b>${ACCOUNTS[sideIssue.a].name}</b> is on the wrong side. Remember each account's normal balance.</div>`;return}
-    box.innerHTML='<div class="feedback badfb">The accounts and sides are right, but an <b>amount</b> doesn’t match the scenario. Check the figures.</div>';return;
-  }
+function checkLab(){
+  const u=units[currentLab],lab=u.lab,box=document.getElementById('labResult');
+  if(validateBuilder('lab',lab.lines,box)!==true)return;
   box.innerHTML=`<div class="successBox"><h3>✓ Entry is correct</h3><p>${lab.success}</p></div>
   ${ledgerHTML({caption:u.entry.caption,lines:lab.lines})}
-  ${currentLab===units.length-1?`<button class="button" onclick="showCertificate()">See your achievement</button>`:`<button class="button" onclick="openLesson(${currentLab+1})">Continue to unit ${currentLab+2}</button>`}`;
+  ${currentLab===units.length-1?`<button class="button" onclick="showPathCertificate()">See your achievement</button>`:`<button class="button" onclick="openLesson(${currentLab+1})">Continue to unit ${currentLab+2}</button>`}`;
   if(!state.labs.includes(currentLab)){state={...state,labs:[...state.labs,currentLab],xp:state.xp+20+(currentLab*5)};save();toast('Entry posted. Nice work!')}
   box.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
+/* ============ Practice: drills ============ */
+function setPracticeSeg(s){practiceSeg=s;renderPractice()}
+function renderPractice(){
+  document.getElementById('segDrills').classList.toggle('on',practiceSeg==='drills');
+  document.getElementById('segSim').classList.toggle('on',practiceSeg==='sim');
+  document.getElementById('practiceDrills').style.display=practiceSeg==='drills'?'':'none';
+  document.getElementById('practiceSim').style.display=practiceSeg==='sim'?'':'none';
+  if(practiceSeg==='drills')renderDrill();
+  else renderSim();
+}
+function newDrill(){drill=DRILLS[rk(0,DRILLS.length-1)]();drillMissed=false;drillSolved=false;renderDrill(true)}
+function renderDrill(keep){
+  if(!drill&&!keep)drill=null;
+  const d=state.drills;
+  const el=document.getElementById('practiceDrills');
+  if(!drill){
+    el.innerHTML=`<div class="card"><h3>Journal entry drills</h3><p>Randomized scenarios across the whole budgetary cycle. First-try correct entries build your streak.</p>
+    <div class="stats" style="margin-top:14px">
+      <div class="stat" style="border:1px solid var(--line);border-radius:14px"><b>${d.streak}</b><small>streak</small></div>
+      <div class="stat" style="border:1px solid var(--line);border-radius:14px"><b>${d.best}</b><small>best</small></div>
+      <div class="stat" style="border:1px solid var(--line);border-radius:14px"><b>${d.total?Math.round(d.correct/d.total*100)+'%':'—'}</b><small>accuracy</small></div>
+    </div>
+    <button class="button" onclick="newDrill()">Deal a scenario</button></div>`;
+    return;
+  }
+  el.innerHTML=`
+  <div class="labhero"><div class="eyebrow">Drill · streak ${d.streak}</div><h1>Record the entry</h1><p>${drill.scenario}</p>
+  <div class="labmeta"><span class="tag">${drill.lines.length} lines</span><span class="tag">8 XP</span></div></div>
+  <div class="card" style="margin-top:14px">
+    ${builderHTML('drill',drill.lines.length)}
+    <button class="button" onclick="checkDrill()" id="drillBtn">Post entry</button>
+    <button class="button secondary small" onclick="toggleHint('drillHint')">I need a hint</button>
+    <div class="hint" id="drillHint">💡 ${drill.hint}</div>
+  </div>
+  <div id="drillResult"></div>`;
+}
+function checkDrill(){
+  const box=document.getElementById('drillResult');
+  if(drillSolved)return;
+  const result=validateBuilder('drill',drill.lines,box);
+  if(result!==true){
+    if(result!=='incomplete'&&!drillMissed){drillMissed=true;state={...state,drills:{...state.drills,streak:0}};save()}
+    return;
+  }
+  drillSolved=true;
+  const d=state.drills,streak=drillMissed?d.streak:d.streak+1;
+  state={...state,xp:state.xp+8,drills:{...d,total:d.total+1,correct:d.correct+(drillMissed?0:1),streak,best:Math.max(d.best,streak)}};
+  save();
+  box.innerHTML=`<div class="successBox"><h3>✓ Correct${drillMissed?'':' — streak '+streak}</h3><p>${drillMissed?'Solved after a retry. The streak resets, but the reps still count.':'First try. Keep the run going.'}</p></div>
+  ${ledgerHTML({caption:'Your entry',lines:drill.lines})}
+  <button class="button" onclick="newDrill()">Next scenario</button>`;
+  box.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ============ Practice: controller simulator ============ */
+function startSim(){sim={idx:0,c:70,t:60,r:150000,log:[],answered:false,choice:null};renderSim()}
+function meterHTML(label,val,money100){
+  const pct=Math.max(0,Math.min(100,val));
+  const cls=pct>=60?'':pct>=35?'warn':'crit';
+  return `<div class="meter"><span>${label}</span><div class="mbar"><div class="mfill ${cls}" style="width:${pct}%"></div></div><b>${money100?'':pct}</b></div>`;
+}
+function renderSim(){
+  const el=document.getElementById('practiceSim');
+  if(!sim){
+    el.innerHTML=`<div class="card"><h3>Controller decision simulator</h3><p>Seven judgment calls from a controller's year: shortfalls, overspend requests, year-end calls, and windfalls. Your compliance score, the council's trust, and the reserves respond to every choice.</p>
+    ${state.simDone?`<p style="margin-top:10px"><b>Best run:</b> ${state.simBest}</p>`:''}
+    <button class="button" onclick="startSim()">Take the chair</button></div>`;
+    return;
+  }
+  if(sim.idx>=SIM.length){
+    const score=Math.round((sim.c+sim.t)/2);
+    const rating=score>=85?'Model Controller':score>=65?'Steady Hand':score>=40?'On Thin Ice':'Audit Incoming';
+    if(!sim.scored){
+      const firstTime=!state.simDone;
+      state={...state,simDone:true,simBest:state.simBest&&scoreOf(state.simBest)>=score?state.simBest:`${rating} (${score})`,xp:state.xp+(firstTime?40:0)};
+      sim={...sim,scored:true};save();
+    }
+    el.innerHTML=`<div class="certificate"><div class="seal">${score>=65?'✓':'!'}</div>
+    <div class="eyebrow" style="color:var(--brass);margin-top:14px">Fiscal year complete</div>
+    <h2>${rating}</h2>
+    <p class="muted">Compliance ${sim.c} · Council trust ${sim.t} · Reserves ${money(sim.r)}</p>
+    <div class="conceptGrid" style="text-align:left">${sim.log.map((L,i)=>`<div class="concept"><b>${i+1}. ${SIM[i].title}</b><span>${L}</span></div>`).join('')}</div></div>
+    <button class="button" onclick="startSim()">Run it again</button>
+    <button class="button secondary" onclick="sim=null;renderSim()">Back to overview</button>`;
+    return;
+  }
+  const D=SIM[sim.idx];
+  el.innerHTML=`
+  <div class="card">
+    <div class="eyebrow" style="color:var(--green)">Decision ${sim.idx+1} of ${SIM.length}</div>
+    <div class="meters">
+      ${meterHTML('Compliance',sim.c)}
+      ${meterHTML('Council trust',sim.t)}
+      <div class="meter"><span>Reserves</span><div></div><b style="font-size:13px">${money(sim.r)}</b></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>${D.title}</h3><p>${D.story}</p>
+    <div class="choices">${D.opts.map((o,i)=>`<button class="${sim.choice===i?'selected':''}" ${sim.answered?'disabled':''} onclick="simChoose(${i})">${o.label}</button>`).join('')}</div>
+    ${sim.answered?simFeedback():''}
+  </div>`;
+}
+function simFeedback(){
+  const D=SIM[sim.idx],o=D.opts[sim.choice];
+  const fx=[['Compliance',o.fx.c],['Trust',o.fx.t]].map(([l,v])=>`<span class="fx ${v>0?'up':v<0?'down':'flat'}">${l} ${v>0?'+':''}${v}</span>`).join('')+
+    (o.fx.r?`<span class="fx ${o.fx.r>0?'up':'down'}">Reserves ${o.fx.r>0?'+':'−'}${money(Math.abs(o.fx.r)).slice(1)}</span>`:'');
+  return `<div class="feedback ${o.verdict==='bad'?'badfb':'good'}"><b>${o.verdict==='best'?'Strong call.':o.verdict==='ok'?'Defensible.':'That will cost you.'}</b> ${o.why}</div>
+  <div class="simfx">${fx}</div>
+  <button class="button" onclick="simNext()">${sim.idx<SIM.length-1?'Next decision':'See the year-end review'}</button>`;
+}
+function simChoose(i){
+  if(sim.answered)return;
+  const o=SIM[sim.idx].opts[i];
+  sim={...sim,choice:i,answered:true,c:clamp(sim.c+o.fx.c),t:clamp(sim.t+o.fx.t),r:sim.r+o.fx.r,log:[...sim.log,o.verdict==='best'?'Strong call':o.verdict==='ok'?'Defensible':'Costly']};
+  renderSim();
+}
+function simNext(){sim={...sim,idx:sim.idx+1,answered:false,choice:null};renderSim()}
+function clamp(v){return Math.max(0,Math.min(100,v))}
+function scoreOf(s){const m=s.match(/\((\d+)\)/);return m?+m[1]:0}
+
+/* ============ General Ledger (fed by the case) ============ */
+function glEntries(){return CASE.slice(0,state.caseStep).flatMap((st,si)=>st.lines.map(l=>({...l,ref:'#'+(si+1)})))}
+function tAccountHTML(key){
+  const es=glEntries().filter(e=>e.a===key);
+  if(!es.length)return '';
+  const drs=es.filter(e=>e.s==='D'),crs=es.filter(e=>e.s==='C');
+  const bal=drs.reduce((s,e)=>s+e.m,0)-crs.reduce((s,e)=>s+e.m,0);
+  const row=e=>`<div class="trow"><span class="ref">${e.ref}</span><span>${e.m.toLocaleString('en-US')}</span></div>`;
+  return `<div class="taccount">
+    <div class="tname">${ACCOUNTS[key].name}<small>${ACCOUNTS[key].sub}</small></div>
+    <div class="tbody"><div class="tcol dr">${drs.map(row).join('')}</div><div class="tcol">${crs.map(row).join('')}</div></div>
+    <div class="tbal"><span class="${bal>0?'has':''}">${bal>0?bal.toLocaleString('en-US'):''}</span><span class="${bal<0?'has':''}">${bal<0?(-bal).toLocaleString('en-US'):''}</span></div>
+  </div>`;
+}
+function glBalance(key){const es=glEntries().filter(e=>e.a===key);return es.filter(e=>e.s==='D').reduce((s,e)=>s+e.m,0)-es.filter(e=>e.s==='C').reduce((s,e)=>s+e.m,0)}
+function renderLedger(){
+  const el=document.getElementById('ledgerContent');
+  if(state.caseStep===0){
+    el.innerHTML=`<div class="card"><h3>The books are empty</h3><p>The General Ledger fills up as you post entries in the case study. Start Maplewood's fiscal year and come back — every entry lands here, T-account by T-account.</p>
+    <button class="button" onclick="go('case')">Start the case study</button></div>`;
+    return;
+  }
+  const expTotal=CASE.slice(0,state.caseStep).filter(s=>!s.closing).flatMap(s=>s.lines).filter(l=>l.a==='exp'&&l.s==='D').reduce((x,l)=>x+l.m,0);
+  const revTotal=CASE.slice(0,state.caseStep).filter(s=>!s.closing).flatMap(s=>s.lines).filter(l=>l.a==='rev'&&l.s==='C').reduce((x,l)=>x+l.m,0);
+  const encOpen=Math.max(0,glBalance('enc'));
+  const budgetOn=glBalance('er')>0;
+  const groups=[['Budgetary accounts',['er','ap','bfb','enc','rfe']],['Operating accounts',['rev','exp']],['Balance sheet accounts',['cash','txr','vp','dfi','fb']]];
+  el.innerHTML=`
+  <div class="card">
+    <h3 style="margin-bottom:6px">Controller's dashboard</h3>
+    <div class="glstat"><span>Entries posted</span><b>${state.caseStep} of ${CASE.length}</b></div>
+    ${budgetOn?`<div class="glstat"><span>Appropriation remaining <small class="muted">(950,000 − spent − committed)</small></span><b>${money(950000-expTotal-encOpen)}</b></div>`:''}
+    <div class="glstat"><span>Revenues recognized vs $1,000,000 estimated</span><b>${money(revTotal)}</b></div>
+    <div class="glstat"><span>Cash on hand</span><b>${money(glBalance('cash'))}</b></div>
+  </div>
+  ${groups.map(([title,keys])=>{
+    const cells=keys.map(tAccountHTML).filter(Boolean).join('');
+    return cells?`<div class="glsection">${title}</div>${cells}`:''}).join('')}
+  <p class="muted" style="font-size:12.5px">Debits on the left of each T, credits on the right. The double-ruled figure is the balance, shown on its normal side. #n = case study event number.</p>`;
+}
+
+/* ============ Case study ============ */
+function renderCase(){
+  const el=document.getElementById('caseContent'),step=state.caseStep;
+  if(step>=CASE.length){el.innerHTML=caseStatementHTML();return}
+  const st=CASE[step];
+  el.innerHTML=`
+  <div class="banner">
+    <div class="eyebrow" style="color:var(--green)">Case study · City of Maplewood</div>
+    <h1>One fiscal year, entry by entry</h1>
+    <p>You are Maplewood's controller. Ten events, one set of books — and the ledger remembers everything you post.</p>
+  </div>
+  <div class="moduleHead"><h2>The year</h2><span>${step}/${CASE.length} posted</span></div>
+  ${CASE.map((s,i)=>{
+    const done=i<step,cur=i===step;
+    return `<div class="card step ${done?'done':''} ${cur?'current':''} ${i>step?'locked':''}" ${cur?`onclick="document.getElementById('caseWork').scrollIntoView({behavior:'smooth'})"`:''}>
+      <div class="stepdot">${done?'✓':i+1}</div>
+      <div><h3 style="font-size:15.5px">${s.title}</h3><p style="font-size:13px">${s.date}</p></div>
+      <div class="unitStatus ${done?'ok':''}">${done?'POSTED':cur?'NOW':''}</div></div>`}).join('')}
+  <div id="caseWork">
+    <div class="labhero" style="margin-top:20px"><div class="eyebrow">${st.date} · Event ${step+1} of ${CASE.length}</div><h1>${st.title}</h1><p>${st.story}</p>
+    <div class="labmeta"><span class="tag">General Fund</span><span class="tag">${st.lines.length} lines</span><span class="tag">15 XP</span></div></div>
+    <h2>Your journal entry</h2>
+    <div class="card">
+      ${builderHTML('case',st.lines.length)}
+      <button class="button" onclick="checkCase()">Post to the General Ledger</button>
+      <button class="button secondary small" onclick="toggleHint('caseHint')">I need a hint</button>
+      <div class="hint" id="caseHint">💡 ${st.hint}</div>
+    </div>
+    <div id="caseResult"></div>
+  </div>`;
+}
+function checkCase(){
+  const st=CASE[state.caseStep],box=document.getElementById('caseResult');
+  if(validateBuilder('case',st.lines,box)!==true)return;
+  state={...state,caseStep:state.caseStep+1,xp:state.xp+15};
+  save();
+  const finished=state.caseStep>=CASE.length;
+  box.innerHTML=`<div class="successBox"><h3>✓ Posted to the General Ledger</h3><p>${st.note}</p></div>
+  ${ledgerHTML({caption:`${st.date} — ${st.title}`,lines:st.lines})}
+  <button class="button" onclick="renderCase();window.scrollTo({top:0,behavior:'instant'})">${finished?'See the year-end statement':'Next event'}</button>
+  <button class="button secondary" onclick="go('ledger')">Check the ledger</button>`;
+  toast(finished?'Fiscal year complete!':'Posted. The T-accounts just moved.');
+  box.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function caseStatementHTML(){
+  const op=CASE.filter(s=>!s.closing).flatMap(s=>s.lines);
+  const actualRev=op.filter(l=>l.a==='rev'&&l.s==='C').reduce((x,l)=>x+l.m,0);
+  const actualExp=op.filter(l=>l.a==='exp'&&l.s==='D').reduce((x,l)=>x+l.m,0);
+  const bud={rev:1000000,exp:950000};
+  const rows=`
+    <tr><td>Revenues</td><td class="num">${money(bud.rev)}</td><td class="num">${money(actualRev)}</td><td><span class="pill ${actualRev>=bud.rev?'ok':'bad'}">${actualRev>=bud.rev?'+':'−'} ${money(Math.abs(actualRev-bud.rev))} ${actualRev>=bud.rev?'favorable':'unfavorable'}</span></td></tr>
+    <tr><td>Expenditures</td><td class="num">${money(bud.exp)}</td><td class="num">${money(actualExp)}</td><td><span class="pill ${actualExp<=bud.exp?'ok':'bad'}">${actualExp<=bud.exp?'+':'−'} ${money(Math.abs(bud.exp-actualExp))} ${actualExp<=bud.exp?'favorable':'unfavorable'}</span></td></tr>
+    <tr class="total"><td>Net change in fund balance</td><td class="num">${money(bud.rev-bud.exp)}</td><td class="num">${money(actualRev-actualExp)}</td><td><span class="pill ${actualRev-actualExp>=bud.rev-bud.exp?'ok':'bad'}">${actualRev-actualExp>=bud.rev-bud.exp?'+':'−'} ${money(Math.abs((actualRev-actualExp)-(bud.rev-bud.exp)))}</span></td></tr>`;
+  return `
+  <div class="certificate"><div class="seal">✓</div>
+    <div class="eyebrow" style="color:var(--brass);margin-top:14px">City of Maplewood · Fiscal year closed</div>
+    <h2>The books are closed</h2>
+    <p class="muted">You posted all ${CASE.length} entries of a complete budgetary cycle — adoption to closing.</p>
+  </div>
+  <h2>Budget-to-actual — General Fund</h2>
+  <div class="tableWrap"><table><thead><tr><th>Item</th><th class="num">Budget</th><th class="num">Actual</th><th>Variance</th></tr></thead><tbody>${rows}</tbody></table></div>
+  <div class="card" style="margin-top:14px"><h3>What the ledger says</h3>
+    <div class="glstat"><span>Ending cash</span><b>${money(glBalance('cash'))}</b></div>
+    <div class="glstat"><span>Taxes still receivable</span><b>${money(glBalance('txr'))}</b></div>
+    <div class="glstat"><span>Vouchers payable</span><b>${money(-glBalance('vp'))}</b></div>
+    <div class="glstat"><span>Fund balance added this year</span><b>${money(-glBalance('fb'))}</b></div>
+  </div>
+  <button class="button" onclick="go('ledger')">Review the final ledger</button>
+  <button class="button secondary" onclick="resetCase()">Replay the fiscal year</button>`;
+}
+function resetCase(){state={...state,caseStep:0};save();renderCase();toast('Maplewood’s books are open again.')}
+
+/* ============ Glossary ============ */
 function renderGlossary(){
   const q=(document.getElementById('glossSearch')?.value||'').toLowerCase();
   const items=glossary.filter(x=>(x[0]+' '+x[1]).toLowerCase().includes(q));
   document.getElementById('glossList').innerHTML=items.map(x=>`<div class="term"><b>${x[0]}</b><p>${x[1]}</p></div>`).join('')||'<p class="muted">No matching term found.</p>';
 }
+
+/* ============ Home / global ============ */
 function updateAll(){
-  const lp=state.lessons.length,lb=state.labs.length,total=units.length*2,done=lp+lb,pct=Math.round(done/total*100),next=nextIndex(),u=units[next];
+  const totalItems=units.length*2+CONCEPTS.length+CASE.length+1;
+  const done=state.lessons.length+state.labs.length+state.micro.length+state.caseStep+(state.simDone?1:0);
+  const pct=Math.round(done/totalItems*100);
   document.getElementById('xp').textContent=state.xp;
+  document.getElementById('statXp').textContent=state.xp;
   document.getElementById('homePct').textContent=pct+'%';
   document.getElementById('homeFill').style.width=pct+'%';
-  document.getElementById('pathPct').textContent=pct+'% complete';
-  document.getElementById('lessonCount').textContent=lp+'/'+units.length;
-  document.getElementById('labCount').textContent=lb+'/'+units.length;
-  document.getElementById('accuracy').textContent=state.quizAttempts?Math.round(state.quizCorrect/state.quizAttempts*100)+'%':'—';
-  const finished=lb===units.length;
-  document.getElementById('nextIcon').textContent=finished?'✓':String(next+1).padStart(2,'0');
-  document.getElementById('nextTitle').textContent=finished?'Lesson complete':u.title;
-  document.getElementById('nextDesc').textContent=finished?'Review your achievement and the glossary.':state.lessons.includes(next)?'Record the practice journal entry.':u.short;
-  document.getElementById('continueBtn').textContent=finished?'See achievement':done?'Keep learning':'Start lesson';
-  renderPath();
+  document.getElementById('homeLearn').textContent=`Core path ${state.labs.length}/${units.length} · Concepts ${state.micro.length}/${CONCEPTS.length}`;
+  document.getElementById('homePractice').textContent=`Drills: best streak ${state.drills.best} · Simulator: ${state.simDone?state.simBest:'not attempted'}`;
+  document.getElementById('homeCase').textContent=state.caseStep>=CASE.length?'Fiscal year closed — replayable':`City of Maplewood, one full fiscal year — ${state.caseStep}/${CASE.length} events`;
+  document.getElementById('homeLedger').textContent=state.caseStep?`${glEntries().length} lines posted across ${new Set(glEntries().map(e=>e.a)).size} accounts`:'Live T-accounts, fed by the case study';
+  document.getElementById('statStreak').textContent=state.drills.best;
+  document.getElementById('statAccuracy').textContent=state.quizAttempts?Math.round(state.quizCorrect/state.quizAttempts*100)+'%':'—';
+  document.getElementById('continueBtn').textContent=done===0?'Start learning':pct>=100?'Explore freely':'Keep going';
 }
-function showCertificate(){
+function showPathCertificate(){
   document.getElementById('modalCard').innerHTML=`<div class="certificate"><div class="seal">✓</div>
   <div class="eyebrow" style="color:var(--brass);margin-top:14px">Budget Lab</div>
-  <h2>Budgetary cycle mastered</h2>
+  <h2>Core path complete</h2>
   <p class="muted">You recorded all 6 entries of the cycle: adoption, surplus, deficit, revenues, expenditures, and closing.</p>
-  <div class="conceptGrid" style="text-align:left"><div class="concept"><b>${state.xp} XP</b><span>experience earned</span></div><div class="concept"><b>${state.quizAttempts?Math.round(state.quizCorrect/state.quizAttempts*100):100}%</b><span>quiz accuracy</span></div></div>
-  <p class="muted">Next step: encumbrances in detail and the fund financial statements.</p></div>
-  <button class="button" onclick="closeModal()">Close</button>`;
+  <p class="muted">Next: run Maplewood's full fiscal year in the case study — and watch the General Ledger build.</p></div>
+  <button class="button" onclick="closeModal();go('case')">Start the case study</button>
+  <button class="button secondary" onclick="closeModal()">Close</button>`;
   openModal();
 }
 function confirmReset(){
-  document.getElementById('modalCard').innerHTML=`<h2>Reset the lesson?</h2><p class="muted">Lessons, entries, XP, and accuracy saved on this phone will be erased.</p>
+  document.getElementById('modalCard').innerHTML=`<h2>Reset everything?</h2><p class="muted">Lessons, drills, the simulator record, the case study, and all XP saved on this phone will be erased.</p>
   <button class="button danger" onclick="resetProgress()">Yes, erase progress</button>
   <button class="button secondary" onclick="closeModal()">Cancel</button>`;
   openModal();
 }
-function resetProgress(){state={...defaultState,lessons:[],labs:[]};save();closeModal();go('home');toast('Progress reset.')}
+function resetProgress(){state={...defaultState,lessons:[],labs:[],micro:[],drills:{...defaultState.drills}};drill=null;sim=null;save();closeModal();go('home');toast('Progress reset.')}
 let lastFocus=null;
 function openModal(){const m=document.getElementById('modal');lastFocus=document.activeElement;m.classList.add('open');m.focus()}
 function closeModal(){document.getElementById('modal').classList.remove('open');if(lastFocus&&document.contains(lastFocus))lastFocus.focus();lastFocus=null}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),2400)}
 document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
 document.getElementById('modal').addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
-updateAll();renderGlossary();
+updateAll();
 </script>
 </body>
 </html>
