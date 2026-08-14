@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#17503f">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<title>Budget Lab · Contabilidad Gubernamental</title>
+<title>Budget Lab · Governmental Accounting</title>
 <style>
 :root{
   --bg:#f3f5f0;--card:#fdfdf8;--ink:#212b23;--muted:#68766a;--line:#dde3d7;
@@ -194,65 +194,65 @@ h2{font-size:21px;margin:26px 2px 12px}
 <body>
 <div class="app">
 <header class="top">
-  <div class="brand" onclick="go('home')"><div class="logo">BL</div><div><b>Budget Lab</b><small>Contabilidad gubernamental</small></div></div>
-  <button class="xp" onclick="toast('Ganas XP por cada evaluación y asiento correcto.')">⚡ <span id="xp">0</span></button>
+  <div class="brand" onclick="go('home')"><div class="logo">BL</div><div><b>Budget Lab</b><small>Governmental accounting</small></div></div>
+  <button class="xp" onclick="toast('You earn XP for every correct check and journal entry.')">⚡ <span id="xp">0</span></button>
 </header>
 
 <section id="home" class="screen active">
   <div class="hero">
-    <div class="eyebrow">Lección en video · Fondo General</div>
-    <h1>Ingresos estimados y erogaciones</h1>
-    <p>Aprende cómo un gobierno registra su presupuesto en los libros, reconoce ingresos y gastos reales, y cierra el ciclo al final del año.</p>
-    <div class="progressline"><span>Progreso de la lección</span><b id="homePct">0%</b></div>
+    <div class="eyebrow">Video lesson · General Fund</div>
+    <h1>Estimated Revenues &amp; Expenditures</h1>
+    <p>Learn how a government records its budget in the books, recognizes actual revenues and expenditures, and closes the cycle at year end.</p>
+    <div class="progressline"><span>Lesson progress</span><b id="homePct">0%</b></div>
     <div class="bar"><div class="fill" id="homeFill"></div></div>
-    <button class="button" onclick="continueLearning()" id="continueBtn">Comenzar lección</button>
+    <button class="button" onclick="continueLearning()" id="continueBtn">Start lesson</button>
   </div>
 
-  <h2>Siguiente paso</h2>
+  <h2>Next step</h2>
   <div class="card next" onclick="continueLearning()">
     <div class="icon" id="nextIcon">01</div>
-    <div><h3 id="nextTitle">El presupuesto es ley</h3><p id="nextDesc">Por qué el presupuesto se asienta en el mayor.</p></div>
+    <div><h3 id="nextTitle">The budget is law</h3><p id="nextDesc">Why the budget is posted to the ledger.</p></div>
     <div class="chev">›</div>
   </div>
 
-  <h2>Tu avance</h2>
+  <h2>Your progress</h2>
   <div class="stats">
-    <div class="card stat"><b id="lessonCount">0/6</b><small>lecciones</small></div>
-    <div class="card stat"><b id="labCount">0/6</b><small>asientos</small></div>
-    <div class="card stat"><b id="accuracy">—</b><small>precisión</small></div>
+    <div class="card stat"><b id="lessonCount">0/6</b><small>lessons</small></div>
+    <div class="card stat"><b id="labCount">0/6</b><small>entries</small></div>
+    <div class="card stat"><b id="accuracy">—</b><small>accuracy</small></div>
   </div>
 
-  <h2>Lo que dominarás</h2>
+  <h2>What you'll master</h2>
   <div class="card">
-    <h3>El ciclo presupuestario completo</h3>
-    <p>Del asiento de adopción del presupuesto al asiento de cierre, con los hechos reales en medio.</p>
+    <h3>The complete budgetary cycle</h3>
+    <p>From the budget adoption entry to the closing entry, with the year's real transactions in between.</p>
     <div class="conceptGrid">
-      <div class="concept"><b>4 cuentas clave</b><span>Estimated Revenues, Appropriations, Revenues y Expenditures</span></div>
-      <div class="concept"><b>6 asientos</b><span>que registrarás tú, línea por línea</span></div>
-      <div class="concept"><b>1 cuenta de cuadre</b><span>Budgetary Fund Balance, con superávit y déficit</span></div>
-      <div class="concept"><b>1 estado</b><span>comparación presupuesto contra real</span></div>
+      <div class="concept"><b>4 key accounts</b><span>Estimated Revenues, Appropriations, Revenues, and Expenditures</span></div>
+      <div class="concept"><b>6 journal entries</b><span>that you will record yourself, line by line</span></div>
+      <div class="concept"><b>1 balancing account</b><span>Budgetary Fund Balance, with surplus and deficit cases</span></div>
+      <div class="concept"><b>1 statement</b><span>the budget-to-actual comparison</span></div>
     </div>
   </div>
   <a class="card linkrow" href="https://youtu.be/fi1LYjtgsDc" target="_blank" rel="noopener">
     <div class="icon">▶</div>
-    <div><h3>Video original</h3><p>Estimated Revenues &amp; Expenditures — Governmental Accounting. Esta lección resume y practica su contenido.</p></div>
+    <div><h3>Original video</h3><p>Estimated Revenues &amp; Expenditures — Governmental Accounting. This lesson summarizes and practices its content.</p></div>
     <div class="chev">›</div>
   </a>
-  <div class="card"><h3>Cifras de práctica</h3><p>Los gobiernos y montos de esta app (Río Verde, Monte Alto, San Rafael) son ejemplos didácticos, no datos reales.</p></div>
+  <div class="card"><h3>Practice figures</h3><p>The governments and amounts in this app (Riverside, Maplewood, Granite County) are teaching examples, not real data.</p></div>
 </section>
 
 <section id="path" class="screen">
   <div class="banner">
-    <div class="eyebrow" style="color:var(--green)">Ruta · 6 unidades</div>
-    <h1>Del plan al cierre</h1>
-    <p>Cada unidad tiene una lección breve, una comprobación y un asiento de diario que registras tú.</p>
+    <div class="eyebrow" style="color:var(--green)">Path · 6 units</div>
+    <h1>From plan to closing</h1>
+    <p>Each unit has a short lesson, a quick check, and a journal entry that you record yourself.</p>
   </div>
-  <div class="moduleHead"><h2>Ciclo presupuestario</h2><span id="pathPct">0% completado</span></div>
+  <div class="moduleHead"><h2>Budgetary cycle</h2><span id="pathPct">0% complete</span></div>
   <div id="unitList"></div>
 </section>
 
 <section id="lesson" class="screen">
-  <div class="lessonTop"><button class="back" onclick="go('path')" aria-label="Volver a la ruta">‹</button><div class="lessonProgress"><div id="lessonBar"></div></div><b id="lessonStep">1/6</b></div>
+  <div class="lessonTop"><button class="back" onclick="go('path')" aria-label="Back to path">‹</button><div class="lessonProgress"><div id="lessonBar"></div></div><b id="lessonStep">1/6</b></div>
   <div id="lessonContent"></div>
 </section>
 
@@ -260,157 +260,157 @@ h2{font-size:21px;margin:26px 2px 12px}
 
 <section id="glossary" class="screen">
   <div class="banner">
-    <div class="eyebrow" style="color:var(--green)">Referencia rápida</div>
-    <h1>Glosario</h1>
-    <p>Los términos oficiales en inglés — como aparecen en exámenes y estados financieros — explicados en español.</p>
+    <div class="eyebrow" style="color:var(--green)">Quick reference</div>
+    <h1>Glossary</h1>
+    <p>The official terms as they appear on exams and in financial statements, in plain English.</p>
   </div>
-  <h2>Términos</h2>
-  <input class="glossSearch" id="glossSearch" placeholder="Buscar Appropriations, Revenues..." oninput="renderGlossary()">
+  <h2>Terms</h2>
+  <input class="glossSearch" id="glossSearch" placeholder="Search Appropriations, Revenues..." oninput="renderGlossary()">
   <div class="card" id="glossList" style="margin-top:12px"></div>
-  <button class="button danger" onclick="confirmReset()">Reiniciar todo el progreso</button>
+  <button class="button danger" onclick="confirmReset()">Reset all progress</button>
 </section>
 </div>
 
-<nav class="bottom" aria-label="Navegación principal">
-  <button data-go="home" class="on" onclick="go('home')"><span>⌂</span>Inicio</button>
-  <button data-go="path" onclick="go('path')"><span>◉</span>Ruta</button>
-  <button data-go="lab" onclick="openCurrentLab()"><span>✎</span>Práctica</button>
-  <button data-go="glossary" onclick="go('glossary')"><span>≡</span>Glosario</button>
+<nav class="bottom" aria-label="Main navigation">
+  <button data-go="home" class="on" onclick="go('home')"><span>⌂</span>Home</button>
+  <button data-go="path" onclick="go('path')"><span>◉</span>Path</button>
+  <button data-go="lab" onclick="openCurrentLab()"><span>✎</span>Practice</button>
+  <button data-go="glossary" onclick="go('glossary')"><span>≡</span>Glossary</button>
 </nav>
 <div class="toast" id="toast" role="status"></div>
 <div class="modal" id="modal"><div class="modalCard" id="modalCard"></div></div>
 
 <script>
 const ACCOUNTS={
-  er:{name:'Estimated Revenues',es:'Ingresos estimados'},
-  ap:{name:'Appropriations',es:'Apropiaciones'},
-  bfb:{name:'Budgetary Fund Balance',es:'Saldo presupuestario del fondo'},
-  rev:{name:'Revenues',es:'Ingresos reales'},
-  exp:{name:'Expenditures',es:'Erogaciones'},
-  txr:{name:'Taxes Receivable',es:'Impuestos por cobrar'},
-  cash:{name:'Cash',es:'Efectivo'},
-  vp:{name:'Vouchers Payable',es:'Comprobantes por pagar'},
-  fb:{name:'Fund Balance',es:'Saldo real del fondo'},
-  enc:{name:'Encumbrances',es:'Compromisos'}
+  er:{name:'Estimated Revenues',sub:'budgetary · debit balance'},
+  ap:{name:'Appropriations',sub:'budgetary · credit balance'},
+  bfb:{name:'Budgetary Fund Balance',sub:'budgetary · balancing account'},
+  rev:{name:'Revenues',sub:'actual · credit balance'},
+  exp:{name:'Expenditures',sub:'actual · debit balance'},
+  txr:{name:'Taxes Receivable',sub:'asset'},
+  cash:{name:'Cash',sub:'asset'},
+  vp:{name:'Vouchers Payable',sub:'liability'},
+  fb:{name:'Fund Balance',sub:'actual · equity'},
+  enc:{name:'Encumbrances',sub:'budgetary · commitment'}
 };
 const money=n=>'$'+n.toLocaleString('en-US');
 
 const units=[
 {
-  id:'ley',title:'El presupuesto es ley',short:'Por qué se asienta en el mayor',
-  desc:'En un gobierno, el presupuesto aprobado no es una guía interna: es un mandato legal, y por eso se registra formalmente en los libros del Fondo General.',
-  objective:'Entender qué es un fondo, por qué el presupuesto se registra y con qué cuentas.',
+  id:'law',title:'The budget is law',short:'Why it is posted to the ledger',
+  desc:'In a government, the approved budget is not an internal guide: it is a legal mandate, and that is why it is formally recorded in the General Fund books.',
+  objective:'Understand what a fund is, why the budget is recorded, and with which accounts.',
   concepts:[
-    ['Fondo','Entidad contable independiente con sus propios libros. El Fondo General cubre la operación diaria del gobierno.'],
-    ['Presupuesto legal','Al aprobarse autoriza el gasto del año y obliga a rendir cuentas contra él.'],
-    ['Estimated Revenues','Los ingresos que se espera recaudar. Cuenta presupuestaria de saldo deudor.'],
-    ['Appropriations','El máximo legal autorizado para gastar. Cuenta presupuestaria de saldo acreedor.'],
-    ['Cuentas presupuestarias','Registran el plan, no hechos reales, y se eliminan al cierre del año.'],
-    ['Funcionan en espejo','Estimated Revenues se debita (Revenues real se acredita); Appropriations se acredita (Expenditures real se debita).']
+    ['Fund','A self-balancing accounting entity with its own books. The General Fund runs the government’s day-to-day operations.'],
+    ['Legal budget','Once adopted, it authorizes the year’s spending and demands accountability against it.'],
+    ['Estimated Revenues','The revenues the government expects to collect. A budgetary account with a debit balance.'],
+    ['Appropriations','The maximum spending legally authorized. A budgetary account with a credit balance.'],
+    ['Budgetary accounts','They record the plan, not real events, and are removed at year-end closing.'],
+    ['Mirror image','They work in reverse: Estimated Revenues is debited (actual Revenues is credited); Appropriations is credited (actual Expenditures is debited).']
   ],
-  video:'El video abre con este asiento: el primer día del año fiscal se debita Estimated Revenues y se acredita Appropriations en el Fondo General.',
-  entry:{caption:'Adopción del presupuesto anual (equilibrado)',lines:[{s:'D',a:'er',m:500000},{s:'C',a:'ap',m:500000}]},
-  quiz:{q:'Al registrar la adopción del presupuesto, ¿qué cuenta se acredita?',opts:['Estimated Revenues','Appropriations','Revenues','Expenditures'],correct:1,why:'Appropriations nace con crédito porque representa la autorización de gasto; Estimated Revenues nace con débito.'},
-  lab:{title:'Registra el presupuesto de Río Verde',scenario:'La Villa de Río Verde aprueba su presupuesto el 1 de enero: ingresos estimados por $500,000 y apropiaciones por $500,000. Registra la adopción.',lines:[{s:'D',a:'er',m:500000},{s:'C',a:'ap',m:500000}],hint:'El presupuesto está equilibrado: debita Estimated Revenues y acredita Appropriations por el mismo monto.',success:'El plan quedó en el mayor: entradas esperadas y gasto autorizado, frente a frente.'}
+  video:'The video opens with this entry: on the first day of the fiscal year, Estimated Revenues is debited and Appropriations is credited in the General Fund.',
+  entry:{caption:'Adoption of the annual budget (balanced)',lines:[{s:'D',a:'er',m:500000},{s:'C',a:'ap',m:500000}]},
+  quiz:{q:'When the budget is adopted and recorded, which account is credited?',opts:['Estimated Revenues','Appropriations','Revenues','Expenditures'],correct:1,why:'Appropriations is born with a credit because it represents spending authority; Estimated Revenues is born with a debit.'},
+  lab:{title:'Record Riverside’s budget',scenario:'The Village of Riverside adopts its budget on January 1: estimated revenues of $500,000 and appropriations of $500,000. Record the adoption.',lines:[{s:'D',a:'er',m:500000},{s:'C',a:'ap',m:500000}],hint:'The budget is balanced: debit Estimated Revenues and credit Appropriations for the same amount.',success:'The plan is now in the ledger: expected inflows and authorized spending, face to face.'}
 },
 {
-  id:'superavit',title:'Superávit planeado',short:'Budgetary Fund Balance acreedor',
-  desc:'Cuando se espera recaudar más de lo que se autoriza gastar, el asiento no cuadra por sí solo. La diferencia se acredita a Budgetary Fund Balance.',
-  objective:'Registrar un presupuesto con superávit usando la cuenta de cuadre.',
+  id:'surplus',title:'Planned surplus',short:'Budgetary Fund Balance credited',
+  desc:'When the government expects to collect more than it authorizes to spend, the entry does not balance on its own. The difference is credited to Budgetary Fund Balance.',
+  objective:'Record a budget with a surplus using the balancing account.',
   concepts:[
-    ['Budgetary Fund Balance','La cuenta presupuestaria que cuadra el asiento del presupuesto.'],
-    ['Superávit','Si Estimated Revenues > Appropriations, la diferencia se acredita a esta cuenta.'],
-    ['Todavía no es dinero','Es un plan: no ha entrado ni salido un solo dólar del fondo.'],
-    ['No es Fund Balance','Fund Balance (real) mide recursos acumulados; la versión presupuestaria solo refleja el plan del año.']
+    ['Budgetary Fund Balance','The budgetary account that balances the budget entry.'],
+    ['Surplus','If Estimated Revenues > Appropriations, the difference is credited to this account.'],
+    ['Not cash yet','It is a plan: not a single dollar has entered or left the fund.'],
+    ['Not Fund Balance','Fund Balance (actual) measures accumulated resources; the budgetary version only reflects the year’s plan.']
   ],
-  video:'En el video, los ingresos estimados superan a las apropiaciones y el sobrante se acredita a Budgetary Fund Balance: el gobierno planea fortalecer sus reservas.',
-  entry:{caption:'Presupuesto con superávit planeado',lines:[{s:'D',a:'er',m:1000000},{s:'C',a:'ap',m:950000},{s:'C',a:'bfb',m:50000}]},
-  quiz:{q:'Estimated Revenues $1,000,000 y Appropriations $950,000. ¿Qué pasa con Budgetary Fund Balance?',opts:['Se debita por $50,000','Se acredita por $50,000','No se usa en este asiento','Se acredita por $1,950,000'],correct:1,why:'Los débitos ($1,000,000) exceden a los créditos ($950,000); la diferencia de $50,000 se acredita para cuadrar: superávit planeado.'},
-  lab:{title:'Presupuesto de Monte Alto',scenario:'La Ciudad de Monte Alto aprueba ingresos estimados por $1,000,000 y apropiaciones por $950,000. Registra la adopción con la cuenta de cuadre.',lines:[{s:'D',a:'er',m:1000000},{s:'C',a:'ap',m:950000},{s:'C',a:'bfb',m:50000}],hint:'Tres líneas: débito a Estimated Revenues por el total estimado, crédito a Appropriations, y el resto ($50,000) como crédito a Budgetary Fund Balance.',success:'Superávit planeado de $50,000: Monte Alto espera terminar el año con más recursos de los que autoriza gastar.'}
+  video:'In the video, estimated revenues exceed appropriations and the excess is credited to Budgetary Fund Balance: the government plans to strengthen its reserves.',
+  entry:{caption:'Budget with a planned surplus',lines:[{s:'D',a:'er',m:1000000},{s:'C',a:'ap',m:950000},{s:'C',a:'bfb',m:50000}]},
+  quiz:{q:'Estimated Revenues $1,000,000 and Appropriations $950,000. What happens to Budgetary Fund Balance?',opts:['It is debited for $50,000','It is credited for $50,000','It is not used in this entry','It is credited for $1,950,000'],correct:1,why:'Debits ($1,000,000) exceed credits ($950,000); the $50,000 difference is credited to balance the entry: a planned surplus.'},
+  lab:{title:'Maplewood’s budget',scenario:'The City of Maplewood adopts estimated revenues of $1,000,000 and appropriations of $950,000. Record the adoption using the balancing account.',lines:[{s:'D',a:'er',m:1000000},{s:'C',a:'ap',m:950000},{s:'C',a:'bfb',m:50000}],hint:'Three lines: debit Estimated Revenues for the full estimate, credit Appropriations, and credit the remainder ($50,000) to Budgetary Fund Balance.',success:'A planned surplus of $50,000: Maplewood expects to end the year with more resources than it authorizes to spend.'}
 },
 {
-  id:'deficit',title:'Déficit planeado',short:'Autorizar más de lo que entra',
-  desc:'Un gobierno con reservas acumuladas puede autorizar gastos mayores a sus ingresos estimados. Entonces Budgetary Fund Balance se debita.',
-  objective:'Registrar un presupuesto deficitario y entender qué significa.',
+  id:'deficit',title:'Planned deficit',short:'Authorizing more than comes in',
+  desc:'A government with accumulated reserves can authorize spending beyond its estimated revenues. In that case, Budgetary Fund Balance is debited.',
+  objective:'Record a deficit budget and understand what it means.',
   concepts:[
-    ['Déficit planeado','Appropriations > Estimated Revenues: se gastará parte de las reservas.'],
-    ['BFB al débito','La diferencia se debita a Budgetary Fund Balance para cuadrar.'],
-    ['Uso de reservas','Solo es viable si el fondo acumuló saldo en años anteriores.'],
-    ['El asiento siempre cuadra','Débitos = créditos, también en las cuentas presupuestarias.']
+    ['Planned deficit','Appropriations > Estimated Revenues: part of the reserves will be spent.'],
+    ['BFB on the debit side','The difference is debited to Budgetary Fund Balance to make the entry balance.'],
+    ['Drawing on reserves','Only viable if the fund accumulated balance in prior years.'],
+    ['Entries always balance','Debits = credits, in budgetary accounts too.']
   ],
-  video:'El video muestra el caso inverso al superávit: cuando lo autorizado excede lo estimado, la cuenta de cuadre absorbe la diferencia con un débito.',
-  entry:{caption:'Presupuesto con déficit planeado',lines:[{s:'D',a:'er',m:800000},{s:'D',a:'bfb',m:30000},{s:'C',a:'ap',m:830000}]},
-  quiz:{q:'Appropriations $830,000 y Estimated Revenues $800,000. El asiento requiere…',opts:['Acreditar Budgetary Fund Balance por $30,000','Debitar Budgetary Fund Balance por $30,000','Reducir Appropriations a $800,000','Debitar Fund Balance (real) por $30,000'],correct:1,why:'Los créditos exceden a los débitos por $30,000; se debita la cuenta presupuestaria de cuadre. La cuenta real Fund Balance no se toca al registrar el plan.'},
-  lab:{title:'Presupuesto de San Rafael',scenario:'El Condado de San Rafael estima ingresos por $800,000 pero apropia $830,000, usando reservas de años anteriores. Registra la adopción.',lines:[{s:'D',a:'er',m:800000},{s:'D',a:'bfb',m:30000},{s:'C',a:'ap',m:830000}],hint:'Dos débitos y un crédito: Estimated Revenues $800,000 y Budgetary Fund Balance $30,000 contra Appropriations $830,000.',success:'Déficit planeado de $30,000: San Rafael financiará parte del año con reservas acumuladas.'}
+  video:'The video shows the reverse of the surplus case: when authorized spending exceeds the estimate, the balancing account absorbs the difference with a debit.',
+  entry:{caption:'Budget with a planned deficit',lines:[{s:'D',a:'er',m:800000},{s:'D',a:'bfb',m:30000},{s:'C',a:'ap',m:830000}]},
+  quiz:{q:'Appropriations $830,000 and Estimated Revenues $800,000. The entry requires…',opts:['Crediting Budgetary Fund Balance for $30,000','Debiting Budgetary Fund Balance for $30,000','Reducing Appropriations to $800,000','Debiting Fund Balance (actual) for $30,000'],correct:1,why:'Credits exceed debits by $30,000; the budgetary balancing account is debited. The actual Fund Balance account is never touched when recording the plan.'},
+  lab:{title:'Granite County’s budget',scenario:'Granite County estimates revenues of $800,000 but appropriates $830,000, drawing on reserves from prior years. Record the adoption.',lines:[{s:'D',a:'er',m:800000},{s:'D',a:'bfb',m:30000},{s:'C',a:'ap',m:830000}],hint:'Two debits and one credit: Estimated Revenues $800,000 and Budgetary Fund Balance $30,000, against Appropriations $830,000.',success:'A planned deficit of $30,000: Granite County will finance part of the year with accumulated reserves.'}
 },
 {
-  id:'ingresos',title:'Ingresos reales',short:'Revenues bajo devengo modificado',
-  desc:'Durante el año llegan los hechos. Al gravar impuestos, el fondo reconoce Revenues: la cuenta real, separada de la estimación.',
-  objective:'Reconocer ingresos reales con la base de devengo modificado.',
+  id:'revenues',title:'Actual revenues',short:'Revenues under modified accrual',
+  desc:'During the year, real events arrive. When taxes are levied, the fund recognizes Revenues: the actual account, kept separate from the estimate.',
+  objective:'Recognize actual revenues under the modified accrual basis.',
   concepts:[
-    ['Revenues','Ingresos reales del período. Saldo acreedor, como en contabilidad comercial.'],
-    ['Devengo modificado','Los fondos gubernamentales reconocen ingresos cuando son medibles y disponibles para pagar obligaciones del período.'],
-    ['Taxes Receivable','El derecho de cobro que nace al gravar impuestos a la propiedad.'],
-    ['Par en espejo','Estimated Revenues (plan, débito) convive todo el año con Revenues (real, crédito).']
+    ['Revenues','The period’s actual revenues. Credit balance, as in commercial accounting.'],
+    ['Modified accrual','Governmental funds recognize revenues when they are measurable and available to pay current-period obligations.'],
+    ['Taxes Receivable','The right to collect that arises when property taxes are levied.'],
+    ['Mirror pair','Estimated Revenues (plan, debit) lives all year alongside Revenues (actual, credit).']
   ],
-  video:'En el video, el gravamen de impuestos genera un débito a Taxes Receivable y un crédito a Revenues; la estimación registrada en enero no se modifica.',
-  entry:{caption:'Gravamen de impuestos a la propiedad',lines:[{s:'D',a:'txr',m:600000},{s:'C',a:'rev',m:600000}]},
-  quiz:{q:'¿Cuándo reconoce ingresos un fondo gubernamental bajo devengo modificado?',opts:['Cuando se cobra el efectivo, siempre','Cuando son medibles y están disponibles','Cuando se aprueba el presupuesto','Al cierre del año fiscal'],correct:1,why:'La regla es "measurable and available": se puede cuantificar y se cobrará a tiempo para pagar obligaciones del período.'},
-  lab:{title:'Gravamen en Monte Alto',scenario:'Monte Alto grava impuestos a la propiedad por $600,000. Se consideran medibles y disponibles. Registra el ingreso.',lines:[{s:'D',a:'txr',m:600000},{s:'C',a:'rev',m:600000}],hint:'Nace un derecho de cobro (débito a Taxes Receivable) y se reconoce el ingreso real (crédito a Revenues). Las cuentas presupuestarias no se tocan.',success:'Primer hecho real del año: $600,000 en Revenues contra $1,000,000 estimados. La comparación ya está viva.'}
+  video:'In the video, the tax levy produces a debit to Taxes Receivable and a credit to Revenues; the estimate recorded in January is not modified.',
+  entry:{caption:'Property tax levy',lines:[{s:'D',a:'txr',m:600000},{s:'C',a:'rev',m:600000}]},
+  quiz:{q:'When does a governmental fund recognize revenues under modified accrual?',opts:['Only when cash is collected','When they are measurable and available','When the budget is adopted','At fiscal year end'],correct:1,why:'The rule is "measurable and available": the amount can be quantified and will be collected in time to pay the period’s obligations.'},
+  lab:{title:'Tax levy in Maplewood',scenario:'Maplewood levies property taxes of $600,000. They are considered measurable and available. Record the revenue.',lines:[{s:'D',a:'txr',m:600000},{s:'C',a:'rev',m:600000}],hint:'A receivable is born (debit Taxes Receivable) and the actual revenue is recognized (credit Revenues). The budgetary accounts are not touched.',success:'The year’s first real event: $600,000 in Revenues against $1,000,000 estimated. The comparison is now alive.'}
 },
 {
-  id:'gastos',title:'Expenditures',short:'Gasto real contra la autorización',
-  desc:'Cada factura aprobada consume la autorización legal. Expenditures se compara contra Appropriations durante todo el año.',
-  objective:'Registrar erogaciones reales y entender el control presupuestario.',
+  id:'expenditures',title:'Expenditures',short:'Real spending against the authorization',
+  desc:'Every approved invoice consumes the legal authorization. Expenditures is compared against Appropriations throughout the year.',
+  objective:'Record actual expenditures and understand budgetary control.',
   concepts:[
-    ['Expenditures','Uso de recursos financieros corrientes. Saldo deudor.'],
-    ['No son expenses','Aquí no hay depreciación: se mide el flujo financiero del período, no el consumo económico.'],
-    ['Vouchers Payable','El pasivo aprobado pendiente de pago.'],
-    ['Control legal','Expenditures no debe exceder Appropriations: ese es el control que el sistema vigila.'],
-    ['Encumbrances','Las órdenes de compra apartan presupuesto antes del gasto; se convierten en Expenditures al recibir lo pedido.']
+    ['Expenditures','The use of current financial resources. Debit balance.'],
+    ['Not expenses','No depreciation here: the measure is the period’s financial outflow, not economic consumption.'],
+    ['Vouchers Payable','The approved liability awaiting payment.'],
+    ['Legal control','Expenditures must not exceed Appropriations: that is the control the system watches.'],
+    ['Encumbrances','Purchase orders set budget aside before the spending happens; they become Expenditures when the goods arrive.']
   ],
-  video:'El video registra una erogación: débito a Expenditures y crédito al pasivo. El saldo disponible de la apropiación se reduce con cada asiento.',
-  entry:{caption:'Factura aprobada por servicios',lines:[{s:'D',a:'exp',m:120000},{s:'C',a:'vp',m:120000}]},
-  quiz:{q:'Durante el año, el control presupuestario compara…',opts:['Revenues contra Expenditures','Expenditures (más Encumbrances) contra Appropriations','Cash contra Vouchers Payable','Fund Balance contra Budgetary Fund Balance'],correct:1,why:'La pregunta legal es cuánta autorización queda: apropiado menos gastado y comprometido.'},
-  lab:{title:'Factura en Monte Alto',scenario:'Monte Alto recibe y aprueba una factura de $120,000 por servicios de seguridad pública. Registra la erogación.',lines:[{s:'D',a:'exp',m:120000},{s:'C',a:'vp',m:120000}],hint:'Débito a Expenditures (cuenta real de gasto) y crédito a Vouchers Payable (pasivo aprobado).',success:'Quedan $830,000 de autorización disponible: $950,000 apropiados menos $120,000 gastados.'}
+  video:'The video records an expenditure: debit Expenditures and credit the liability. The available balance of the appropriation shrinks with every entry.',
+  entry:{caption:'Approved invoice for services',lines:[{s:'D',a:'exp',m:120000},{s:'C',a:'vp',m:120000}]},
+  quiz:{q:'During the year, budgetary control compares…',opts:['Revenues against Expenditures','Expenditures (plus Encumbrances) against Appropriations','Cash against Vouchers Payable','Fund Balance against Budgetary Fund Balance'],correct:1,why:'The legal question is how much authority remains: appropriated, minus spent and committed.'},
+  lab:{title:'An invoice in Maplewood',scenario:'Maplewood receives and approves a $120,000 invoice for public safety services. Record the expenditure.',lines:[{s:'D',a:'exp',m:120000},{s:'C',a:'vp',m:120000}],hint:'Debit Expenditures (the actual spending account) and credit Vouchers Payable (the approved liability).',success:'$830,000 of authority remains: $950,000 appropriated minus $120,000 spent.'}
 },
 {
-  id:'cierre',title:'Comparar y cerrar',short:'Variaciones y asiento inverso',
-  desc:'Al cierre, el plan se retira de los libros con el asiento exactamente inverso al de enero, y se reporta la comparación presupuesto contra real.',
-  objective:'Cerrar las cuentas presupuestarias y leer la comparación budget-to-actual.',
+  id:'closing',title:'Compare and close',short:'Variances and the reversing entry',
+  desc:'At year end, the plan leaves the books through the exact reverse of January’s entry, and the budget-to-actual comparison is reported.',
+  objective:'Close the budgetary accounts and read the budget-to-actual statement.',
   concepts:[
-    ['Asiento de cierre','La reversa exacta del asiento del presupuesto, por los mismos montos originales.'],
-    ['Variación favorable','Ingresos reales por encima de lo estimado, o gastos por debajo de lo apropiado.'],
-    ['Budget-to-actual','El estado comparativo que GASB exige presentar para el Fondo General.'],
-    ['Ciclo completo','Plan → hechos reales → comparación → cierre. Y el año siguiente comienza de nuevo.']
+    ['Closing entry','The exact reverse of the budget entry, for the same original amounts.'],
+    ['Favorable variance','Actual revenues above the estimate, or spending below the appropriation.'],
+    ['Budget-to-actual','The comparative statement GASB requires for the General Fund.'],
+    ['Full cycle','Plan → real events → comparison → closing. And the next year starts again.']
   ],
-  video:'El video cierra el ciclo: las cuentas presupuestarias desaparecen con la reversa y las cuentas reales cuentan la historia del año en el estado comparativo.',
-  compare:{rows:[['Ingresos',1000000,1020000],['Erogaciones (autorizadas)',950000,930000]]},
-  entry:{caption:'Cierre de cuentas presupuestarias (reversa)',lines:[{s:'D',a:'ap',m:950000},{s:'D',a:'bfb',m:50000},{s:'C',a:'er',m:1000000}]},
-  quiz:{q:'¿Cómo se eliminan las cuentas presupuestarias al cierre del año?',opts:['Se transfieren a Fund Balance','Con el asiento inverso exacto al de la adopción','Se ajustan a los montos reales','No se eliminan: pasan al año siguiente'],correct:1,why:'Se revierten por sus montos originales. Las cuentas reales (Revenues, Expenditures) se cierran por separado contra Fund Balance.'},
-  lab:{title:'Cierre del año en Monte Alto',scenario:'Fin de año: revierte el presupuesto que Monte Alto registró en enero (Estimated Revenues $1,000,000; Appropriations $950,000; Budgetary Fund Balance $50,000 acreedor).',lines:[{s:'D',a:'ap',m:950000},{s:'D',a:'bfb',m:50000},{s:'C',a:'er',m:1000000}],hint:'Cada cuenta cambia de lado respecto al asiento de enero: lo que se acreditó ahora se debita, y viceversa, por los mismos montos.',success:'Ciclo completo. El plan salió de los libros y las cuentas reales quedan listas para su propio cierre.'}
+  video:'The video closes the cycle: the budgetary accounts disappear through the reversal, and the actual accounts tell the year’s story in the comparative statement.',
+  compare:{rows:[['Revenues',1000000,1020000],['Expenditures (authorized)',950000,930000]]},
+  entry:{caption:'Closing the budgetary accounts (reversal)',lines:[{s:'D',a:'ap',m:950000},{s:'D',a:'bfb',m:50000},{s:'C',a:'er',m:1000000}]},
+  quiz:{q:'How are the budgetary accounts removed at year end?',opts:['They are transferred to Fund Balance','With the exact reverse of the adoption entry','They are adjusted to the actual amounts','They are not removed: they carry into next year'],correct:1,why:'They are reversed for their original amounts. The actual accounts (Revenues, Expenditures) are closed separately against Fund Balance.'},
+  lab:{title:'Year-end closing in Maplewood',scenario:'Year end: reverse the budget Maplewood recorded in January (Estimated Revenues $1,000,000; Appropriations $950,000; Budgetary Fund Balance $50,000 credit).',lines:[{s:'D',a:'ap',m:950000},{s:'D',a:'bfb',m:50000},{s:'C',a:'er',m:1000000}],hint:'Every account switches sides from the January entry: what was credited is now debited, and vice versa, for the same amounts.',success:'Full cycle. The plan is out of the books and the actual accounts are ready for their own closing.'}
 }
 ];
 
 const glossary=[
-['Fund','Fondo','Entidad contable independiente con sus propios libros y ecuación contable.'],
-['General Fund','Fondo General','El fondo principal: opera los servicios diarios del gobierno.'],
-['Budget','Presupuesto','Plan financiero anual con fuerza de ley una vez aprobado.'],
-['Estimated Revenues','Ingresos estimados','Cuenta presupuestaria (débito) con los ingresos que se espera recaudar.'],
-['Appropriations','Apropiaciones','Cuenta presupuestaria (crédito) con el máximo legal autorizado para gastar.'],
-['Budgetary Fund Balance','Saldo presupuestario','Cuenta que cuadra el asiento del presupuesto: crédito si hay superávit planeado, débito si hay déficit.'],
-['Revenues','Ingresos reales','Ingresos del período efectivamente reconocidos. Saldo acreedor.'],
-['Expenditures','Erogaciones','Uso real de recursos financieros corrientes. Saldo deudor. No incluyen depreciación.'],
-['Encumbrance','Compromiso','Reserva de presupuesto por una orden de compra emitida, antes de recibir el bien o servicio.'],
-['Modified accrual','Devengo modificado','Base contable de los fondos gubernamentales: ingresos cuando son medibles y disponibles.'],
-['Measurable & available','Medible y disponible','Criterio para reconocer ingresos: cuantificables y cobrables a tiempo para pagar obligaciones del período.'],
-['Taxes Receivable','Impuestos por cobrar','Derecho de cobro que nace al gravar impuestos.'],
-['Vouchers Payable','Comprobantes por pagar','Pasivo por facturas aprobadas pendientes de pago.'],
-['Fund Balance','Saldo del fondo','Cuenta real: recursos netos acumulados del fondo. Distinta de la versión presupuestaria.'],
-['Variance','Variación','Diferencia entre presupuesto y real; favorable o desfavorable.'],
-['Budget-to-actual','Presupuesto contra real','Estado comparativo requerido por GASB para el Fondo General.'],
-['Closing entry','Asiento de cierre','Al fin de año, la reversa exacta del asiento del presupuesto elimina las cuentas presupuestarias.'],
-['GASB','GASB','Governmental Accounting Standards Board: emite las normas contables de los gobiernos estatales y locales de EE. UU.']
+['Fund','A self-balancing accounting entity with its own books and its own accounting equation.'],
+['General Fund','The main fund: it operates the government’s day-to-day services.'],
+['Budget','The annual financial plan, with the force of law once adopted.'],
+['Estimated Revenues','Budgetary account (debit) holding the revenues expected to be collected.'],
+['Appropriations','Budgetary account (credit) holding the maximum spending legally authorized.'],
+['Budgetary Fund Balance','The account that balances the budget entry: credited for a planned surplus, debited for a planned deficit.'],
+['Revenues','The period’s actual recognized revenues. Credit balance.'],
+['Expenditures','The actual use of current financial resources. Debit balance. No depreciation included.'],
+['Encumbrance','Budget set aside for an issued purchase order, before the goods or services arrive.'],
+['Modified accrual','The accounting basis of governmental funds: revenues when measurable and available.'],
+['Measurable & available','The revenue recognition test: quantifiable and collectible in time to pay current-period obligations.'],
+['Taxes Receivable','The right to collect that arises when taxes are levied.'],
+['Vouchers Payable','Liability for approved invoices awaiting payment.'],
+['Fund Balance','Actual account: the fund’s accumulated net resources. Distinct from the budgetary version.'],
+['Variance','The difference between budget and actual; favorable or unfavorable.'],
+['Budget-to-actual','The comparative statement GASB requires for the General Fund.'],
+['Closing entry','At year end, the exact reverse of the budget entry removes the budgetary accounts.'],
+['GASB','Governmental Accounting Standards Board: sets accounting standards for U.S. state and local governments.']
 ];
 
 const defaultState={lessons:[],labs:[],quizAttempts:0,quizCorrect:0,xp:0};
@@ -423,20 +423,20 @@ function go(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remo
 function unlocked(i){return i===0||state.labs.includes(i-1)}
 function nextIndex(){for(let i=0;i<units.length;i++)if(!state.labs.includes(i))return i;return units.length-1}
 function continueLearning(){const i=nextIndex();if(!state.lessons.includes(i))openLesson(i);else openLab(i)}
-function openLesson(i){if(!unlocked(i))return toast('Completa el asiento anterior para desbloquear esta unidad.');currentLesson=i;selectedAnswer=null;quizChecked=false;renderLesson();go('lesson')}
-function openLab(i){if(!unlocked(i))return toast('Esta práctica todavía está bloqueada.');currentLab=i;renderLab();go('lab')}
+function openLesson(i){if(!unlocked(i))return toast('Complete the previous journal entry to unlock this unit.');currentLesson=i;selectedAnswer=null;quizChecked=false;renderLesson();go('lesson')}
+function openLab(i){if(!unlocked(i))return toast('This practice is still locked.');currentLab=i;renderLab();go('lab')}
 function openCurrentLab(){openLab(nextIndex())}
 
 function ledgerHTML(entry){
   const debits=entry.lines.filter(l=>l.s==='D'),credits=entry.lines.filter(l=>l.s==='C');
   const td=debits.reduce((s,l)=>s+l.m,0),tc=credits.reduce((s,l)=>s+l.m,0);
-  const row=l=>`<div class="lrow"><span class="acct ${l.s==='C'?'cr':''}">${ACCOUNTS[l.a].name}<small>${ACCOUNTS[l.a].es}</small></span><span class="amt">${l.s==='D'?money(l.m):''}</span><span class="amt">${l.s==='C'?money(l.m):''}</span></div>`;
-  return `<div class="ledger"><div class="lrow lhead"><span>Cuenta</span><span class="amt">Debe</span><span class="amt">Haber</span></div>${debits.map(row).join('')}${credits.map(row).join('')}<div class="lrow ltotal"><span></span><span class="amt">${money(td)}</span><span class="amt">${money(tc)}</span></div>${entry.caption?`<div class="lcaption">${entry.caption}</div>`:''}</div>`;
+  const row=l=>`<div class="lrow"><span class="acct ${l.s==='C'?'cr':''}">${ACCOUNTS[l.a].name}<small>${ACCOUNTS[l.a].sub}</small></span><span class="amt">${l.s==='D'?money(l.m):''}</span><span class="amt">${l.s==='C'?money(l.m):''}</span></div>`;
+  return `<div class="ledger"><div class="lrow lhead"><span>Account</span><span class="amt">Debit</span><span class="amt">Credit</span></div>${debits.map(row).join('')}${credits.map(row).join('')}<div class="lrow ltotal"><span></span><span class="amt">${money(td)}</span><span class="amt">${money(tc)}</span></div>${entry.caption?`<div class="lcaption">${entry.caption}</div>`:''}</div>`;
 }
 function compareHTML(cmp){
-  const rows=cmp.rows.map(r=>{const isRev=r[0].startsWith('Ingresos');const fav=isRev?r[2]>=r[1]:r[2]<=r[1];const diff=Math.abs(r[2]-r[1]);
-  return `<tr><td>${r[0]}</td><td class="num">${money(r[1])}</td><td class="num">${money(r[2])}</td><td><span class="pill ${fav?'ok':'bad'}">${fav?'+':'−'} ${money(diff)} ${fav?'favorable':'desfavorable'}</span></td></tr>`}).join('');
-  return `<div class="tableWrap"><table><thead><tr><th>Concepto</th><th class="num">Presupuesto</th><th class="num">Real</th><th>Variación</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+  const rows=cmp.rows.map(r=>{const isRev=r[0].startsWith('Revenues');const fav=isRev?r[2]>=r[1]:r[2]<=r[1];const diff=Math.abs(r[2]-r[1]);
+  return `<tr><td>${r[0]}</td><td class="num">${money(r[1])}</td><td class="num">${money(r[2])}</td><td><span class="pill ${fav?'ok':'bad'}">${fav?'+':'−'} ${money(diff)} ${fav?'favorable':'unfavorable'}</span></td></tr>`}).join('');
+  return `<div class="tableWrap"><table><thead><tr><th>Item</th><th class="num">Budget</th><th class="num">Actual</th><th>Variance</th></tr></thead><tbody>${rows}</tbody></table></div>`;
 }
 
 function renderLesson(){
@@ -444,25 +444,25 @@ function renderLesson(){
   document.getElementById('lessonBar').style.width=((currentLesson+1)/units.length*100)+'%';
   document.getElementById('lessonStep').textContent=(currentLesson+1)+'/'+units.length;
   document.getElementById('lessonContent').innerHTML=`<article class="card lessonCard">
-  <div class="eyebrow" style="color:var(--green)">Unidad ${String(currentLesson+1).padStart(2,'0')}</div>
+  <div class="eyebrow" style="color:var(--green)">Unit ${String(currentLesson+1).padStart(2,'0')}</div>
   <h1>${u.title}</h1><p class="lead">${u.desc}</p>
-  <div class="objective"><div>🎯</div><div><b>Objetivo</b><p>${u.objective}</p></div></div>
+  <div class="objective"><div>🎯</div><div><b>Objective</b><p>${u.objective}</p></div></div>
   <div class="conceptGrid">${u.concepts.map(c=>`<div class="concept"><b>${c[0]}</b><span>${c[1]}</span></div>`).join('')}</div>
-  <div class="mission"><b>EN EL VIDEO</b><p>${u.video}</p></div>
+  <div class="mission"><b>IN THE VIDEO</b><p>${u.video}</p></div>
   ${u.compare?compareHTML(u.compare):''}
   ${ledgerHTML(u.entry)}
-  <h3 class="quizTitle">Comprueba lo aprendido</h3><p>${u.quiz.q}</p>
+  <h3 class="quizTitle">Check your understanding</h3><p>${u.quiz.q}</p>
   <div class="choices">${u.quiz.opts.map((o,i)=>`<button class="${selectedAnswer===i?'selected':''}" onclick="chooseAnswer(${i})">${o}</button>`).join('')}</div>
-  ${quizChecked?`<div class="feedback ${selectedAnswer===u.quiz.correct?'good':'badfb'}">${selectedAnswer===u.quiz.correct?'Correcto. ':'Revisa el concepto. '}${u.quiz.why}</div>`:''}
+  ${quizChecked?`<div class="feedback ${selectedAnswer===u.quiz.correct?'good':'badfb'}">${selectedAnswer===u.quiz.correct?'Correct. ':'Review the concept. '}${u.quiz.why}</div>`:''}
   <div class="actions">
-    <button class="button" onclick="checkLessonQuiz()">${quizChecked&&selectedAnswer===u.quiz.correct?'Ir a registrar el asiento':'Comprobar respuesta'}</button>
-    <button class="button secondary" onclick="go('path')">Volver a la ruta</button>
+    <button class="button" onclick="checkLessonQuiz()">${quizChecked&&selectedAnswer===u.quiz.correct?'Go record the entry':'Check answer'}</button>
+    <button class="button secondary" onclick="go('path')">Back to path</button>
   </div></article>`;
 }
 function chooseAnswer(i){selectedAnswer=i;quizChecked=false;renderLesson()}
 function checkLessonQuiz(){
   const u=units[currentLesson];
-  if(selectedAnswer===null)return toast('Selecciona una respuesta.');
+  if(selectedAnswer===null)return toast('Select an answer.');
   if(quizChecked&&selectedAnswer===u.quiz.correct)return openLab(currentLesson);
   state.quizAttempts++;quizChecked=true;
   if(selectedAnswer===u.quiz.correct){state.quizCorrect++;if(!state.lessons.includes(currentLesson)){state.lessons.push(currentLesson);state.xp+=10}}
@@ -474,37 +474,37 @@ function renderPath(){
     return `<div class="card unit ${isDone?'done':''} ${isCurrent?'current':''} ${isLocked?'locked':''}" onclick="${isLocked?'lockedMsg()':`openLesson(${i})`}">
       <div class="icon">${isDone?'✓':String(i+1).padStart(2,'0')}</div>
       <div><h3>${u.title}</h3><p>${u.short}</p></div>
-      <div class="unitStatus ${isDone?'ok':''}">${isDone?'COMPLETA':isLocked?'BLOQUEADA':state.lessons.includes(i)?'ASIENTO':'LECCIÓN'}</div></div>`}).join('');
+      <div class="unitStatus ${isDone?'ok':''}">${isDone?'COMPLETE':isLocked?'LOCKED':state.lessons.includes(i)?'ENTRY':'LESSON'}</div></div>`}).join('');
 }
-function lockedMsg(){toast('Completa la unidad anterior primero.')}
+function lockedMsg(){toast('Complete the previous unit first.')}
 
 function accountOptions(sel){
-  return `<option value="" ${sel?'':'selected'} disabled>Cuenta…</option>`+Object.keys(ACCOUNTS).map(k=>`<option value="${k}" ${sel===k?'selected':''}>${ACCOUNTS[k].name} — ${ACCOUNTS[k].es}</option>`).join('');
+  return `<option value="" ${sel?'':'selected'} disabled>Account…</option>`+Object.keys(ACCOUNTS).map(k=>`<option value="${k}" ${sel===k?'selected':''}>${ACCOUNTS[k].name}</option>`).join('');
 }
 function renderLab(){
   const u=units[currentLab],lab=u.lab,done=state.labs.includes(currentLab),n=lab.lines.length;
   document.getElementById('labContent').innerHTML=`
-  <div class="lessonTop"><button class="back" onclick="go('path')" aria-label="Volver a la ruta">‹</button><div class="lessonProgress"><div style="width:${(currentLab+1)/units.length*100}%"></div></div><b>${currentLab+1}/${units.length}</b></div>
-  <div class="labhero"><div class="eyebrow">Asiento ${String(currentLab+1).padStart(2,'0')}</div><h1>${lab.title}</h1><p>${lab.scenario}</p>
-  <div class="labmeta"><span class="tag">Fondo General</span><span class="tag">${n} líneas</span><span class="tag">${20+(currentLab*5)} XP</span></div></div>
-  <h2>Tu asiento de diario</h2>
+  <div class="lessonTop"><button class="back" onclick="go('path')" aria-label="Back to path">‹</button><div class="lessonProgress"><div style="width:${(currentLab+1)/units.length*100}%"></div></div><b>${currentLab+1}/${units.length}</b></div>
+  <div class="labhero"><div class="eyebrow">Entry ${String(currentLab+1).padStart(2,'0')}</div><h1>${lab.title}</h1><p>${lab.scenario}</p>
+  <div class="labmeta"><span class="tag">General Fund</span><span class="tag">${n} lines</span><span class="tag">${20+(currentLab*5)} XP</span></div></div>
+  <h2>Your journal entry</h2>
   <div class="card">
-    <p style="margin-top:0">Este asiento usa <b>${n} líneas</b>. Elige lado, cuenta y monto de cada una; el orden no importa.</p>
-    <div class="jlabels"><span>Lado</span><span>Cuenta</span><span>Monto</span></div>
+    <p style="margin-top:0">This entry uses <b>${n} lines</b>. Choose the side, account, and amount for each; order doesn't matter.</p>
+    <div class="jlabels"><span>Side</span><span>Account</span><span>Amount</span></div>
     ${Array.from({length:n},(_,i)=>`
       <div class="jgrid" data-row="${i}">
-        <div class="sideToggle" role="group" aria-label="Lado de la línea ${i+1}">
-          <button type="button" data-side="D" onclick="setSide(${i},'D')">Debe</button>
-          <button type="button" data-side="C" onclick="setSide(${i},'C')">Haber</button>
+        <div class="sideToggle" role="group" aria-label="Side of line ${i+1}">
+          <button type="button" data-side="D" onclick="setSide(${i},'D')">Debit</button>
+          <button type="button" data-side="C" onclick="setSide(${i},'C')">Credit</button>
         </div>
-        <select id="acct${i}" aria-label="Cuenta de la línea ${i+1}">${accountOptions('')}</select>
-        <input id="amt${i}" inputmode="numeric" autocomplete="off" placeholder="0" aria-label="Monto de la línea ${i+1}">
+        <select id="acct${i}" aria-label="Account for line ${i+1}">${accountOptions('')}</select>
+        <input id="amt${i}" inputmode="numeric" autocomplete="off" placeholder="0" aria-label="Amount for line ${i+1}">
       </div>`).join('')}
-    <button class="button" onclick="checkEntry()">Registrar asiento</button>
-    <button class="button secondary small" onclick="toggleHint()">Necesito una pista</button>
+    <button class="button" onclick="checkEntry()">Post entry</button>
+    <button class="button secondary small" onclick="toggleHint()">I need a hint</button>
     <div class="hint" id="hint">💡 ${lab.hint}</div>
   </div>
-  <div id="labResult">${done?`<div class="successBox"><h3>✓ Asiento ya completado</h3><p>Puedes volver a registrarlo para practicar.</p></div>`:''}</div>`;
+  <div id="labResult">${done?`<div class="successBox"><h3>✓ Entry already completed</h3><p>You can post it again for practice.</p></div>`:''}</div>`;
   labSides=Array(n).fill(null);
 }
 let labSides=[];
@@ -517,65 +517,65 @@ function checkEntry(){
   const rows=[];
   for(let i=0;i<n;i++){
     const a=document.getElementById('acct'+i).value,m=parseAmt(document.getElementById('amt'+i).value),s=labSides[i];
-    if(!s||!a||!m){box.innerHTML='<div class="feedback badfb">Completa todas las líneas: lado, cuenta y monto.</div>';return}
+    if(!s||!a||!m){box.innerHTML='<div class="feedback badfb">Complete every line: side, account, and amount.</div>';return}
     rows.push({s,a,m});
   }
   const td=rows.filter(r=>r.s==='D').reduce((x,r)=>x+r.m,0),tc=rows.filter(r=>r.s==='C').reduce((x,r)=>x+r.m,0);
-  if(td!==tc){box.innerHTML=`<div class="feedback badfb"><b>El asiento no cuadra.</b><br>Débitos ${money(td)} vs créditos ${money(tc)}. En todo asiento, débitos = créditos.</div>`;return}
+  if(td!==tc){box.innerHTML=`<div class="feedback badfb"><b>The entry doesn't balance.</b><br>Debits ${money(td)} vs credits ${money(tc)}. In every journal entry, debits = credits.</div>`;return}
   const wrongAcct=rows.find(r=>!lab.lines.some(l=>l.a===r.a));
-  if(wrongAcct){box.innerHTML=`<div class="feedback badfb"><b>${ACCOUNTS[wrongAcct.a].name}</b> no pertenece a este asiento. Repasa qué cuentas intervienen en el escenario.</div>`;return}
+  if(wrongAcct){box.innerHTML=`<div class="feedback badfb"><b>${ACCOUNTS[wrongAcct.a].name}</b> doesn't belong in this entry. Review which accounts the scenario involves.</div>`;return}
   const key=r=>r.s+'|'+r.a+'|'+r.m;
   const want=lab.lines.map(key).sort().join(';'),got=rows.map(key).sort().join(';');
   if(want!==got){
     const sideIssue=rows.find(r=>lab.lines.some(l=>l.a===r.a&&l.s!==r.s&&!lab.lines.some(x=>x.a===r.a&&x.s===r.s)));
-    if(sideIssue){box.innerHTML=`<div class="feedback badfb"><b>${ACCOUNTS[sideIssue.a].name}</b> está del lado equivocado. Recuerda el saldo normal de cada cuenta.</div>`;return}
-    box.innerHTML='<div class="feedback badfb">Las cuentas y los lados son correctos, pero algún <b>monto</b> no coincide con el escenario. Revisa las cifras.</div>';return;
+    if(sideIssue){box.innerHTML=`<div class="feedback badfb"><b>${ACCOUNTS[sideIssue.a].name}</b> is on the wrong side. Remember each account's normal balance.</div>`;return}
+    box.innerHTML='<div class="feedback badfb">The accounts and sides are right, but an <b>amount</b> doesn’t match the scenario. Check the figures.</div>';return;
   }
-  box.innerHTML=`<div class="successBox"><h3>✓ Asiento correcto</h3><p>${lab.success}</p></div>
+  box.innerHTML=`<div class="successBox"><h3>✓ Entry is correct</h3><p>${lab.success}</p></div>
   ${ledgerHTML({caption:u.entry.caption,lines:lab.lines})}
-  ${currentLab===units.length-1?`<button class="button" onclick="showCertificate()">Ver logro de la lección</button>`:`<button class="button" onclick="openLesson(${currentLab+1})">Continuar a la unidad ${currentLab+2}</button>`}`;
-  if(!state.labs.includes(currentLab)){state.labs.push(currentLab);state.xp+=20+(currentLab*5);save();toast('Asiento registrado. ¡Buen trabajo!')}
+  ${currentLab===units.length-1?`<button class="button" onclick="showCertificate()">See your achievement</button>`:`<button class="button" onclick="openLesson(${currentLab+1})">Continue to unit ${currentLab+2}</button>`}`;
+  if(!state.labs.includes(currentLab)){state.labs.push(currentLab);state.xp+=20+(currentLab*5);save();toast('Entry posted. Nice work!')}
   box.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
 function renderGlossary(){
   const q=(document.getElementById('glossSearch')?.value||'').toLowerCase();
-  const items=glossary.filter(x=>(x[0]+' '+x[1]+' '+x[2]).toLowerCase().includes(q));
-  document.getElementById('glossList').innerHTML=items.map(x=>`<div class="term"><b>${x[0]}</b><small>${x[1]}</small><p>${x[2]}</p></div>`).join('')||'<p class="muted">No se encontró ese término.</p>';
+  const items=glossary.filter(x=>(x[0]+' '+x[1]).toLowerCase().includes(q));
+  document.getElementById('glossList').innerHTML=items.map(x=>`<div class="term"><b>${x[0]}</b><p>${x[1]}</p></div>`).join('')||'<p class="muted">No matching term found.</p>';
 }
 function updateAll(){
   const lp=state.lessons.length,lb=state.labs.length,total=units.length*2,done=lp+lb,pct=Math.round(done/total*100),next=nextIndex(),u=units[next];
   document.getElementById('xp').textContent=state.xp;
   document.getElementById('homePct').textContent=pct+'%';
   document.getElementById('homeFill').style.width=pct+'%';
-  document.getElementById('pathPct').textContent=pct+'% completado';
+  document.getElementById('pathPct').textContent=pct+'% complete';
   document.getElementById('lessonCount').textContent=lp+'/'+units.length;
   document.getElementById('labCount').textContent=lb+'/'+units.length;
   document.getElementById('accuracy').textContent=state.quizAttempts?Math.round(state.quizCorrect/state.quizAttempts*100)+'%':'—';
   const finished=lb===units.length;
   document.getElementById('nextIcon').textContent=finished?'✓':String(next+1).padStart(2,'0');
-  document.getElementById('nextTitle').textContent=finished?'Lección completada':u.title;
-  document.getElementById('nextDesc').textContent=finished?'Revisa tu logro y repasa el glosario.':state.lessons.includes(next)?'Registra el asiento de práctica.':u.short;
-  document.getElementById('continueBtn').textContent=finished?'Ver logro':done?'Continuar aprendiendo':'Comenzar lección';
+  document.getElementById('nextTitle').textContent=finished?'Lesson complete':u.title;
+  document.getElementById('nextDesc').textContent=finished?'Review your achievement and the glossary.':state.lessons.includes(next)?'Record the practice journal entry.':u.short;
+  document.getElementById('continueBtn').textContent=finished?'See achievement':done?'Keep learning':'Start lesson';
   renderPath();
 }
 function showCertificate(){
   document.getElementById('modalCard').innerHTML=`<div class="certificate"><div class="seal">✓</div>
   <div class="eyebrow" style="color:var(--brass);margin-top:14px">Budget Lab</div>
-  <h2>Ciclo presupuestario dominado</h2>
-  <p class="muted">Registraste los 6 asientos del ciclo: adopción, superávit, déficit, ingresos, erogaciones y cierre.</p>
-  <div class="conceptGrid" style="text-align:left"><div class="concept"><b>${state.xp} XP</b><span>experiencia obtenida</span></div><div class="concept"><b>${state.quizAttempts?Math.round(state.quizCorrect/state.quizAttempts*100):100}%</b><span>precisión en evaluaciones</span></div></div>
-  <p class="muted">Siguiente paso: encumbrances en detalle y los estados financieros de fondos.</p></div>
-  <button class="button" onclick="closeModal()">Cerrar</button>`;
+  <h2>Budgetary cycle mastered</h2>
+  <p class="muted">You recorded all 6 entries of the cycle: adoption, surplus, deficit, revenues, expenditures, and closing.</p>
+  <div class="conceptGrid" style="text-align:left"><div class="concept"><b>${state.xp} XP</b><span>experience earned</span></div><div class="concept"><b>${state.quizAttempts?Math.round(state.quizCorrect/state.quizAttempts*100):100}%</b><span>quiz accuracy</span></div></div>
+  <p class="muted">Next step: encumbrances in detail and the fund financial statements.</p></div>
+  <button class="button" onclick="closeModal()">Close</button>`;
   document.getElementById('modal').classList.add('open');
 }
 function confirmReset(){
-  document.getElementById('modalCard').innerHTML=`<h2>¿Reiniciar la lección?</h2><p class="muted">Se borrarán lecciones, asientos, XP y precisión guardados en este teléfono.</p>
-  <button class="button danger" onclick="resetProgress()">Sí, borrar progreso</button>
-  <button class="button secondary" onclick="closeModal()">Cancelar</button>`;
+  document.getElementById('modalCard').innerHTML=`<h2>Reset the lesson?</h2><p class="muted">Lessons, entries, XP, and accuracy saved on this phone will be erased.</p>
+  <button class="button danger" onclick="resetProgress()">Yes, erase progress</button>
+  <button class="button secondary" onclick="closeModal()">Cancel</button>`;
   document.getElementById('modal').classList.add('open');
 }
-function resetProgress(){state={...defaultState,lessons:[],labs:[]};save();closeModal();go('home');toast('Progreso reiniciado.')}
+function resetProgress(){state={...defaultState,lessons:[],labs:[]};save();closeModal();go('home');toast('Progress reset.')}
 function closeModal(){document.getElementById('modal').classList.remove('open')}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.style.display='none',2400)}
 document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
