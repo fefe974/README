@@ -1,0 +1,71 @@
+/* ---------------------------------------------------------------
+   Palette: the materials of a certified public document.
+   Ground is bond paper, ink is iron-gall (near-black, green-grey
+   bias), and the single accent is the blue of a certification
+   stamp. Correct/incorrect are semantic and sit outside the accent.
+   Channels are space-separated RGB so Tailwind can apply opacity.
+   --------------------------------------------------------------- */
+:root {
+  --ground: 237 237 231;
+  --sheet: 247 247 243;
+  --sunk: 226 226 218;
+  --ink: 25 28 25;
+  --ink-2: 61 66 60;
+  --muted: 107 113 104;
+  --rule: 208 208 198;
+  --rule-2: 185 186 174;
+  --seal: 27 58 107;
+  --seal-soft: 221 228 239;
+  --ok: 30 107 79;
+  --ok-soft: 220 235 227;
+  --no: 148 51 31;
+  --no-soft: 242 225 219;
+  --shadow: 0 10px 30px rgb(25 28 25 / 0.09);
+  --shadow-sm: 0 1px 3px rgb(25 28 25 / 0.07);
+  color-scheme: light;
+}
+
+/* System-dark: the default state stamps nothing on the root, so this
+   must carry it, guarded so an explicit light choice still wins. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --ground: 16 19 23;
+    --sheet: 23 27 32;
+    --sunk: 12 15 18;
+    --ink: 230 232 227;
+    --ink-2: 195 200 194;
+    --muted: 141 149 143;
+    --rule: 38 44 51;
+    --rule-2: 56 65 74;
+    --seal: 127 168 220;
+    --seal-soft: 24 37 52;
+    --ok: 95 191 151;
+    --ok-soft: 18 36 28;
+    --no: 224 134 107;
+    --no-soft: 43 23 18;
+    --shadow: 0 10px 30px rgb(0 0 0 / 0.5);
+    --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.35);
+    color-scheme: dark;
+  }
+}
+
+/* Explicit toggle wins in both directions. */
+:root[data-theme='dark'] {
+  --ground: 16 19 23;
+  --sheet: 23 27 32;
+  --sunk: 12 15 18;
+  --ink: 230 232 227;
+  --ink-2: 195 200 194;
+  --muted: 141 149 143;
+  --rule: 38 44 51;
+  --rule-2: 56 65 74;
+  --seal: 127 168 220;
+  --seal-soft: 24 37 52;
+  --ok: 95 191 151;
+  --ok-soft: 18 36 28;
+  --no: 224 134 107;
+  --no-soft: 43 23 18;
+  --shadow: 0 10px 30px rgb(0 0 0 / 0.5);
+  --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.35);
+  color-scheme: dark;
+}

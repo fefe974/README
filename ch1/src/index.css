@@ -1,0 +1,62 @@
+@import './styles/fonts.css';
+@import './styles/tokens.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    /* Explicit ground: the artifact host paints its own theme behind
+       the page, so a transparent body would borrow the wrong one. */
+    @apply bg-ground text-ink font-body antialiased;
+  }
+  /* WCAG 2.2: focus indicator at least a 2px perimeter, 3:1 contrast. */
+  :focus-visible {
+    @apply outline-none ring-[3px] ring-seal ring-offset-2 ring-offset-ground rounded-[6px];
+  }
+  ::selection {
+    @apply bg-sealsoft text-ink;
+  }
+  /* No real italic ships in these subsets, and a synthesised oblique on
+     a hyperlegible face reads as a rendering fault. Emphasis carries on
+     weight instead. */
+  em,
+  i {
+    @apply not-italic font-semibold text-ink;
+  }
+}
+
+@layer components {
+  /* Bilingual term: Spanish reading, English term of art alongside.
+     box-decoration-break keeps the chip intact when it wraps. */
+  .term {
+    @apply font-bold text-ink;
+  }
+  .term > i {
+    @apply not-italic font-mono text-[0.78em] font-medium text-seal bg-sealsoft
+           px-[5px] py-[1.5px] rounded-[5px] ml-[5px] tracking-tight;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+  .prose-ch p + p {
+    @apply mt-[0.9em];
+  }
+  .prose-ch em {
+    @apply not-italic font-semibold text-ink;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
