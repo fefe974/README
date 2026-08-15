@@ -18,12 +18,21 @@ export type Viz =
   | { v: 'split'; whole: { label: string; amount: string }; parts: { label: string; amount: string; tone?: Tone }[] }
   | { v: 'scale'; label: string; value: string; marks: { label: string; value: string; pass: boolean }[] }
 
-/* One worked example per step: a concrete case, an illustration, and
-   the reasoning revealed a step at a time. */
+/* The decision the student makes before being told anything. The app
+   teaches by asking first: the reasoning only unlocks once they have
+   committed to an answer. */
+export type Probe =
+  | { p: 'classify'; ask: string; options: string[]; items: { label: string; answer: number }[] }
+  | { p: 'choice'; ask: string; options: string[]; answer: number }
+  | { p: 'yesno'; ask: string; yes: string; no: string; items: { label: string; answer: boolean }[] }
+
+/* One worked example per step: a concrete case, an illustration, a
+   decision to make, and the reasoning revealed a step at a time. */
 export type Example = {
   title: string
   setup: string
   viz: Viz
+  probe: Probe
   steps: string[]
   answer: string
 }

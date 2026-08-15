@@ -17,6 +17,17 @@ export const CH2_EXAMPLES: Record<string, Example> = {
         { cells: ['Fondo de pensiones de los empleados', 'Fiduciaria'], tone: 'no' },
       ],
     },
+    probe: {
+      p: 'classify',
+      ask: 'Clasifica cada actividad del condado.',
+      options: ['Gubernamental', 'Tipo negocio', 'Fiduciaria'],
+      items: [
+        { label: 'Patrullaje del sheriff', answer: 0 },
+        { label: 'Planta de agua potable', answer: 1 },
+        { label: 'Impuestos cobrados para el distrito escolar', answer: 2 },
+        { label: 'Fondo de pensiones de los empleados', answer: 2 },
+      ],
+    },
     steps: [
       'El patrullaje se paga con impuestos generales y no cobra al usuario: gubernamental.',
       'La planta de agua cobra por metro cúbico y busca cubrir su costo: tipo negocio.',
@@ -40,6 +51,12 @@ export const CH2_EXAMPLES: Record<string, Example> = {
         { cells: ['<b>Net position</b>', '<b>177 700</b>', '<b>89 800</b>'], tone: 'seal' },
       ],
     },
+    probe: {
+      p: 'choice',
+      ask: 'Con las cifras de la tabla, ¿cuál es el net position de actividades gubernamentales?',
+      options: ['412 800', '177 700', '174 300', '183 900'],
+      answer: 1,
+    },
     steps: [
       'Dos columnas separadas: actividades gubernamentales y tipo negocio. No se mezclan.',
       'Aparecen dos elementos que una empresa no tiene: <em>deferred outflows</em> y <em>deferred inflows</em> de recursos.',
@@ -60,6 +77,17 @@ export const CH2_EXAMPLES: Record<string, Example> = {
         { label: 'A departamentos gubernamentales', amount: '$3,8 M · 90 %', tone: 'seal' },
         { label: 'Al fondo de agua (enterprise)', amount: '$0,4 M · 10 %', tone: 'plain' },
       ],
+    },
+    probe: {
+      p: 'choice',
+      ask: '¿En qué columna de los estados de todo el gobierno aparece el taller?',
+      options: [
+        'Actividades gubernamentales',
+        'Actividades tipo negocio',
+        'Una columna propia de servicios internos',
+        'No aparece arriba',
+      ],
+      answer: 0,
     },
     steps: [
       'Abajo, en los estados por fondos, el taller es un fondo <em>propietario</em>. Eso no está en duda.',
@@ -82,6 +110,17 @@ export const CH2_EXAMPLES: Record<string, Example> = {
         { cells: ['Statement of activities (todo el gobierno)', 'No'], tone: 'no' },
         { cells: ['Statement of fiduciary net position', 'Sí'], tone: 'ok' },
         { cells: ['Statement of changes in fiduciary net position', 'Sí'], tone: 'ok' },
+      ],
+    },
+    probe: {
+      p: 'yesno',
+      ask: '¿Aparecen los $80 000 000 en cada estado?',
+      yes: 'Aparecen', no: 'No aparecen',
+      items: [
+        { label: 'Statement of net position (todo el gobierno)', answer: false },
+        { label: 'Statement of activities (todo el gobierno)', answer: false },
+        { label: 'Statement of fiduciary net position', answer: true },
+        { label: 'Statement of changes in fiduciary net position', answer: true },
       ],
     },
     steps: [
@@ -108,6 +147,17 @@ export const CH2_EXAMPLES: Record<string, Example> = {
         { cells: ['<b>= Net position · actividades gubernam.</b>', '<b>95 000</b>'], tone: 'seal' },
       ],
     },
+    probe: {
+      p: 'choice',
+      ask: '¿Por qué el fund balance es $12 M y el net position $95 M?',
+      options: [
+        'Porque uno está mal calculado',
+        'Porque abajo no se reportan activos de capital ni deuda a largo plazo',
+        'Porque arriba se incluyen los fondos fiduciarios',
+        'Porque usan periodos distintos',
+      ],
+      answer: 1,
+    },
     steps: [
       'Abajo no se reportan activos de capital: no sirven para pagar obligaciones del periodo.',
       'Al subir, esos $148 M de activos netos <em>sí</em> entran.',
@@ -132,6 +182,12 @@ export const CH2_EXAMPLES: Record<string, Example> = {
         { cells: ['<b>Fund balance</b>', '<b>$500 000</b>'], tone: 'seal' },
       ],
     },
+    probe: {
+      p: 'choice',
+      ask: '¿Qué tipo de fondo hay que abrir para ese donativo?',
+      options: ['General Fund', 'Special revenue fund', 'Permanent fund', 'Private-purpose trust fund'],
+      answer: 1,
+    },
     steps: [
       'Si el dinero entrara al General Fund, se mezclaría con recursos sin restricción.',
       'Entonces nadie podría demostrar que se usó solo en la biblioteca.',
@@ -152,6 +208,17 @@ export const CH2_EXAMPLES: Record<string, Example> = {
         { cells: ['Bacheo pagado con el impuesto a la gasolina', 'Special revenue'], tone: 'plain' },
         { cells: ['Intereses de los bonos de 2019', 'Debt service'], tone: 'plain' },
         { cells: ['Anticipo al constructor del nuevo juzgado', 'Capital projects'], tone: 'plain' },
+      ],
+    },
+    probe: {
+      p: 'classify',
+      ask: '¿En qué fondo vive cada pago?',
+      options: ['General', 'Special revenue', 'Debt service', 'Capital projects'],
+      items: [
+        { label: 'Nómina de la oficina del administrador', answer: 0 },
+        { label: 'Bacheo pagado con el impuesto a la gasolina', answer: 1 },
+        { label: 'Intereses de los bonos de 2019', answer: 2 },
+        { label: 'Anticipo al constructor del nuevo juzgado', answer: 3 },
       ],
     },
     steps: [
@@ -175,6 +242,15 @@ export const CH2_EXAMPLES: Record<string, Example> = {
         { cells: ['Taller de flotilla', 'departamentos del condado', 'Internal service'], tone: 'plain' },
       ],
     },
+    probe: {
+      p: 'classify',
+      ask: 'Los dos son propietarios. ¿De qué tipo es cada uno?',
+      options: ['Enterprise', 'Internal service'],
+      items: [
+        { label: 'Alberca municipal, entrada $30', answer: 0 },
+        { label: 'Taller que repara los vehículos del condado', answer: 1 },
+      ],
+    },
     steps: [
       'Los dos son propietarios: cobran por lo que hacen y usan devengado pleno.',
       'La única pregunta que los separa es <em>a quién le venden</em>.',
@@ -194,6 +270,15 @@ export const CH2_EXAMPLES: Record<string, Example> = {
       rows: [
         { cells: ['Fondo Ramírez', 'mantener el parque municipal', 'Permanent · gubernamental'], tone: 'seal' },
         { cells: ['Fondo Ortega', 'becas para hijos de bomberos caídos', 'Private-purpose trust · fiduciario'], tone: 'no' },
+      ],
+    },
+    probe: {
+      p: 'classify',
+      ask: 'Mismo principal preservado. ¿Qué fondo le toca a cada dotación?',
+      options: ['Permanent (gubernamental)', 'Private-purpose trust (fiduciario)'],
+      items: [
+        { label: 'Fondo Ramírez · rendimientos mantienen el parque municipal', answer: 0 },
+        { label: 'Fondo Ortega · rendimientos pagan becas a hijos de bomberos', answer: 1 },
       ],
     },
     steps: [
@@ -219,6 +304,15 @@ export const CH2_EXAMPLES: Record<string, Example> = {
         { cells: ['20 de abril de 2025', '110', 'No'], tone: 'no' },
       ],
     },
+    probe: {
+      p: 'yesno',
+      ask: 'Cierre el 31 de diciembre, política de 60 días. ¿Es ingreso de 2024?',
+      yes: 'Sí', no: 'No',
+      items: [
+        { label: 'Cobrado el 14 de febrero de 2025 · 45 días', answer: true },
+        { label: 'Cobrado el 20 de abril de 2025 · 110 días', answer: false },
+      ],
+    },
     steps: [
       'Bajo devengado modificado, el ingreso necesita dos cosas: ser <em>medible</em> y estar <em>disponible</em>.',
       'Medible lo es en ambos casos: son $900 000 ya determinados.',
@@ -239,6 +333,16 @@ export const CH2_EXAMPLES: Record<string, Example> = {
         { cells: ['Efectivo remanente', 'Sí', 'Sí'], tone: 'ok' },
         { cells: ['Edificio del juzgado · $8 M', 'No', 'Sí'], tone: 'no' },
         { cells: ['Bono a 20 años · $5 M', 'No', 'Sí'], tone: 'no' },
+      ],
+    },
+    probe: {
+      p: 'yesno',
+      ask: '¿Aparece en el balance del fondo de proyectos de capital?',
+      yes: 'Aparece', no: 'No aparece',
+      items: [
+        { label: 'Efectivo remanente', answer: true },
+        { label: 'Edificio del juzgado · $8 000 000', answer: false },
+        { label: 'Bono a 20 años · $5 000 000', answer: false },
       ],
     },
     steps: [
@@ -264,6 +368,12 @@ export const CH2_EXAMPLES: Record<string, Example> = {
         { cells: ['<b>Total 8 años</b>', '<b>$240 000</b>', '<b>$240 000</b>'], tone: 'ok' },
       ],
     },
+    probe: {
+      p: 'choice',
+      ask: 'El camión cuesta $240 000 y dura 8 años. ¿Cuánto se registra en el fondo el año 1?',
+      options: ['$30 000', '$240 000', '$0', '$210 000'],
+      answer: 1,
+    },
     steps: [
       'En el fondo se registra un <em>expenditure</em> de $240 000 el año 1: salió todo el recurso corriente.',
       'Arriba se registra un activo, y el <em>expense</em> es la depreciación: $30 000 al año.',
@@ -285,6 +395,12 @@ export const CH2_EXAMPLES: Record<string, Example> = {
         { label: 'Depreciación de planta y red', amount: '$1 100 000', tone: 'seal' },
         { label: 'Intereses de la deuda', amount: '$400 000', tone: 'plain' },
       ],
+    },
+    probe: {
+      p: 'choice',
+      ask: 'Con el costo completo y 2 000 000 de m³, ¿cuál es la tarifa por metro cúbico?',
+      options: ['$2,15', '$2,70', '$1,95', '$3,20'],
+      answer: 1,
     },
     steps: [
       'Con devengado modificado no vería la depreciación: solo el efectivo que salió este año.',
@@ -310,6 +426,16 @@ export const CH2_EXAMPLES: Record<string, Example> = {
         { label: 'Queda por clasificar', amount: '$2 514 000', tone: 'plain' },
       ],
     },
+    probe: {
+      p: 'yesno',
+      ask: '¿Es nonspendable?',
+      yes: 'Sí', no: 'No',
+      items: [
+        { label: 'Inventario de almacén · $22 000', answer: true },
+        { label: 'Seguros pagados por anticipado · $464 000', answer: true },
+        { label: 'Efectivo sin restricción · $2 514 000', answer: false },
+      ],
+    },
     steps: [
       'La clasificación se hace en orden, y lo primero es apartar lo <em>no gastable</em>.',
       'El inventario es un bien físico: no está en forma de poder gastarse.',
@@ -329,6 +455,16 @@ export const CH2_EXAMPLES: Record<string, Example> = {
         { cells: ['$250 000', 'el gobierno federal (subvención)', 'Restricted'], tone: 'seal' },
         { cells: ['$1 000 000', 'la comisión, por ordenanza', 'Committed'], tone: 'ok' },
         { cells: ['$100 000', 'la administradora del condado', 'Assigned'], tone: 'plain' },
+      ],
+    },
+    probe: {
+      p: 'classify',
+      ask: '¿Quién puso el candado en cada monto?',
+      options: ['Restricted', 'Committed', 'Assigned'],
+      items: [
+        { label: '$250 000 · subvención federal para vivienda', answer: 0 },
+        { label: '$1 000 000 · reserva creada por ordenanza de la comisión', answer: 1 },
+        { label: '$100 000 · apartados por la administradora del condado', answer: 2 },
       ],
     },
     steps: [
@@ -353,6 +489,15 @@ export const CH2_EXAMPLES: Record<string, Example> = {
         { label: '¿Puede la comisión usarlo en otra cosa?', sub: 'Sí, revirtiendo la ordenanza', tone: 'ok' },
       ],
     },
+    probe: {
+      p: 'classify',
+      ask: 'Las dos son ordenanzas del máximo nivel. ¿Cómo se clasifica cada saldo?',
+      options: ['Restricted', 'Committed'],
+      items: [
+        { label: 'A · crea un impuesto a las ventas destinado a desarrollo económico', answer: 0 },
+        { label: 'B · aparta $1 000 000 ya existentes como reserva de emergencia', answer: 1 },
+      ],
+    },
     steps: [
       'Las dos son acciones formales del máximo nivel, así que parecen ambas <em>committed</em>.',
       'La ordenanza A es <em>legislación habilitante</em>: autoriza recaudar un ingreso <em>para un fin restringido</em>.',
@@ -373,6 +518,16 @@ export const CH2_EXAMPLES: Record<string, Example> = {
         { cells: ['General Fund', '$1 164 000', 'Unassigned'], tone: 'ok' },
         { cells: ['Special revenue (biblioteca)', '$50 000', 'Assigned'], tone: 'seal' },
         { cells: ['Capital projects (sobregirado)', '−$80 000', 'Unassigned negativo'], tone: 'no' },
+      ],
+    },
+    probe: {
+      p: 'classify',
+      ask: '¿Cómo se clasifica el residuo de cada fondo?',
+      options: ['Unassigned', 'Assigned'],
+      items: [
+        { label: 'General Fund · $1 164 000 restantes', answer: 0 },
+        { label: 'Special revenue de biblioteca · $50 000 sin restricción', answer: 1 },
+        { label: 'Capital projects · sobregirado en $80 000', answer: 0 },
       ],
     },
     steps: [
@@ -399,6 +554,12 @@ export const CH2_EXAMPLES: Record<string, Example> = {
         { label: 'No mayores · una sola columna agregada', amount: '20', tone: 'plain' },
       ],
     },
+    probe: {
+      p: 'choice',
+      ask: 'El condado usa 23 fondos gubernamentales y 2 pasan la prueba. ¿Cuántas columnas tendrá el balance?',
+      options: ['23', '4', '3', '2'],
+      answer: 1,
+    },
     steps: [
       'Al usuario no le interesan los 23: le interesan los que mueven dinero grande.',
       'El General Fund siempre tiene columna, sin hacer cuentas.',
@@ -419,6 +580,15 @@ export const CH2_EXAMPLES: Record<string, Example> = {
       marks: [
         { label: 'Valla 1 · 10 % de gubernamentales', value: '$2 630 000', pass: false },
         { label: 'Valla 2 · 5 % del combinado', value: '$2 562 500', pass: true },
+      ],
+    },
+    probe: {
+      p: 'yesno',
+      ask: 'El fondo tiene $2 600 000 de activos. ¿Salta cada valla?',
+      yes: 'La salta', no: 'No la salta',
+      items: [
+        { label: 'Valla 1 · 10 % de gubernamentales = $2 630 000', answer: false },
+        { label: 'Valla 2 · 5 % del combinado = $2 562 500', answer: true },
       ],
     },
     steps: [
@@ -442,6 +612,17 @@ export const CH2_EXAMPLES: Record<string, Example> = {
         { label: 'Se reporta como fondo mayor', sub: 'por decisión, no por aritmética', tone: 'seal' },
       ],
     },
+    probe: {
+      p: 'choice',
+      ask: 'No pasa ningún umbral, pero al condado le importa. ¿Puede reportarse como mayor?',
+      options: [
+        'No: la prueba aritmética es la única vía',
+        'Sí: cualquier fondo de importancia significativa puede reportarse como mayor',
+        'Solo si lo autoriza el auditor',
+        'Solo si lo pasó el año anterior',
+      ],
+      answer: 1,
+    },
     steps: [
       'Por números no califica: ni activos, ni pasivos, ni ingresos, ni egresos llegan.',
       'Pero la norma añade un criterio de juicio a la prueba aritmética.',
@@ -462,6 +643,17 @@ export const CH2_EXAMPLES: Record<string, Example> = {
         { cells: ['Caminos · special revenue mayor', 'Sí', 'Sí'], tone: 'ok' },
         { cells: ['Biblioteca · special revenue no mayor', 'Sí', 'No'], tone: 'no' },
         { cells: ['Proyectos de capital · mayor', 'No', 'No'], tone: 'no' },
+      ],
+    },
+    probe: {
+      p: 'yesno',
+      ask: '¿Lleva cédula de comparación presupuestal?',
+      yes: 'Sí', no: 'No',
+      items: [
+        { label: 'General Fund', answer: true },
+        { label: 'Caminos · special revenue mayor, con presupuesto legal', answer: true },
+        { label: 'Biblioteca · special revenue NO mayor', answer: false },
+        { label: 'Proyectos de capital · mayor, sin presupuesto legal', answer: false },
       ],
     },
     steps: [

@@ -3,22 +3,29 @@ import { CHAPTERS } from '@/lib/course'
 import type { Chapter } from '@/lib/types'
 import { Article } from '@/components/Article'
 import { Capstone, type CapState } from '@/components/Capstone'
+import type { Verdict } from '@/components/Tutor'
 import { Stamp } from '@/components/Stamp'
 import { Card, CardContent } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
 import { cn } from '@/lib/utils'
 
 type Screen = 'course' | 'case' | 'articles' | 'close' | 'glossary'
-type ChapterSave = { quiz: Record<string, Record<number, number>>; cap: CapState }
+type Solves = Record<string, Record<number, Verdict>>
+type ChapterSave = { quiz: Record<string, Record<number, number>>; cap: CapState; solves: Solves }
 type Saved = Record<string, ChapterSave>
 
 const KEY = 'cuentas-publicas'
-const blank = (): ChapterSave => ({ quiz: {}, cap: {} })
+const blank = (): ChapterSave => ({ quiz: {}, cap: {}, solves: {} })
 
 function load(): Saved {
   try {
     const raw = localStorage.getItem(KEY)
-    if (raw) return JSON.parse(raw)
+    if (raw) {
+      const parsed = JSON.parse(raw) as Saved
+      // Older saves predate the exercises; fill the field in.
+      for (const k of Object.keys(parsed)) parsed[k] = { ...blank(), ...parsed[k] }
+      return parsed
+    }
   } catch {
     /* storage may be unavailable in a sandboxed frame */
   }
@@ -264,7 +271,7 @@ export default function App() {
                     <span className="min-w-0 flex-1">
                       <span className="block font-display text-[16.5px] leading-tight">{a.concept}</span>
                       <span className="mt-0.5 block font-mono text-[10.5px] tracking-wide text-muted">
-                        {a.steps.length} pasos · {a.quiz.length} preguntas
+                        {a.steps.length} pasos · {Object.keys(save.solves[a.id] ?? {}).length}/{a.steps.length} resueltos
                       </span>
                     </span>
                     {done ? <Stamp roman={a.roman} size="sm" /> : <span className="text-[19px] text-rule2">›</span>}
@@ -301,6 +308,13 @@ export default function App() {
             total={chapter.articles.length}
             answers={save.quiz[article.id] ?? {}}
             onAnswer={(qi, oi) => answer(article.id, qi, oi)}
+            solves={save.solves[article.id] ?? {}}
+            onSolve={(st, v) =>
+              patch((s) => ({
+                ...s,
+                solves: { ...s.solves, [article.id]: { ...(s.solves[article.id] ?? {}), [st]: v } },
+              }))
+            }
             onBack={() => setOpen(null)}
             onNext={idx < chapter.articles.length - 1 ? () => setOpen(chapter.articles[idx + 1].id) : null}
           />

@@ -3,7 +3,7 @@ import gsap from 'gsap'
 import type { Article as ArticleT } from '@/lib/types'
 import { Figure } from '@/lib/figures/index'
 import { exampleFor } from '@/lib/examples'
-import { ExampleCard } from './ExampleCard'
+import { Tutor, type Verdict } from './Tutor'
 import { Quiz } from './Quiz'
 import { Stamp } from './Stamp'
 import { Card, CardContent } from './ui/card'
@@ -20,6 +20,8 @@ export function Article({
   onAnswer,
   onBack,
   onNext,
+  solves,
+  onSolve,
 }: {
   article: ArticleT
   index: number
@@ -28,6 +30,9 @@ export function Article({
   onAnswer: (qi: number, oi: number) => void
   onBack: () => void
   onNext: (() => void) | null
+  /* Verdicts on this article's exercises, keyed by step index. */
+  solves: Record<number, Verdict>
+  onSolve: (step: number, v: Verdict) => void
 }) {
   const answered = article.quiz.every((_, i) => answers[i] != null)
   const last = article.steps.length
@@ -57,6 +62,9 @@ export function Article({
   const onCheck = step === last
   const current = onCheck ? null : article.steps[step]
   const ex = onCheck ? null : exampleFor(article.id, step)
+  const solvedFor = (i: number) => solves[i]
+  const exGot = Object.values(solves).reduce((a, v) => a + v.got, 0)
+  const exOf = Object.values(solves).reduce((a, v) => a + v.of, 0)
   const right = article.quiz.filter((q, i) => answers[i] === q.a).length
 
   return (
@@ -75,12 +83,24 @@ export function Article({
 
       {/* Step rail — how much of this article is left, at a glance. */}
       <div className="mb-6 flex gap-1" aria-hidden="true">
-        {Array.from({ length: last + 1 }).map((_, i) => (
-          <span
-            key={i}
-            className={cn('h-[3px] flex-1 rounded-full', i <= step ? 'bg-seal' : 'bg-sunk')}
-          />
-        ))}
+        {Array.from({ length: last + 1 }).map((_, i) => {
+          const v = solves[i]
+          const perfect = v && v.got === v.of
+          return (
+            <span
+              key={i}
+              className={cn(
+                'h-[3px] flex-1 rounded-full',
+                i === last
+                  ? i <= step ? 'bg-seal' : 'bg-sunk'
+                  : perfect ? 'bg-ok'
+                  : v ? 'bg-no'
+                  : i <= step ? 'bg-seal'
+                  : 'bg-sunk',
+              )}
+            />
+          )
+        })}
       </div>
 
       <div ref={pane}>
@@ -128,7 +148,13 @@ export function Article({
               })}
             </div>
 
-            {ex && <ExampleCard ex={ex} />}
+            {ex && (
+              <Tutor
+                ex={ex}
+                solved={solvedFor(step) ?? null}
+                onSolved={(v) => onSolve(step, v)}
+              />
+            )}
 
             <button
               onClick={() => goto(step + 1)}
@@ -141,6 +167,42 @@ export function Article({
 
         {onCheck && (
           <>
+            {/* What the student actually solved on the way here. */}
+            <div className="mb-8 overflow-hidden rounded-xl border border-rule">
+              <div className="border-b border-rule bg-sunk px-4 py-2.5">
+                <p className="font-mono text-[9.5px] uppercase tracking-[0.14em] text-muted">Tus ejercicios</p>
+                <p className="mt-0.5 font-display text-[16.5px] leading-tight">
+                  {exGot} de {exOf} decisiones correctas
+                </p>
+              </div>
+              <ol className="divide-y divide-rule">
+                {article.steps.map((st, i) => {
+                  const v = solves[i]
+                  return (
+                    <li key={i} className="flex items-center gap-3 bg-sheet px-4 py-2.5">
+                      <span
+                        className={cn(
+                          'grid h-[22px] w-[22px] flex-none place-items-center rounded-full font-mono text-[10px] font-bold',
+                          !v ? 'bg-sunk text-muted' : v.got === v.of ? 'bg-oksoft text-ok' : 'bg-nosoft text-no',
+                        )}
+                      >
+                        {!v ? i + 1 : v.got === v.of ? '✓' : '!'}
+                      </span>
+                      <span className="min-w-0 flex-1 text-[14px] leading-snug text-ink2">{st.head}</span>
+                      <span className="flex-none font-mono text-[11px] tabular-nums text-muted">
+                        {v ? `${v.got}/${v.of}` : '—'}
+                      </span>
+                    </li>
+                  )
+                })}
+              </ol>
+              {exOf > exGot && (
+                <p className="border-t border-rule bg-sheet px-4 py-2.5 text-[13px] leading-snug text-muted">
+                  Puedes volver con «Atrás» y rehacer cualquier ejercicio antes de responder las preguntas.
+                </p>
+              )}
+            </div>
+
             <p className="font-mono text-[10.5px] uppercase tracking-[0.13em] text-muted">Términos de este artículo</p>
             <div className="mt-3 overflow-hidden rounded-xl border border-rule">
               {article.terms.map(([en, es], i) => (

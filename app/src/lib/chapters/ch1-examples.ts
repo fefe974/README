@@ -18,6 +18,12 @@ export const CH1_EXAMPLES: Record<string, Example> = {
         { cells: ['Predial', '$1 200', 'Los servicios del condado'], tone: 'seal', note: 'sin relación con lo pagado' },
       ],
     },
+    probe: {
+      p: 'choice',
+      ask: '¿Cuál de los dos pagos es una transacción de intercambio?',
+      options: ['El café', 'El predial', 'Los dos', 'Ninguno de los dos'],
+      answer: 0,
+    },
     steps: [
       '¿Puede negarse a pagar? El café sí; el predial no. El pago al condado es <em>involuntario</em>.',
       '¿Puede elegir la cantidad? Puede pedir un café más chico. No puede pedir «menos policía» y pagar menos.',
@@ -37,6 +43,16 @@ export const CH1_EXAMPLES: Record<string, Example> = {
         { label: 'Prueba (a) · aportantes sin retorno proporcional', sub: 'Recibió $2,1 M en donativos. Los donantes no reciben nada a cambio.', tone: 'ok' },
         { label: 'Prueba (b) · propósito distinto de la utilidad', sub: 'Su fin es conservar y exhibir, no generar utilidad.', tone: 'ok' },
         { label: 'Prueba (c) · sin intereses de propiedad', sub: 'Nadie posee una parte que pueda vender o redimir.', tone: 'ok' },
+      ],
+    },
+    probe: {
+      p: 'yesno',
+      ask: '¿El museo cumple cada una de las tres pruebas?',
+      yes: 'Cumple', no: 'No cumple',
+      items: [
+        { label: '(a) Recibe recursos de quienes no esperan retorno proporcional', answer: true },
+        { label: '(b) Su propósito operativo no es generar utilidad', answer: true },
+        { label: '(c) No hay intereses de propiedad vendibles', answer: true },
       ],
     },
     steps: [
@@ -62,6 +78,17 @@ export const CH1_EXAMPLES: Record<string, Example> = {
         { cells: ['Mantenimiento pospuesto', '$6 300 000'], tone: 'no' },
       ],
     },
+    probe: {
+      p: 'choice',
+      ask: '¿El superávit de $2 000 000 prueba que el condado tuvo un buen año?',
+      options: [
+        'Sí: entró más de lo que salió',
+        'No: el superávit vino de posponer mantenimiento',
+        'Sí, si además bajó la deuda',
+        'No se puede saber sin el estado de flujos',
+      ],
+      answer: 1,
+    },
     steps: [
       'En una empresa, $2 M de utilidad casi siempre es buena noticia.',
       'Aquí el superávit salió de <em>no</em> prestar servicios: se pospuso mantenimiento por $6,3 M.',
@@ -82,6 +109,17 @@ export const CH1_EXAMPLES: Record<string, Example> = {
         { cells: ['Ciudad de San Ramón', 'muchas'], tone: 'seal' },
         { cells: ['Distrito Escolar de Valle Verde', 'una'], tone: 'ok' },
         { cells: ['Distrito de Control de Inundaciones', 'una'], tone: 'ok' },
+      ],
+    },
+    probe: {
+      p: 'classify',
+      ask: 'Clasifica cada entidad.',
+      options: ['Propósito general', 'Propósito especial'],
+      items: [
+        { label: 'Condado de Valle Verde', answer: 0 },
+        { label: 'Ciudad de San Ramón', answer: 0 },
+        { label: 'Distrito Escolar de Valle Verde', answer: 1 },
+        { label: 'Distrito de Control de Inundaciones', answer: 1 },
       ],
     },
     steps: [
@@ -108,6 +146,17 @@ export const CH1_EXAMPLES: Record<string, Example> = {
         { label: 'El auditor lo revisará el año siguiente', sub: 'y el electorado en la próxima elección', tone: 'plain' },
       ],
     },
+    probe: {
+      p: 'choice',
+      ask: '¿Puede el alcalde ordenar ese gasto por su cuenta?',
+      options: [
+        'Sí: es una emergencia y él dirige el ejecutivo',
+        'No: necesita que el concejo modifique el presupuesto',
+        'Sí, pero debe avisar al auditor',
+        'Solo si el monto es menor a $1 000 000',
+      ],
+      answer: 1,
+    },
     steps: [
       'En una empresa, un director con autoridad de gasto firma y se ejecuta.',
       'Aquí el presupuesto es una <em>autorización legal</em>: sin partida, el alcalde no puede gastar solo.',
@@ -130,6 +179,12 @@ export const CH1_EXAMPLES: Record<string, Example> = {
         { label: 'Los residentes', sub: 'que pagan y reciben el servicio', tone: 'seal' },
       ],
     },
+    probe: {
+      p: 'choice',
+      ask: '¿Ante cuántas instancias distintas responde el condado por esos $3 000 000?',
+      options: ['Una: el gobierno federal', 'Dos', 'Tres', 'Cuatro'],
+      answer: 3,
+    },
     steps: [
       'El otorgante federal condiciona el uso: solo vivienda, solo familias de bajos ingresos.',
       'Encima corren las leyes estatales sobre compras y contratación, que no desaparecen.',
@@ -149,6 +204,15 @@ export const CH1_EXAMPLES: Record<string, Example> = {
       parts: [
         { label: 'Fiscal · ¿gastó dentro de lo aprobado?', amount: 'Sí', tone: 'ok' },
         { label: 'Operativa · ¿usó bien los recursos?', amount: 'No', tone: 'no' },
+      ],
+    },
+    probe: {
+      p: 'yesno',
+      ask: '¿Cumplió el departamento cada tipo de rendición de cuentas?',
+      yes: 'Sí', no: 'No',
+      items: [
+        { label: 'Fiscal: ¿gastó dentro de lo aprobado?', answer: true },
+        { label: 'Operativa: ¿usó bien los recursos?', answer: false },
       ],
     },
     steps: [
@@ -171,6 +235,12 @@ export const CH1_EXAMPLES: Record<string, Example> = {
         { label: 'Pagado por contribuyentes de 2024', amount: '$48 M', tone: 'ok' },
         { label: 'Trasladado a contribuyentes futuros', amount: '$4 M', tone: 'no' },
       ],
+    },
+    probe: {
+      p: 'choice',
+      ask: '¿Cuánto del costo de 2024 lo pagarán contribuyentes futuros?',
+      options: ['$0', '$4 000 000', '$48 000 000', '$52 000 000'],
+      answer: 1,
     },
     steps: [
       'Los residentes de 2024 recibieron servicios por $52 M.',
@@ -196,6 +266,16 @@ export const CH1_EXAMPLES: Record<string, Example> = {
         { cells: ['Servicio de Parques Nacionales', 'FASAB'], tone: 'plain' },
       ],
     },
+    probe: {
+      p: 'classify',
+      ask: '¿Qué cuerpo normativo le toca a cada una?',
+      options: ['GASB', 'FASB', 'FASAB'],
+      items: [
+        { label: 'Condado de Valle Verde', answer: 0 },
+        { label: 'Ferretería La Sierra, S.A.', answer: 1 },
+        { label: 'Servicio de Parques Nacionales', answer: 2 },
+      ],
+    },
     steps: [
       'La pregunta nunca es qué dice la norma, sino <em>qué naturaleza tiene la entidad</em>.',
       'El condado es un gobierno local. Le toca el GASB.',
@@ -217,6 +297,17 @@ export const CH1_EXAMPLES: Record<string, Example> = {
         { label: 'Resultado: no depende de ningún gobierno', sub: 'independent standards-setting board in the private sector', tone: 'ok' },
       ],
     },
+    probe: {
+      p: 'choice',
+      ask: '¿De dónde sale el dinero que financia al GASB?',
+      options: [
+        'Del presupuesto federal',
+        'De cuotas voluntarias de los gobiernos que regula',
+        'De una cuota sobre operaciones de valores municipales',
+        'De la venta de sus publicaciones',
+      ],
+      answer: 2,
+    },
     steps: [
       'El GASB se formó en 1984 y opera bajo la Financial Accounting Foundation, que nombra a sus miembros.',
       'La misma fundación supervisa al FASB. Son cuerpos <em>paralelos</em>, no uno subordinado al otro.',
@@ -236,6 +327,15 @@ export const CH1_EXAMPLES: Record<string, Example> = {
       rows: [
         { cells: ['General de Valle Verde', 'gubernamental', 'GASB'], tone: 'seal' },
         { cells: ['San Lucas', 'privado', 'FASB'], tone: 'plain' },
+      ],
+    },
+    probe: {
+      p: 'classify',
+      ask: 'Los dos son sin fines de lucro. ¿Qué tablero sigue cada uno?',
+      options: ['GASB', 'FASB'],
+      items: [
+        { label: 'Hospital General de Valle Verde (lo opera el condado)', answer: 0 },
+        { label: 'Hospital San Lucas (asociación privada)', answer: 1 },
       ],
     },
     steps: [
@@ -259,6 +359,17 @@ export const CH1_EXAMPLES: Record<string, Example> = {
         { label: 'FINRA les cobra la cuota de apoyo', sub: 'establecida en febrero de 2012', tone: 'seal' },
         { label: 'Con eso se financia el GASB', sub: 'que fija las normas que el condado debe seguir', tone: 'ok' },
       ],
+    },
+    probe: {
+      p: 'choice',
+      ask: '¿Quién paga la cuota que sostiene al GASB?',
+      options: [
+        'El condado que emite los bonos',
+        'Las firmas que reportan operaciones de valores municipales',
+        'Los compradores de los bonos',
+        'La Financial Accounting Foundation',
+      ],
+      answer: 1,
     },
     steps: [
       'La Dodd-Frank de 2010 ordenó crear una cuota de apoyo contable para el GASB.',
@@ -287,6 +398,17 @@ export const CH1_EXAMPLES: Record<string, Example> = {
         { cells: ['Sección estadística', 'No', 'Sí'] },
       ],
     },
+    probe: {
+      p: 'yesno',
+      ask: '¿Cada pieza forma parte del mínimo obligatorio?',
+      yes: 'Sí', no: 'No',
+      items: [
+        { label: 'MD&A', answer: true },
+        { label: 'Estados financieros básicos y notas', answer: true },
+        { label: 'Carta de transmisión', answer: false },
+        { label: 'Sección estadística', answer: false },
+      ],
+    },
     steps: [
       'El mínimo obligatorio lo fija el GASB y es corto: MD&A, estados básicos con notas, y RSI.',
       'El informe anual completo <em>no es obligatorio</em>, pero casi todos lo preparan como registro público.',
@@ -312,6 +434,17 @@ export const CH1_EXAMPLES: Record<string, Example> = {
         { cells: ['Combining statements', 'No'], tone: 'no' },
       ],
     },
+    probe: {
+      p: 'yesno',
+      ask: '¿Cuáles exige el mínimo?',
+      yes: 'Exigida', no: 'No exigida',
+      items: [
+        { label: 'Estados por fondos', answer: true },
+        { label: 'Notas a los estados financieros', answer: true },
+        { label: 'Otra RSI distinta del MD&A', answer: true },
+        { label: 'Combining and individual fund statements', answer: false },
+      ],
+    },
     steps: [
       'El MD&A abre el paquete: narrativa legible sobre los estados y el año frente al anterior.',
       'Los estados básicos son <em>dos categorías</em>, no una: de todo el gobierno y por fondos.',
@@ -332,6 +465,16 @@ export const CH1_EXAMPLES: Record<string, Example> = {
         { cells: ['Carta del director financiero a la comisión', 'Introductoria'], tone: 'seal' },
         { cells: ['Opinión del auditor independiente', 'Financiera'], tone: 'ok' },
         { cells: ['Tabla de deuda por habitante, 10 años', 'Estadística'], tone: 'plain' },
+      ],
+    },
+    probe: {
+      p: 'classify',
+      ask: '¿En qué sección va cada documento?',
+      options: ['Introductoria', 'Financiera', 'Estadística'],
+      items: [
+        { label: 'Carta del director financiero a la comisión', answer: 0 },
+        { label: 'Opinión del auditor independiente', answer: 1 },
+        { label: 'Tabla de deuda por habitante, 10 años', answer: 2 },
       ],
     },
     steps: [
@@ -355,6 +498,17 @@ export const CH1_EXAMPLES: Record<string, Example> = {
         { cells: ['2024', 'Annual Comprehensive Financial Report', 'tres secciones'], tone: 'seal' },
       ],
     },
+    probe: {
+      p: 'choice',
+      ask: '¿Qué cambió entre el informe de 2018 y el de 2024?',
+      options: [
+        'Se añadió la sección estadística',
+        'Solo el nombre: CAFR pasó a ACFR',
+        'El informe se volvió obligatorio',
+        'Cambió la base contable',
+      ],
+      answer: 1,
+    },
     steps: [
       'Las palabras están en distinto orden: <em>comprehensive annual</em> contra <em>annual comprehensive</em>.',
       'El cambio viene del <em>Statement No. 98</em> del GASB, emitido en 2021.',
@@ -375,6 +529,12 @@ export const CH1_EXAMPLES: Record<string, Example> = {
         { cells: ['Por fondos gubernamentales', '+$1,2 M', 'rendición fiscal'], tone: 'seal' },
         { cells: ['De todo el gobierno', '−$3,4 M', 'rendición operativa'], tone: 'plain' },
       ],
+    },
+    probe: {
+      p: 'choice',
+      ask: 'Una dice +$1,2 M y la otra −$3,4 M. ¿Cuál está mal?',
+      options: ['La de fondos', 'La de todo el gobierno', 'Ninguna: miden cosas distintas', 'Las dos'],
+      answer: 2,
     },
     steps: [
       'Abajo se miden solo recursos financieros corrientes: entró más efectivo del que salió, +$1,2 M.',
