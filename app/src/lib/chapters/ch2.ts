@@ -210,7 +210,7 @@ const ARTICLES: Article[] = [
         blocks: [
           { k: 'p', t: 'Los fondos <em>gubernamentales</em> usan <span class="term">recursos financieros corrientes<i>current financial resources</i></span> con <span class="term">devengado modificado<i>modified accrual</i></span>.' },
           { k: 'p', t: 'Se mide solo el efectivo y lo que se convertirá en efectivo a tiempo para pagar obligaciones del periodo. El ingreso se reconoce cuando es <em>medible</em> y está <span class="term">disponible<i>available</i></span>.' },
-          { k: 'note', head: 'Cuánto es «disponible»', t: 'Cada gobierno define su propio plazo, salvo una excepción: los impuestos prediales deben cobrarse <em>dentro de 60 días</em> del cierre para considerarse disponibles. La mayoría adopta 60 días para todo, pero el rango va de 30 días a un año.', tone: 'seal' },
+          { k: 'note', head: 'Cuánto es «disponible»', t: 'Cada gobierno define su propio plazo, salvo una excepción: los impuestos prediales deben cobrarse <em>dentro de 60 días</em> del cierre para considerarse disponibles. La mayoría adopta 60 días para todo, pero el rango va de 30 días a un año.', tone: 'seal' },
         ],
       },
       {
@@ -226,7 +226,7 @@ const ARTICLES: Article[] = [
         blocks: [
           { k: 'p', t: 'Los <span class="term">expenditures<i>egresos</i></span> son los recursos usados para adquirir un activo o servicio, y se reconocen cuando surge la obligación de pagar con recursos corrientes.' },
           { k: 'p', t: 'Los <span class="term">expenses<i>gastos</i></span> son costos expirados o consumidos al prestar el servicio. Miden el costo a largo plazo, así que pertenecen al nivel de todo el gobierno.' },
-          { k: 'fig', id: 'focus', cap: 'Comprar una patrulla de $60 000 es un expenditure completo el año de la compra en el fondo; arriba es un activo que se deprecia por años. La misma transacción, dos cifras distintas — y por eso hay conciliación.' },
+          { k: 'fig', id: 'focus', cap: 'Comprar una patrulla de $60 000 es un expenditure completo el año de la compra en el fondo; arriba es un activo que se deprecia por años. La misma transacción, dos cifras distintas — y por eso hay conciliación.' },
         ],
       },
       {
@@ -241,7 +241,7 @@ const ARTICLES: Article[] = [
     terms: [
       ['Current financial resources', 'Efectivo y partidas que se volverán efectivo a tiempo para pagar obligaciones del periodo.'],
       ['Modified accrual', 'Ingresos cuando son medibles y están disponibles; expenditures cuando obligan recursos corrientes.'],
-      ['Available', 'Cobrable a tiempo para pagar obligaciones del periodo. 60 días obligatorios para el impuesto predial.'],
+      ['Available', 'Cobrable a tiempo para pagar obligaciones del periodo. 60 días obligatorios para el impuesto predial.'],
       ['Economic resources focus', 'Se miden todos los recursos, corrientes y no corrientes, con devengado pleno.'],
       ['Expenditures', 'Recursos usados para adquirir un activo o servicio. Propio de los fondos gubernamentales.'],
       ['Expenses', 'Costos expirados o consumidos al prestar el servicio. Propio del nivel de todo el gobierno.'],
@@ -272,12 +272,12 @@ const ARTICLES: Article[] = [
         w: '«Medible y disponible» es la fórmula exacta. Las opciones B y D describen devengado pleno, y además usan <em>expenses</em>, que no es el término de los fondos gubernamentales.',
       },
       {
-        q: 'Un condado compra una patrulla de $60 000 en efectivo. ¿Cómo se reporta?',
+        q: 'Un condado compra una patrulla de $60 000 en efectivo. ¿Cómo se reporta?',
         src: 'Concepto, LO 2-3',
         o: [
-          'Expenditure de $60 000 en el fondo; activo depreciable en todo el gobierno',
+          'Expenditure de $60 000 en el fondo; activo depreciable en todo el gobierno',
           'Activo depreciable en los dos lugares',
-          'Expenditure de $60 000 en los dos lugares',
+          'Expenditure de $60 000 en los dos lugares',
           'No se reporta hasta que se deprecie',
         ],
         a: 0,
@@ -363,7 +363,7 @@ const ARTICLES: Article[] = [
         w: 'El otorgante es externo y fijó el destino: restringido. La opción A es asignado (intención sin acción formal); C y D son nonspendable — el inventario por su forma y el principal de la dotación por ley.',
       },
       {
-        q: 'El concejo aprueba una ordenanza que aparta $1 000 000 como reserva de emergencia, retirable solo con dos tercios de los votos. Eso es…',
+        q: 'El concejo aprueba una ordenanza que aparta $1 000 000 como reserva de emergencia, retirable solo con dos tercios de los votos. Eso es…',
         src: '2–20',
         o: ['Restricted', 'Committed', 'Assigned', 'Unassigned'],
         a: 1,
@@ -377,7 +377,7 @@ const ARTICLES: Article[] = [
         w: 'Solo el General Fund. Otros fondos pueden llegar a reportar un no asignado <em>negativo</em> si gastan por encima de lo restringido, comprometido o asignado, pero nunca uno positivo.',
       },
       {
-        q: 'El alcalde declara que aparta $25 000 para comprar un terreno para un parque, sin ordenanza. Eso es…',
+        q: 'El alcalde declara que aparta $25 000 para comprar un terreno para un parque, sin ordenanza. Eso es…',
         src: '2–20',
         o: ['Restricted', 'Committed', 'Assigned', 'Nonspendable'],
         a: 2,
@@ -408,8 +408,8 @@ const ARTICLES: Article[] = [
         head: 'Las dos vallas',
         blocks: [
           { k: 'p', t: 'Un fondo es mayor si alguno de sus elementos —activos, pasivos, ingresos o egresos— cumple <em>las dos</em> condiciones:' },
-          { k: 'p', t: '<em>(a)</em> Es al menos el <em>10 %</em> del mismo elemento para todos los fondos de su categoría. <em>(b)</em> Ese <em>mismo</em> elemento es al menos el <em>5 %</em> del total de fondos gubernamentales y enterprise combinados.' },
-          { k: 'fig', id: 'major', cap: 'Las dos vallas se saltan con el mismo elemento. Un fondo que pasa el 10 % en pasivos y el 5 % en ingresos no califica: son elementos distintos.' },
+          { k: 'p', t: '<em>(a)</em> Es al menos el <em>10 %</em> del mismo elemento para todos los fondos de su categoría. <em>(b)</em> Ese <em>mismo</em> elemento es al menos el <em>5 %</em> del total de fondos gubernamentales y enterprise combinados.' },
+          { k: 'fig', id: 'major', cap: 'Las dos vallas se saltan con el mismo elemento. Un fondo que pasa el 10 % en pasivos y el 5 % en ingresos no califica: son elementos distintos.' },
           { k: 'note', head: 'El error clásico', t: 'Cumplir <em>(a)</em> con un elemento y <em>(b)</em> con otro <em>no</em> sirve. Tiene que ser el mismo elemento el que salte las dos vallas.', tone: 'warn' },
         ],
       },
@@ -430,24 +430,24 @@ const ARTICLES: Article[] = [
       },
     ],
     terms: [
-      ['Major fund', 'Fondo que recibe columna propia. El General Fund siempre lo es; los demás pasan la prueba 10 % y 5 %.'],
+      ['Major fund', 'Fondo que recibe columna propia. El General Fund siempre lo es; los demás pasan la prueba 10 % y 5 %.'],
       ['Nonmajor funds', 'Se agregan en una sola columna, con detalle opcional en combining statements.'],
       ['Budgetary comparison schedule', 'Presupuesto contra real para el General Fund y cada special revenue fund mayor con presupuesto legal.'],
     ],
     quiz: [
       {
-        q: 'Un gobierno reporta activos totales: General $18 400 000; Library (special revenue) $2 900 000; Debt Service $2 600 000; total gubernamentales $26 300 000; gubernamentales y enterprise combinados $51 250 000. ¿Cuáles son mayores por activos?',
+        q: 'Un gobierno reporta activos totales: General $18 400 000; Library (special revenue) $2 900 000; Debt Service $2 600 000; total gubernamentales $26 300 000; gubernamentales y enterprise combinados $51 250 000. ¿Cuáles son mayores por activos?',
         src: '2–16, ítem 10',
         o: ['Solo el General Fund', 'General Fund y Library Fund', 'General Fund y Debt Service Fund', 'Los tres'],
         a: 1,
-        w: 'El 10 % de gubernamentales es $2 630 000; el 5 % del combinado, $2 562 500. Library ($2 900 000) supera ambas. Debt Service ($2 600 000) pasa el 5 % pero se queda $30 000 por debajo del 10 %, así que no es mayor. El General lo es siempre.',
+        w: 'El 10 % de gubernamentales es $2 630 000; el 5 % del combinado, $2 562 500. Library ($2 900 000) supera ambas. Debt Service ($2 600 000) pasa el 5 % pero se queda $30 000 por debajo del 10 %, así que no es mayor. El General lo es siempre.',
       },
       {
         q: 'La separación de fondos mayores existe porque…',
         src: '2–16, ítem 6',
         o: [
           'Los usuarios quieren el detalle de todos los fondos',
-          'Agregar fondos que superen el 5 % viola las normas',
+          'Agregar fondos que superen el 5 % viola las normas',
           'Los usuarios necesitan examinar los fondos fiduciarios',
           'Los usuarios necesitan ver los fondos con montos grandes de recursos y actividad',
         ],
@@ -520,14 +520,14 @@ const FINAL: Question[] = [
     w: 'La misma información de actividades gubernamentales aparece con dos enfoques de medición distintos. Por eso el GASB exige conciliar los fund balances con el net position, y el cambio del periodo entre los dos estados operativos.',
   },
   {
-    q: 'El condado quiere clasificar $464 000 de seguro pagado por anticipado en su General Fund. ¿Qué clasificación?',
+    q: 'El condado quiere clasificar $464 000 de seguro pagado por anticipado en su General Fund. ¿Qué clasificación?',
     src: '2–20 · artículo IV',
     o: ['Restricted', 'Committed', 'Nonspendable', 'Unassigned'],
     a: 2,
     w: 'Un pago anticipado no está en forma de poder gastarse: es nonspendable, igual que el inventario. Lo primero que se aparta al clasificar.',
   },
   {
-    q: 'Un fondo del condado alcanza el 10 % de los pasivos de su categoría y el 5 % de los ingresos del combinado. ¿Es mayor?',
+    q: 'Un fondo del condado alcanza el 10 % de los pasivos de su categoría y el 5 % de los ingresos del combinado. ¿Es mayor?',
     src: 'Artículo V',
     o: [
       'Sí: cumple las dos condiciones',
@@ -536,7 +536,7 @@ const FINAL: Question[] = [
       'No hay información suficiente',
     ],
     a: 1,
-    w: 'Es el error clásico. Cumplir (a) con pasivos y (b) con ingresos no sirve: tiene que ser el mismo elemento el que pase el 10 % y el 5 %.',
+    w: 'Es el error clásico. Cumplir (a) con pasivos y (b) con ingresos no sirve: tiene que ser el mismo elemento el que pase el 10 % y el 5 %.',
   },
 ]
 
@@ -616,16 +616,16 @@ export const CH2: Chapter = {
         { code: 'U', label: 'Unassigned', eyebrow: 'e' },
       ],
       items: [
-        ['$22 000 de inventario en el General Fund', 0],
-        ['$464 000 de seguro pagado por anticipado', 0],
-        ['Reserva de emergencia de $1 000 000, retirable con dos tercios del concejo', 2],
-        ['5 % del impuesto a las ventas apartado por ordenanza para desarrollo económico', 2],
-        ['$250 000 de subvención federal para vivienda de emergencia', 1],
-        ['$100 000 de prima de bonos que la administradora apartó para pagar principal', 3],
-        ['$25 000 que el alcalde aparta para comprar terreno de un parque', 3],
-        ['Saldo de $50 000 sin restricciones en un special revenue fund', 3],
+        ['$22 000 de inventario en el General Fund', 0],
+        ['$464 000 de seguro pagado por anticipado', 0],
+        ['Reserva de emergencia de $1 000 000, retirable con dos tercios del concejo', 2],
+        ['5 % del impuesto a las ventas apartado por ordenanza para desarrollo económico', 2],
+        ['$250 000 de subvención federal para vivienda de emergencia', 1],
+        ['$100 000 de prima de bonos que la administradora apartó para pagar principal', 3],
+        ['$25 000 que el alcalde aparta para comprar terreno de un parque', 3],
+        ['Saldo de $50 000 sin restricciones en un special revenue fund', 3],
         ['El capital projects fund cerró con saldo negativo', 4],
-        ['Cambio neto de $154 238 en el General Fund', 4],
+        ['Cambio neto de $154 238 en el General Fund', 4],
       ],
       note: 'La ordenanza del concejo compromete; la decisión de la administradora o del alcalde solo asigna. Y ojo con el special revenue sin restricciones: lo que sobra en un fondo que no es el General se considera asignado, no no asignado.',
     },
@@ -651,7 +651,7 @@ export const CH2: Chapter = {
           revenues: 3150000,
           expenditures: 2980000,
           major: true,
-          why: 'Por activos: $2,9 M supera el 10 % de gubernamentales ($2 630 000) y el 5 % del combinado ($2 562 500). El mismo elemento salta las dos vallas.',
+          why: 'Por activos: $2,9 M supera el 10 % de gubernamentales ($2 630 000) y el 5 % del combinado ($2 562 500). El mismo elemento salta las dos vallas.',
         },
         {
           name: 'Debt Service Fund',
@@ -660,12 +660,12 @@ export const CH2: Chapter = {
           revenues: 2400000,
           expenditures: 2350000,
           major: false,
-          why: 'Por activos, $2,6 M no llega al 10 % de gubernamentales ($2 630 000). Ningún otro elemento salta ambas vallas, así que no es mayor.',
+          why: 'Por activos, $2,6 M no llega al 10 % de gubernamentales ($2 630 000). Ningún otro elemento salta ambas vallas, así que no es mayor.',
         },
       ],
       totalCategory: { assets: 26300000, liabilities: 6100000, revenues: 28900000, expenditures: 27500000 },
       totalCombined: { assets: 51250000, liabilities: 14800000, revenues: 55200000, expenditures: 52700000 },
-      note: 'La trampa está en el Debt Service Fund: se queda a $30 000 del 10 %. Por eso la prueba se hace con números, no a ojo.',
+      note: 'La trampa está en el Debt Service Fund: se queda a $30 000 del 10 %. Por eso la prueba se hace con números, no a ojo.',
     },
     {
       kind: 'quiz',
@@ -676,7 +676,7 @@ export const CH2: Chapter = {
     },
   ],
   glossary: [
-    ['Available', 'Disponible', 'Cobrable a tiempo para pagar obligaciones del periodo. El impuesto predial exige 60 días; el resto lo define cada gobierno.', 'III'],
+    ['Available', 'Disponible', 'Cobrable a tiempo para pagar obligaciones del periodo. El impuesto predial exige 60 días; el resto lo define cada gobierno.', 'III'],
     ['Assigned fund balance', 'Saldo asignado', 'Intención de uso sin acción formal, expresada por el cuerpo de gobierno o por quien este delegó.', 'IV'],
     ['Business-type activities', 'Actividades tipo negocio', 'Servicios cobrados al usuario que buscan autofinanciarse. Los subsidios de impuestos generales no son raros.', 'I'],
     ['Capital projects fund', 'Fondo de proyectos de capital', 'Registra ingresos y bonos destinados a comprar o construir activos de larga vida.', 'II'],
@@ -693,7 +693,7 @@ export const CH2: Chapter = {
     ['Fund', 'Fondo', 'Entidad fiscal y contable con cuentas que cuadran solas, segregada para una actividad u objetivo específico.', 'II'],
     ['General Fund', 'Fondo general', 'El fondo operativo principal. Uno y solo uno por gobierno. Recibe todo lo que no deba ir a otro lado.', 'II'],
     ['Internal service fund', 'Fondo de servicios internos', 'Sirve a departamentos del propio gobierno. Propietario, pero suele reportarse en actividades gubernamentales.', 'II'],
-    ['Major fund', 'Fondo mayor', 'Recibe columna propia. El General siempre; los demás si el mismo elemento pasa el 10 % y el 5 %.', 'V'],
+    ['Major fund', 'Fondo mayor', 'Recibe columna propia. El General siempre; los demás si el mismo elemento pasa el 10 % y el 5 %.', 'V'],
     ['Modified accrual', 'Devengado modificado', 'Ingresos cuando son medibles y están disponibles; expenditures cuando obligan recursos corrientes.', 'III'],
     ['Nonspendable fund balance', 'Saldo no gastable', 'No está en forma de gastarse (inventario, anticipos) o debe mantenerse intacto por ley o contrato.', 'IV'],
     ['Permanent fund', 'Fondo permanente', 'Dotación cuyo principal se preserva y cuyos rendimientos apoyan un propósito público.', 'II'],

@@ -7,6 +7,27 @@ export type Block =
   | { k: 'fig'; id: string; cap: string }
   | { k: 'note'; head: string; t: string; tone?: 'seal' | 'warn' }
 
+export type Tone = 'plain' | 'seal' | 'ok' | 'no'
+
+/* Illustrations for worked examples are data-driven: four shapes cover
+   every example in the course, so they stay visually consistent and
+   reflow on a phone instead of being 38 hand-drawn SVGs. */
+export type Viz =
+  | { v: 'ledger'; cols: string[]; rows: { cells: string[]; tone?: Tone; note?: string }[] }
+  | { v: 'flow'; nodes: { label: string; sub?: string; tone?: Tone }[] }
+  | { v: 'split'; whole: { label: string; amount: string }; parts: { label: string; amount: string; tone?: Tone }[] }
+  | { v: 'scale'; label: string; value: string; marks: { label: string; value: string; pass: boolean }[] }
+
+/* One worked example per step: a concrete case, an illustration, and
+   the reasoning revealed a step at a time. */
+export type Example = {
+  title: string
+  setup: string
+  viz: Viz
+  steps: string[]
+  answer: string
+}
+
 export type Step = { head: string; blocks: Block[] }
 
 export type Question = {

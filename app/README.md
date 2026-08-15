@@ -15,11 +15,13 @@ npm run dev
 Every chapter is anchored on a real end-of-chapter case, then taught backwards:
 
 1. **Caso** — the case stated up front, unsolved.
-2. **Artículos** — one article per key concept, each a sequence of **steps (one idea per screen)**, then a check with terms and questions from the chapter's own end-of-chapter set. Completing one stamps it *certificado*.
+2. **Artículos** — one article per key concept, each a sequence of **steps (one idea per screen)**. Every step carries a **worked example**: a concrete case in the same fictional county, an illustration, and the reasoning revealed a step at a time. Then a check with terms and questions from the chapter's own end-of-chapter set. Completing one stamps it *certificado*.
 3. **Cierre** — the case again, with minimum guidance.
 4. **Glosario** — the chapter's terms, bilingual and searchable.
 
-Length is a design constraint: no paragraph past ~40 words, no screen past ~110.
+Length is a design constraint: no paragraph past ~40 words. Examples stay collapsed until tapped, so a step arrives at ~1.6 phone screens and only grows if the student asks it to.
+
+Examples are data-driven — four illustration shapes (`ledger`, `flow`, `split`, `scale`) cover all 38, so they stay visually consistent and reflow on a phone instead of being 38 hand-drawn SVGs. A build-time check asserts every step has one.
 
 ## Chapters
 
@@ -56,6 +58,8 @@ src/
   lib/types.ts         shared shapes: Article, Step, Task, Chapter
   lib/course.ts        the chapter registry
   lib/chapters/        ch1.ts, ch2.ts — all copy, questions, capstone data
+                       ch1-examples.ts, ch2-examples.ts — one worked example per step
+  lib/examples.ts      example registry, keyed `${articleId}-${stepIndex}`
   lib/figures/         kit.tsx (shared drawing kit), ch1.tsx, ch2.tsx, index.tsx
   components/ui/       shadcn-pattern primitives on Radix
   components/          Article, Quiz, Capstone, Stamp
@@ -64,7 +68,7 @@ src/
 
 ### Adding a chapter
 
-Write `src/lib/chapters/chN.ts` exporting a `Chapter`, add its figures to `src/lib/figures/chN.tsx` and the figure registry, then append it to `CHAPTERS` in `course.ts`. Nothing in the shell needs to change.
+Write `src/lib/chapters/chN.ts` exporting a `Chapter`, add its figures to `src/lib/figures/chN.tsx` and the figure registry, write one example per step in `chN-examples.ts`, then append it to `CHAPTERS` in `course.ts`. Nothing in the shell needs to change.
 
 Capstone tasks are a discriminated union, so a chapter mixes kinds freely:
 

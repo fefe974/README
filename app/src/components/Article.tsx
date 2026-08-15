@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import type { Article as ArticleT } from '@/lib/types'
 import { Figure } from '@/lib/figures/index'
+import { exampleFor } from '@/lib/examples'
+import { ExampleCard } from './ExampleCard'
 import { Quiz } from './Quiz'
 import { Stamp } from './Stamp'
 import { Card, CardContent } from './ui/card'
@@ -54,6 +56,7 @@ export function Article({
 
   const onCheck = step === last
   const current = onCheck ? null : article.steps[step]
+  const ex = onCheck ? null : exampleFor(article.id, step)
   const right = article.quiz.filter((q, i) => answers[i] === q.a).length
 
   return (
@@ -124,6 +127,8 @@ export function Article({
                 )
               })}
             </div>
+
+            {ex && <ExampleCard ex={ex} />}
 
             <button
               onClick={() => goto(step + 1)}
