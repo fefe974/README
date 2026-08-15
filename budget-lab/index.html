@@ -305,6 +305,7 @@ h2{font-size:21px;margin:26px 2px 12px}
     <div><h3>Original video</h3><p>Estimated Revenues &amp; Expenditures — Governmental Accounting. This app practices its content.</p></div>
     <div class="chev">›</div>
   </a>
+  <div class="card"><h3>Grounded in your textbook</h3><p>Terminology and treatments follow Reck, Lowensohn &amp; Neely, <i>Accounting for Governmental &amp; Nonprofit Entities</i>, 18th ed., Chapters 3–4: Encumbrances Outstanding, the 60-day availability rule, budget amendments, and the levy allowance.</p></div>
   <div class="card"><h3>Practice figures</h3><p>The governments and amounts in this app are teaching examples, not real data.</p></div>
   <button class="button danger" onclick="confirmReset()">Reset all progress</button>
 </section>
@@ -397,14 +398,15 @@ const ACCOUNTS={
   er:{name:'Estimated Revenues',sub:'budgetary · debit balance'},
   ap:{name:'Appropriations',sub:'budgetary · credit balance'},
   bfb:{name:'Budgetary Fund Balance',sub:'budgetary · balancing account'},
-  enc:{name:'Encumbrances',sub:'budgetary · commitment'},
-  rfe:{name:'Reserve for Encumbrances',sub:'budgetary · offset to encumbrances'},
+  enc:{name:'Encumbrances',sub:'budgetary · debit balance'},
+  rfe:{name:'Encumbrances Outstanding',sub:'budgetary · offset to Encumbrances'},
   rev:{name:'Revenues',sub:'actual · credit balance'},
   exp:{name:'Expenditures',sub:'actual · debit balance'},
-  txr:{name:'Taxes Receivable',sub:'asset'},
+  txr:{name:'Taxes Receivable—Current',sub:'asset'},
+  auc:{name:'Allowance for Uncollectible Current Taxes',sub:'contra-asset'},
   cash:{name:'Cash',sub:'asset'},
   vp:{name:'Vouchers Payable',sub:'liability'},
-  dfi:{name:'Deferred Inflows',sub:'liability-like · next year’s revenue'},
+  dfi:{name:'Deferred Inflows of Resources',sub:'unavailable revenue'},
   fb:{name:'Fund Balance',sub:'actual · equity'}
 };
 const money=n=>(n<0?'−$':'$')+Math.abs(n).toLocaleString('en-US');
@@ -465,13 +467,13 @@ const units=[
   concepts:[
     ['Revenues','The period’s actual revenues. Credit balance, as in commercial accounting.'],
     ['Modified accrual','Governmental funds recognize revenues when they are measurable and available to pay current-period obligations.'],
-    ['Taxes Receivable','The right to collect that arises when property taxes are levied.'],
+    ['Taxes Receivable—Current','The right to collect that arises when property taxes are levied.'],
     ['Mirror pair','Estimated Revenues (plan, debit) lives all year alongside Revenues (actual, credit).']
   ],
-  video:'In the video, the tax levy produces a debit to Taxes Receivable and a credit to Revenues; the estimate recorded in January is not modified.',
+  video:'In the video, the tax levy produces a debit to Taxes Receivable—Current and a credit to Revenues; the estimate recorded in January is not modified.',
   entry:{caption:'Property tax levy',lines:[{s:'D',a:'txr',m:600000},{s:'C',a:'rev',m:600000}]},
   quiz:{q:'When does a governmental fund recognize revenues under modified accrual?',opts:['Only when cash is collected','When they are measurable and available','When the budget is adopted','At fiscal year end'],correct:1,why:'The rule is "measurable and available": the amount can be quantified and will be collected in time to pay the period’s obligations.'},
-  lab:{title:'Tax levy in Maplewood',scenario:'Maplewood levies property taxes of $600,000. They are considered measurable and available. Record the revenue.',lines:[{s:'D',a:'txr',m:600000},{s:'C',a:'rev',m:600000}],hint:'A receivable is born (debit Taxes Receivable) and the actual revenue is recognized (credit Revenues). The budgetary accounts are not touched.',success:'The year’s first real event: $600,000 in Revenues against $1,000,000 estimated. The comparison is now alive.'}
+  lab:{title:'Tax levy in Maplewood',scenario:'Maplewood levies property taxes of $600,000. They are considered measurable and available. Record the revenue.',lines:[{s:'D',a:'txr',m:600000},{s:'C',a:'rev',m:600000}],hint:'A receivable is born (debit Taxes Receivable—Current) and the actual revenue is recognized (credit Revenues). The budgetary accounts are not touched.',success:'The year’s first real event: $600,000 in Revenues against $1,000,000 estimated. The comparison is now alive.'}
 },
 {
   id:'expenditures',title:'Expenditures',short:'Real spending against the authorization',
@@ -519,8 +521,8 @@ const CONCEPTS=[
  points:['Revenues: when measurable and available.','Expenditures: when the liability is incurred (with limited exceptions).','No depreciation in governmental funds — capital outlays are expenditures.'],
  check:{q:'Under modified accrual, governmental funds measure…',opts:['Economic income like a business','Flows of current financial resources','Only cash movements'],correct:1,why:'It sits between cash and full accrual: the question is what current resources came in and went out.'}},
 {id:'available',tag:'Basis',term:'Measurable & available',def:'The two-part test for recognizing revenues: quantifiable, and collectible in time to pay the current period’s bills.',
- points:['“Available” usually means collected within the period or shortly after (commonly 60 days).','Taxes levied but collectible far in the future are deferred, not revenue.','This is the reason modified accrual differs most from business accounting.'],
- check:{q:'A tax collectible 10 months after year end is…',opts:['Revenue now','A deferred inflow, revenue later','Never revenue'],correct:1,why:'It fails the “available” test today, so it waits as a deferred inflow until it can pay current obligations.'}},
+ points:['For property taxes, GASB defines “available” as collected within the period or within 60 days of year end.','Amounts expected later than that are credited to Deferred Inflows of Resources and become revenue when collected.','Property taxes are imposed nonexchange revenues: the receivable is recorded when the enforceable claim (the levy) arises.'],
+ check:{q:'A tax collectible 10 months after year end is…',opts:['Revenue now','A deferred inflow, revenue later','Never revenue'],correct:1,why:'It fails the 60-day availability test, so it waits in Deferred Inflows of Resources until the period it can pay obligations.'}},
 {id:'estrev',tag:'Budgetary',term:'Estimated Revenues',def:'The budgetary account holding the year’s revenue plan. Debit balance — the mirror of actual Revenues.',
  points:['Debited once, when the budget is adopted.','Untouched by real events during the year.','Removed by the closing reversal at year end.'],
  exampleEntry:{caption:'At adoption',lines:[{s:'D',a:'er',m:750000},{s:'C',a:'ap',m:750000}]},
@@ -538,18 +540,24 @@ const CONCEPTS=[
  points:['Buying a truck: full expenditure now, no depreciation later.','Recognized when the liability is incurred.','Closed to Fund Balance at year end.'],
  check:{q:'A governmental fund buys equipment for $80,000 cash. It records…',opts:['An asset, then depreciation','An expenditure of $80,000','Nothing until year end'],correct:1,why:'Capital outlays consume current financial resources, so the fund records the full expenditure now.'}},
 {id:'enc',tag:'Control',term:'Encumbrances',def:'Budget set aside when a purchase order is issued — a commitment, before any liability exists.',
- points:['Debit Encumbrances, credit Reserve for Encumbrances at the PO.','Reversed when the goods or services arrive.','Keeps the “remaining authority” number honest mid-year.'],
+ points:['Debit Encumbrances, credit Encumbrances Outstanding at the PO.','Reversed when the goods or services arrive.','The exception among budgetary accounts: it carries a debit balance, the same side as Expenditures, because a commitment precedes an expenditure.'],
  exampleEntry:{caption:'Purchase order issued',lines:[{s:'D',a:'enc',m:40000},{s:'C',a:'rfe',m:40000}]},
- check:{q:'An encumbrance is recorded when…',opts:['The invoice arrives','The purchase order is issued','The check is written'],correct:1,why:'The commitment begins at the PO; the expenditure comes later, when the goods arrive.'}},
-{id:'rfe',tag:'Control',term:'Reserve for Encumbrances',def:'The credit-side twin of Encumbrances: it shows how much fund balance is committed to open orders.',
- points:['Rises and falls in lockstep with Encumbrances.','At year end, open amounts often carry into next year’s budget.','Zero when no purchase orders are outstanding.'],
- check:{q:'When goods arrive, the encumbrance pair is…',opts:['Left in place','Reversed for the PO amount','Doubled'],correct:1,why:'The commitment is replaced by a real expenditure and liability, so the pair is reversed.'}},
+ check:{q:'Which budgetary account does NOT have a balance opposite its operating counterpart?',opts:['Estimated Revenues','Appropriations','Encumbrances'],correct:2,why:'Encumbrances carries a debit balance like Expenditures — a commitment precedes an expenditure. Every other budgetary account mirrors its counterpart.'}},
+{id:'rfe',tag:'Control',term:'Encumbrances Outstanding',def:'The credit-side twin of Encumbrances: it shows how much of the appropriation is committed to open orders.',
+ points:['Rises and falls in lockstep with Encumbrances.','At year end: if the government will not honor open POs, close the pair (debit Encumbrances Outstanding, credit Encumbrances). If it will honor them, it may keep the pair open or close and reopen it next year.','Zero when no purchase orders are outstanding.'],
+ check:{q:'When goods arrive, the encumbrance pair is…',opts:['Left in place','Reversed for the PO amount','Doubled'],correct:1,why:'The commitment is replaced by a real expenditure and liability, so the pair is reversed at the encumbered amount.'}},
 {id:'vp',tag:'Actual',term:'Vouchers Payable',def:'The liability recorded when an invoice is approved for payment — the government’s accounts payable.',
  points:['Born together with the expenditure.','Cleared when the check is issued.','A control point: only approved vouchers get paid.'],
  check:{q:'Paying an approved voucher debits…',opts:['Expenditures again','Vouchers Payable','Appropriations'],correct:1,why:'The expenditure was recorded at approval; payment just clears the liability against cash.'}},
-{id:'b2a',tag:'Reporting',term:'Budget-to-actual statement',def:'The required comparison of original budget, final budget, and actual results for the General Fund.',
- points:['Variances are labeled favorable or unfavorable.','Actuals are shown on the budgetary basis for a fair comparison.','It is the public’s scoreboard for budget discipline.'],
- check:{q:'A favorable expenditure variance means actual spending was…',opts:['Above appropriations','Below appropriations','Exactly on budget'],correct:1,why:'Spending under the legal ceiling is favorable; over it is unfavorable — and illegal.'}},
+{id:'b2a',tag:'Reporting',term:'Budget-to-actual statement',def:'The required comparison of budget and actual results for the General Fund and every fund with a legally adopted budget.',
+ points:['GASB requires both the originally adopted and the final amended budget columns; a variance column is encouraged but not required.','Outstanding encumbrances are added to expenditures to show how much of the appropriation is committed and spent.','Comparisons are presented at the legal level of budgetary control, on the government’s budgetary basis.'],
+ check:{q:'Which budget amounts must the comparison present?',opts:['Final budget only','Original and final budgets','Whichever the council prefers'],correct:1,why:'GASB requires both the originally adopted and the final amended budget, so readers can see amendments as well as variances.'}},
+{id:'ofs',tag:'Budgetary',term:'Other financing sources & uses',def:'Inflows and outflows that change fund balance but are not revenues or expenditures — interfund transfers and bond proceeds.',
+ points:['Reported in their own section of the operating statement, below revenues and expenditures.','Budgeted through two more budgetary accounts: Estimated Other Financing Sources and Estimated Other Financing Uses.','A transfer in is not revenue, and a transfer out is not an expenditure — GASB requires the distinction.'],
+ check:{q:'A budgeted transfer out of the General Fund is recorded in…',opts:['Appropriations','Estimated Other Financing Uses','Expenditures'],correct:1,why:'Transfers are not expenditures; the budget side uses Estimated Other Financing Uses, and the actual side uses Other Financing Uses.'}},
+{id:'ctrl',tag:'Control',term:'Control & subsidiary ledgers',def:'Each general ledger control account (Estimated Revenues, Revenues, Appropriations, Expenditures…) is backed by subsidiary detail in the same classifications as the budget.',
+ points:['The sum of subsidiary account balances must always equal the control account balance.','Detail is kept at whatever level law or sound administration requires — by source for revenues, by function for spending.','Expenditures may not exceed appropriations at the legal level of budgetary control without a formal amendment.'],
+ check:{q:'The balances of the Revenues subsidiary accounts must always sum to…',opts:['Estimated Revenues','The Revenues control account','Fund Balance'],correct:1,why:'Subsidiary detail supports its own control account; the totals must agree at all times.'}},
 {id:'close',tag:'Closing',term:'Closing entries',def:'Two jobs at year end: reverse the budget exactly, and close the actual accounts to Fund Balance.',
  points:['Budgetary accounts leave by the exact reverse of adoption.','Revenues and Expenditures close to Fund Balance.','After closing, only real balance-sheet accounts remain.'],
  exampleEntry:{caption:'Closing the actuals (revenues exceeded expenditures)',lines:[{s:'D',a:'rev',m:500000},{s:'C',a:'exp',m:460000},{s:'C',a:'fb',m:40000}]},
@@ -566,13 +574,18 @@ const glossary=[
 ['Budgetary Fund Balance','The account that balances the budget entry: credited for a planned surplus, debited for a planned deficit.'],
 ['Revenues','The period’s actual recognized revenues. Credit balance.'],
 ['Expenditures','The actual use of current financial resources. Debit balance. No depreciation included.'],
-['Encumbrance','Budget set aside for an issued purchase order, before the goods or services arrive.'],
-['Reserve for Encumbrances','Credit-side twin of Encumbrances; shows fund balance committed to open orders.'],
+['Encumbrance','Budget set aside for an issued purchase order, before the goods or services arrive. The one budgetary account with a debit balance like its operating counterpart.'],
+['Encumbrances Outstanding','Credit-side twin of Encumbrances; shows how much of the appropriation is committed to open orders.'],
+['Estimated Other Financing Sources / Uses','Budgetary accounts for planned interfund transfers and debt proceeds — items that are not revenues or expenditures.'],
 ['Modified accrual','The accounting basis of governmental funds: revenues when measurable and available.'],
-['Measurable & available','The revenue recognition test: quantifiable and collectible in time to pay current-period obligations.'],
-['Taxes Receivable','The right to collect that arises when taxes are levied.'],
+['Measurable & available','The revenue recognition test: quantifiable and collectible in time to pay current-period obligations. For property taxes, within 60 days of year end.'],
+['Taxes Receivable—Current','The right to collect that arises when taxes are levied; a control account supported by taxpayer-level detail.'],
+['Allowance for Uncollectible Current Taxes','Contra-asset for the portion of the levy not expected to be collected; the levy is credited to Revenues net of this amount.'],
+['Imposed nonexchange revenue','Revenue where the government receives value without giving equal value directly in exchange — property taxes are the classic case.'],
+['Control account','A general ledger account whose balance must always equal the sum of its subsidiary ledger detail.'],
+['Legal level of budgetary control','The level (fund, program, department) at which spending may not exceed appropriations without a formal budget amendment.'],
 ['Vouchers Payable','Liability for approved invoices awaiting payment.'],
-['Deferred Inflows','Resources received that belong to a future period — next year’s revenue, not this year’s.'],
+['Deferred Inflows of Resources','Resources received or receivable that belong to a future period — unavailable revenue, not this year’s.'],
 ['Fund Balance','Actual account: the fund’s accumulated net resources. Distinct from the budgetary version.'],
 ['Variance','The difference between budget and actual; favorable or unfavorable.'],
 ['Budget-to-actual','The comparative statement GASB requires for the General Fund.'],
@@ -593,14 +606,14 @@ const CASE=[
 {date:'February – June',title:'Collections come in',story:'Through spring, taxpayers pay $820,000 of the levy.',
  lines:[{s:'D',a:'cash',m:820000},{s:'C',a:'txr',m:820000}],
  hint:'Cash comes in and the receivable shrinks. No new revenue — it was recognized at the levy.',
- note:'$80,000 of the levy is still outstanding in Taxes Receivable.'},
+ note:'$80,000 of the levy is still outstanding in Taxes Receivable—Current.'},
 {date:'March 10',title:'Fees and licenses',story:'Permit fees and business licenses bring in $120,000 in cash, recognized as revenue when received.',
  lines:[{s:'D',a:'cash',m:120000},{s:'C',a:'rev',m:120000}],
  hint:'Cash revenue: debit Cash, credit Revenues.',
  note:'Total actual revenues reach $1,020,000 — already above the estimate.'},
 {date:'April 3',title:'Order the fire engine',story:'The fire department issues a purchase order for a new engine: $200,000. Nothing has been received yet, but the money must be set aside.',
  lines:[{s:'D',a:'enc',m:200000},{s:'C',a:'rfe',m:200000}],
- hint:'A purchase order creates an encumbrance, not an expenditure: debit Encumbrances, credit Reserve for Encumbrances.',
+ hint:'A purchase order creates an encumbrance, not an expenditure: debit Encumbrances, credit Encumbrances Outstanding.',
  note:'Available authority drops: $950,000 appropriated − $200,000 committed.'},
 {date:'May 20',title:'The engine arrives',story:'The fire engine is delivered with an invoice for $198,000 — slightly under the PO. Reverse the $200,000 encumbrance and record the actual expenditure.',
  lines:[{s:'D',a:'rfe',m:200000},{s:'C',a:'enc',m:200000},{s:'D',a:'exp',m:198000},{s:'C',a:'vp',m:198000}],
@@ -637,10 +650,12 @@ const DRILLS=[
 ()=>{const x=rk(40,300)*1000,t=town();return{scenario:`${t} receives and approves an invoice of ${money(x)} for contracted services. Record it.`,lines:[{s:'D',a:'exp',m:x},{s:'C',a:'vp',m:x}],hint:'Debit Expenditures, credit Vouchers Payable.'}},
 ()=>{const x=rk(40,300)*1000,t=town();return{scenario:`${t} pays a previously approved voucher of ${money(x)}. Record the payment.`,lines:[{s:'D',a:'vp',m:x},{s:'C',a:'cash',m:x}],hint:'The expenditure already exists. Clear the liability against cash.'}},
 ()=>{const x=rk(50,400)*1000,t=town();return{scenario:`${t} pays ${money(x)} of payroll directly in cash. Record it.`,lines:[{s:'D',a:'exp',m:x},{s:'C',a:'cash',m:x}],hint:'An expenditure paid immediately: debit Expenditures, credit Cash.'}},
-()=>{const x=rk(30,250)*1000,t=town();return{scenario:`${t} issues a purchase order for equipment: ${money(x)}. Nothing received yet. Record it.`,lines:[{s:'D',a:'enc',m:x},{s:'C',a:'rfe',m:x}],hint:'A PO creates an encumbrance: debit Encumbrances, credit Reserve for Encumbrances.'}},
+()=>{const x=rk(30,250)*1000,t=town();return{scenario:`${t} issues a purchase order for equipment: ${money(x)}. Nothing received yet. Record it.`,lines:[{s:'D',a:'enc',m:x},{s:'C',a:'rfe',m:x}],hint:'A PO creates an encumbrance: debit Encumbrances, credit Encumbrances Outstanding.'}},
 ()=>{const po=rk(50,250)*1000,inv=po-rk(1,8)*1000,t=town();return{scenario:`${t}'s equipment arrives. The PO was ${money(po)}; the invoice is ${money(inv)}. Reverse the encumbrance and record the expenditure (4 lines).`,lines:[{s:'D',a:'rfe',m:po},{s:'C',a:'enc',m:po},{s:'D',a:'exp',m:inv},{s:'C',a:'vp',m:inv}],hint:'Reverse the encumbrance pair at the PO amount, then record expenditure and voucher at the invoice amount.'}},
 ()=>{const a=rk(500,1100)*1000,d=rk(20,80)*1000,t=town();return{scenario:`Year end in ${t}. Reverse the budget recorded at adoption: Estimated Revenues ${money(a)}, Appropriations ${money(a-d)}, Budgetary Fund Balance ${money(d)} credit.`,lines:[{s:'D',a:'ap',m:a-d},{s:'D',a:'bfb',m:d},{s:'C',a:'er',m:a}],hint:'Exact reverse of adoption: every account switches sides, same amounts.'}},
-()=>{const r=rk(600,1200)*1000,e=r-rk(30,120)*1000,t=town();return{scenario:`Close ${t}'s actual accounts: Revenues ${money(r)}, Expenditures ${money(e)}. Close both to Fund Balance.`,lines:[{s:'D',a:'rev',m:r},{s:'C',a:'exp',m:e},{s:'C',a:'fb',m:r-e}],hint:'Zero out Revenues (debit) and Expenditures (credit); the difference goes to Fund Balance.'}}
+()=>{const r=rk(600,1200)*1000,e=r-rk(30,120)*1000,t=town();return{scenario:`Close ${t}'s actual accounts: Revenues ${money(r)}, Expenditures ${money(e)}. Close both to Fund Balance.`,lines:[{s:'D',a:'rev',m:r},{s:'C',a:'exp',m:e},{s:'C',a:'fb',m:r-e}],hint:'Zero out Revenues (debit) and Expenditures (credit); the difference goes to Fund Balance.'}},
+()=>{const er=rk(10,30)*1000,ap=er+rk(10,40)*1000,t=town();return{scenario:`Mid-year, ${t}'s council legally amends the budget: Estimated Revenues up by ${money(er)}, Appropriations up by ${money(ap)}. Record the amendment.`,lines:[{s:'D',a:'er',m:er},{s:'D',a:'bfb',m:ap-er},{s:'C',a:'ap',m:ap}],hint:'Amendments use the same budgetary accounts as adoption. Appropriations grew more than Estimated Revenues, so Budgetary Fund Balance absorbs the difference with a debit.'}},
+()=>{const L=rk(3,9)*100000,t=town();const unc=L*2/100;return{scenario:`${t} levies property taxes of ${money(L)} and expects 2% (${money(unc)}) to be uncollectible. Record the levy net of the allowance (3 lines).`,lines:[{s:'D',a:'txr',m:L},{s:'C',a:'auc',m:unc},{s:'C',a:'rev',m:L-unc}],hint:'Debit the full levy to Taxes Receivable—Current; credit the uncollectible portion to the Allowance (a contra-asset); credit only the collectible 98% to Revenues.'}}
 ];
 
 /* ============ Controller simulator ============ */
@@ -667,7 +682,7 @@ const SIM=[
   {label:'Quietly raise the revenue estimate so it looks balanced',fx:{c:-25,t:-10,r:0},verdict:'bad',why:'Inflating estimates is the cardinal sin of budgeting — it corrupts every control downstream.'}]},
 {title:'The early payments',story:'In December, several taxpayers prepay $25,000 of next year’s property taxes.',
  opts:[
-  {label:'Credit Deferred Inflows — it is next year’s revenue',fx:{c:8,t:0,r:0},verdict:'best',why:'The resources belong to the period they are levied for. Deferred inflows hold them until then.'},
+  {label:'Credit Deferred Inflows of Resources — it is unavailable revenue',fx:{c:8,t:0,r:0},verdict:'best',why:'The resources belong to the period they are levied for. Deferred Inflows of Resources holds them until then — the 60-day availability rule for property taxes.'},
   {label:'Recognize it as this year’s revenue',fx:{c:-12,t:0,r:0},verdict:'bad',why:'It fails the recognition test for this period and overstates this year’s results.'},
   {label:'Hold the checks undeposited until January',fx:{c:-20,t:-10,r:0},verdict:'bad',why:'Undeposited receipts are a basic internal control failure, whatever the accounting intent.'}]},
 {title:'The January invoice',story:'On January 5, an invoice arrives for snow removal services performed December 18–22.',
@@ -1121,6 +1136,7 @@ function caseStatementHTML(){
   </div>
   <h2>Budget-to-actual — General Fund</h2>
   <div class="tableWrap"><table><thead><tr><th>Item</th><th class="num">Budget</th><th class="num">Actual</th><th>Variance</th></tr></thead><tbody>${rows}</tbody></table></div>
+  <p class="muted" style="font-size:12.5px;margin-top:8px">GASB requires this comparison to show both the original and the final amended budget. Maplewood adopted no amendments this year, so the two are identical — one Budget column stands for both. No encumbrances remained outstanding at year end.</p>
   <div class="card" style="margin-top:14px"><h3>What the ledger says</h3>
     <div class="glstat"><span>Ending cash</span><b>${money(glBalance('cash'))}</b></div>
     <div class="glstat"><span>Taxes still receivable</span><b>${money(glBalance('txr'))}</b></div>
