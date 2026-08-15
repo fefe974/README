@@ -22,6 +22,7 @@ export function Article({
   onNext,
   solves,
   onSolve,
+  initialStep,
 }: {
   article: ArticleT
   index: number
@@ -33,17 +34,19 @@ export function Article({
   /* Verdicts on this article's exercises, keyed by step index. */
   solves: Record<number, Verdict>
   onSolve: (step: number, v: Verdict) => void
+  /* Where to land. The dashboard sends the student straight to a step. */
+  initialStep?: number
 }) {
   const answered = article.quiz.every((_, i) => answers[i] != null)
   const last = article.steps.length
   // Reopening a finished article lands on the check, not back at step 1.
-  const [step, setStep] = useState(answered ? last : 0)
+  const [step, setStep] = useState(initialStep ?? (answered ? last : 0))
   const pane = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    setStep(answered ? last : 0)
+    setStep(initialStep ?? (answered ? last : 0))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [article.id])
+  }, [article.id, initialStep])
 
   useEffect(() => {
     if (!pane.current) return
@@ -82,7 +85,11 @@ export function Article({
       </div>
 
       {/* Step rail — how much of this article is left, at a glance. */}
-      <div className="mb-6 flex gap-1" aria-hidden="true">
+      <div
+        className="mb-6 flex gap-1"
+        role="img"
+        aria-label={`Avance del artículo: ${Object.values(solves).filter((v) => v.got === v.of).length} de ${last} ejercicios sin fallos`}
+      >
         {Array.from({ length: last + 1 }).map((_, i) => {
           const v = solves[i]
           const perfect = v && v.got === v.of

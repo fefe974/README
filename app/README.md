@@ -10,6 +10,18 @@ npm run build     # -> dist/index.html
 npm run dev
 ```
 
+## The dashboard
+
+The app opens on a panel, not a table of contents. It answers three questions before anything else: how am I doing, what do I do next, and what needs fixing.
+
+- **Hero** — one number: the share of exercise decisions answered correctly, with a meter.
+- **Resume** — a single button naming the exact next step (`cap. 2 · artículo III · Dos preguntas, no una`), computed from the first step with no verdict.
+- **KPI row** — exercises solved, articles certified, exercises to review.
+- **Mastery by concept** — a bar per article, grouped by chapter, showing the share of correct decisions. Articles never started are excluded and counted in a footnote rather than shown as empty rows.
+- **Para repasar** — the specific exercises answered wrong, worst first, each tapping straight through to that step.
+
+Status is never colour alone. The correct/incorrect pair measures ΔE 5.9 under deuteranopia (`dataviz` validator, categorical checks scoped out — these are status colours, and contrast against both surfaces passes), so every good/bad signal ships with a glyph and a word.
+
 ## Teaching model
 
 Every chapter is anchored on a real end-of-chapter case, then taught backwards:
@@ -71,12 +83,14 @@ Thirteen hand-authored inline SVG figures carry the mechanisms.
 src/
   lib/types.ts         shared shapes: Article, Step, Task, Chapter
   lib/course.ts        the chapter registry
+  lib/progress.ts      everything the dashboard derives: totals, per-concept mastery,
+                       weak spots, and where to resume
   lib/chapters/        ch1.ts, ch2.ts — all copy, questions, capstone data
                        ch1-examples.ts, ch2-examples.ts — one exercise per step
   lib/examples.ts      example registry, keyed `${articleId}-${stepIndex}`
   lib/figures/         kit.tsx (shared drawing kit), ch1.tsx, ch2.tsx, index.tsx
   components/ui/       shadcn-pattern primitives on Radix
-  components/          Article, Tutor, Quiz, Capstone, Stamp
+  components/          Dashboard, Article, Tutor, Quiz, Capstone, Stamp
   styles/              tokens.css, fonts.css (base64 woff2, latin subset)
 ```
 

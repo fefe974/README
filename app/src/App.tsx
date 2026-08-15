@@ -3,6 +3,7 @@ import { CHAPTERS } from '@/lib/course'
 import type { Chapter } from '@/lib/types'
 import { Article } from '@/components/Article'
 import { Capstone, type CapState } from '@/components/Capstone'
+import { Dashboard } from '@/components/Dashboard'
 import type { Verdict } from '@/components/Tutor'
 import { Stamp } from '@/components/Stamp'
 import { Card, CardContent } from '@/components/ui/card'
@@ -50,6 +51,7 @@ export default function App() {
   const [screen, setScreen] = useState<Screen>('course')
   const [chId, setChId] = useState<string>(CHAPTERS[0].id)
   const [open, setOpen] = useState<string | null>(null)
+  const [jump, setJump] = useState<number | undefined>(undefined)
   const [saved, setSaved] = useState<Saved>(load)
   const [theme, setTheme] = useState<'light' | 'dark' | null>(null)
   const [q, setQ] = useState('')
@@ -98,7 +100,15 @@ export default function App() {
 
   const go = (s: Screen) => {
     setOpen(null)
+    setJump(undefined)
     setScreen(s)
+  }
+  /* Straight from the dashboard to one exercise. */
+  const resume = (cid: string, aid: string, step: number) => {
+    setChId(cid)
+    setOpen(aid)
+    setJump(step)
+    setScreen('articles')
   }
   const openChapter = (id: string) => {
     setChId(id)
@@ -126,7 +136,7 @@ export default function App() {
         <div className="min-w-0">
           <b className="block font-display text-[15px] leading-tight">Cuentas Públicas</b>
           <span className="block font-mono text-[10px] uppercase tracking-[0.1em] text-muted">
-            {screen === 'course' ? 'El curso' : `Capítulo ${chapter.num}`}
+            {screen === 'course' ? 'Panel' : `Capítulo ${chapter.num}`}
           </span>
         </div>
         <button
@@ -139,55 +149,26 @@ export default function App() {
       </header>
 
       <main id="main">
-        {/* ---------------------------------------------- el curso */}
+        {/* ----------------------------------------------- el panel */}
         {screen === 'course' && (
-          <div>
-            <p className="font-mono text-[10.5px] uppercase tracking-[0.13em] text-muted">Contabilidad gubernamental y NFP</p>
-            <h1 className="mt-1.5 text-balance font-display text-[29px] leading-[1.1] tracking-tight">El curso</h1>
-            <p className="mb-6 mt-2.5 text-[15.5px] leading-relaxed text-ink2">
-              Cada capítulo se construye sobre un caso real del final del capítulo. Se estudia en artículos cortos y se
-              cierra resolviendo el caso con guía mínima.
-            </p>
-            <div className="flex flex-col gap-2.5">
-              {CHAPTERS.map((c) => {
-                const s = saved[c.id] ?? blank()
-                const done = certifiedIn(c, s) + (capDoneIn(c, s) ? 1 : 0)
-                const of = c.articles.length + 1
-                return (
-                  <button
-                    key={c.id}
-                    onClick={() => openChapter(c.id)}
-                    className="w-full rounded-xl border border-rule bg-sheet p-4 text-left shadow-[var(--shadow-sm)]"
-                  >
-                    <div className="flex items-baseline gap-2.5">
-                      <span className="font-mono text-[10.5px] uppercase tracking-[0.13em] text-seal">
-                        Capítulo {c.num}
-                      </span>
-                      {done === of && (
-                        <span className="font-mono text-[10px] uppercase tracking-wider text-ok">completo</span>
-                      )}
-                    </div>
-                    <b className="mt-1 block text-balance font-display text-[19px] leading-tight">{c.name}</b>
-                    <p className="mt-1 font-mono text-[10.5px] leading-snug text-muted">{c.en}</p>
-                    <div className="mt-3 flex items-center gap-3">
-                      <Progress value={(done / of) * 100} className="flex-1" />
-                      <span className="font-mono text-[11px] tabular-nums text-muted">{done}/{of}</span>
-                    </div>
-                  </button>
-                )
-              })}
-            </div>
+          <>
+            <Dashboard
+              chapters={CHAPTERS}
+              saved={saved}
+              onOpenChapter={openChapter}
+              onResume={resume}
+            />
             <p className="mx-auto mt-7 max-w-read text-center text-[12.5px] leading-relaxed text-muted">
               Basado en Reck, Lowensohn y Neely, <em>Accounting for Governmental &amp; Nonprofit Entities</em>, 18.ª ed.
               Las cifras de los estados son ilustrativas.
             </p>
             <button
-              onClick={() => { setSaved({}); setQ(''); }}
-              className="mt-6 w-full rounded-xl border border-rule2 bg-sheet px-4 py-3 text-[15px] font-bold"
+              onClick={() => { setSaved({}); setQ('') }}
+              className="mt-4 w-full rounded-xl border border-rule2 bg-sheet px-4 py-3 text-[15px] font-bold"
             >
               Reiniciar todo el progreso
             </button>
-          </div>
+          </>
         )}
 
         {/* ------------------------------------------------ el caso */}
@@ -254,7 +235,7 @@ export default function App() {
                 return (
                   <button
                     key={a.id}
-                    onClick={() => setOpen(a.id)}
+                    onClick={() => { setOpen(a.id); setJump(undefined) }}
                     className={cn(
                       'flex w-full items-center gap-3.5 rounded-xl border bg-sheet px-4 py-3.5 text-left shadow-[var(--shadow-sm)]',
                       done ? 'border-seal' : 'border-rule',
@@ -315,8 +296,13 @@ export default function App() {
                 solves: { ...s.solves, [article.id]: { ...(s.solves[article.id] ?? {}), [st]: v } },
               }))
             }
-            onBack={() => setOpen(null)}
-            onNext={idx < chapter.articles.length - 1 ? () => setOpen(chapter.articles[idx + 1].id) : null}
+            initialStep={jump}
+            onBack={() => { setOpen(null); setJump(undefined) }}
+            onNext={
+              idx < chapter.articles.length - 1
+                ? () => { setOpen(chapter.articles[idx + 1].id); setJump(undefined) }
+                : null
+            }
           />
         )}
 
@@ -367,7 +353,7 @@ export default function App() {
       <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-rule bg-ground/95 pb-[calc(7px+env(safe-area-inset-bottom))] pt-2 backdrop-blur">
         <div className="mx-auto grid max-w-[680px] grid-cols-5">
           {([
-            ['course', 'Curso', '⌂'],
+            ['course', 'Panel', '◱'],
             ['case', 'Caso', '❑'],
             ['articles', 'Artículos', '§'],
             ['close', 'Cierre', '✦'],
