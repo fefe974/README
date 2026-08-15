@@ -1,0 +1,1211 @@
+<title>Cuentas Públicas</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1D5A49">
+<style>
+:root{
+  --paper:#EDEFE9; --surface:#FBFCF8; --surface2:#F4F6EF; --sunk:#E4E8DF;
+  --ink:#131C18; --ink2:#2B3B33; --muted:#5C6A62; --line:#D4DACE; --line2:#C2CBBB;
+  --seal:#1D5A49; --sealsoft:#DFEBE4; --sealink:#164539;
+  --brass:#8E6B1F; --brasssoft:#F1E8D2;
+  --oxide:#98392B; --oxidesoft:#F6E4DF;
+  --shadow:0 10px 28px rgba(19,28,24,.09);
+  --shadow2:0 2px 6px rgba(19,28,24,.06);
+  --serif:ui-serif,"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0E1411; --surface:#161E19; --surface2:#1B241E; --sunk:#101815;
+  --ink:#E7EDE7; --ink2:#C6D2C8; --muted:#8FA095; --line:#28332C; --line2:#38463C;
+  --seal:#63C1A2; --sealsoft:#173229; --sealink:#8AD6BB;
+  --brass:#CFA24F; --brasssoft:#2C2517; --oxide:#DE8874; --oxidesoft:#331C17;
+  --shadow:0 10px 28px rgba(0,0,0,.45); --shadow2:0 2px 6px rgba(0,0,0,.3);
+}}
+:root[data-theme="dark"]{
+  --paper:#0E1411; --surface:#161E19; --surface2:#1B241E; --sunk:#101815;
+  --ink:#E7EDE7; --ink2:#C6D2C8; --muted:#8FA095; --line:#28332C; --line2:#38463C;
+  --seal:#63C1A2; --sealsoft:#173229; --sealink:#8AD6BB;
+  --brass:#CFA24F; --brasssoft:#2C2517; --oxide:#DE8874; --oxidesoft:#331C17;
+  --shadow:0 10px 28px rgba(0,0,0,.45); --shadow2:0 2px 6px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-text-size-adjust:100%}
+.app{max-width:680px;margin:0 auto;min-height:100vh;padding:0 18px calc(96px + env(safe-area-inset-bottom))}
+h1,h2,h3{font-family:var(--serif);font-weight:600;text-wrap:balance;margin:0}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2.5px solid var(--seal);outline-offset:2px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- chrome ---------- */
+.bar{position:sticky;top:0;z-index:30;margin:0 -18px 20px;padding:calc(10px + env(safe-area-inset-top)) 18px 10px;
+  background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
+.seal{width:36px;height:36px;flex:none;border-radius:50%;border:1.5px solid var(--seal);color:var(--seal);
+  display:grid;place-items:center;font-family:var(--serif);font-weight:700;font-size:15px;letter-spacing:-.02em}
+.barid b{display:block;font-family:var(--serif);font-size:15px;line-height:1.2}
+.barid span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.themebtn{margin-left:auto;background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:7px 10px;font-size:13px;color:var(--muted)}
+
+/* ---------- typography atoms ---------- */
+.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.lo{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--seal);background:var(--sealsoft);
+  padding:2px 6px;border-radius:4px;display:inline-block}
+.t{font-weight:600;color:var(--ink)}
+.t i{font-family:var(--mono);font-style:normal;font-size:.79em;font-weight:500;color:var(--seal);
+  background:var(--sealsoft);padding:1.5px 5px;border-radius:5px;margin-left:5px;letter-spacing:-.01em;
+  box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.rule{height:1px;background:var(--line);margin:26px 0}
+
+/* ---------- screens ---------- */
+.screen{display:none}.screen.on{display:block;animation:fade .28s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ---------- hero / case file ---------- */
+.file{background:var(--surface);border:1px solid var(--line);border-radius:4px 4px 14px 14px;box-shadow:var(--shadow);overflow:hidden}
+.file>.tab{background:var(--seal);color:var(--paper);padding:9px 16px;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase}
+:root[data-theme="dark"] .file>.tab,:root:not([data-theme="light"]) .file>.tab{color:#0E1411}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .file>.tab{color:#F5F8F3}}
+.file>.body{padding:22px 18px}
+.file h1{font-size:29px;line-height:1.12;letter-spacing:-.015em;margin-bottom:12px}
+.lede{color:var(--ink2);font-size:16.5px}
+.stamp{display:inline-block;margin-top:16px;border:1.5px solid var(--oxide);color:var(--oxide);border-radius:5px;
+  padding:5px 10px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;transform:rotate(-1.2deg)}
+
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border-top:1px solid var(--line)}
+.facts div{background:var(--surface);padding:14px 16px}
+.facts b{display:block;font-family:var(--serif);font-size:22px;line-height:1.1;color:var(--seal);font-variant-numeric:tabular-nums}
+.facts span{display:block;font-size:12.5px;color:var(--muted);margin-top:3px;line-height:1.35}
+
+/* ---------- generic card ---------- */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:18px;box-shadow:var(--shadow2)}
+.card+.card{margin-top:12px}
+.stack{display:flex;flex-direction:column;gap:14px}
+.h2{font-family:var(--serif);font-size:21px;line-height:1.2;letter-spacing:-.01em}
+.h3{font-family:var(--serif);font-size:17.5px;line-height:1.25}
+.sub{color:var(--muted);font-size:14px;line-height:1.5}
+
+/* ---------- route list ---------- */
+.unit{width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:13px;
+  padding:15px 16px;display:grid;grid-template-columns:34px 1fr auto;gap:13px;align-items:center;box-shadow:var(--shadow2)}
+.unit[data-done="1"]{border-color:var(--seal)}
+.unit .n{width:34px;height:34px;border-radius:9px;background:var(--sunk);color:var(--muted);display:grid;place-items:center;
+  font-family:var(--mono);font-size:13px;font-weight:600}
+.unit[data-done="1"] .n{background:var(--sealsoft);color:var(--seal)}
+.unit .ttl{font-family:var(--serif);font-size:16.5px;line-height:1.25}
+.unit .meta{font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.06em;margin-top:3px}
+.unit .go{color:var(--line2);font-size:19px}
+
+/* ---------- progress ---------- */
+.track{height:6px;border-radius:3px;background:var(--sunk);overflow:hidden}
+.track>i{display:block;height:100%;background:var(--seal);border-radius:3px;transition:width .45s ease}
+.prow{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;font-size:13px;color:var(--muted)}
+.prow b{font-family:var(--mono);font-size:12.5px;color:var(--ink);font-variant-numeric:tabular-nums}
+
+/* ---------- lesson ---------- */
+.back{background:none;border:0;padding:0 0 14px;color:var(--muted);font-size:14px;font-family:var(--mono);letter-spacing:.04em}
+.lesson h2{font-size:26px;line-height:1.15;letter-spacing:-.015em;margin:8px 0 4px}
+.lesson .en{font-family:var(--mono);font-size:12.5px;color:var(--muted);letter-spacing:-.01em}
+.mini{margin-top:24px}
+.mini>.tagline{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.mini>.tagline i{font-family:var(--mono);font-style:normal;font-size:11px;color:var(--seal);border:1px solid var(--line);
+  background:var(--surface);border-radius:20px;padding:2px 9px;letter-spacing:.06em}
+.mini>.tagline hr{flex:1;border:0;border-top:1px solid var(--line);margin:0}
+.mini p{margin-top:11px;color:var(--ink2)}
+.mini p:first-of-type{margin-top:0}
+.pull{border-left:3px solid var(--seal);background:var(--surface2);padding:13px 15px;border-radius:0 10px 10px 0;margin-top:14px;font-size:15px}
+.pull b{font-family:var(--serif);display:block;font-size:15.5px;margin-bottom:3px}
+.warn{border-left-color:var(--oxide)}
+.warn b{color:var(--oxide)}
+
+/* ---------- figures ---------- */
+figure{margin:18px 0 0;background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:16px 14px 13px;box-shadow:var(--shadow2)}
+figure .scroll{overflow-x:auto}
+figure svg{display:block;width:100%;min-width:320px;max-width:100%;height:auto;color:var(--ink)}
+figcaption{margin-top:11px;padding-top:11px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);line-height:1.45}
+figcaption b{color:var(--ink2);font-weight:600}
+
+/* ---------- terms ---------- */
+.terms{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:11px;overflow:hidden}
+.terms>div{background:var(--surface);padding:11px 14px}
+.terms dt{font-family:var(--mono);font-size:12.5px;color:var(--seal);letter-spacing:-.01em}
+.terms dd{margin:2px 0 0;font-size:14.5px;color:var(--ink2)}
+
+/* ---------- quiz ---------- */
+.q{margin-top:14px}
+.q>p{font-size:16px;margin-bottom:11px}
+.q>p em{font-style:normal;font-family:var(--mono);font-size:11px;color:var(--muted);display:block;letter-spacing:.08em;margin-bottom:5px}
+.opt{width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:10px;
+  padding:12px 14px;margin-bottom:7px;display:flex;gap:11px;align-items:flex-start;line-height:1.4;font-size:15px;transition:border-color .15s,background .15s}
+.opt .k{font-family:var(--mono);font-size:12px;color:var(--muted);padding-top:2px;flex:none}
+.opt[data-s="ok"]{border-color:var(--seal);background:var(--sealsoft)}
+.opt[data-s="ok"] .k{color:var(--seal)}
+.opt[data-s="no"]{border-color:var(--oxide);background:var(--oxidesoft)}
+.opt[data-s="no"] .k{color:var(--oxide)}
+.opt[disabled]{cursor:default}
+.why{margin-top:4px;padding:12px 14px;border-radius:10px;background:var(--surface2);border:1px solid var(--line);font-size:14.5px;color:var(--ink2);line-height:1.5}
+.why b{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:4px}
+.why.ok b{color:var(--seal)}.why.no b{color:var(--oxide)}
+
+/* ---------- buttons ---------- */
+.btn{display:block;width:100%;text-align:center;background:var(--seal);color:var(--paper);border:0;border-radius:11px;
+  padding:15px;font-weight:650;font-size:15.5px;box-shadow:var(--shadow2)}
+:root[data-theme="dark"] .btn,:root:not([data-theme="light"]) .btn{color:#0E1411}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .btn{color:#F5F8F3}}
+.btn.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line2);box-shadow:none}
+.btn[disabled]{opacity:.42}
+.btn+.btn{margin-top:9px}
+
+/* ---------- capstone tasks ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.chip{background:var(--surface);border:1px solid var(--line2);border-radius:20px;padding:8px 13px;font-size:14px;line-height:1.25;transition:all .15s}
+.chip[data-sel="1"]{border-color:var(--seal);background:var(--sealsoft);color:var(--seal);font-weight:600}
+.chip[data-s="ok"]{border-color:var(--seal);background:var(--sealsoft);opacity:.5}
+.chip[data-s="no"]{border-color:var(--oxide);background:var(--oxidesoft)}
+.bins{display:flex;flex-direction:column;gap:9px;margin-top:14px}
+.bin{width:100%;text-align:left;background:var(--surface2);border:1.5px dashed var(--line2);border-radius:11px;padding:12px 14px}
+.bin[data-armed="1"]{border-color:var(--seal);border-style:solid}
+.bin>b{font-family:var(--serif);font-size:15.5px;display:block}
+.bin>span{font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.bin>.held{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.bin>.held:empty{display:none}
+.held em{font-style:normal;font-size:12.5px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:3px 8px}
+.held em[data-s="ok"]{border-color:var(--seal);color:var(--seal)}
+.held em[data-s="no"]{border-color:var(--oxide);color:var(--oxide);text-decoration:line-through}
+
+/* grid task */
+.gridtask{overflow-x:auto;margin-top:14px}
+table.gt{border-collapse:collapse;width:100%;min-width:330px;font-size:14px}
+table.gt th{font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);
+  font-weight:500;padding:0 4px 9px;text-align:center;vertical-align:bottom}
+table.gt th:first-child{text-align:left;width:52%}
+table.gt td{border-top:1px solid var(--line);padding:9px 4px;text-align:center}
+table.gt td:first-child{text-align:left;line-height:1.35;padding-right:9px;color:var(--ink2)}
+.yn{width:38px;height:32px;border-radius:8px;border:1px solid var(--line2);background:var(--surface);
+  font-family:var(--mono);font-size:13px;color:var(--muted)}
+.yn[data-v="Y"]{border-color:var(--seal);background:var(--sealsoft);color:var(--seal);font-weight:700}
+.yn[data-v="N"]{border-color:var(--line2);background:var(--sunk);color:var(--ink2);font-weight:700}
+.yn[data-s="no"]{border-color:var(--oxide);background:var(--oxidesoft);color:var(--oxide)}
+
+/* statements compare */
+.stmts{display:flex;flex-direction:column;gap:12px;margin-top:14px}
+.stmt{border:1px solid var(--line);border-radius:11px;overflow:hidden;background:var(--surface)}
+.stmt>h4{margin:0;padding:11px 14px;background:var(--surface2);border-bottom:1px solid var(--line);
+  font-family:var(--serif);font-size:15px;font-weight:600}
+.stmt>h4 span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:400}
+.stmt table{width:100%;border-collapse:collapse;font-size:13.5px}
+.stmt td{padding:6px 14px;border-top:1px solid var(--line)}
+.stmt tr:first-child td{border-top:0}
+.stmt td:last-child{text-align:right;font-family:var(--mono);font-size:12.5px;font-variant-numeric:tabular-nums;color:var(--ink2);white-space:nowrap}
+.stmt tr[data-l="1"] td:first-child{padding-left:26px;color:var(--muted)}
+.stmt tr[data-h="1"] td{font-weight:700;background:var(--surface2)}
+
+/* score */
+.score{text-align:center;padding:26px 18px}
+.score .big{font-family:var(--serif);font-size:52px;line-height:1;color:var(--seal);font-variant-numeric:tabular-nums}
+.score .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+
+/* glossary */
+.gsearch{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:13px 14px;
+  font-size:15.5px;font-family:var(--sans);color:var(--ink);margin-bottom:14px}
+.gitem{border-bottom:1px solid var(--line);padding:14px 2px}
+.gitem dt{font-family:var(--mono);font-size:14px;color:var(--seal);letter-spacing:-.01em}
+.gitem .es{font-family:var(--serif);font-size:16px;margin-top:1px}
+.gitem dd{margin:5px 0 0;font-size:14.5px;color:var(--ink2);line-height:1.5}
+.gitem .src{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.07em;margin-top:6px;text-transform:uppercase}
+
+/* nav */
+nav{position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--paper) 92%,transparent);
+  backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:7px 0 calc(7px + env(safe-area-inset-bottom))}
+nav>div{max-width:680px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+nav button{background:none;border:0;padding:7px 2px;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--muted)}
+nav button span{font-size:19px;line-height:1}
+nav button small{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase}
+nav button[aria-current="true"]{color:var(--seal)}
+</style>
+
+<div class="app">
+  <header class="bar">
+    <div class="seal">CP</div>
+    <div class="barid"><b>Cuentas Públicas</b><span>Cap. 1 · Gov &amp; NFP</span></div>
+    <button class="themebtn" id="themebtn" aria-label="Cambiar tema">◐</button>
+  </header>
+
+  <!-- ============ CASE ============ -->
+  <section class="screen on" id="s-case">
+    <div class="file">
+      <div class="tab">Expediente 1–17 / 1–18 · Capítulo 1</div>
+      <div class="body">
+        <h1>El informe que nadie sabe leer</h1>
+        <p class="lede">El concejo municipal te entrega dos documentos y una pregunta incómoda:
+        <em>«¿Esta ciudad vivió dentro de sus medios este año, y esta asociación gastó el dinero de sus donantes en su misión?»</em></p>
+        <p class="lede" style="margin-top:12px">Uno es el <span class="t">informe financiero anual integral<i>CAFR</i></span> de la Ciudad y Condado de Denver.
+        El otro es el balance de <em>Promote Health Association, Inc.</em>, una organización sin fines de lucro.
+        Se ven parecidos. No lo son.</p>
+        <div class="stamp">Sin resolver</div>
+      </div>
+      <div class="facts">
+        <div><b>90 056</b><span>gobiernos locales en EE. UU., más el federal y 50 estatales</span></div>
+        <div><b>1,6 M</b><span>organizaciones sin fines de lucro con estatus de exención fiscal</span></div>
+        <div><b>3</b><span>cuerpos normativos: GASB, FASB y FASAB</span></div>
+        <div><b>0</b><span>opiniones de auditoría sin salvedades jamás emitidas sobre los estados consolidados del gobierno federal</span></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:18px">
+      <div class="eyebrow">Cómo funciona este módulo</div>
+      <p class="h2" style="margin:7px 0 10px">Seis mini-clases, luego el caso completo</p>
+      <p class="sub">Cada mini-clase desarma una pieza del expediente y te la explica en simple. Al final vuelves al caso
+      <b>sin guía</b>: clasificas las secciones del CAFR, comparas los dos estados financieros y resuelves los ejercicios 1–19 y 1–21.</p>
+      <p class="sub" style="margin-top:11px">Los términos técnicos se muestran en español con su forma en inglés al lado
+      —<span class="t">rendición de cuentas<i>accountability</i></span>— porque así aparecen en el examen y en la norma.</p>
+    </div>
+
+    <div class="card">
+      <div class="prow"><span>Tu avance en el capítulo</span><b id="capnum">0 / 7</b></div>
+      <div class="track"><i id="capbar" style="width:0%"></i></div>
+    </div>
+
+    <button class="btn" style="margin-top:14px" data-go="path">Empezar la ruta</button>
+    <p class="sub" style="margin-top:14px;text-align:center;font-size:12.5px">
+      Cifras y estados presentados con fines didácticos, basados en <em>Accounting for Governmental &amp; Nonprofit Entities</em>, 18.ª ed. (Reck, Lowensohn y Neely).</p>
+  </section>
+
+  <!-- ============ PATH ============ -->
+  <section class="screen" id="s-path">
+    <div id="path-list">
+      <div class="eyebrow">Ruta del capítulo 1</div>
+      <h2 class="h2" style="margin:7px 0 4px">De cero al CAFR</h2>
+      <p class="sub" style="margin-bottom:18px">Seis unidades, una por cada objetivo de aprendizaje del capítulo.</p>
+      <div class="stack" id="units"></div>
+      <div class="rule"></div>
+      <div class="card">
+        <div class="eyebrow">Al terminar las seis</div>
+        <p class="h3" style="margin:6px 0 8px">Se abre el cierre del caso</p>
+        <p class="sub">Cuatro tareas con guía mínima. Es la parte que se parece al examen.</p>
+        <button class="btn ghost" style="margin-top:13px" data-go="cap">Ir al cierre</button>
+      </div>
+    </div>
+    <div id="path-detail" hidden></div>
+  </section>
+
+  <!-- ============ CAPSTONE ============ -->
+  <section class="screen" id="s-cap"></section>
+
+  <!-- ============ GLOSSARY ============ -->
+  <section class="screen" id="s-gloss">
+    <div class="eyebrow">Referencia</div>
+    <h2 class="h2" style="margin:7px 0 4px">Glosario bilingüe</h2>
+    <p class="sub" style="margin-bottom:16px">Los <em>key terms</em> del capítulo 1, en inglés y español.</p>
+    <input class="gsearch" id="gq" placeholder="Buscar: accrual, fondo, CAFR…" autocomplete="off">
+    <dl id="glist" style="margin:0"></dl>
+    <div class="rule"></div>
+    <button class="btn ghost" id="reset">Reiniciar todo el progreso</button>
+  </section>
+</div>
+
+<nav><div>
+  <button data-go="case"><span>❑</span><small>Caso</small></button>
+  <button data-go="path"><span>◉</span><small>Ruta</small></button>
+  <button data-go="cap"><span>✦</span><small>Cierre</small></button>
+  <button data-go="gloss"><span>≡</span><small>Glosario</small></button>
+</div></nav>
+
+<script>
+/* ============================================================
+   ILUSTRACIONES — SVG en línea, currentColor para ambos temas
+   ============================================================ */
+const A = `<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker>
+<marker id="ahs" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--seal)"/></marker>
+<marker id="aho" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--oxide)"/></marker></defs>`;
+
+/* helper: caja con 1–2 líneas de texto */
+function bx(x,y,w,h,l1,l2,o={}){
+  const st=o.stroke||'currentColor', fl=o.fill||'var(--surface2)', tc=o.text||'currentColor';
+  const cx=x+w/2;
+  const t = l2
+    ? `<text x="${cx}" y="${y+h/2-3}" text-anchor="middle" font-size="12" font-weight="600" fill="${tc}">${l1}</text>
+       <text x="${cx}" y="${y+h/2+12}" text-anchor="middle" font-size="10.5" fill="${o.sub||'currentColor'}" opacity=".72">${l2}</text>`
+    : `<text x="${cx}" y="${y+h/2+4}" text-anchor="middle" font-size="12" font-weight="600" fill="${tc}">${l1}</text>`;
+  return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="7" fill="${fl}" stroke="${st}" stroke-width="1.2"/>${t}`;
+}
+
+/* helper: corta un texto en líneas sin partir palabras */
+function wrapT(s,max){
+  const w=s.split(' '); const L=[]; let c='';
+  for(const x of w){ if(c && (c+' '+x).length>max){ L.push(c); c=x; } else c = c?c+' '+x:x; }
+  if(c) L.push(c); return L;
+}
+
+const FIG = {};
+
+/* --- 1-1 : quién da recursos y qué recibe a cambio --- */
+FIG.flow = `<svg viewBox="0 0 360 336" role="img" aria-label="Comparación del flujo de recursos en empresas, gobiernos y organizaciones sin fines de lucro: la diferencia está en si el que aporta recibe un beneficio proporcional.">${A}
+${[
+ {y:8,  tag:'EMPRESA · FOR-PROFIT', a:'Cliente / accionista', b:'Empresa', back:'bienes, servicios y retorno proporcional a lo aportado', dash:0, col:'currentColor'},
+ {y:118,tag:'GOBIERNO · GOVERNMENT', a:'Contribuyente', b:'Gobierno', back:'servicios públicos, sin relación con lo que cada uno pagó', dash:1, col:'var(--seal)'},
+ {y:228,tag:'SIN FINES DE LUCRO · NFP', a:'Donante', b:'Organización', back:'servicios, con frecuencia para terceros, no para el donante', dash:1, col:'var(--oxide)'}
+].map(r=>`
+<text x="4" y="${r.y+9}" font-size="9.5" letter-spacing="1.2" fill="${r.col}" font-weight="600">${r.tag}</text>
+${bx(4,r.y+18,140,38,r.a,'',{stroke:r.col})}
+${bx(216,r.y+18,140,38,r.b,'',{stroke:r.col,fill:'var(--surface)'})}
+<line x1="146" y1="${r.y+37}" x2="212" y2="${r.y+37}" stroke="${r.col}" stroke-width="1.4" marker-end="url(#ah)" style="color:${r.col}"/>
+<text x="179" y="${r.y+31}" text-anchor="middle" font-size="9.5" fill="${r.col}">recursos</text>
+<path d="M286 ${r.y+56} C286 ${r.y+82} 74 ${r.y+82} 74 ${r.y+56}" fill="none" stroke="${r.col}" stroke-width="1.4"
+ ${r.dash?'stroke-dasharray="4 3"':''} marker-end="url(#ah)" style="color:${r.col}"/>
+<text x="180" y="${r.y+95}" text-anchor="middle" font-size="10" fill="currentColor" opacity=".8">${r.back}</text>`).join('')}
+</svg>`;
+
+/* --- 1-2 : quién fija las normas --- */
+FIG.setters = `<svg viewBox="0 0 360 356" role="img" aria-label="Mapa de los cuerpos normativos: la Financial Accounting Foundation supervisa al GASB y al FASB; tres funcionarios federales crearon el FASAB. Cada uno fija normas para un tipo de entidad.">${A}
+${bx(20,6,150,34,'Financial Accounting','Foundation (FAF)')}
+${bx(200,6,150,34,'Comptroller General,','OMB y Tesoro (1990)',{stroke:'var(--brass)',sub:'var(--brass)'})}
+<line x1="60" y1="42" x2="60" y2="66" stroke="currentColor" stroke-width="1.3" marker-end="url(#ah)"/>
+<line x1="130" y1="42" x2="130" y2="66" stroke="currentColor" stroke-width="1.3" marker-end="url(#ah)"/>
+<line x1="275" y1="42" x2="275" y2="66" stroke="var(--brass)" stroke-width="1.3" marker-end="url(#ah)" style="color:var(--brass)"/>
+${bx(10,68,100,34,'GASB','',{stroke:'var(--seal)',fill:'var(--sealsoft)',text:'var(--seal)'})}
+${bx(120,68,100,34,'FASB','')}
+${bx(230,68,120,34,'FASAB','',{stroke:'var(--brass)',fill:'var(--brasssoft)',text:'var(--brass)'})}
+<line x1="60" y1="104" x2="60" y2="130" stroke="var(--seal)" stroke-width="1.3" marker-end="url(#ahs)"/>
+<line x1="170" y1="104" x2="170" y2="130" stroke="currentColor" stroke-width="1.3" marker-end="url(#ah)"/>
+<line x1="290" y1="104" x2="290" y2="130" stroke="var(--brass)" stroke-width="1.3" marker-end="url(#ah)" style="color:var(--brass)"/>
+${bx(4,132,112,52,'Gobiernos','estatales y locales',{stroke:'var(--seal)'})}
+${bx(122,132,96,52,'Empresas','for-profit')}
+${bx(224,132,132,52,'Gobierno federal','y sus agencias',{stroke:'var(--brass)'})}
+<line x1="60" y1="186" x2="60" y2="212" stroke="var(--seal)" stroke-width="1.3" marker-end="url(#ahs)"/>
+<line x1="170" y1="186" x2="170" y2="212" stroke="currentColor" stroke-width="1.3" marker-end="url(#ah)"/>
+${bx(4,214,112,52,'NFP que son','gubernamentales',{stroke:'var(--seal)'})}
+${bx(122,214,150,52,'NFP independientes','de un gobierno')}
+<text x="4" y="292" font-size="10.5" font-weight="600" fill="var(--oxide)">La línea que más se falla ↑</text>
+<text x="4" y="308" font-size="10.5" fill="currentColor" opacity=".8">Las NFP se reparten entre dos tableros: si la</text>
+<text x="4" y="322" font-size="10.5" fill="currentColor" opacity=".8">organización es gubernamental (universidad pública,</text>
+<text x="4" y="336" font-size="10.5" fill="currentColor" opacity=".8">hospital público) sigue GASB; si no, sigue FASB.</text>
+<text x="4" y="350" font-size="10.5" fill="currentColor" opacity=".8">No se puede elegir.</text>
+</svg>`;
+
+/* --- 1-3 : interperiod equity, línea de tiempo --- */
+FIG.equity = `<svg viewBox="0 0 360 336" role="img" aria-label="Línea de tiempo de la equidad entre periodos: cuando el costo de los servicios del año excede los recursos del año, el exceso se traslada como carga a los contribuyentes futuros.">${A}
+<text x="4" y="12" font-size="9.5" letter-spacing="1.2" font-weight="600" fill="var(--seal)">CASO A · HAY EQUIDAD ENTRE PERIODOS</text>
+<rect x="4" y="24" width="9" height="10" fill="var(--sealsoft)" stroke="var(--seal)" stroke-width="1"/>
+<text x="18" y="33" font-size="10" fill="var(--seal)">recursos del año</text>
+<rect x="118" y="24" width="9" height="10" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2 1.5" opacity=".7"/>
+<text x="132" y="33" font-size="10" fill="currentColor" opacity=".7">costo de los servicios del año</text>
+<line x1="4" y1="100" x2="356" y2="100" stroke="currentColor" stroke-width="1" opacity=".35"/>
+${[0,1,2].map(i=>`<text x="${34+i*112}" y="114" text-anchor="middle" font-size="10" fill="currentColor" opacity=".6">Año ${i+1}</text>`).join('')}
+${[0,1,2].map(i=>`
+<rect x="${10+i*112}" y="56" width="22" height="44" fill="var(--sealsoft)" stroke="var(--seal)" stroke-width="1.1"/>
+<rect x="${36+i*112}" y="64" width="22" height="36" fill="none" stroke="currentColor" stroke-width="1.1" stroke-dasharray="3 2" opacity=".7"/>`).join('')}
+<text x="4" y="134" font-size="10.5" fill="currentColor" opacity=".85">Cada generación paga los servicios que recibe.</text>
+
+<text x="4" y="166" font-size="9.5" letter-spacing="1.2" font-weight="600" fill="var(--oxide)">CASO B · SE ROMPE LA EQUIDAD</text>
+<line x1="4" y1="268" x2="356" y2="268" stroke="currentColor" stroke-width="1" opacity=".35"/>
+${[0,1,2].map(i=>`<text x="${34+i*112}" y="282" text-anchor="middle" font-size="10" fill="currentColor" opacity=".6">Año ${i+1}</text>`).join('')}
+<rect x="10" y="232" width="22" height="36" fill="var(--sealsoft)" stroke="var(--seal)" stroke-width="1.1"/>
+<rect x="36" y="202" width="22" height="66" fill="var(--oxidesoft)" stroke="var(--oxide)" stroke-width="1.1"/>
+<rect x="122" y="232" width="22" height="36" fill="var(--sealsoft)" stroke="var(--seal)" stroke-width="1.1"/>
+<rect x="148" y="220" width="22" height="48" fill="none" stroke="currentColor" stroke-width="1.1" stroke-dasharray="3 2" opacity=".7"/>
+<rect x="234" y="232" width="22" height="36" fill="var(--sealsoft)" stroke="var(--seal)" stroke-width="1.1"/>
+<rect x="260" y="220" width="22" height="48" fill="none" stroke="currentColor" stroke-width="1.1" stroke-dasharray="3 2" opacity=".7"/>
+<path d="M58 206 C120 186 210 186 262 216" fill="none" stroke="var(--oxide)" stroke-width="1.5" marker-end="url(#aho)" style="color:var(--oxide)"/>
+<text x="176" y="184" text-anchor="middle" font-size="10.5" font-weight="600" fill="var(--oxide)">el exceso se traslada</text>
+<text x="4" y="300" font-size="10.5" fill="currentColor" opacity=".85">El año 1 gastó más de lo que recaudó. Quien paga la</text>
+<text x="4" y="314" font-size="10.5" fill="currentColor" opacity=".85">diferencia son contribuyentes futuros que nunca</text>
+<text x="4" y="328" font-size="10.5" fill="currentColor" opacity=".85">recibieron ese servicio.</text>
+</svg>`;
+
+/* --- 1-4a : anatomía del CAFR --- */
+FIG.cafr = `<svg viewBox="0 0 360 452" role="img" aria-label="Anatomía del CAFR: tres secciones —introductoria, financiera y estadística— donde los requisitos mínimos de reporte externo son solo un subconjunto de la sección financiera.">${A}
+<rect x="2" y="2" width="356" height="396" rx="10" fill="none" stroke="currentColor" stroke-width="1.6"/>
+<text x="14" y="22" font-size="10" letter-spacing="1.2" font-weight="700" fill="currentColor">CAFR · COMPREHENSIVE ANNUAL FINANCIAL REPORT</text>
+<text x="14" y="35" font-size="9.5" fill="currentColor" opacity=".6">No es obligatorio — pero casi todos los gobiernos lo preparan</text>
+
+${bx(12,46,336,38,'1 · Sección introductoria','Portada, carta de transmisión, descripción del gobierno')}
+
+<rect x="12" y="92" width="336" height="246" rx="7" fill="var(--surface)" stroke="currentColor" stroke-width="1.2"/>
+<text x="24" y="110" font-size="12" font-weight="600" fill="currentColor">2 · Sección financiera</text>
+${[
+ ['Informe del auditor','auditor’s report',0],
+ ['Management’s discussion and analysis','MD&amp;A — es RSI',1],
+ ['Estados financieros básicos y sus notas','government-wide + fund + notes',1],
+ ['Otra required supplementary information','RSI distinta del MD&amp;A',1],
+ ['Información suplementaria adicional','combining and individual fund statements',0]
+].map((r,i)=>`
+<rect x="34" y="${120+i*38}" width="304" height="32" rx="6" fill="${r[2]?'var(--sealsoft)':'var(--surface2)'}" stroke="${r[2]?'var(--seal)':'var(--line2)'}" stroke-width="1"/>
+<text x="44" y="${133+i*38}" font-size="10.5" font-weight="600" fill="${r[2]?'var(--seal)':'currentColor'}">${r[0]}</text>
+<text x="44" y="${145+i*38}" font-size="9.5" fill="currentColor" opacity=".65">${r[1]}</text>`).join('')}
+<path d="M32 158 L24 158 L24 266 L32 266" fill="none" stroke="var(--seal)" stroke-width="1.5"/>
+<rect x="34" y="308" width="10" height="11" rx="2" fill="var(--sealsoft)" stroke="var(--seal)" stroke-width="1"/>
+<text x="50" y="313" font-size="9.5" font-weight="700" fill="var(--seal)">estos tres = el mínimo requerido de reporte</text>
+<text x="50" y="325" font-size="9.5" fill="var(--seal)" opacity=".85">externo · general purpose external financial reporting</text>
+
+${bx(12,346,336,38,'3 · Sección estadística','Demografía, tendencias financieras, capacidad fiscal, operación')}
+
+<text x="2" y="424" font-size="10.5" font-weight="600" fill="var(--oxide)">La relación que hay que memorizar:</text>
+<text x="2" y="442" font-size="10.5" fill="currentColor" opacity=".85">mínimo requerido ⊂ sección financiera ⊂ CAFR</text>
+</svg>`;
+
+/* --- 1-4b : doble papel de los estados --- */
+FIG.dual = `<svg viewBox="0 0 360 296" role="img" aria-label="Los estados financieros básicos se dividen en estados de todo el gobierno, que responden por la rendición de cuentas operativa, y estados por fondos, que responden por la rendición de cuentas fiscal.">${A}
+${bx(70,4,220,34,'Basic financial statements','Estados financieros básicos')}
+<path d="M180 40 L180 52 L92 52 L92 66" fill="none" stroke="var(--seal)" stroke-width="1.4" marker-end="url(#ahs)"/>
+<path d="M180 40 L180 52 L268 52 L268 66" fill="none" stroke="var(--brass)" stroke-width="1.4" marker-end="url(#ah)" style="color:var(--brass)"/>
+<rect x="6" y="68" width="172" height="176" rx="9" fill="var(--sealsoft)" stroke="var(--seal)" stroke-width="1.3"/>
+<rect x="188" y="68" width="166" height="176" rx="9" fill="var(--brasssoft)" stroke="var(--brass)" stroke-width="1.3"/>
+<text x="92" y="88" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--seal)">Government-wide</text>
+<text x="92" y="101" text-anchor="middle" font-size="9.5" fill="var(--seal)" opacity=".8">todo el gobierno, agregado</text>
+<text x="271" y="88" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--brass)">Governmental funds</text>
+<text x="271" y="101" text-anchor="middle" font-size="9.5" fill="var(--brass)" opacity=".8">fondos, en detalle</text>
+${[
+ ['Base contable','Accrual basis','Modified accrual'],
+ ['Enfoque de medición','Recursos económicos','Recursos financieros corrientes'],
+ ['Horizonte','Largo plazo','El año presupuestario'],
+ ['Registra','Expenses','Expenditures']
+].map((r,i)=>`
+<line x1="6" y1="${112+i*32}" x2="178" y2="${112+i*32}" stroke="var(--seal)" stroke-width=".8" opacity=".35"/>
+<line x1="188" y1="${112+i*32}" x2="354" y2="${112+i*32}" stroke="var(--brass)" stroke-width=".8" opacity=".35"/>
+<text x="14" y="${124+i*32}" font-size="8.5" letter-spacing=".7" fill="currentColor" opacity=".55">${r[0].toUpperCase()}</text>
+<text x="14" y="${136+i*32}" font-size="10.5" font-weight="600" fill="currentColor">${r[1]}</text>
+<text x="196" y="${136+i*32}" font-size="10.5" font-weight="600" fill="currentColor">${r[2]}</text>`).join('')}
+<line x1="6" y1="240" x2="178" y2="240" stroke="var(--seal)" stroke-width="1"/>
+<line x1="188" y1="240" x2="354" y2="240" stroke="var(--brass)" stroke-width="1"/>
+${bx(6,252,172,38,'Operational accountability','¿usó bien los recursos?',{stroke:'var(--seal)',fill:'var(--sealsoft)',text:'var(--seal)',sub:'var(--seal)'})}
+${bx(188,252,166,38,'Fiscal accountability','¿cumplió lo aprobado?',{stroke:'var(--brass)',fill:'var(--brasssoft)',text:'var(--brass)',sub:'var(--brass)'})}
+</svg>`;
+
+/* --- 1-5 : PAR federal --- */
+FIG.par = `<svg viewBox="0 0 360 268" role="img" aria-label="Las cuatro secciones del performance and accountability report que OMB Circular A-136 exige a los departamentos y agencias federales.">${A}
+<text x="4" y="12" font-size="9.5" letter-spacing="1.2" font-weight="600" fill="var(--brass)">OMB CIRCULAR A-136 EXIGE, EN ESTE ORDEN</text>
+${[
+ ['1','MD&amp;A','Panorama del reporte completo: misión, estructura, metas, resultados, análisis de los estados y del control interno'],
+ ['2','Performance information','El annual performance report (APR): qué metas de desempeño se lograron y cuáles no'],
+ ['3','Basic financial statements','Balance sheet · net cost · changes in net position · budgetary resources · custodial activity · social insurance'],
+ ['4','Other accompanying information','Carga tributaria, tax gap, retos de gestión, ingresos no percibidos']
+].map((r,i)=>`
+<rect x="4" y="${22+i*60}" width="352" height="52" rx="7" fill="var(--surface2)" stroke="var(--brass)" stroke-width="1.1"/>
+<circle cx="26" cy="${48+i*60}" r="12" fill="var(--brasssoft)" stroke="var(--brass)" stroke-width="1.1"/>
+<text x="26" y="${52+i*60}" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--brass)">${r[0]}</text>
+<text x="46" y="${40+i*60}" font-size="11.5" font-weight="700" fill="currentColor">${r[1]}</text>
+${wrapT(r[2],62).slice(0,2).map((ln,li)=>`<text x="46" y="${53+i*60+li*11}" font-size="9.3" fill="currentColor" opacity=".72">${ln}</text>`).join('')}`).join('')}
+</svg>`;
+
+/* --- 1-6 : NFP net assets y gastos --- */
+FIG.nfp = `<svg viewBox="0 0 360 330" role="img" aria-label="En una organización sin fines de lucro el activo neto se divide según las restricciones del donante, y los gastos se dividen entre programas y actividades de apoyo para calcular el porcentaje destinado a la misión.">${A}
+${bx(4,4,168,34,'Statement of','financial position')}
+${bx(188,4,168,34,'Statement of','activities')}
+<line x1="88" y1="40" x2="88" y2="58" stroke="currentColor" stroke-width="1.3" marker-end="url(#ah)"/>
+<line x1="272" y1="40" x2="272" y2="58" stroke="currentColor" stroke-width="1.3" marker-end="url(#ah)"/>
+<text x="88" y="72" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor">Net assets</text>
+<text x="272" y="72" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor">Expenses</text>
+<line x1="88" y1="78" x2="88" y2="88" stroke="currentColor" stroke-width="1.2"/>
+<line x1="44" y1="88" x2="132" y2="88" stroke="currentColor" stroke-width="1.2"/>
+<line x1="44" y1="88" x2="44" y2="98" stroke="currentColor" stroke-width="1.2" marker-end="url(#ah)"/>
+<line x1="132" y1="88" x2="132" y2="98" stroke="currentColor" stroke-width="1.2" marker-end="url(#ah)"/>
+${bx(4,100,80,54,'Without','donor restr.',{stroke:'var(--seal)',fill:'var(--sealsoft)',text:'var(--seal)',sub:'var(--seal)'})}
+${bx(92,100,80,54,'With','donor restr.',{stroke:'var(--oxide)',fill:'var(--oxidesoft)',text:'var(--oxide)',sub:'var(--oxide)'})}
+<line x1="272" y1="78" x2="272" y2="88" stroke="currentColor" stroke-width="1.2"/>
+<line x1="212" y1="88" x2="332" y2="88" stroke="currentColor" stroke-width="1.2"/>
+${[212,272,332].map(x=>`<line x1="${x}" y1="88" x2="${x}" y2="98" stroke="currentColor" stroke-width="1.2" marker-end="url(#ah)"/>`).join('')}
+${bx(180,100,62,54,'Program','misión',{stroke:'var(--seal)',fill:'var(--sealsoft)',text:'var(--seal)',sub:'var(--seal)'})}
+${bx(246,100,56,54,'Mgmt &amp;','general')}
+${bx(306,100,50,54,'Fund-','raising')}
+<text x="4" y="176" font-size="10" fill="currentColor" opacity=".72">Solo dos categorías. La restricción</text>
+<text x="4" y="188" font-size="10" fill="currentColor" opacity=".72">la impone el donante, no la entidad.</text>
+<text x="184" y="176" font-size="10" fill="currentColor" opacity=".72">Programa aparte de apoyo. Esa</text>
+<text x="184" y="188" font-size="10" fill="currentColor" opacity=".72">separación es lo que permite:</text>
+<rect x="4" y="200" width="352" height="52" rx="8" fill="var(--sealsoft)" stroke="var(--seal)" stroke-width="1.3"/>
+<text x="180" y="222" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--seal)">gastos de programa ÷ gastos totales</text>
+<text x="180" y="240" text-anchor="middle" font-size="10.5" fill="var(--seal)" opacity=".85">el porcentaje que el donante quiere ver, y por eso se exige</text>
+<text x="4" y="276" font-size="10.5" font-weight="600" fill="currentColor">Los tres estados obligatorios de una NFP:</text>
+<text x="4" y="292" font-size="10.5" fill="currentColor" opacity=".82">statement of financial position · statement of activities</text>
+<text x="4" y="306" font-size="10.5" fill="currentColor" opacity=".82">· statement of cash flows, más la relación entre gastos</text>
+<text x="4" y="320" font-size="10.5" fill="currentColor" opacity=".82">funcionales y naturales.</text>
+</svg>`;
+
+/* ============================================================
+   CONTENIDO — 6 unidades
+   ============================================================ */
+const UNITS=[
+{
+ id:'u1', lo:'LO 1-1', ttl:'¿Qué hace distinto a un gobierno?',
+ en:'Characteristics that distinguish government and not-for-profit entities',
+ blocks:[
+  {t:'lec',tag:'La pregunta de fondo',p:[
+   'Antes de aprender un solo asiento contable, hay que entender <em>por qué</em> las reglas son distintas. Y la respuesta no es burocrática: es que el dinero entra de otra manera.',
+   'En una empresa, quien pone recursos espera algo proporcional de vuelta: el cliente paga y se lleva el producto, el accionista invierte y espera dividendos. Existe un dueño, y ese dueño puede vender su parte.',
+   'En un gobierno o en una organización sin fines de lucro eso se rompe. El <span class="t">contribuyente<i>taxpayer</i></span> paga impuestos sin poder elegir cuánto servicio recibe, y el <span class="t">donante<i>donor</i></span> financia servicios que muchas veces recibirá otra persona.']},
+  {t:'fig',k:'flow',cap:'<b>La diferencia está en la flecha de retorno.</b> En la empresa es sólida y proporcional; en el gobierno y en la NFP es punteada porque lo que recibes no depende de lo que aportaste.'},
+  {t:'lec',tag:'Las tres características del FASB',p:[
+   'El FASB, en su <em>Concepts No. 4</em>, fijó los tres rasgos que separan a estas entidades de una empresa:',
+   '<b>1.</b> Reciben recursos importantes de quienes <em>no</em> esperan devolución ni beneficios proporcionales.<br><b>2.</b> Su propósito operativo no es generar utilidad.<br><b>3.</b> No existen intereses de propiedad definidos que se puedan vender, transferir o redimir.']},
+  {t:'pull',b:'El punto que agrega el GASB',x:'En un gobierno el poder está en manos del pueblo. Los votantes lo delegan en funcionarios, y ese poder queda repartido entre el ejecutivo, el legislativo y el judicial. Cada rama limita a la otra. Ninguna empresa opera así.'},
+  {t:'lec',tag:'Y de ahí sale todo lo demás',p:[
+   'El contribuyente es un aportante <em>involuntario</em> ante un gobierno que casi siempre tiene poder monopólico. No hay mercado competitivo, y no hay relación entre lo que pagas y el servicio que recibes.',
+   'Consecuencia directa: <b>no existe una cifra de <span class="t">utilidad neta<i>net income</i></span> que sirva para juzgar si un gobierno lo hizo bien.</b> Por eso hace falta rendición de cuentas pública en el reporte financiero — es el sustituto de la utilidad.']},
+  {t:'pull',b:'Dos tipos de gobierno, y te lo preguntarán',x:'<span class="t">Propósito general<i>general purpose</i></span>: estados, condados, municipios, <em>townships</em> — prestan muchos servicios distintos. <span class="t">Propósito especial<i>special purpose</i></span>: distritos escolares, universidades públicas, distritos de riego o de bomberos — una sola función o unas pocas. Ambos pueden cobrar impuestos.'}
+ ],
+ terms:[
+  ['General purpose government','Gobierno de propósito general: presta una amplia gama de servicios (policía, bomberos, calles, cultura).'],
+  ['Special purpose government','Gobierno de propósito especial: presta una sola función o unas pocas (educación, drenaje, bomberos).'],
+  ['Interperiod equity','Equidad entre periodos: que el gobierno «viva dentro de sus medios».']
+ ],
+ quiz:[
+  {q:'¿Cuál de los siguientes es un <em>special purpose government</em>?',src:'Adaptado de 1–19, ítem 1',
+   o:['El estado de Arkansas','El condado de Greene','Minneapolis Public Schools','La ciudad de Seattle'],a:2,
+   w:'Un distrito escolar independiente presta una sola función: educación. Estados, condados y ciudades prestan una gama amplia de servicios, así que son <em>general purpose governments</em>.'},
+  {q:'¿Qué afirmación es verdadera <b>tanto</b> para un gobierno <b>como</b> para una empresa?',src:'Adaptado de 1–19, ítem 2',
+   o:['Ausencia de motivo de lucro','Puede ganar ingresos mediante transacciones de intercambio','Ausencia de dueños','Los recursos los aportan quienes no se benefician directamente'],a:1,
+   w:'Un gobierno también cobra por servicios: agua, permisos, transporte. Esas son <em>exchange transactions</em>, igual que una venta. Las otras tres opciones describen solo al gobierno.'},
+  {q:'Clasifica: <em>Hillsborough County Independent School District</em> y <em>Missoula, Montana</em>.',src:'Adaptado de 1–2',
+   o:['Ambos de propósito general','Ambos de propósito especial','Distrito escolar = especial; Missoula = general','Distrito escolar = general; Missoula = especial'],a:2,
+   w:'El distrito escolar tiene una función única (educación) → especial. Missoula es una ciudad que presta muchos servicios → general. La palabra «District» casi siempre indica propósito especial.'}
+ ]
+},
+{
+ id:'u2', lo:'LO 1-2', ttl:'¿Quién escribe las reglas?',
+ en:'The authoritative standard-setting bodies',
+ blocks:[
+  {t:'lec',tag:'Tres tableros, no uno',p:[
+   'La Regla 203 del Código de Conducta Profesional del AICPA designa formalmente a tres cuerpos como autoridad para establecer los <span class="t">principios de contabilidad generalmente aceptados<i>GAAP</i></span>. En la práctica, «autoridad para establecer principios» significa autoridad para fijar normas de contabilidad y de reporte.',
+   'La pregunta de examen nunca es «¿qué dice la norma?». Es <b>«¿qué tablero le toca a esta entidad?»</b>']},
+  {t:'fig',k:'setters',cap:'<b>Sigue la flecha desde la entidad hacia arriba.</b> El GASB y el FASB son cuerpos paralelos bajo la Financial Accounting Foundation, que nombra a sus miembros. El FASAB nació aparte, en 1990.'},
+  {t:'lec',tag:'La trampa: las NFP están partidas',p:[
+   'Aquí es donde casi todo el mundo se equivoca. La autoridad sobre las organizaciones sin fines de lucro <b>se divide</b> entre el FASB y el GASB, porque un buen número de NFP son de naturaleza gubernamental — sobre todo universidades públicas y hospitales públicos.',
+   'Regla simple: <b>si la NFP es gubernamental, GASB. Si es independiente de un gobierno, FASB.</b> No es una elección de la administración; depende de lo que la entidad <em>es</em>.']},
+  {t:'pull',b:'Cómo se financian (y por qué importa)',x:'La ley Sarbanes-Oxley impuso una cuota sobre las emisiones de valores corporativos para sostener al FASB. La Dodd-Frank (2010) ordenó crear una cuota equivalente para el GASB; FINRA la estableció en febrero de 2012 y se cobra a las firmas que reportan operaciones de valores municipales. Como no dependen de ninguna organización ni gobierno particular, a ambos se les llama <em>independent standards-setting boards in the private sector</em>.'},
+  {t:'lec',tag:'El tablero federal',p:[
+   'Los estatutos federales asignan la estructura financiera del gobierno a tres funcionarios: el <em>Comptroller General</em>, el director de la OMB y el secretario del Tesoro. En 1990 esos tres crearon el <span class="t">FASAB<i>Federal Accounting Standards Advisory Board</i></span>.',
+   'Se entiende que, en la medida de lo posible, las normas federales deben ser consistentes con las del GASB y, cuando aplique, con las del FASB.']}
+ ],
+ terms:[
+  ['GASB','Governmental Accounting Standards Board: normas para gobiernos estatales y locales, incluidas sus NFP.'],
+  ['FASB','Financial Accounting Standards Board: normas para empresas y para NFP no gubernamentales.'],
+  ['FASAB','Federal Accounting Standards Advisory Board: normas para el gobierno federal y sus agencias.'],
+  ['GAAP','Generally accepted accounting principles: los principios de contabilidad generalmente aceptados.']
+ ],
+ quiz:[
+  {q:'¿Qué afirmación sobre las fuentes de normas es <b>falsa</b>?',src:'Adaptado de 1–19, ítem 3',
+   o:['El GASB fija normas para todos los gobiernos estatales y locales','El FASB fija normas para todas las entidades empresariales y sin fines de lucro','El FASB y el GASB son administrados por la Financial Accounting Foundation','El FASAB fija normas para el gobierno federal y sus agencias'],a:1,
+   w:'Es falsa porque dice «todas». El FASB no cubre las NFP gubernamentales —universidades y hospitales públicos— que siguen al GASB. Las otras tres afirmaciones son correctas.'},
+  {q:'Un consejero del Beth House Museum (NFP no gubernamental) dice: «tomé clases de contabilidad y podemos elegir entre las reglas del FASB o las del GASB». ¿Tiene razón?',src:'Adaptado de 1–4',
+   o:['Sí; ambos cuerpos están bajo la FAF, así que son intercambiables','Sí, si el consejo lo aprueba por mayoría','No; al ser una NFP no gubernamental le corresponde el FASB, sin opción','No; toda NFP sigue al GASB'],a:2,
+   w:'No hay elección. El cuerpo normativo lo determina la naturaleza de la entidad. Al ser un museo no gubernamental, le corresponde el FASB. Si fuera un museo operado por una ciudad, sería GASB.'},
+  {q:'Asigna: <em>Department of Defense</em> · <em>Mayo Clinic</em> · <em>New York City</em>.',src:'Adaptado de 1–21',
+   o:['FASAB · FASB · GASB','GASB · FASB · FASAB','FASAB · GASB · GASB','FASB · FASB · GASB'],a:0,
+   w:'Defensa es una agencia federal → FASAB. Mayo Clinic es una NFP privada → FASB. Nueva York es un gobierno local → GASB.'}
+ ]
+},
+{
+ id:'u3', lo:'LO 1-3', ttl:'Rendir cuentas y vivir dentro de tus medios',
+ en:'Objectives of financial reporting',
+ blocks:[
+  {t:'lec',tag:'La frase que ancla el capítulo',p:[
+   'El GASB lo dice sin rodeos: <b>«la rendición de cuentas es la piedra angular de todo reporte financiero en el gobierno»</b>. La <span class="t">rendición de cuentas<i>accountability</i></span> obliga al gobierno a justificar cómo obtiene y cómo usa recursos públicos, como los impuestos.',
+   'El reporte financiero le da al ciudadano la información para participar en ese debate. No es un trámite: es el mecanismo por el que un votante puede juzgar a quien eligió.']},
+  {t:'lec',tag:'Interperiod equity, en una frase',p:[
+   'Muy ligado a la rendición de cuentas está un concepto que el GASB considera parte esencial de ella: la <span class="t">equidad entre periodos<i>interperiod equity</i></span>.',
+   'Definición simple: <b>que el gobierno viva dentro de sus medios.</b> El reporte financiero debe permitir evaluar si los recursos del periodo actual alcanzaron para pagar los servicios del periodo actual.',
+   'Cuando el costo de los servicios de este año supera los recursos de este año, ese exceso se convierte en carga de contribuyentes futuros que <em>nunca recibieron el beneficio</em> de esos servicios.']},
+  {t:'fig',k:'equity',cap:'<b>Ojo con la trampa clásica:</b> <em>interperiod equity</em> no pregunta si los ingresos superaron a los gastos ni si los activos cubren los pasivos. Pregunta si los recursos del año presente pagaron los servicios del año presente.'},
+  {t:'lec',tag:'Los cuatro objetivos federales',p:[
+   'La rendición de cuentas también es el cimiento de los objetivos que el FASAB fijó para el gobierno federal. Su <em>Concepts Statement No. 1</em> identifica cuatro:',
+   '<b>Integridad presupuestaria</b> — cumplir las leyes sobre cómo se recaudan y se gastan los recursos.<br><b>Desempeño operativo</b> — la eficiencia y la eficacia con que se administran activos y pasivos.<br><b>Custodia<span class="t"><i>stewardship</i></span></b> — si la condición financiera del gobierno mejoró o se deterioró.<br><b>Sistemas y controles</b> — si existen controles internos y administrativos adecuados.']},
+  {t:'pull',b:'Una diferencia que se pregunta',x:'El FASB y el GASB se enfocan en el reporte <em>externo</em>. El FASAB se ocupa de <b>ambos</b>, interno y externo, y por eso sus normas abarcan contabilidad de costos y medidas de desempeño. Sus cuatro grupos de usuarios: ciudadanos, el Congreso, ejecutivos y gerentes de programa.'},
+  {t:'lec',tag:'Y el objetivo de una NFP es otro',p:[
+   'Para las organizaciones sin fines de lucro, el énfasis se desplaza: los objetivos priorizan la <b>utilidad para la toma de decisiones</b><span class="t"><i>decision usefulness</i></span> por encima de la rendición de cuentas financiera.',
+   'La razón, según el FASB, es que las NFP se parecen a las empresas en muchos aspectos, y lo que el usuario necesita decidir es <em>a dónde asignar recursos escasos</em>. Para eso quiere saber qué servicios presta la organización, si podrá seguir prestándolos, y qué tan bien la administración custodia sus activos.']}
+ ],
+ terms:[
+  ['Accountability','Rendición de cuentas: la piedra angular de todo reporte financiero gubernamental.'],
+  ['Interperiod equity','Equidad entre periodos: si los recursos del año actual bastaron para pagar los servicios del año actual.'],
+  ['Stewardship','Custodia: la salvaguarda de los activos y su uso eficiente y eficaz.'],
+  ['Decision usefulness','Utilidad para decidir: el énfasis principal del reporte de las NFP.']
+ ],
+ quiz:[
+  {q:'El concepto de <em>interperiod equity</em> se refiere a si…',src:'Adaptado de 1–19, ítem 5',
+   o:['Los ingresos igualaron o superaron a los gastos del año','Los activos totales bastaron para cubrir los pasivos totales','Los ingresos del año presente bastaron para pagar los servicios del año presente','Los contribuyentes futuros recibirán el mismo nivel de servicios'],a:2,
+   w:'Es exactamente eso: recursos del periodo actual contra servicios del periodo actual. La opción D suena parecida y es la trampa habitual — describe una consecuencia, no la definición.'},
+  {q:'James Black revisa el reporte de su ciudad porque le preocupa que <b>no esté usando bien sus recursos</b>. ¿Qué le interesa principalmente?',src:'Adaptado de 1–19, ítem 4',
+   o:['Fiscal accountability','Social accountability','Political accountability','Operational accountability'],a:3,
+   w:'«Usar los recursos de forma eficiente y eficaz» es la definición de <em>operational accountability</em>. La <em>fiscal accountability</em> es distinta: se refiere a cumplir lo que el público decidió sobre recaudar y gastar dentro del año presupuestario.'},
+  {q:'¿Cuál <b>no</b> es uno de los cuatro objetivos del reporte financiero federal según el FASAB?',src:'Adaptado de 1–16',
+   o:['Integridad presupuestaria','Desempeño operativo','Maximización del superávit fiscal','Adecuación de sistemas y controles'],a:2,
+   w:'Los cuatro son integridad presupuestaria, desempeño operativo, <em>stewardship</em> y sistemas y controles. Ningún objetivo del reporte gubernamental habla de maximizar un resultado financiero — esa es lógica de empresa.'}
+ ]
+},
+{
+ id:'u4', lo:'LO 1-4', ttl:'El mínimo requerido y el CAFR',
+ en:'Minimum requirements for general purpose external financial reporting',
+ blocks:[
+  {t:'lec',tag:'Dos cosas distintas que se confunden siempre',p:[
+   'Hay un <b>mínimo obligatorio</b> de reporte externo, fijado por el GASB. Y hay un <b>CAFR</b>, que es un documento mucho más grande y que <em>no es obligatorio</em> — aunque casi todos los gobiernos lo preparan como registro público.',
+   'El mínimo vive <em>dentro</em> del CAFR. Confundirlos es el error más común del capítulo.']},
+  {t:'lec',tag:'Qué exige el mínimo',p:[
+   'El modelo de reporte del GASB exige, como mínimo: el <span class="t">MD&amp;A<i>management’s discussion and analysis</i></span>, los estados financieros básicos —de todo el gobierno y por fondos—, las notas, y la <span class="t">información suplementaria requerida<i>RSI</i></span> distinta del MD&amp;A.',
+   'El MD&amp;A es en sí mismo RSI, y es el centro del modelo: comunica en forma narrativa y legible el propósito de los estados básicos, la posición financiera actual y los resultados del año comparados con el anterior.']},
+  {t:'fig',k:'cafr',cap:'<b>Léelo como una caja dentro de otra caja.</b> El mínimo requerido son los ítems 2, 3 y 4 de la sección financiera. Todo lo demás del CAFR —la carta de transmisión, el informe del auditor, los <em>combining statements</em>, la sección estadística— es información adicional que va más allá del mínimo.'},
+  {t:'lec',tag:'Por qué hay dos juegos de estados',p:[
+   'El GASB prescribe <b>dos categorías</b> de estados básicos, y cada una responde a una pregunta distinta de rendición de cuentas.',
+   'Los <span class="t">estados de todo el gobierno<i>government-wide</i></span> dan una vista agregada de la <em>net position</em> y sus cambios. Sirven para la <b>rendición de cuentas operativa</b>: ¿usó el gobierno sus recursos de forma eficiente y eficaz? Para eso el GASB concluyó que hay que usar lo mismo que usa una empresa: base devengada y enfoque de recursos económicos.',
+   'Los <span class="t">estados por fondos<i>fund financial statements</i></span> dan el detalle. Los <em>governmental funds</em> se enfocan en el flujo de corto plazo de recursos financieros corrientes, lo que facilita evaluar la <b>rendición de cuentas fiscal</b>: ¿cumplió el gobierno lo que el público decidió sobre recaudar y gastar dentro del año? Por ese enfoque corto usan <span class="t">base devengada modificada<i>modified accrual</i></span>.']},
+  {t:'fig',k:'dual',cap:'Bajo <em>modified accrual</em>, los ingresos se reconocen cuando son medibles y están <b>disponibles</b> para gastar, y se registran <em>expenditures</em> —no <em>expenses</em>— cuando surge una obligación a pagarse con recursos financieros corrientes.'},
+  {t:'pull',b:'Nota terminológica',x:'El GASB usa <em>net position</em> donde el FASB usa <em>net assets</em>. Son sustancialmente lo mismo. Los fondos <em>proprietary</em> y <em>fiduciary</em> —actividades tipo negocio y fiduciarias— siguen principios parecidos a los de una empresa.'},
+  {t:'lec',tag:'Las tres secciones del CAFR',p:[
+   '<b>Introductoria:</b> portada, índice, carta de transmisión, descripción del gobierno. La carta puede ser literalmente una carta del director financiero al ejecutivo y al órgano de gobierno, y debe citar los requisitos legales y de política del reporte.',
+   '<b>Financiera:</b> informe del auditor, MD&amp;A, estados básicos y notas, RSI distinta del MD&amp;A, e información suplementaria adicional como los <em>combining and individual fund statements</em>.',
+   '<b>Estadística:</b> tablas y gráficas con datos demográficos y económicos, tendencias financieras, capacidad fiscal e información operativa.']},
+  {t:'pull',b:'Sobre la auditoría',x:'Las leyes de auditoría varían por estado. En algunos, una agencia estatal audita a todos los gobiernos locales; en la mayoría los auditan firmas independientes; en otros, una mezcla. En cualquier caso la opinión del auditor debe acompañar a los estados reproducidos en el informe.'}
+ ],
+ terms:[
+  ['CAFR','Informe financiero anual integral: no es obligatorio, pero contiene el mínimo requerido y mucho más.'],
+  ['MD&A','Discusión y análisis de la administración: narrativa legible; es RSI y es el centro del modelo.'],
+  ['RSI','Required supplementary information: información suplementaria requerida.'],
+  ['Government-wide financial statements','Estados agregados de todo el gobierno; base devengada; responden por la rendición de cuentas operativa.'],
+  ['Fund financial statements','Estados por fondos; los gubernamentales usan devengado modificado; responden por la rendición de cuentas fiscal.'],
+  ['Modified accrual','Ingresos cuando son medibles y están disponibles; <em>expenditures</em> cuando obligan recursos corrientes.'],
+  ['Operational accountability','Si el gobierno usó sus recursos de forma eficiente y eficaz.'],
+  ['Fiscal accountability','Si el gobierno cumplió lo decidido por el público sobre recaudar y gastar en el periodo.']
+ ],
+ quiz:[
+  {q:'¿Qué componentes forman el <b>mínimo requerido</b> de reporte financiero externo de propósito general?',src:'Adaptado de 1–19, ítem 6',
+   o:['Sección introductoria, sección financiera y sección estadística','MD&amp;A, estados de todo el gobierno, estados por fondos, notas y RSI','Carta del director financiero, estados del gobierno, notas y RSI','MD&amp;A, estados de todo el gobierno, notas y RSI'],a:1,
+   w:'La opción A describe las secciones del <b>CAFR</b>, no el mínimo — esa es la confusión que el examen busca. La opción D omite los estados por fondos, que sí forman parte de los estados básicos.'},
+  {q:'Bajo normas del GASB, la información útil para evaluar la <em>operational accountability</em> se reporta principalmente en…',src:'Adaptado de 1–19, ítem 7',
+   o:['Los estados por fondos','Los estados de todo el gobierno','La sección estadística del CAFR','La carta de transmisión'],a:1,
+   w:'Los estados de todo el gobierno usan base devengada y enfoque de recursos económicos, que es lo que permite juzgar eficiencia y eficacia. Los estados por fondos sirven para la <em>fiscal accountability</em>.'},
+  {q:'¿Cuál de estos <b>no</b> forma parte de la sección financiera de un CAFR?',src:'Adaptado de 1–8 y 1–17',
+   o:['El informe del auditor','El MD&amp;A','La carta de transmisión','Los combining and individual fund statements'],a:2,
+   w:'La carta de transmisión va en la sección <b>introductoria</b>. Es la pieza que más se coloca mal, porque suena a algo financiero.'},
+  {q:'Bajo <em>modified accrual</em>, ¿cuándo se reconoce un ingreso?',src:'Adaptado del texto, LO 1-4',
+   o:['Cuando se gana, sin importar cuándo se cobra','Cuando es medible y está disponible para gastar','Cuando se recibe el efectivo, siempre','Cuando lo aprueba el presupuesto'],a:1,
+   w:'«Medible y disponible» es la fórmula exacta. Y del otro lado se registran <em>expenditures</em>, no <em>expenses</em>: la obligación de pagar con recursos financieros corrientes.'}
+ ]
+},
+{
+ id:'u5', lo:'LO 1-5', ttl:'El gobierno federal',
+ en:'Required financial statements for the federal government',
+ blocks:[
+  {t:'lec',tag:'El reporte de todo el gobierno de EE. UU.',p:[
+   'El Departamento del Tesoro prepara desde hace más de una década un reporte financiero del gobierno como un todo. Incluye una <em>Citizen’s Guide</em> en lenguaje llano, un MD&amp;A, varios estados financieros e información suplementaria que cubre tanto el presupuesto como las actividades patrimoniales, y la conciliación entre ambos.',
+   'La pieza más llamativa es el <span class="t">estado de seguro social<i>statement of social insurance</i></span>: al cierre del año fiscal 2016 reflejaba un exceso del valor presente de gastos actuariales futuros sobre los ingresos de <b>más de 46,7 billones de dólares</b>.']},
+  {t:'pull',b:'El dato que sorprende a todos',x:'Los estados consolidados del gobierno federal <em>sí</em> se auditan. Pero el <em>Comptroller General</em> <b>nunca</b> ha podido emitir una opinión sin salvedades. Las razones: deficiencias serias de control interno sobre el reporte financiero, problemas de gestión financiera en el Departamento de Defensa, dificultades de conciliación y procesos inefectivos de consolidación. El resultado es una <em>abstención de opinión</em> año tras año.',warn:1},
+  {t:'lec',tag:'Y el reporte de cada agencia',p:[
+   'La <em>Circular A-136</em> de la OMB exige a los departamentos y agencias federales importantes preparar un <span class="t">informe de desempeño y rendición de cuentas<i>PAR</i></span>: un documento que combina información financiera <em>y</em> de desempeño para que el usuario juzgue qué tan bien la agencia cumple su misión.']},
+  {t:'fig',k:'par',cap:'<b>Cuatro secciones, y te van a preguntar cuál no existe.</b> Los estados básicos federales son: <em>balance sheet</em>, <em>statement of net cost</em> (los costos del programa menos los ingresos ganados dan el costo neto), <em>changes in net position</em>, <em>budgetary resources</em>, <em>custodial activity</em> y <em>social insurance</em>.'},
+  {t:'lec',tag:'La marca del reporte federal',p:[
+   'El reporte financiero federal pone un énfasis fuerte en el <b>desempeño de la administración</b>, no solo en la información financiera. Eso es coherente con lo que viste en la unidad 3: el FASAB se ocupa del reporte interno y externo, y por eso sus normas alcanzan la contabilidad de costos y las medidas de desempeño.']}
+ ],
+ terms:[
+  ['PAR','Performance and accountability report: exigido por OMB Circular A-136; combina desempeño y finanzas.'],
+  ['APR','Annual performance report: la sección de desempeño dentro del PAR.'],
+  ['Statement of net cost','Estado de costo neto: presenta los gastos antes que los ingresos; costos menos ingresos ganados = costo neto.'],
+  ['Statement of social insurance','Estado de seguro social: Seguridad Social, Medicare y otros compromisos a valor presente.']
+ ],
+ quiz:[
+  {q:'¿Cuál <b>no</b> es una sección requerida del PAR de una agencia federal?',src:'Adaptado de 1–19, ítem 8',
+   o:['Una sección de desempeño que incluye el APR','Un MD&amp;A','Una sección de estados financieros básicos','Una declaración de no participación en asuntos políticos'],a:3,
+   w:'Las cuatro secciones son MD&amp;A, información de desempeño (APR), estados financieros básicos y otra información acompañante. La «declaración de no participación política» no existe.'},
+  {q:'¿Qué opinión de auditoría han recibido históricamente los estados consolidados del gobierno federal?',src:'Adaptado del texto, LO 1-5',
+   o:['Sin salvedades, todos los años','Nunca se han auditado','Nunca una sin salvedades; el Comptroller General se ha abstenido','Opinión adversa, todos los años'],a:2,
+   w:'Sí se auditan, pero el <em>Comptroller General</em> nunca ha emitido una opinión sin salvedades. Se detalla en el capítulo 17.'},
+  {q:'En el <em>statement of net cost</em> federal, ¿cómo se presenta la información?',src:'Adaptado del texto, LO 1-5',
+   o:['Ingresos primero, luego gastos, igual que una empresa','Gastos primero: costos del programa menos ingresos ganados = costo neto','Solo flujos de efectivo','Solo información presupuestaria'],a:1,
+   w:'Es un formato invertido respecto al estado de resultados de una empresa: los gastos van antes que los ingresos, y el resultado es un <em>costo neto</em>, no una utilidad.'}
+ ]
+},
+{
+ id:'u6', lo:'LO 1-6', ttl:'Sin fines de lucro: restricciones y misión',
+ en:'Required financial statements for not-for-profit organizations',
+ blocks:[
+  {t:'lec',tag:'Tres estados, y uno más de información',p:[
+   'La mayoría de las NFP son no gubernamentales y por lo tanto siguen al FASB. El propósito principal de sus estados es dar información <b>útil para decidir</b> a usuarios externos: donantes, miembros, acreedores.',
+   'Esos usuarios necesitan evaluar dos cosas: <b>(1)</b> los servicios que presta la organización y su capacidad de seguir prestándolos, y <b>(2)</b> el desempeño y la custodia de recursos por parte de la administración.',
+   'Para eso el FASB exige un juego de estados de toda la organización: <span class="t">estado de situación financiera<i>statement of financial position</i></span>, <span class="t">estado de actividades<i>statement of activities</i></span> y <span class="t">estado de flujos de efectivo<i>statement of cash flows</i></span>. Además debe mostrarse la relación entre gastos <em>funcionales</em> y <em>naturales</em> (personal, viajes, suministros): en el estado de actividades, en una nota, o como un estado separado.']},
+  {t:'lec',tag:'Las restricciones las pone el donante',p:[
+   'Muchas NFP dependen de donaciones, y el donante puede imponer <span class="t">restricciones<i>donor-imposed restrictions</i></span>: que su aporte se use para un fin concreto o en un periodo concreto. Pueden ser temporales o, en ciertos fondos patrimoniales, permanentes.',
+   'Un <em>permanent endowment</em> obliga a la organización a mantener el principal a perpetuidad, pero le permite usar los rendimientos del principal invertido — con o sin restricción de destino.',
+   'Por eso el estado de situación financiera reporta el <em>net assets</em> en <b>dos categorías</b>: con restricciones de donante y sin restricciones de donante. Y el estado de actividades reporta los aumentos y disminuciones de cada una.']},
+  {t:'fig',k:'nfp',cap:'<b>La separación de gastos no es cosmética.</b> Reportar los gastos de programa aparte de los de <em>management and general</em> y de <em>fund-raising</em> es lo que permite a donantes y órganos de vigilancia calcular qué porcentaje del gasto total va realmente a la misión.'},
+  {t:'pull',b:'La pregunta que hace el texto',x:'«¿Donarías a una organización que gasta más en soporte administrativo y recaudación de fondos que en su misión?» Esa pregunta es la razón entera de la norma.'},
+  {t:'lec',tag:'Detalles que se preguntan',p:[
+   'Igual que en una empresa, el FASB permite preparar el estado de flujos de efectivo por método <b>directo o indirecto</b>. Pero hay una diferencia: a las NFP que usan el método indirecto <b>no</b> se les exige preparar la sección de conciliación.',
+   'Sobre auditoría: la necesidad varía según regulaciones estatales y requisitos de acreedores y otorgantes. Si una NFP ejerce fondos federales por encima de cierto umbral, queda sujeta a los mismos requisitos de auditoría federal que un gobierno estatal o local.']}
+ ],
+ terms:[
+  ['Statement of financial position','Estado de situación financiera: el balance de una NFP.'],
+  ['Statement of activities','Estado de actividades: reporta cambios en cada categoría de <em>net assets</em>.'],
+  ['Donor-imposed restrictions','Restricciones impuestas por el donante: temporales o permanentes.'],
+  ['Net assets with / without donor restrictions','Las dos únicas categorías de activo neto de una NFP.'],
+  ['Functional expenses','Gastos funcionales: programa, <em>management and general</em>, <em>fund-raising</em>.']
+ ],
+ quiz:[
+  {q:'Los estados financieros básicos de una NFP incluyen todos los siguientes <b>excepto</b>…',src:'Adaptado de 1–19, ítem 9',
+   o:['Statement of financial position','Statement of activities','Statement of changes in functional expenses','Statement of cash flows'],a:2,
+   w:'Los tres estados exigidos son situación financiera, actividades y flujos de efectivo. La relación entre gastos funcionales y naturales debe mostrarse, pero no como un estado llamado «changes in functional expenses» — puede ir en el estado de actividades, en una nota o como estado separado.'},
+  {q:'¿Por qué es la razón <b>principal</b> que una NFP separe los gastos de programa de los de soporte?',src:'Adaptado de 1–19, ítem 10',
+   o:['Porque las normas del GASB lo exigen','Porque los gerentes de programa necesitan saber el costo de sus actividades','Porque la alta dirección necesita saber cuánto gasta en soporte','Porque donantes, órganos de vigilancia y otros necesitan saber qué porcentaje del gasto total va a los programas'],a:3,
+   w:'Las opciones B y C son usos internos legítimos, pero la norma existe para usuarios <b>externos</b>. Y la A es falsa: se trata de una NFP no gubernamental, así que la norma es del FASB.'},
+  {q:'¿En cuántas categorías reporta el <em>net assets</em> una NFP, y quién define la clasificación?',src:'Adaptado del texto, LO 1-6',
+   o:['Tres categorías, definidas por el consejo directivo','Dos categorías, según las restricciones que impone el donante','Dos categorías, según lo decida la administración','Cuatro categorías, según el tipo de fondo'],a:1,
+   w:'Dos: con restricciones de donante y sin restricciones de donante. Y la clave es que quien restringe es el <b>donante</b>, no la organización. Una designación interna del consejo no crea una restricción de donante.'}
+ ]
+}
+];
+
+/* ============================================================
+   GLOSARIO
+   ============================================================ */
+const GLOSS=[
+ ['Accountability','Rendición de cuentas','La piedra angular de todo el reporte financiero en el gobierno: la obligación de justificar cómo se obtienen y se usan los recursos públicos.','LO 1-3'],
+ ['Basic financial statements','Estados financieros básicos','Las dos categorías que prescribe el GASB: <em>government-wide</em> y <em>fund</em>, junto con sus notas, que son parte integral de ellos.','LO 1-4'],
+ ['Comprehensive annual financial report (CAFR)','Informe financiero anual integral','Documento no obligatorio con tres secciones —introductoria, financiera y estadística— que contiene el mínimo requerido y bastante más.','LO 1-4'],
+ ['Donor-imposed restrictions','Restricciones impuestas por el donante','Condiciones de uso o de tiempo que el donante fija sobre su aporte. Pueden ser temporales o permanentes.','LO 1-6'],
+ ['FASAB','Federal Accounting Standards Advisory Board','Creado en 1990 por el Comptroller General, el director de la OMB y el secretario del Tesoro. Fija normas para el gobierno federal, internas y externas.','LO 1-2'],
+ ['FASB','Financial Accounting Standards Board','Fija normas para empresas y para NFP <b>no</b> gubernamentales. Formado en 1973, opera bajo la Financial Accounting Foundation.','LO 1-2'],
+ ['Fiscal accountability','Rendición de cuentas fiscal','Si el gobierno cumplió las decisiones del público sobre recaudar y gastar, generalmente dentro de un periodo presupuestario de un año. Se evalúa con los estados por fondos.','LO 1-4'],
+ ['Fund financial statements','Estados financieros por fondos','Detalle por fondo. Los <em>governmental funds</em> se enfocan en el flujo de recursos financieros corrientes y usan devengado modificado.','LO 1-4'],
+ ['GAAP','Principios de contabilidad generalmente aceptados','Establecidos por GASB, FASB y FASAB según la Regla 203 del Código de Conducta Profesional del AICPA.','LO 1-2'],
+ ['GASB','Governmental Accounting Standards Board','Formado en 1984. Fija normas para gobiernos estatales y locales, incluidas las NFP gubernamentales.','LO 1-2'],
+ ['General purpose governments','Gobiernos de propósito general','Estados, condados, municipios y <em>townships</em>: prestan una amplia gama de servicios a sus residentes.','LO 1-1'],
+ ['Government-wide financial statements','Estados financieros de todo el gobierno','Vista agregada de la <em>net position</em> y sus cambios. Base devengada y enfoque de recursos económicos.','LO 1-4'],
+ ['Interperiod equity','Equidad entre periodos','Que el gobierno viva dentro de sus medios: si los recursos del periodo actual bastaron para pagar los servicios del periodo actual.','LO 1-3'],
+ ['Management’s discussion and analysis (MD&A)','Discusión y análisis de la administración','RSI en forma narrativa y legible sobre el propósito de los estados básicos y la situación del año frente al anterior. Es el centro del modelo de reporte.','LO 1-4'],
+ ['Modified accrual','Base devengada modificada','Ingresos cuando son medibles y están <b>disponibles</b>; <em>expenditures</em> cuando obligan recursos financieros corrientes.','LO 1-4'],
+ ['Net position / Net assets','Activo neto','El GASB dice <em>net position</em>; el FASB dice <em>net assets</em>. Son sustancialmente lo mismo.','LO 1-4'],
+ ['Operational accountability','Rendición de cuentas operativa','Si el gobierno usó sus recursos de forma eficiente y eficaz para cumplir objetivos operativos. Se evalúa con los estados de todo el gobierno.','LO 1-4'],
+ ['Performance and accountability report (PAR)','Informe de desempeño y rendición de cuentas','Exigido por OMB Circular A-136. Cuatro secciones: MD&amp;A, desempeño (APR), estados financieros básicos y otra información acompañante.','LO 1-5'],
+ ['Required supplementary information (RSI)','Información suplementaria requerida','Información obligatoria fuera de los estados básicos. El MD&amp;A es RSI, y además se exige otra RSI distinta del MD&amp;A.','LO 1-4'],
+ ['Service efforts and accomplishments (SEA)','Esfuerzos y logros del servicio','Medidas no financieras de desempeño. Los <em>outputs</em> son trabajo hecho; los <em>outcomes</em> son el impacto en los objetivos del programa. El GASB las alienta; no las exige.','Alcance ampliado'],
+ ['Special purpose governments','Gobiernos de propósito especial','Distritos escolares independientes, universidades públicas y distritos especiales: una sola función o unas pocas.','LO 1-1'],
+ ['Stewardship','Custodia','La salvaguarda de los activos y su uso eficiente y eficaz. Objetivo tanto federal como de las NFP.','LO 1-3']
+];
+
+/* ============================================================
+   ESTADO
+   ============================================================ */
+const KEY='cp-ch1-v1';
+let S={done:{},quiz:{},cap:{}};
+try{const r=localStorage.getItem(KEY); if(r) S=Object.assign(S,JSON.parse(r));}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+
+const $=s=>document.querySelector(s);
+const esc=s=>s;
+
+/* ============================================================
+   NAVEGACIÓN
+   ============================================================ */
+const SCREENS={case:'s-case',path:'s-path',cap:'s-cap',gloss:'s-gloss'};
+function go(name){
+  Object.entries(SCREENS).forEach(([k,id])=>$('#'+id).classList.toggle('on',k===name));
+  document.querySelectorAll('nav button').forEach(b=>b.setAttribute('aria-current',String(b.dataset.go===name)));
+  if(name==='path'){ $('#path-detail').hidden=true; $('#path-list').hidden=false; renderUnits(); }
+  if(name==='cap') renderCap();
+  window.scrollTo(0,0);
+}
+document.addEventListener('click',e=>{
+  const g=e.target.closest('[data-go]'); if(g) go(g.dataset.go);
+});
+
+/* tema */
+$('#themebtn').onclick=()=>{
+  const cur=document.documentElement.getAttribute('data-theme');
+  const sysDark=matchMedia('(prefers-color-scheme: dark)').matches;
+  const next = cur ? (cur==='dark'?'light':'dark') : (sysDark?'light':'dark');
+  document.documentElement.setAttribute('data-theme',next);
+};
+
+/* ============================================================
+   PROGRESO
+   ============================================================ */
+function doneCount(){ return UNITS.filter(u=>S.done[u.id]).length + (S.done.cap?1:0); }
+function paintProgress(){
+  const n=doneCount(), pct=Math.round(n/7*100);
+  $('#capnum').textContent=n+' / 7';
+  $('#capbar').style.width=pct+'%';
+}
+
+/* ============================================================
+   RUTA
+   ============================================================ */
+function renderUnits(){
+  $('#units').innerHTML=UNITS.map((u,i)=>`
+    <button class="unit" data-unit="${u.id}" data-done="${S.done[u.id]?1:0}">
+      <span class="n">${S.done[u.id]?'✓':i+1}</span>
+      <span><span class="ttl">${u.ttl}</span><span class="meta">${u.lo} · ${u.quiz.length} preguntas</span></span>
+      <span class="go">›</span>
+    </button>`).join('');
+  paintProgress();
+}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-unit]'); if(b) openUnit(b.dataset.unit);
+});
+
+function figHTML(k,cap){
+  return `<figure><div class="scroll">${FIG[k]}</div><figcaption>${cap}</figcaption></figure>`;
+}
+
+function openUnit(id){
+  const u=UNITS.find(x=>x.id===id), i=UNITS.indexOf(u);
+  const body=u.blocks.map(b=>{
+    if(b.t==='lec') return `<section class="mini"><div class="tagline"><i>${b.tag}</i><hr></div>${b.p.map(p=>`<p>${p}</p>`).join('')}</section>`;
+    if(b.t==='fig') return figHTML(b.k,b.cap);
+    if(b.t==='pull') return `<div class="pull ${b.warn?'warn':''}"><b>${b.b}</b>${b.x}</div>`;
+    return '';
+  }).join('');
+
+  $('#path-list').hidden=true;
+  const d=$('#path-detail'); d.hidden=false;
+  d.innerHTML=`
+    <button class="back" data-back>‹ Ruta del capítulo</button>
+    <div class="lesson">
+      <span class="lo">${u.lo}</span>
+      <h2>${u.ttl}</h2>
+      <p class="en">${u.en}</p>
+      ${body}
+      <div class="rule"></div>
+      <div class="eyebrow">Términos de esta unidad</div>
+      <div class="terms" style="margin-top:10px">${u.terms.map(t=>`<div><dt>${t[0]}</dt><dd>${t[1]}</dd></div>`).join('')}</div>
+      <div class="rule"></div>
+      <div class="eyebrow">Comprueba antes de seguir</div>
+      <h3 class="h3" style="margin:6px 0 2px">${u.quiz.length} preguntas del final del capítulo</h3>
+      <p class="sub">Elige y verás por qué. No se penaliza equivocarse.</p>
+      <div id="quizbox" style="margin-top:16px"></div>
+      <div id="quizend" style="margin-top:20px"></div>
+    </div>`;
+  renderQuiz(u);
+  window.scrollTo(0,0);
+}
+document.addEventListener('click',e=>{
+  if(e.target.closest('[data-back]')){ $('#path-detail').hidden=true; $('#path-list').hidden=false; renderUnits(); window.scrollTo(0,0); }
+});
+
+function renderQuiz(u){
+  const st=S.quiz[u.id]||(S.quiz[u.id]={});
+  $('#quizbox').innerHTML=u.quiz.map((q,qi)=>{
+    const pick=st[qi];
+    const opts=q.o.map((o,oi)=>{
+      let s='';
+      if(pick!=null){ if(oi===q.a) s='ok'; else if(oi===pick) s='no'; }
+      return `<button class="opt" ${pick!=null?'disabled':''} data-q="${u.id}" data-qi="${qi}" data-oi="${oi}" ${s?`data-s="${s}"`:''}>
+        <span class="k">${'ABCD'[oi]}</span><span>${o}</span></button>`;
+    }).join('');
+    const why = pick!=null
+      ? `<div class="why ${pick===q.a?'ok':'no'}"><b>${pick===q.a?'Correcto':'Revisa esto'}</b>${q.w}</div>` : '';
+    return `<div class="q"><p><em>${q.src}</em>${q.q}</p>${opts}${why}</div>`;
+  }).join('');
+
+  const answered=u.quiz.every((_,qi)=>st[qi]!=null);
+  const right=u.quiz.filter((q,qi)=>st[qi]===q.a).length;
+  const i=UNITS.indexOf(u), nxt=UNITS[i+1];
+  $('#quizend').innerHTML = answered
+    ? `<div class="card" style="text-align:center">
+        <div class="eyebrow">Unidad completada</div>
+        <p class="h2" style="margin:8px 0 2px">${right} de ${u.quiz.length} correctas</p>
+        <p class="sub">${right===u.quiz.length?'Sin fallos. Sigue.':'Vuelve a leer la mini-clase de arriba antes de avanzar.'}</p>
+       </div>
+       ${nxt?`<button class="btn" style="margin-top:12px" data-open="${nxt.id}">Siguiente · ${nxt.ttl}</button>`:''}
+       <button class="btn ${nxt?'ghost':''}" style="margin-top:${nxt?'9px':'12px'}" data-go="${nxt?'path':'cap'}">${nxt?'Volver a la ruta':'Ir al cierre del caso'}</button>`
+    : '';
+  if(answered && !S.done[u.id]){ S.done[u.id]=1; save(); }
+}
+document.addEventListener('click',e=>{
+  const o=e.target.closest('.opt[data-q]'); if(!o) return;
+  const u=UNITS.find(x=>x.id===o.dataset.q);
+  (S.quiz[u.id]=S.quiz[u.id]||{})[o.dataset.qi]=+o.dataset.oi;
+  save(); renderQuiz(u);
+});
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-open]'); if(b) openUnit(b.dataset.open);
+});
+
+/* ============================================================
+   CIERRE DEL CASO
+   ============================================================ */
+const SORT_ITEMS=[
+ ['Carta de transmisión',0],['Portada e índice',0],['Descripción del gobierno',0],
+ ['Informe del auditor independiente',1],['MD&A',1],['Estados financieros básicos y notas',1],
+ ['RSI distinta del MD&A',1],['Combining and individual fund statements',1],
+ ['Tablas demográficas y económicas',2],['Tendencias financieras',2],['Capacidad fiscal',2],['Información operativa',2]
+];
+const SORT_BINS=['1 · Sección introductoria','2 · Sección financiera','3 · Sección estadística'];
+
+const MATCH_ITEMS=[
+ ['Una universidad estatal pública','G'],['Department of Defense','FB'],['AICPA','F'],
+ ['El condado donde vives','G'],['Internal Revenue Service','FB'],['Mayo Clinic','F'],
+ ['New York City','G'],['American Cancer Society','F'],
+ ['Metropolitan Washington Airports Authority','G'],['The Metropolitan Museum of Art','F']
+];
+const MATCH_BINS=[['G','GASB'],['F','FASB'],['FB','FASAB']];
+
+const GRID_ROWS=[
+ ['Ausencia de intereses de propiedad definidos que se puedan vender',['Y','Y','N']],
+ ['Quien aporta recursos espera un beneficio proporcional',['N','N','Y']],
+ ['Su desempeño global se resume en una cifra de <em>net income</em>',['N','N','Y']],
+ ['Exige un MD&A como <em>required supplementary information</em>',['Y','N','N']],
+ ['Prepara estados <em>government-wide</em> y estados por fondos',['Y','N','N']],
+ ['Reporta <em>net assets</em> con y sin restricciones de donante',['N','Y','N']],
+ ['Prepara un <em>statement of activities</em>',['Y','Y','N']],
+ ['Separa gastos de programa de <em>management and general</em> y <em>fund-raising</em>',['N','Y','N']]
+];
+const GRID_COLS=['Gobierno estatal/local','NFP no gubernamental','Empresa'];
+
+const FINAL_Q=[
+ {q:'Un ciudadano quiere saber si su ciudad <b>cumplió el presupuesto aprobado</b> este año. ¿Qué estados consulta y con qué base contable están preparados?',
+  o:['Government-wide, base devengada','Estados por fondos gubernamentales, devengado modificado','La sección estadística del CAFR','El statement of net cost'],a:1,
+  w:'Cumplir lo aprobado dentro del año es <em>fiscal accountability</em> → estados por fondos → devengado modificado, con enfoque de recursos financieros corrientes.'},
+ {q:'La ciudad no publicó un CAFR este año, solo el mínimo requerido. ¿Qué <b>no</b> vas a encontrar?',
+  o:['El MD&A','Los estados financieros básicos','La carta de transmisión y la sección estadística','Las notas a los estados financieros'],a:2,
+  w:'El mínimo requerido es MD&amp;A + estados básicos + notas + RSI. La carta de transmisión (introductoria) y la sección estadística existen solo dentro del CAFR, que es voluntario.'},
+ {q:'Promote Health Association recibe una donación con la condición de usarla en un programa específico. ¿Dónde impacta?',
+  o:['Aumenta net assets sin restricciones de donante','Aumenta net assets con restricciones de donante','No se registra hasta que se gaste','Aumenta el capital contable'],a:1,
+  w:'La restricción la impone el donante, así que entra en <em>net assets with donor restrictions</em>, y el <em>statement of activities</em> reporta el aumento en esa categoría.'},
+ {q:'Un donante quiere comparar dos NFP para decidir a cuál dar. ¿Qué requisito de reporte se lo permite directamente?',
+  o:['La separación entre gastos de programa y de soporte','El uso del método indirecto de flujos de efectivo','La opinión del auditor','El statement of financial position'],a:0,
+  w:'Esa separación es lo que permite calcular el porcentaje del gasto total que va a la misión, y existe precisamente para usuarios externos como los donantes.'},
+ {q:'La universidad pública del estado y una universidad privada preparan sus estados. ¿Qué normas siguen?',
+  o:['Ambas FASB','Ambas GASB','La pública GASB; la privada FASB','La pública FASAB; la privada FASB'],a:2,
+  w:'Una universidad pública es una NFP gubernamental → GASB. Una privada es independiente de un gobierno → FASB. El FASAB solo cubre al gobierno federal.'},
+ {q:'El concejo pregunta si la ciudad «vivió dentro de sus medios». ¿Qué concepto están invocando y qué mide?',
+  o:['Operational accountability: eficiencia en el uso de recursos','Interperiod equity: si los recursos del año pagaron los servicios del año','Stewardship: la custodia de los activos','Budgetary integrity: cumplir las leyes de gasto'],a:1,
+  w:'«Vivir dentro de sus medios» es la definición literal de <em>interperiod equity</em>. Si no se cumple, la diferencia la pagan contribuyentes futuros que no recibieron el servicio.'}
+];
+
+function renderCap(){
+  const locked = UNITS.some(u=>!S.done[u.id]);
+  const c=S.cap;
+  if(locked){
+    $('#s-cap').innerHTML=`
+      <div class="eyebrow">Cierre del caso</div>
+      <h2 class="h2" style="margin:7px 0 4px">Todavía cerrado</h2>
+      <p class="sub" style="margin-bottom:16px">Completa las seis unidades de la ruta para abrir el expediente. Llevas ${UNITS.filter(u=>S.done[u.id]).length} de 6.</p>
+      <div class="card"><div class="prow"><span>Unidades completadas</span><b>${UNITS.filter(u=>S.done[u.id]).length} / 6</b></div>
+      <div class="track"><i style="width:${UNITS.filter(u=>S.done[u.id]).length/6*100}%"></i></div></div>
+      <button class="btn" style="margin-top:14px" data-go="path">Continuar la ruta</button>`;
+    return;
+  }
+  $('#s-cap').innerHTML=`
+    <div class="file">
+      <div class="tab">Cierre · guía mínima</div>
+      <div class="body">
+        <h1>Ahora resuélvelo tú</h1>
+        <p class="lede">Cuatro tareas. Sin mini-clases, sin pistas antes de responder. Si te trabas, el glosario sigue ahí.</p>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+    <div class="eyebrow">Tarea 1 · Ejercicio 1–17</div>
+    <h3 class="h3" style="margin:6px 0 4px">Arma el CAFR de la ciudad</h3>
+    <p class="sub">Toca un elemento, luego la sección donde va.</p>
+    <div id="sortbox"></div>
+
+    <div class="rule"></div>
+    <div class="eyebrow">Tarea 2 · Ejercicio 1–18</div>
+    <h3 class="h3" style="margin:6px 0 4px">Denver frente a Promote Health</h3>
+    <p class="sub">Los dos documentos del expediente, lado a lado. Estúdialos y responde debajo.</p>
+    ${STMTS}
+    <div id="cmpbox"></div>
+
+    <div class="rule"></div>
+    <div class="eyebrow">Tarea 3 · Ejercicio 1–21</div>
+    <h3 class="h3" style="margin:6px 0 4px">¿Quién le fija las normas a quién?</h3>
+    <p class="sub">Toca la entidad, luego su cuerpo normativo.</p>
+    <div id="matchbox"></div>
+
+    <div class="rule"></div>
+    <div class="eyebrow">Tarea 4 · Ejercicio 1–19</div>
+    <h3 class="h3" style="margin:6px 0 4px">El caso completo</h3>
+    <p class="sub">Seis preguntas que cruzan los seis objetivos del capítulo.</p>
+    <div id="finalbox" style="margin-top:14px"></div>
+    <div id="capend" style="margin-top:22px"></div>`;
+  renderSort(); renderGrid(); renderMatch(); renderFinal(); capEnd();
+}
+
+/* --- Tarea 1: clasificar --- */
+let sortSel=null;
+function renderSort(){
+  const st=S.cap.sort=S.cap.sort||{};
+  const left=SORT_ITEMS.map((it,i)=>[it,i]).filter(([it,i])=>st[i]==null);
+  $('#sortbox').innerHTML=`
+    <div class="chips">${left.map(([it,i])=>`<button class="chip" data-sort="${i}" ${sortSel===i?'data-sel="1"':''}>${it[0]}</button>`).join('')||'<p class="sub">Todos clasificados.</p>'}</div>
+    <div class="bins">${SORT_BINS.map((b,bi)=>`
+      <button class="bin" data-bin="${bi}" ${sortSel!=null?'data-armed="1"':''}>
+        <span>Sección</span><b>${b}</b>
+        <span class="held">${SORT_ITEMS.map((it,i)=>[it,i]).filter(([it,i])=>st[i]===bi)
+          .map(([it,i])=>`<em data-s="${it[1]===bi?'ok':'no'}">${it[0]}</em>`).join('')}</span>
+      </button>`).join('')}</div>
+    ${left.length===0?`<div class="card" style="margin-top:12px;text-align:center"><b style="font-family:var(--serif);font-size:18px">${SORT_ITEMS.filter((it,i)=>st[i]===it[1]).length} de ${SORT_ITEMS.length} bien colocados</b>
+      <p class="sub" style="margin-top:5px">La carta de transmisión es introductoria; el informe del auditor es financiero. Esos dos son los que más se cambian de lugar.</p>
+      <button class="btn ghost" style="margin-top:12px" data-resort="1">Intentar de nuevo</button></div>`:''}`;
+}
+document.addEventListener('click',e=>{
+  const c=e.target.closest('[data-sort]');
+  if(c){ sortSel = sortSel===+c.dataset.sort ? null : +c.dataset.sort; renderSort(); return; }
+  const b=e.target.closest('[data-bin]');
+  if(b && sortSel!=null){ (S.cap.sort=S.cap.sort||{})[sortSel]=+b.dataset.bin; sortSel=null; save(); renderSort(); capEnd(); return; }
+  if(e.target.closest('[data-resort]')){ S.cap.sort={}; sortSel=null; save(); renderSort(); capEnd(); }
+});
+
+/* --- Tarea 2: los dos estados + rejilla --- */
+function renderGrid(){
+  const st=S.cap.grid=S.cap.grid||{};
+  $('#cmpbox').innerHTML=`
+    <p class="sub" style="margin-top:16px">Para cada característica marca <b>Y</b> si aplica a ese tipo de entidad o <b>N</b> si no. Toca el mismo botón para alternar.</p>
+    <div class="gridtask"><table class="gt">
+      <tr><th>Característica</th>${GRID_COLS.map(c=>`<th>${c}</th>`).join('')}</tr>
+      ${GRID_ROWS.map((r,ri)=>`<tr><td>${r[0]}</td>${r[1].map((ans,ci)=>{
+        const k=ri+'-'+ci, v=st[k];
+        const wrong = S.cap.gridChecked && v && v!==ans;
+        return `<td><button class="yn" data-grid="${k}" ${v?`data-v="${v}"`:''} ${wrong?'data-s="no"':''}>${v||'·'}</button></td>`;
+      }).join('')}</tr>`).join('')}
+    </table></div>
+    ${S.cap.gridChecked
+      ? `<div class="card" style="margin-top:12px;text-align:center">
+          <b style="font-family:var(--serif);font-size:18px">${GRID_ROWS.reduce((a,r,ri)=>a+r[1].filter((ans,ci)=>st[ri+'-'+ci]===ans).length,0)} de 24 correctas</b>
+          <p class="sub" style="margin-top:5px">Fíjate en la fila del <em>statement of activities</em>: lo preparan <b>ambos</b>, gobierno y NFP. Ahí está la respuesta al ejercicio 1–18.</p>
+          <button class="btn ghost" style="margin-top:12px" data-regrid="1">Intentar de nuevo</button></div>`
+      : `<button class="btn ghost" style="margin-top:12px" data-checkgrid="1" ${Object.keys(st).length<24?'disabled':''}>${Object.keys(st).length<24?`Faltan ${24-Object.keys(st).length} casillas`:'Comprobar la rejilla'}</button>`}`;
+}
+document.addEventListener('click',e=>{
+  const g=e.target.closest('[data-grid]');
+  if(g && !S.cap.gridChecked){ const st=S.cap.grid=S.cap.grid||{}, k=g.dataset.grid;
+    st[k] = st[k]==='Y' ? 'N' : st[k]==='N' ? undefined : 'Y';
+    if(st[k]===undefined) delete st[k];
+    save(); renderGrid(); return; }
+  if(e.target.closest('[data-checkgrid]')){ S.cap.gridChecked=1; save(); renderGrid(); capEnd(); return; }
+  if(e.target.closest('[data-regrid]')){ S.cap.grid={}; S.cap.gridChecked=0; save(); renderGrid(); capEnd(); }
+});
+
+/* --- Tarea 3: emparejar --- */
+let matchSel=null;
+function renderMatch(){
+  const st=S.cap.match=S.cap.match||{};
+  const left=MATCH_ITEMS.map((it,i)=>[it,i]).filter(([it,i])=>st[i]==null);
+  $('#matchbox').innerHTML=`
+    <div class="chips">${left.map(([it,i])=>`<button class="chip" data-match="${i}" ${matchSel===i?'data-sel="1"':''}>${it[0]}</button>`).join('')||'<p class="sub">Todas asignadas.</p>'}</div>
+    <div class="bins">${MATCH_BINS.map(([code,name])=>`
+      <button class="bin" data-mbin="${code}" ${matchSel!=null?'data-armed="1"':''}>
+        <span>${code}</span><b>${name}</b>
+        <span class="held">${MATCH_ITEMS.map((it,i)=>[it,i]).filter(([it,i])=>st[i]===code)
+          .map(([it,i])=>`<em data-s="${it[1]===code?'ok':'no'}">${it[0]}</em>`).join('')}</span>
+      </button>`).join('')}</div>
+    ${left.length===0?`<div class="card" style="margin-top:12px;text-align:center"><b style="font-family:var(--serif);font-size:18px">${MATCH_ITEMS.filter((it,i)=>st[i]===it[1]).length} de ${MATCH_ITEMS.length} correctas</b>
+      <p class="sub" style="margin-top:5px">La Metropolitan Washington Airports Authority es un cuerpo público creado por un pacto interestatal → GASB. El AICPA y el Met Museum son NFP privadas → FASB.</p>
+      <button class="btn ghost" style="margin-top:12px" data-rematch="1">Intentar de nuevo</button></div>`:''}`;
+}
+document.addEventListener('click',e=>{
+  const c=e.target.closest('[data-match]');
+  if(c){ matchSel = matchSel===+c.dataset.match ? null : +c.dataset.match; renderMatch(); return; }
+  const b=e.target.closest('[data-mbin]');
+  if(b && matchSel!=null){ (S.cap.match=S.cap.match||{})[matchSel]=b.dataset.mbin; matchSel=null; save(); renderMatch(); capEnd(); return; }
+  if(e.target.closest('[data-rematch]')){ S.cap.match={}; matchSel=null; save(); renderMatch(); capEnd(); }
+});
+
+/* --- Tarea 4: preguntas finales --- */
+function renderFinal(){
+  const st=S.cap.final=S.cap.final||{};
+  $('#finalbox').innerHTML=FINAL_Q.map((q,qi)=>{
+    const pick=st[qi];
+    const opts=q.o.map((o,oi)=>{
+      let s=''; if(pick!=null){ if(oi===q.a) s='ok'; else if(oi===pick) s='no'; }
+      return `<button class="opt" ${pick!=null?'disabled':''} data-fq="${qi}" data-foi="${oi}" ${s?`data-s="${s}"`:''}>
+        <span class="k">${'ABCD'[oi]}</span><span>${o}</span></button>`;
+    }).join('');
+    return `<div class="q"><p><em>Pregunta ${qi+1} de ${FINAL_Q.length}</em>${q.q}</p>${opts}
+      ${pick!=null?`<div class="why ${pick===q.a?'ok':'no'}"><b>${pick===q.a?'Correcto':'Revisa esto'}</b>${q.w}</div>`:''}</div>`;
+  }).join('');
+}
+document.addEventListener('click',e=>{
+  const o=e.target.closest('[data-fq]'); if(!o) return;
+  (S.cap.final=S.cap.final||{})[o.dataset.fq]=+o.dataset.foi; save(); renderFinal(); capEnd();
+});
+
+function capEnd(){
+  const box=$('#capend'); if(!box) return;
+  const s=S.cap.sort||{}, m=S.cap.match||{}, f=S.cap.final||{}, g=S.cap.grid||{};
+  const t1=Object.keys(s).length===SORT_ITEMS.length;
+  const t2=!!S.cap.gridChecked;
+  const t3=Object.keys(m).length===MATCH_ITEMS.length;
+  const t4=FINAL_Q.every((_,i)=>f[i]!=null);
+  if(!(t1&&t2&&t3&&t4)){
+    box.innerHTML=`<div class="card"><div class="prow"><span>Tareas del cierre</span><b>${[t1,t2,t3,t4].filter(Boolean).length} / 4</b></div>
+      <div class="track"><i style="width:${[t1,t2,t3,t4].filter(Boolean).length/4*100}%"></i></div></div>`;
+    return;
+  }
+  const sc = SORT_ITEMS.filter((it,i)=>s[i]===it[1]).length
+           + GRID_ROWS.reduce((a,r,ri)=>a+r[1].filter((ans,ci)=>g[ri+'-'+ci]===ans).length,0)
+           + MATCH_ITEMS.filter((it,i)=>m[i]===it[1]).length
+           + FINAL_Q.filter((q,i)=>f[i]===q.a).length;
+  const tot=SORT_ITEMS.length+24+MATCH_ITEMS.length+FINAL_Q.length;
+  if(!S.done.cap){ S.done.cap=1; save(); }
+  box.innerHTML=`<div class="file"><div class="tab">Expediente cerrado</div>
+    <div class="score">
+      <div class="big">${Math.round(sc/tot*100)}%</div>
+      <div class="lbl">${sc} de ${tot} respuestas correctas</div>
+      <p class="sub" style="margin-top:16px">Ya puedes responder la pregunta del concejo: los estados por fondos dicen si Denver cumplió lo aprobado, los <em>government-wide</em> dicen si usó bien sus recursos, y la separación de gastos de Promote Health dice cuánto fue a la misión.</p>
+    </div></div>
+    <button class="btn ghost" style="margin-top:12px" data-go="gloss">Repasar el glosario</button>`;
+  paintProgress();
+}
+
+/* --- estados financieros del expediente --- */
+const STMTS=`<div class="stmts">
+  <div class="stmt">
+    <h4>City and County of Denver<span>Statement of net position · government-wide · en miles</span></h4>
+    <table>
+      <tr data-h="1"><td>Assets</td><td>Gov. activities</td></tr>
+      <tr data-l="1"><td>Efectivo e inversiones</td><td>842 310</td></tr>
+      <tr data-l="1"><td>Capital assets, neto</td><td>3 118 470</td></tr>
+      <tr data-h="1"><td>Total assets</td><td>3 960 780</td></tr>
+      <tr><td>Deferred outflows of resources</td><td>96 240</td></tr>
+      <tr data-h="1"><td>Liabilities</td><td></td></tr>
+      <tr data-l="1"><td>Deuda a largo plazo</td><td>1 604 900</td></tr>
+      <tr data-h="1"><td>Total liabilities</td><td>2 013 550</td></tr>
+      <tr><td>Deferred inflows of resources</td><td>58 470</td></tr>
+      <tr data-h="1"><td>Net position</td><td></td></tr>
+      <tr data-l="1"><td>Net investment in capital assets</td><td>1 513 570</td></tr>
+      <tr data-l="1"><td>Restricted</td><td>288 940</td></tr>
+      <tr data-l="1"><td>Unrestricted</td><td>182 490</td></tr>
+      <tr data-h="1"><td>Total net position</td><td>1 985 000</td></tr>
+    </table>
+  </div>
+  <div class="stmt">
+    <h4>Promote Health Association, Inc.<span>Balance sheet · NFP no gubernamental · en dólares</span></h4>
+    <table>
+      <tr data-h="1"><td>Assets</td><td></td></tr>
+      <tr data-l="1"><td>Efectivo y equivalentes</td><td>412 600</td></tr>
+      <tr data-l="1"><td>Contribuciones por cobrar</td><td>187 300</td></tr>
+      <tr data-l="1"><td>Propiedad y equipo, neto</td><td>640 100</td></tr>
+      <tr data-h="1"><td>Total assets</td><td>1 240 000</td></tr>
+      <tr data-h="1"><td>Liabilities</td><td></td></tr>
+      <tr data-l="1"><td>Cuentas por pagar</td><td>96 400</td></tr>
+      <tr data-h="1"><td>Total liabilities</td><td>274 000</td></tr>
+      <tr data-h="1"><td>Net assets</td><td></td></tr>
+      <tr data-l="1"><td>Without donor restrictions</td><td>703 500</td></tr>
+      <tr data-l="1"><td>With donor restrictions</td><td>262 500</td></tr>
+      <tr data-h="1"><td>Total net assets</td><td>966 000</td></tr>
+    </table>
+  </div>
+</div>
+<figcaption style="border:0;padding-top:12px;margin-top:0">Cifras ilustrativas. Mira dónde difieren: <b>deferred outflows / inflows of resources</b> y las tres clases de <b>net position</b> solo existen del lado gubernamental; <b>with / without donor restrictions</b> solo del lado de la NFP.</figcaption>`;
+
+/* ============================================================
+   GLOSARIO
+   ============================================================ */
+function renderGloss(q=''){
+  const t=q.trim().toLowerCase();
+  const rows=GLOSS.filter(g=>!t||(g[0]+' '+g[1]+' '+g[2]).toLowerCase().includes(t));
+  $('#glist').innerHTML = rows.length ? rows.map(g=>`
+    <div class="gitem"><dt>${g[0]}</dt><div class="es">${g[1]}</div><dd>${g[2]}</dd><div class="src">${g[3]}</div></div>`).join('')
+    : `<p class="sub" style="padding:20px 0">Sin coincidencias para «${q}».</p>`;
+}
+$('#gq').addEventListener('input',e=>renderGloss(e.target.value));
+$('#reset').onclick=()=>{
+  S={done:{},quiz:{},cap:{}}; save();
+  sortSel=null; matchSel=null;
+  renderUnits(); paintProgress(); go('case');
+};
+
+/* ============================================================
+   ARRANQUE
+   ============================================================ */
+renderUnits(); renderGloss(); paintProgress(); go('case');
+</script>
