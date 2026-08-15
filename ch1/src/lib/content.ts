@@ -15,6 +15,8 @@ export type Question = {
   w: string
 }
 
+export type Step = { head: string; blocks: Block[] }
+
 export type Article = {
   id: string
   roman: string
@@ -22,7 +24,9 @@ export type Article = {
   title: string
   en: string
   standfirst: string
-  blocks: Block[]
+  /* One idea per step. A phone shows one step at a time, so no article
+     is ever a single long scroll. */
+  steps: Step[]
   terms: [string, string][]
   quiz: Question[]
 }
@@ -46,42 +50,36 @@ export const ARTICLES: Article[] = [
     en: 'Distinctions between governmental and commercial accounting',
     standfirst:
       'La diferencia no empieza en los asientos contables. Empieza en cómo entra el dinero y en qué espera a cambio quien lo aporta.',
-    blocks: [
+    steps: [
       {
-        k: 'p',
-        t: 'En una empresa, quien aporta recursos espera algo proporcional de vuelta. El cliente paga y se lleva el producto. El accionista invierte y espera dividendos, y puede vender su parte cuando quiera.',
+        head: 'El dinero entra de otra manera',
+        blocks: [
+          { k: 'p', t: 'En una empresa, quien aporta recursos espera algo proporcional de vuelta. El cliente paga y se lleva el producto. El accionista invierte, espera dividendos y puede vender su parte.' },
+          { k: 'p', t: 'En un gobierno eso se rompe. El <span class="term">contribuyente<i>taxpayer</i></span> paga de forma <em>involuntaria</em>, ante una entidad que casi siempre tiene poder monopólico. No elige cuánto servicio recibe ni puede negarse a pagar.' },
+          { k: 'fig', id: 'resources', cap: 'La diferencia está en la flecha de retorno: sólida y proporcional en la empresa, punteada en el gobierno porque lo que recibes no depende de lo que aportaste.' },
+        ],
       },
       {
-        k: 'p',
-        t: 'En un gobierno eso se rompe por completo. El <span class="term">contribuyente<i>taxpayer</i></span> paga impuestos de forma <em>involuntaria</em>, ante una entidad que en la mayoría de los casos tiene poder monopólico, y no puede elegir cuánto servicio recibe ni negarse a pagar si le parece caro.',
+        head: 'Las tres características del FASB',
+        blocks: [
+          { k: 'p', t: 'El FASB fijó en su <span class="term">Concepts No. 4<i>SFAC 4</i></span> lo que separa a estas entidades de un negocio:' },
+          { k: 'p', t: '<em>(a)</em> Reciben recursos de quienes no esperan devolución ni beneficios proporcionales. <em>(b)</em> Su propósito operativo no es generar utilidad. <em>(c)</em> No hay intereses de propiedad que se puedan vender, transferir o redimir.' },
+        ],
       },
       {
-        k: 'fig',
-        id: 'resources',
-        cap: 'La diferencia está en la flecha de retorno: sólida y proporcional en la empresa, punteada en el gobierno porque lo que recibes no depende de lo que aportaste.',
+        head: 'No existe una cifra que lo resuma',
+        blocks: [
+          { k: 'p', t: 'De aquí sale lo que ordena el resto del curso. Sin mercado competitivo, y sin relación entre lo que se paga y el servicio que se recibe, <em>no hay una cifra de utilidad neta que sirva para juzgar a un gobierno</em>.' },
+          { k: 'fig', id: 'noNetIncome', cap: 'Una empresa comprime su desempeño en una sola cifra. Un gobierno no tiene esa cifra, y la rendición de cuentas ocupa su lugar.' },
+          { k: 'note', head: 'La pregunta que reemplaza a la utilidad', t: '¿Contra qué se juzga entonces a un gobierno? Contra si cumplió lo que el público decidió, y si usó bien lo que recibió. Ese hueco es el que llena la rendición de cuentas — el artículo II.', tone: 'seal' },
+        ],
       },
       {
-        k: 'p',
-        t: 'El FASB fijó en su <span class="term">Concepts No. 4<i>SFAC 4</i></span> las tres características que separan a estas entidades de un negocio: <em>(a)</em> reciben recursos importantes de quienes no esperan devolución ni beneficios proporcionales; <em>(b)</em> su propósito operativo no es generar utilidad; <em>(c)</em> no existen intereses de propiedad definidos que se puedan vender, transferir o redimir.',
-      },
-      {
-        k: 'p',
-        t: 'De ahí sale la consecuencia que ordena todo el resto del curso. Sin mercado competitivo y sin relación entre lo que se paga y el servicio que se recibe, <em>no existe una cifra de utilidad neta que sirva para juzgar si un gobierno lo hizo bien</em>.',
-      },
-      {
-        k: 'fig',
-        id: 'noNetIncome',
-        cap: 'Una empresa comprime su desempeño en una sola cifra. Un gobierno no tiene esa cifra, y la rendición de cuentas ocupa su lugar.',
-      },
-      {
-        k: 'note',
-        head: 'La pregunta que reemplaza a la utilidad',
-        t: 'Si no hay <em>net income</em>, ¿contra qué se juzga a un gobierno? Contra si cumplió lo que el público decidió y si usó bien lo que recibió. Ese es el hueco exacto que llena la rendición de cuentas, y es de lo que trata el artículo II.',
-        tone: 'seal',
-      },
-      {
-        k: 'p',
-        t: 'Conviene fijar también el vocabulario de entidades. Los <span class="term">gobiernos de propósito general<i>general purpose</i></span> —estados, condados, municipios, <em>townships</em>— prestan una gama amplia de servicios. Los <span class="term">gobiernos de propósito especial<i>special purpose</i></span> —distritos escolares independientes, universidades públicas, distritos de riego o de bomberos— prestan una sola función o unas pocas. Ambos pueden gravar y recaudar.',
+        head: 'Dos tipos de gobierno',
+        blocks: [
+          { k: 'p', t: 'Los <span class="term">gobiernos de propósito general<i>general purpose</i></span> —estados, condados, municipios, <em>townships</em>— prestan una gama amplia de servicios.' },
+          { k: 'p', t: 'Los de <span class="term">propósito especial<i>special purpose</i></span> —distritos escolares, universidades públicas, distritos de riego o de bomberos— prestan una sola función o unas pocas. Ambos pueden gravar y recaudar.' },
+        ],
       },
     ],
     terms: [
@@ -133,46 +131,40 @@ export const ARTICLES: Article[] = [
     en: 'Legal authority and public accountability',
     standfirst:
       'En una empresa el presupuesto es un plan. En un gobierno es una ley. Esa sola diferencia explica buena parte del modelo contable.',
-    blocks: [
+    steps: [
       {
-        k: 'p',
-        t: 'El GASB describe el entorno de un gobierno señalando dónde reside el poder: <em>en manos del pueblo</em>. Los votantes lo delegan en funcionarios mediante elecciones, y una vez delegado queda repartido entre el ejecutivo, el legislativo y el judicial, de modo que cada rama limita a las otras.',
+        head: 'El poder reside en el pueblo',
+        blocks: [
+          { k: 'p', t: 'El GASB describe el entorno de un gobierno señalando dónde reside el poder: <em>en manos del pueblo</em>.' },
+          { k: 'p', t: 'Los votantes lo delegan en funcionarios mediante elecciones. Una vez delegado queda repartido entre el ejecutivo, el legislativo y el judicial, y cada rama limita a las otras.' },
+          { k: 'fig', id: 'authority', cap: 'Las restricciones llegan de arriba y de los lados. Cada capa impone requisitos que el reporte financiero tiene que poder demostrar.' },
+        ],
       },
       {
-        k: 'fig',
-        id: 'authority',
-        cap: 'Las restricciones llegan de arriba y de los lados. Cada capa impone requisitos de rendición de cuentas que el reporte financiero tiene que poder demostrar.',
+        head: 'Las restricciones llegan de todos lados',
+        blocks: [
+          { k: 'p', t: 'A esos límites internos se suman los externos: las leyes de jurisdicciones superiores, los actos del propio cuerpo legislativo y los acuerdos con acreedores.' },
+          { k: 'p', t: 'Todos crean requisitos únicos de rendición de cuentas financiera. Y quien recibe subvenciones de un nivel superior debe rendir cuentas a quien se las dio, además de a la ciudadanía.' },
+          { k: 'p', t: 'Por eso el GASB afirma que <em>la rendición de cuentas es la piedra angular de todo reporte financiero en el gobierno</em>.' },
+        ],
       },
       {
-        k: 'p',
-        t: 'A esas restricciones internas se suman las externas. Las leyes de jurisdicciones superiores, los actos del propio cuerpo legislativo y los acuerdos con acreedores <em>imponen límites sobre la actividad financiera del gobierno y crean requisitos únicos de rendición de cuentas financiera</em>. Los niveles superiores de gobierno además financian actividades mediante un sistema extenso de subvenciones, y quien recibe esos fondos debe rendir cuentas tanto a quien se los dio como a la ciudadanía.',
+        head: 'Dos preguntas, no una',
+        blocks: [
+          { k: 'p', t: 'Esa piedra angular se parte en dos, y el examen las distingue sin piedad.' },
+          { k: 'p', t: 'La <span class="term">rendición de cuentas fiscal<i>fiscal accountability</i></span> pregunta si el gobierno cumplió lo que el público decidió sobre recaudar y gastar, normalmente dentro del año presupuestario.' },
+          { k: 'p', t: 'La <span class="term">operativa<i>operational accountability</i></span> pregunta algo más amplio: si usó sus recursos de forma eficiente y eficaz para cumplir sus objetivos.' },
+          { k: 'fig', id: 'accountability', cap: 'Dos preguntas, dos horizontes. Cumplir la ley del presupuesto es de corto plazo; usar bien los recursos es de largo plazo.' },
+        ],
       },
       {
-        k: 'p',
-        t: 'Por eso el GASB afirma que <em>la rendición de cuentas es la piedra angular de todo reporte financiero en el gobierno</em>. La <span class="term">rendición de cuentas<i>accountability</i></span> obliga a justificar cómo se obtienen y cómo se usan los recursos públicos.',
-      },
-      {
-        k: 'p',
-        t: 'Esa piedra angular se parte en dos preguntas distintas, y el examen las distingue sin piedad. La <span class="term">rendición de cuentas fiscal<i>fiscal accountability</i></span> pregunta si el gobierno cumplió lo que el público decidió sobre recaudar y gastar, normalmente dentro del año presupuestario. La <span class="term">rendición de cuentas operativa<i>operational accountability</i></span> pregunta algo más amplio: si usó sus recursos de forma eficiente y eficaz para cumplir sus objetivos.',
-      },
-      {
-        k: 'fig',
-        id: 'accountability',
-        cap: 'Dos preguntas, dos horizontes. Cumplir la ley del presupuesto es de corto plazo; usar bien los recursos es de largo plazo. El artículo IV muestra qué estados responden a cada una.',
-      },
-      {
-        k: 'p',
-        t: 'Ligado a todo esto está un concepto que el GASB considera parte esencial de la rendición de cuentas: la <span class="term">equidad entre periodos<i>interperiod equity</i></span>. En una frase, que el gobierno <em>viva dentro de sus medios</em>. El reporte debe permitir evaluar si los recursos del periodo actual bastaron para pagar los servicios del periodo actual.',
-      },
-      {
-        k: 'note',
-        head: 'Cuando se rompe, alguien más paga',
-        t: 'Si el costo de los servicios de este año supera los recursos de este año, ese exceso se convierte en carga de contribuyentes futuros que <em>nunca recibieron el beneficio</em> de esos servicios. Ojo: <em>interperiod equity</em> no pregunta si los ingresos superaron a los gastos, ni si los activos cubren los pasivos. Esas dos son las distractoras clásicas.',
-        tone: 'warn',
-      },
-      {
-        k: 'p',
-        t: 'La autoridad legal también alcanza a la auditoría. Las leyes varían de estado a estado: algunos exigen que una agencia estatal audite a todos los gobiernos locales, en la mayoría los auditan firmas independientes, y en otros hay una mezcla. En cualquier caso la opinión del auditor debe acompañar a los estados financieros reproducidos en el informe.',
+        head: 'Vivir dentro de sus medios',
+        blocks: [
+          { k: 'p', t: 'El GASB considera la <span class="term">equidad entre periodos<i>interperiod equity</i></span> parte esencial de la rendición de cuentas. En una frase: que el gobierno <em>viva dentro de sus medios</em>.' },
+          { k: 'p', t: 'El reporte debe permitir evaluar si los recursos del periodo actual bastaron para pagar los servicios del periodo actual.' },
+          { k: 'note', head: 'Cuando se rompe, alguien más paga', t: 'El exceso se vuelve carga de contribuyentes futuros que <em>nunca recibieron el beneficio</em>. Ojo: no pregunta si los ingresos superaron a los gastos, ni si los activos cubren los pasivos. Esas son las distractoras clásicas.', tone: 'warn' },
+          { k: 'p', t: 'La autoridad legal alcanza también a la auditoría. Las leyes varían de estado a estado, pero en todos los casos la opinión del auditor debe acompañar a los estados del informe.' },
+        ],
       },
     ],
     terms: [
@@ -225,29 +217,36 @@ export const ARTICLES: Article[] = [
     en: 'GASB vs. FASB jurisdiction',
     standfirst:
       'La pregunta de examen casi nunca es qué dice la norma. Es qué tablero le toca a esta entidad — y no se puede elegir.',
-    blocks: [
+    steps: [
       {
-        k: 'p',
-        t: 'La Regla 203 del Código de Conducta Profesional del AICPA designa formalmente tres cuerpos con autoridad para establecer los <span class="term">principios de contabilidad generalmente aceptados<i>GAAP</i></span>: el GASB para gobiernos estatales y locales, el FASB para empresas y organizaciones sin fines de lucro, y el <span class="term">FASAB<i>Federal Accounting Standards Advisory Board</i></span> para el gobierno federal y sus agencias.',
-      },
-      { k: 'fig', id: 'jurisdiction', cap: 'Sigue la flecha hacia arriba desde la entidad. La fila de abajo es donde se pierde la mayoría de los puntos.' },
-      {
-        k: 'p',
-        t: 'El GASB y el FASB son cuerpos <em>paralelos</em> bajo la supervisión de la <span class="term">Financial Accounting Foundation<i>FAF</i></span>, que nombra a los miembros de ambos y sostiene sus operaciones. El GASB se formó en 1984; sus antecesores fueron el National Council on Governmental Accounting (1973–84) y, antes, los comités nacionales de contabilidad gubernamental y municipal. El FASB se formó en 1973.',
-      },
-      {
-        k: 'p',
-        t: 'El FASAB nació por otra vía. En 1990 lo crearon tres funcionarios federales a quienes los estatutos asignan la estructura financiera del gobierno: el <em>Comptroller General</em>, el director de la OMB y el secretario del Tesoro. Se entiende que, en la medida de lo posible, sus normas deben ser consistentes con las del GASB y, cuando aplique, con las del FASB.',
+        head: 'Tres tableros, no uno',
+        blocks: [
+          { k: 'p', t: 'La Regla 203 del Código de Conducta Profesional del AICPA designa tres cuerpos con autoridad para establecer los <span class="term">GAAP<i>generally accepted accounting principles</i></span>.' },
+          { k: 'p', t: 'El <em>GASB</em> para gobiernos estatales y locales. El <em>FASB</em> para empresas y organizaciones sin fines de lucro. El <em>FASAB</em> para el gobierno federal y sus agencias.' },
+          { k: 'fig', id: 'jurisdiction', cap: 'Sigue la flecha hacia arriba desde la entidad. La fila de abajo es donde se pierde la mayoría de los puntos.' },
+        ],
       },
       {
-        k: 'note',
+        head: 'Quién supervisa a quién',
+        blocks: [
+          { k: 'p', t: 'El GASB y el FASB son cuerpos <em>paralelos</em> bajo la <span class="term">Financial Accounting Foundation<i>FAF</i></span>, que nombra a sus miembros. El GASB se formó en 1984; el FASB, en 1973.' },
+          { k: 'p', t: 'El FASAB nació por otra vía. Lo crearon en 1990 el <em>Comptroller General</em>, el director de la OMB y el secretario del Tesoro. Sus normas deben ser consistentes con las del GASB en lo posible.' },
+        ],
+      },
+      {
         head: 'La línea donde se pierde el punto',
-        t: 'La autoridad sobre las organizaciones sin fines de lucro <em>está partida</em>, porque muchas son de naturaleza gubernamental: universidades públicas y hospitales públicos, sobre todo. Si la NFP es gubernamental sigue al <em>GASB</em>; si es independiente de un gobierno sigue al <em>FASB</em>. No es una decisión de la administración ni del consejo directivo: depende de lo que la entidad <em>es</em>.',
-        tone: 'warn',
+        blocks: [
+          { k: 'p', t: 'La autoridad sobre las organizaciones sin fines de lucro <em>está partida</em>, porque muchas son de naturaleza gubernamental.' },
+          { k: 'note', head: 'La regla, sin excepciones', t: 'Si la NFP es gubernamental —universidad pública, hospital público— sigue al <em>GASB</em>. Si es independiente de un gobierno, sigue al <em>FASB</em>. No lo decide la administración ni el consejo: depende de lo que la entidad <em>es</em>.', tone: 'warn' },
+        ],
       },
       {
-        k: 'p',
-        t: 'Vale la pena saber cómo se financian, porque explica por qué se les llama independientes. La ley Sarbanes-Oxley impuso una cuota sobre emisiones de valores corporativos para sostener al FASB. La Dodd-Frank de 2010 ordenó crear una cuota equivalente para el GASB, y FINRA la estableció en febrero de 2012, cobrándola a las firmas que reportan operaciones de valores municipales. Al no depender de ninguna organización ni gobierno en particular, a ambos se les describe como <em>independent standards-setting boards in the private sector</em>.',
+        head: 'Por qué se les llama independientes',
+        blocks: [
+          { k: 'p', t: 'La ley Sarbanes-Oxley impuso una cuota sobre emisiones de valores corporativos para sostener al FASB.' },
+          { k: 'p', t: 'La Dodd-Frank de 2010 ordenó una cuota equivalente para el GASB, y FINRA la estableció en 2012 sobre las firmas que reportan operaciones de valores municipales.' },
+          { k: 'p', t: 'Al no depender de ninguna organización ni gobierno en particular, a ambos se les describe como <em>independent standards-setting boards in the private sector</em>.' },
+        ],
       },
     ],
     terms: [
@@ -308,42 +307,45 @@ export const ARTICLES: Article[] = [
     en: 'Basic CAFR / ACFR structure',
     standfirst:
       'Son dos cosas distintas y se confunden constantemente. Una es obligatoria y pequeña. La otra es voluntaria y mucho más grande.',
-    blocks: [
+    steps: [
       {
-        k: 'p',
-        t: 'El GASB fija un <em>mínimo obligatorio</em> de reporte financiero externo de propósito general. Y por separado existe el informe anual completo, que <em>no es obligatorio</em> aunque casi todos los gobiernos lo preparan como registro público. El mínimo vive <em>dentro</em> del informe. Confundirlos es el error más común del capítulo.',
+        head: 'Dos cosas que se confunden siempre',
+        blocks: [
+          { k: 'p', t: 'El GASB fija un <em>mínimo obligatorio</em> de reporte financiero externo. Por separado existe el informe anual completo, que <em>no es obligatorio</em> aunque casi todos los gobiernos lo preparan.' },
+          { k: 'p', t: 'El mínimo vive <em>dentro</em> del informe. Confundirlos es el error más común del capítulo.' },
+        ],
       },
       {
-        k: 'p',
-        t: 'El mínimo exige cuatro cosas: el <span class="term">MD&amp;A<i>management’s discussion and analysis</i></span>, los estados financieros básicos —de todo el gobierno y por fondos— con sus notas, y la <span class="term">información suplementaria requerida<i>RSI</i></span> distinta del MD&amp;A. El MD&amp;A es a la vez RSI y el centro del modelo: comunica en forma narrativa y legible el propósito de los estados básicos y la situación del año frente al anterior. Las notas se consideran <em>parte integral</em> de los estados.',
+        head: 'Qué exige el mínimo',
+        blocks: [
+          { k: 'p', t: 'Cuatro cosas: el <span class="term">MD&amp;A<i>management’s discussion and analysis</i></span>, los estados básicos —de todo el gobierno y por fondos—, sus notas, y la <span class="term">RSI<i>required supplementary information</i></span> distinta del MD&amp;A.' },
+          { k: 'p', t: 'El MD&amp;A es a la vez RSI y el centro del modelo: cuenta en forma narrativa y legible qué hay en los estados y cómo fue el año frente al anterior. Las notas son <em>parte integral</em> de los estados.' },
+        ],
       },
       {
-        k: 'fig',
-        id: 'acfr',
-        cap: 'Léelo como una caja dentro de otra caja. Todo lo que queda fuera del corchete —carta de transmisión, informe del auditor, combining statements, sección estadística— va más allá del mínimo.',
+        head: 'La anatomía del informe',
+        blocks: [
+          { k: 'fig', id: 'acfr', cap: 'Léelo como una caja dentro de otra caja. Todo lo que queda fuera del corchete va más allá del mínimo.' },
+          { k: 'p', t: '<em>Introductoria:</em> portada, índice, carta de transmisión y descripción del gobierno.' },
+          { k: 'p', t: '<em>Financiera:</em> informe del auditor, MD&amp;A, estados básicos y notas, RSI, e información suplementaria como los <em>combining statements</em>.' },
+          { k: 'p', t: '<em>Estadística:</em> datos demográficos y económicos, tendencias financieras, capacidad fiscal e información operativa.' },
+        ],
       },
       {
-        k: 'note',
         head: 'CAFR pasó a llamarse ACFR',
-        t: 'Tu libro de texto, de 2019, dice <em>comprehensive annual financial report</em> (CAFR). En 2021 el GASB lo renombró <span class="term">annual comprehensive financial report<i>ACFR</i></span> mediante su <em>Statement No. 98</em>, porque la sigla anterior se pronuncia como un insulto racial en inglés sudafricano. Es el mismo documento con el mismo contenido: solo cambió el nombre y el orden de las palabras. Reconoce ambos términos — verás CAFR en material anterior a 2021 y ACFR en todo lo actual.',
-        tone: 'seal',
+        blocks: [
+          { k: 'note', head: 'Tu libro dice CAFR; la norma vigente dice ACFR', t: 'El texto, de 2019, dice <em>comprehensive annual financial report</em>. En 2021 el GASB lo renombró <span class="term">annual comprehensive financial report<i>ACFR</i></span> con su <em>Statement No. 98</em>, porque la sigla anterior suena como un insulto racial en inglés sudafricano.', tone: 'seal' },
+          { k: 'p', t: 'Es el mismo documento, con las mismas tres secciones y el mismo contenido. Reconoce los dos términos: verás CAFR en material anterior a 2021 y ACFR en todo lo actual.' },
+        ],
       },
       {
-        k: 'p',
-        t: 'El informe tiene tres secciones. La <em>introductoria</em> lleva portada, índice, carta de transmisión y descripción del gobierno; la carta puede ser literalmente una carta del director financiero al ejecutivo y al cuerpo de gobierno, y debe citar los requisitos legales y de política del reporte. La <em>financiera</em> lleva el informe del auditor, el MD&amp;A, los estados básicos y notas, la RSI distinta del MD&amp;A, e información suplementaria como los <em>combining and individual fund statements</em>. La <em>estadística</em> lleva tablas de datos demográficos y económicos, tendencias financieras, capacidad fiscal e información operativa.',
-      },
-      {
-        k: 'p',
-        t: 'Falta la pieza que conecta con el artículo II: por qué hay <em>dos</em> juegos de estados básicos. Cada uno responde a una de las dos preguntas de rendición de cuentas.',
-      },
-      {
-        k: 'fig',
-        id: 'dual',
-        cap: 'Bajo devengado modificado los ingresos se reconocen cuando son medibles y están disponibles para gastar, y se registran expenditures —no expenses— cuando surge una obligación a pagarse con recursos financieros corrientes.',
-      },
-      {
-        k: 'p',
-        t: 'Los estados de todo el gobierno dan una vista agregada y usan lo mismo que una empresa —base devengada y enfoque de recursos económicos— porque el GASB concluyó que así se evalúa mejor la rendición de cuentas operativa. Los estados por fondos dan el detalle; los <em>governmental funds</em> se enfocan en el flujo de corto plazo de recursos financieros corrientes, que es lo que permite evaluar la rendición de cuentas fiscal. Nota terminológica: el GASB dice <em>net position</em> donde el FASB dice <em>net assets</em>; son sustancialmente lo mismo.',
+        head: 'Por qué hay dos juegos de estados',
+        blocks: [
+          { k: 'p', t: 'Cada juego responde a una de las dos preguntas del artículo II.' },
+          { k: 'fig', id: 'dual', cap: 'Bajo devengado modificado los ingresos se reconocen cuando son medibles y están disponibles, y se registran expenditures —no expenses— cuando obligan recursos corrientes.' },
+          { k: 'p', t: 'Los de todo el gobierno usan lo mismo que una empresa —base devengada y recursos económicos— porque así se evalúa mejor la rendición de cuentas operativa.' },
+          { k: 'p', t: 'Los de fondos gubernamentales miran el corto plazo, que es lo que permite evaluar la fiscal. Nota: el GASB dice <em>net position</em> donde el FASB dice <em>net assets</em>; son lo mismo.' },
+        ],
       },
     ],
     terms: [

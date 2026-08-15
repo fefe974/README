@@ -21,7 +21,11 @@ Four key concepts, taught as four articles in dependency order:
 | III | GASB vs. FASB jurisdiction |
 | IV | Basic CAFR / ACFR structure |
 
-Each article ends in questions drawn from the chapter's own end-of-chapter set, with an explanation on every answer. Completing one stamps it certified. All four unlock the capstone: problems 1–17, 1–18, 1–21 and a cross-article question set, with minimum guidance.
+Each article runs as **steps — one idea per screen** — then a check: terms plus questions drawn from the chapter's own end-of-chapter set, with an explanation on every answer. Completing one stamps it certified. Reopening a certified article lands on its check rather than back at step 1.
+
+All four unlock the capstone: problems 1–17, 1–18, 1–21 and a cross-article question set, with minimum guidance.
+
+Length is a design constraint, not an accident: no paragraph runs past ~40 words and no screen past ~110, so an article is roughly 1.4 phone screens instead of 5.5.
 
 Note on currency: the 18e says **CAFR**; GASB Statement No. 98 (2021) renamed it **ACFR**. The app teaches both and explains the rename, since students will meet both terms depending on the age of the source.
 
