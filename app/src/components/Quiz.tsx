@@ -1,5 +1,5 @@
 import * as RadioGroup from '@radix-ui/react-radio-group'
-import type { Question } from '@/lib/content'
+import type { Question } from '@/lib/types'
 import { cn } from '@/lib/utils'
 
 /* A radio group rather than a row of buttons: one answer per question,

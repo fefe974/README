@@ -1,46 +1,10 @@
-/* Chapter 1 content, sourced from Reck, Lowensohn & Neely,
-   "Accounting for Governmental & Nonprofit Entities", 18e, ch. 1.
-   Narration is Spanish; terms of art stay in English via <span class="term">. */
+/* Capítulo 1 — Introducción a la contabilidad y el reporte financiero
+   para gobiernos y entidades sin fines de lucro.
+   Reck, Lowensohn & Neely, 18e, cap. 1. */
 
-export type Block =
-  | { k: 'p'; t: string }
-  | { k: 'fig'; id: FigureId; cap: string }
-  | { k: 'note'; head: string; t: string; tone?: 'seal' | 'warn' }
+import type { Article, Chapter, Question } from '../types'
 
-export type Question = {
-  q: string
-  src: string
-  o: string[]
-  a: number
-  w: string
-}
-
-export type Step = { head: string; blocks: Block[] }
-
-export type Article = {
-  id: string
-  roman: string
-  concept: string
-  title: string
-  en: string
-  standfirst: string
-  /* One idea per step. A phone shows one step at a time, so no article
-     is ever a single long scroll. */
-  steps: Step[]
-  terms: [string, string][]
-  quiz: Question[]
-}
-
-export type FigureId =
-  | 'resources'
-  | 'noNetIncome'
-  | 'authority'
-  | 'accountability'
-  | 'jurisdiction'
-  | 'acfr'
-  | 'dual'
-
-export const ARTICLES: Article[] = [
+const ARTICLES: Article[] = [
   /* ------------------------------------------------------------ I */
   {
     id: 'a1',
@@ -411,57 +375,7 @@ export const ARTICLES: Article[] = [
   },
 ]
 
-/* ------------------------------------------------------------------
-   Cierre — el caso 1–17 / 1–18 con guía mínima
-   ------------------------------------------------------------------ */
-
-export const SORT_BINS = ['Introductoria', 'Financiera', 'Estadística']
-export const SORT_ITEMS: [string, number][] = [
-  ['Carta de transmisión', 0],
-  ['Portada e índice', 0],
-  ['Descripción del gobierno', 0],
-  ['Informe del auditor independiente', 1],
-  ['MD&A', 1],
-  ['Estados básicos y notas', 1],
-  ['RSI distinta del MD&A', 1],
-  ['Combining and individual fund statements', 1],
-  ['Tablas demográficas y económicas', 2],
-  ['Tendencias financieras', 2],
-  ['Capacidad fiscal', 2],
-  ['Información operativa', 2],
-]
-
-export const MATCH_BINS: [string, string][] = [
-  ['G', 'GASB'],
-  ['F', 'FASB'],
-  ['FB', 'FASAB'],
-]
-export const MATCH_ITEMS: [string, string][] = [
-  ['Una universidad estatal pública', 'G'],
-  ['Department of Defense', 'FB'],
-  ['AICPA', 'F'],
-  ['El condado donde vives', 'G'],
-  ['Internal Revenue Service', 'FB'],
-  ['Mayo Clinic', 'F'],
-  ['New York City', 'G'],
-  ['American Cancer Society', 'F'],
-  ['Metropolitan Washington Airports Authority', 'G'],
-  ['The Metropolitan Museum of Art', 'F'],
-]
-
-export const GRID_COLS = ['Gobierno', 'NFP privada', 'Empresa']
-export const GRID_ROWS: [string, ('Y' | 'N')[]][] = [
-  ['Ausencia de intereses de propiedad que se puedan vender', ['Y', 'Y', 'N']],
-  ['Quien aporta recursos espera un beneficio proporcional', ['N', 'N', 'Y']],
-  ['Su desempeño global se resume en una cifra de net income', ['N', 'N', 'Y']],
-  ['Exige un MD&A como required supplementary information', ['Y', 'N', 'N']],
-  ['Prepara estados government-wide y estados por fondos', ['Y', 'N', 'N']],
-  ['Reporta net assets con y sin restricciones de donante', ['N', 'Y', 'N']],
-  ['Prepara un statement of activities', ['Y', 'Y', 'N']],
-  ['Sigue normas emitidas por el GASB', ['Y', 'N', 'N']],
-]
-
-export const FINAL: Question[] = [
+const FINAL: Question[] = [
   {
     q: 'Un ciudadano quiere saber si su ciudad <em>cumplió el presupuesto aprobado</em>. ¿Qué estados consulta y con qué base contable?',
     src: 'Cruza los artículos II y IV',
@@ -531,7 +445,100 @@ export const FINAL: Question[] = [
   },
 ]
 
-export const GLOSSARY: [string, string, string, string][] = [
+export const CH1: Chapter = {
+  id: 'ch1',
+  num: 1,
+  name: 'Introducción al reporte de gobiernos y NFP',
+  en: 'Introduction to Accounting and Financial Reporting',
+  caseTab: 'Expediente · problemas 1–17 y 1–18',
+  caseTitle: 'El informe que nadie sabe leer',
+  caseLede: [
+    'El concejo municipal te entrega el informe anual de la ciudad y el balance de una asociación sin fines de lucro, y hace una pregunta incómoda: <em>«¿esta ciudad vivió dentro de sus medios, y estas dos entidades siquiera se pueden comparar?»</em>',
+    'Para responder hacen falta cuatro cosas, y este capítulo es exactamente esas cuatro.',
+  ],
+  articles: ARTICLES,
+  capstoneLede:
+    'Cuatro tareas, sin mini-clases y sin pistas antes de responder. Si te trabas, el glosario sigue ahí.',
+  closing:
+    'Ya puedes responder las cuatro preguntas del capítulo: por qué un gobierno no se mide con utilidad neta, de dónde viene su obligación de rendir cuentas, qué tablero normativo le toca a cada entidad, y qué contiene realmente un ACFR.',
+  tasks: [
+    {
+      kind: 'sort',
+      title: 'Arma el ACFR de la ciudad',
+      src: 'Problema 1–17',
+      hint: 'Toca un elemento, luego la sección donde va.',
+      bins: [
+        { code: '1', label: 'Introductoria', eyebrow: 'Sección 1' },
+        { code: '2', label: 'Financiera', eyebrow: 'Sección 2' },
+        { code: '3', label: 'Estadística', eyebrow: 'Sección 3' },
+      ],
+      items: [
+        ['Carta de transmisión', 0],
+        ['Portada e índice', 0],
+        ['Descripción del gobierno', 0],
+        ['Informe del auditor independiente', 1],
+        ['MD&A', 1],
+        ['Estados básicos y notas', 1],
+        ['RSI distinta del MD&A', 1],
+        ['Combining and individual fund statements', 1],
+        ['Tablas demográficas y económicas', 2],
+        ['Tendencias financieras', 2],
+        ['Capacidad fiscal', 2],
+        ['Información operativa', 2],
+      ],
+      note: 'La carta de transmisión es introductoria; el informe del auditor es financiero. Esos dos son los que más se cambian de lugar.',
+    },
+    {
+      kind: 'grid',
+      title: 'Gobierno, NFP privada y empresa',
+      src: 'Problema 1–18',
+      hint: 'Marca Y si la característica aplica a ese tipo de entidad, N si no. Toca de nuevo para alternar.',
+      cols: ['Gobierno', 'NFP privada', 'Empresa'],
+      rows: [
+        ['Ausencia de intereses de propiedad que se puedan vender', ['Y', 'Y', 'N']],
+        ['Quien aporta recursos espera un beneficio proporcional', ['N', 'N', 'Y']],
+        ['Su desempeño global se resume en una cifra de net income', ['N', 'N', 'Y']],
+        ['Exige un MD&A como required supplementary information', ['Y', 'N', 'N']],
+        ['Prepara estados government-wide y estados por fondos', ['Y', 'N', 'N']],
+        ['Reporta net assets con y sin restricciones de donante', ['N', 'Y', 'N']],
+        ['Prepara un statement of activities', ['Y', 'Y', 'N']],
+        ['Sigue normas emitidas por el GASB', ['Y', 'N', 'N']],
+      ],
+      note: 'Mira la fila del statement of activities: lo preparan tanto el gobierno como la NFP. Ahí está el corazón del problema 1–18.',
+    },
+    {
+      kind: 'sort',
+      title: '¿Quién le fija las normas a quién?',
+      src: 'Problema 1–21',
+      hint: 'Toca la entidad, luego su cuerpo normativo.',
+      bins: [
+        { code: 'G', label: 'GASB', eyebrow: 'G' },
+        { code: 'F', label: 'FASB', eyebrow: 'F' },
+        { code: 'FB', label: 'FASAB', eyebrow: 'FB' },
+      ],
+      items: [
+        ['Una universidad estatal pública', 0],
+        ['Department of Defense', 2],
+        ['AICPA', 1],
+        ['El condado donde vives', 0],
+        ['Internal Revenue Service', 2],
+        ['Mayo Clinic', 1],
+        ['New York City', 0],
+        ['American Cancer Society', 1],
+        ['Metropolitan Washington Airports Authority', 0],
+        ['The Metropolitan Museum of Art', 1],
+      ],
+      note: 'La Metropolitan Washington Airports Authority es un cuerpo público creado por pacto interestatal → GASB. El AICPA y el Met son NFP privadas → FASB.',
+    },
+    {
+      kind: 'quiz',
+      title: 'El caso completo',
+      src: 'Cruza los cuatro artículos',
+      hint: 'Seis preguntas que mezclan los cuatro conceptos.',
+      questions: FINAL,
+    },
+  ],
+  glossary: [
   ['Accountability', 'Rendición de cuentas', 'La piedra angular de todo reporte financiero gubernamental: justificar cómo se obtienen y se usan los recursos públicos.', 'II'],
   ['ACFR / CAFR', 'Informe anual integral', 'El informe completo de tres secciones. No es obligatorio. Renombrado por GASB 98 en 2021; el contenido no cambió.', 'IV'],
   ['Basic financial statements', 'Estados financieros básicos', 'Las dos categorías que prescribe el GASB —government-wide y fund— junto con sus notas, que son parte integral.', 'IV'],
@@ -551,4 +558,5 @@ export const GLOSSARY: [string, string, string, string][] = [
   ['Operational accountability', 'Rendición de cuentas operativa', 'Si el gobierno usó sus recursos de forma eficiente y eficaz para cumplir sus objetivos operativos.', 'II'],
   ['RSI', 'Información suplementaria requerida', 'Obligatoria y fuera de los estados básicos. El MD&A es RSI, y además se exige otra RSI distinta del MD&A.', 'IV'],
   ['Special purpose government', 'Gobierno de propósito especial', 'Distritos escolares independientes, universidades públicas y distritos especiales: una función o unas pocas.', 'I'],
-]
+  ],
+}

@@ -1,64 +1,7 @@
-import type { FigureId } from './content'
+import type { ReactElement } from 'react'
+import { Box, Defs, INK, MUT, NO, NOS, OK, OKS, RULE, SEAL, SEALS, SHEET, SUNK, svgProps } from './kit'
 
-/* Hand-authored inline SVG. Colours come from the token variables so
-   both themes resolve; nothing here depends on a raw hex. */
-
-const INK = 'rgb(var(--ink))'
-const MUT = 'rgb(var(--muted))'
-const SEAL = 'rgb(var(--seal))'
-const SEALS = 'rgb(var(--seal-soft))'
-const RULE = 'rgb(var(--rule-2))'
-const SHEET = 'rgb(var(--sheet))'
-const SUNK = 'rgb(var(--sunk))'
-const NO = 'rgb(var(--no))'
-const NOS = 'rgb(var(--no-soft))'
-const OK = 'rgb(var(--ok))'
-const OKS = 'rgb(var(--ok-soft))'
-
-function Defs() {
-  return (
-    <defs>
-      <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-        <path d="M0 0 L10 5 L0 10 z" fill={INK} />
-      </marker>
-      <marker id="ars" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-        <path d="M0 0 L10 5 L0 10 z" fill={SEAL} />
-      </marker>
-      <marker id="arn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-        <path d="M0 0 L10 5 L0 10 z" fill={NO} />
-      </marker>
-    </defs>
-  )
-}
-
-type BoxProps = {
-  x: number; y: number; w: number; h: number
-  a: string; b?: string
-  stroke?: string; fill?: string; text?: string; sub?: string
-}
-function Box({ x, y, w, h, a, b, stroke = RULE, fill = SHEET, text = INK, sub = MUT }: BoxProps) {
-  const cx = x + w / 2
-  return (
-    <>
-      <rect x={x} y={y} width={w} height={h} rx="7" fill={fill} stroke={stroke} strokeWidth="1.2" />
-      {b ? (
-        <>
-          <text x={cx} y={y + h / 2 - 3} textAnchor="middle" fontSize="11.5" fontWeight="700" fill={text}>{a}</text>
-          <text x={cx} y={y + h / 2 + 11} textAnchor="middle" fontSize="10" fill={sub}>{b}</text>
-        </>
-      ) : (
-        <text x={cx} y={y + h / 2 + 4} textAnchor="middle" fontSize="11.5" fontWeight="700" fill={text}>{a}</text>
-      )}
-    </>
-  )
-}
-
-const svgProps = (label: string, h: number) => ({
-  viewBox: `0 0 360 ${h}`,
-  role: 'img' as const,
-  'aria-label': label,
-  className: 'block h-auto w-full min-w-[320px]',
-})
+/* Figuras del capítulo 1. */
 
 /* ---------------------------------------------------------- I.a */
 function Resources() {
@@ -310,7 +253,7 @@ function Dual() {
   )
 }
 
-const MAP: Record<FigureId, () => JSX.Element> = {
+export const CH1_FIGURES: Record<string, () => ReactElement> = {
   resources: Resources,
   noNetIncome: NoNetIncome,
   authority: Authority,
@@ -318,16 +261,4 @@ const MAP: Record<FigureId, () => JSX.Element> = {
   jurisdiction: Jurisdiction,
   acfr: Acfr,
   dual: Dual,
-}
-
-export function Figure({ id, cap }: { id: FigureId; cap: string }) {
-  const C = MAP[id]
-  return (
-    <figure className="mt-5 rounded-xl border border-rule bg-sheet p-4 pb-3 shadow-[var(--shadow-sm)]">
-      <div className="overflow-x-auto">
-        <C />
-      </div>
-      <figcaption className="mt-3 border-t border-rule pt-3 text-[13px] leading-snug text-muted">{cap}</figcaption>
-    </figure>
-  )
 }
