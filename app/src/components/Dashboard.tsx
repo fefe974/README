@@ -6,6 +6,7 @@ import {
   type ChapterSave, type ConceptStat, type Weak,
 } from '@/lib/progress'
 import { Progress } from './ui/progress'
+import { VideoCard } from './VideoCard'
 import { cn } from '@/lib/utils'
 
 /* A dashboard is scanned, not read: the summary comes before the
@@ -147,6 +148,8 @@ export function Dashboard({
         <Stat label="Artículos" value={`${t.certified}`} of={`de ${t.articles}`} />
         <Stat label="Por repasar" value={`${weakTotal(chapters, saved)}`} of="ejercicios" tone={weakTotal(chapters, saved) ? 'no' : 'ok'} />
       </section>
+
+      <VideoCard />
 
       {/* ---------------------------- chapters --------------------------- */}
       <section data-panel-card>
