@@ -72,7 +72,8 @@ Built with the `frontend-design` and `ui-ux-pro-max` skills in `.claude/skills/`
 
 - **Palette** — the materials of a certified public document: bond-paper ground, iron-gall ink, one accent (the blue of a certification stamp). Correct/incorrect are semantic, outside the accent.
 - **Type** — EB Garamond (display), Atkinson Hyperlegible (body — a Braille Institute face for low vision, the accessibility thesis made material), IBM Plex Mono (citations and data).
-- **Signature** — completing an article stamps it *certificado*, GSAP `back.out` ~420ms, skipped under `prefers-reduced-motion`.
+- **Signature** — completing an article stamps it *certificado*, GSAP `back.out` ~420ms.
+- **Motion** — every animation goes through `useGSAP` from `@gsap/react` (scoped, auto-reverting) and `gsap.matchMedia()` for `prefers-reduced-motion`, per the official `gsap-*` skills in `.claude/skills/`. Transform and opacity only, so it stays on the compositor.
 - **Themes** — light and dark defined token-level, covering all three viewer states.
 
 Thirteen hand-authored inline SVG figures carry the mechanisms.

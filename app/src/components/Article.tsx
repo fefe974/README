@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import gsap from 'gsap'
+import { FULL, gsap, useGSAP } from '@/lib/gsap'
 import type { Article as ArticleT } from '@/lib/types'
 import { Figure } from '@/lib/figures/index'
 import { exampleFor } from '@/lib/examples'
@@ -48,14 +48,16 @@ export function Article({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [article.id, initialStep])
 
-  useEffect(() => {
-    if (!pane.current) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const ctx = gsap.context(() => {
-      gsap.from('[data-anim]', { opacity: 0, y: 10, duration: 0.32, stagger: 0.05, ease: 'power2.out' })
-    }, pane)
-    return () => ctx.revert()
-  }, [step, article.id])
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia()
+      mm.add(FULL, () => {
+        gsap.from('[data-anim]', { opacity: 0, y: 10, duration: 0.32, stagger: 0.05, ease: 'power2.out' })
+      })
+      return () => mm.revert()
+    },
+    { dependencies: [step, article.id], scope: pane, revertOnUpdate: true },
+  )
 
   const goto = (n: number) => {
     setStep(n)

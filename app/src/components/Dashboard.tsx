@@ -1,3 +1,5 @@
+import { useRef } from 'react'
+import { FULL, gsap, useGSAP } from '@/lib/gsap'
 import type { Chapter } from '@/lib/types'
 import {
   chapterStats, nextUp, totals, weakSpots,
@@ -35,9 +37,52 @@ export function Dashboard({
     byChapter.reduce((a, g) => a + g.rows.length, 0)
   const weak = chapters.flatMap((c) => weakSpots(c, saved[c.id] ?? empty())).slice(0, 5)
   const started = t.solved > 0
+  const root = useRef<HTMLDivElement>(null)
+
+  /* One orchestrated entrance rather than effects scattered down the
+     page: the hero counts up while the ring draws, then the sections
+     stagger in behind it. Transform and opacity only, so it stays on
+     the compositor. */
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia()
+      mm.add(FULL, () => {
+        const tl = gsap.timeline({ defaults: { ease: 'power2.out' } })
+        tl.from('[data-panel-hero]', { opacity: 0, y: 12, duration: 0.4 })
+          .from('[data-panel-card]', { opacity: 0, y: 14, duration: 0.38, stagger: 0.05 }, '-=0.2')
+
+        const ring = root.current?.querySelector<SVGCircleElement>('[data-ring]')
+        if (ring) {
+          const len = Number(ring.dataset.len)
+          tl.from(ring, { strokeDashoffset: len, duration: 0.7, ease: 'power2.inOut' }, 0.1)
+        }
+
+        const num = root.current?.querySelector<HTMLElement>('[data-count]')
+        if (num) {
+          const target = Number(num.dataset.count)
+          const proxy = { v: 0 }
+          tl.to(
+            proxy,
+            {
+              v: target,
+              duration: 0.7,
+              ease: 'power2.inOut',
+              snap: { v: 1 },
+              onUpdate: () => {
+                num.textContent = `${proxy.v}%`
+              },
+            },
+            0.1,
+          )
+        }
+      })
+      return () => mm.revert()
+    },
+    { scope: root },
+  )
 
   return (
-    <div className="flex flex-col gap-5">
+    <div ref={root} className="flex flex-col gap-5">
       <header>
         <p className="font-mono text-[10.5px] uppercase tracking-[0.13em] text-muted">
           Contabilidad gubernamental y NFP
@@ -46,7 +91,7 @@ export function Dashboard({
       </header>
 
       {/* ---------------- hero + the one action that matters ---------------- */}
-      <section className="overflow-hidden rounded-xl border border-rule bg-sheet shadow-[var(--shadow)]">
+      <section data-panel-hero className="overflow-hidden rounded-xl border border-rule bg-sheet shadow-[var(--shadow)]">
         <div className="flex items-end gap-4 p-5 pb-4">
           <div className="min-w-0 flex-1">
             <p className="font-mono text-[9.5px] uppercase tracking-[0.14em] text-muted">
@@ -54,7 +99,12 @@ export function Dashboard({
             </p>
             {started ? (
               <>
-                <p className="font-display text-[52px] leading-none tracking-tight text-seal">{t.mastery}%</p>
+                <p
+                  data-count={t.mastery ?? 0}
+                  className="font-display text-[52px] leading-none tracking-tight text-seal tabular-nums"
+                >
+                  {t.mastery}%
+                </p>
                 <p className="mt-1.5 text-[13.5px] leading-snug text-muted">
                   {t.got} de {t.of} decisiones correctas
                 </p>
@@ -92,14 +142,14 @@ export function Dashboard({
       </section>
 
       {/* ---------------------------- KPI row ---------------------------- */}
-      <section aria-label="Resumen" className="grid grid-cols-3 gap-2.5">
+      <section data-panel-card aria-label="Resumen" className="grid grid-cols-3 gap-2.5">
         <Stat label="Ejercicios" value={`${t.solved}`} of={`de ${t.steps}`} />
         <Stat label="Artículos" value={`${t.certified}`} of={`de ${t.articles}`} />
         <Stat label="Por repasar" value={`${weakTotal(chapters, saved)}`} of="ejercicios" tone={weakTotal(chapters, saved) ? 'no' : 'ok'} />
       </section>
 
       {/* ---------------------------- chapters --------------------------- */}
-      <section>
+      <section data-panel-card>
         <h2 className="mb-2.5 font-mono text-[10.5px] uppercase tracking-[0.13em] text-muted">Capítulos</h2>
         <div className="flex flex-col gap-2.5">
           {chapters.map((c) => {
@@ -139,7 +189,7 @@ export function Dashboard({
 
       {/* ------------------------ mastery by concept --------------------- */}
       {started && (
-        <section>
+        <section data-panel-card>
           <h2 className="mb-1 font-mono text-[10.5px] uppercase tracking-[0.13em] text-muted">Dominio por concepto</h2>
           <p className="mb-3 text-[13px] leading-snug text-muted">
             Porcentaje de decisiones correctas en los artículos que ya trabajaste.
@@ -168,7 +218,7 @@ export function Dashboard({
 
       {/* ---------------------------- review list ------------------------ */}
       {weak.length > 0 && (
-        <section>
+        <section data-panel-card>
           <h2 className="mb-1 font-mono text-[10.5px] uppercase tracking-[0.13em] text-muted">Para repasar</h2>
           <p className="mb-3 text-[13px] leading-snug text-muted">
             Los ejercicios que fallaste, empezando por el peor. Toca para volver a ese paso.
@@ -240,9 +290,12 @@ function Ring({ pct }: { pct: number }) {
     <svg width="68" height="68" viewBox="0 0 68 68" role="img" aria-label={`${pct} por ciento de dominio`} className="flex-none">
       <circle cx="34" cy="34" r={r} fill="none" stroke="rgb(var(--sunk))" strokeWidth="7" />
       <circle
+        data-ring
+        data-len={c}
         cx="34" cy="34" r={r} fill="none"
         stroke="rgb(var(--seal))" strokeWidth="7" strokeLinecap="round"
-        strokeDasharray={`${(c * pct) / 100} ${c}`}
+        strokeDasharray={c}
+        strokeDashoffset={c - (c * pct) / 100}
         transform="rotate(-90 34 34)"
       />
     </svg>

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import gsap from 'gsap'
+import { FULL, gsap, useGSAP } from '@/lib/gsap'
 import type { Example, Probe, Tone, Viz } from '@/lib/types'
 import { cn } from '@/lib/utils'
 
@@ -45,16 +45,22 @@ export function Tutor({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ex.title])
 
-  useEffect(() => {
-    if (!list.current || shown === 0) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const el = list.current.children[shown - 1] as HTMLElement | undefined
-    if (!el) return
-    const t = gsap.from(el, { opacity: 0, y: 8, duration: 0.28, ease: 'power2.out' })
-    return () => {
-      t.kill()
-    }
-  }, [shown])
+  /* Reveals the step just added. Killing a from() tween would leave the
+     row at whatever opacity it had reached; useGSAP reverts instead, so
+     an interrupted reveal never strands a step invisible. */
+  useGSAP(
+    () => {
+      if (shown === 0) return
+      const el = list.current?.children[shown - 1] as HTMLElement | undefined
+      if (!el) return
+      const mm = gsap.matchMedia()
+      mm.add(FULL, () => {
+        gsap.from(el, { opacity: 0, y: 8, duration: 0.28, ease: 'power2.out' })
+      })
+      return () => mm.revert()
+    },
+    { dependencies: [shown], scope: list },
+  )
 
   const need = probeCount(ex.probe)
   const answered = Object.keys(answers).length

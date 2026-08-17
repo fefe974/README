@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react'
-import gsap from 'gsap'
+import { useRef } from 'react'
+import { FULL, gsap, REDUCED, useGSAP } from '@/lib/gsap'
 import { cn } from '@/lib/utils'
 
 /* The signature element. Completing an article stamps it certified —
@@ -19,28 +19,33 @@ export function Stamp({
   className?: string
 }) {
   const ref = useRef<HTMLDivElement>(null)
-  const played = useRef(false)
 
-  useEffect(() => {
-    if (!animate || played.current || !ref.current) return
-    played.current = true
+  useGSAP(
+    () => {
+      if (!animate) return
+      const mm = gsap.matchMedia()
 
-    // Respect the user's motion preference: land it, don't perform it.
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      gsap.set(ref.current, { opacity: 1, scale: 1, rotate: -4 })
-      return
-    }
+      // Motion off: land the stamp, don't perform it.
+      mm.add(REDUCED, () => {
+        gsap.set(ref.current, { opacity: 1, scale: 1, rotate: -4 })
+      })
 
-    const tl = gsap.timeline()
-    tl.fromTo(
-      ref.current,
-      { opacity: 0, scale: 1.75, rotate: -16 },
-      { opacity: 1, scale: 1, rotate: -4, duration: 0.42, ease: 'back.out(1.6)' },
-    ).to(ref.current, { scale: 0.97, duration: 0.08, yoyo: true, repeat: 1, ease: 'power1.inOut' })
-    return () => {
-      tl.kill()
-    }
-  }, [animate])
+      // Standard tier: back.out to land it, then a short press.
+      mm.add(FULL, () => {
+        gsap
+          .timeline()
+          .fromTo(
+            ref.current,
+            { opacity: 0, scale: 1.75, rotate: -16 },
+            { opacity: 1, scale: 1, rotate: -4, duration: 0.42, ease: 'back.out(1.6)' },
+          )
+          .to(ref.current, { scale: 0.97, duration: 0.08, yoyo: true, repeat: 1, ease: 'power1.inOut' })
+      })
+
+      return () => mm.revert()
+    },
+    { dependencies: [animate], scope: ref },
+  )
 
   const sm = size === 'sm'
   return (
