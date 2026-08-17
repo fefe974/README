@@ -69,3 +69,69 @@
   --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.35);
   color-scheme: dark;
 }
+
+/* ---------------------------------------------------------------
+   Piel «papel de trabajo». Generada desde
+   penpot/cuentas-publicas.tokens.json — el mismo archivo que se
+   importa en Penpot, así que el diseño y el código no pueden
+   divergir. No editar a mano: editar el JSON y regenerar.
+   --------------------------------------------------------------- */
+:root[data-skin='workpaper'] {
+    --ground: 234 237 230;
+    --sheet: 248 250 245;
+    --sunk: 220 226 214;
+    --ink: 25 30 26;
+    --ink-2: 62 71 65;
+    --muted: 94 104 93;
+    --rule: 204 212 198;
+    --rule-2: 176 186 169;
+    --seal: 58 58 143;
+    --seal-soft: 227 227 244;
+    --ok: 29 107 78;
+    --ok-soft: 220 235 227;
+    --no: 151 52 33;
+    --no-soft: 245 227 222;
+    --shadow: 0 10px 30px rgb(25 30 26 / 0.10);
+    --shadow-sm: 0 1px 3px rgb(25 30 26 / 0.08);
+    color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-skin='workpaper']:not([data-theme='light']) {
+    --ground: 17 20 16;
+    --sheet: 25 29 23;
+    --sunk: 13 16 11;
+    --ink: 230 234 226;
+    --ink-2: 194 201 191;
+    --muted: 139 148 137;
+    --rule: 38 43 34;
+    --rule-2: 54 62 51;
+    --seal: 154 154 240;
+    --seal-soft: 30 30 58;
+    --ok: 95 191 151;
+    --ok-soft: 18 36 28;
+    --no: 224 134 107;
+    --no-soft: 43 23 18;
+    --shadow: 0 10px 30px rgb(0 0 0 / 0.5);
+    --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.35);
+    color-scheme: dark;
+  }
+}
+:root[data-skin='workpaper'][data-theme='dark'] {
+    --ground: 17 20 16;
+    --sheet: 25 29 23;
+    --sunk: 13 16 11;
+    --ink: 230 234 226;
+    --ink-2: 194 201 191;
+    --muted: 139 148 137;
+    --rule: 38 43 34;
+    --rule-2: 54 62 51;
+    --seal: 154 154 240;
+    --seal-soft: 30 30 58;
+    --ok: 95 191 151;
+    --ok-soft: 18 36 28;
+    --no: 224 134 107;
+    --no-soft: 43 23 18;
+    --shadow: 0 10px 30px rgb(0 0 0 / 0.5);
+    --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.35);
+    color-scheme: dark;
+}

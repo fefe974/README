@@ -16,6 +16,8 @@ type ChapterSave = { quiz: Record<string, Record<number, number>>; cap: CapState
 type Saved = Record<string, ChapterSave>
 
 const KEY = 'cuentas-publicas'
+const SKIN_KEY = 'cuentas-publicas-skin'
+export type Skin = 'workpaper' | 'record'
 const blank = (): ChapterSave => ({ quiz: {}, cap: {}, solves: {} })
 
 function load(): Saved {
@@ -54,6 +56,13 @@ export default function App() {
   const [jump, setJump] = useState<number | undefined>(undefined)
   const [saved, setSaved] = useState<Saved>(load)
   const [theme, setTheme] = useState<'light' | 'dark' | null>(null)
+  const [skin, setSkin] = useState<Skin>(() => {
+    try {
+      return (localStorage.getItem(SKIN_KEY) as Skin) ?? 'workpaper'
+    } catch {
+      return 'workpaper'
+    }
+  })
   const [q, setQ] = useState('')
 
   useEffect(() => {
@@ -68,6 +77,18 @@ export default function App() {
     if (theme) document.documentElement.setAttribute('data-theme', theme)
     else document.documentElement.removeAttribute('data-theme')
   }, [theme])
+
+  /* 'record' is the original identity — the certified public report.
+     'workpaper' is the current one. Both are complete token sets, so
+     switching repaints everything without touching a component. */
+  useEffect(() => {
+    document.documentElement.setAttribute('data-skin', skin)
+    try {
+      localStorage.setItem(SKIN_KEY, skin)
+    } catch {
+      /* ignore */
+    }
+  }, [skin])
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -157,6 +178,8 @@ export default function App() {
               saved={saved}
               onOpenChapter={openChapter}
               onResume={resume}
+              skin={skin}
+              onSkin={setSkin}
             />
             <p className="mx-auto mt-7 max-w-read text-center text-[12.5px] leading-relaxed text-muted">
               Basado en Reck, Lowensohn y Neely, <em>Accounting for Governmental &amp; Nonprofit Entities</em>, 18.ª ed.

@@ -1,0 +1,124 @@
+{
+  "core": {
+    "space": {
+      "step": { "$value": "4", "$type": "spacing", "$description": "Unidad base de la retícula" },
+      "xs": { "$value": "{space.step} * 2", "$type": "spacing" },
+      "sm": { "$value": "{space.step} * 3", "$type": "spacing" },
+      "md": { "$value": "{space.step} * 4", "$type": "spacing" },
+      "lg": { "$value": "{space.step} * 5", "$type": "spacing" },
+      "xl": { "$value": "{space.step} * 8", "$type": "spacing" }
+    },
+    "radius": {
+      "sm": { "$value": "6", "$type": "borderRadius" },
+      "md": { "$value": "10", "$type": "borderRadius" },
+      "lg": { "$value": "12", "$type": "borderRadius" },
+      "pill": { "$value": "999", "$type": "borderRadius" }
+    },
+    "stroke": {
+      "hair": { "$value": "1", "$type": "borderWidth", "$description": "Reglas y separadores" },
+      "mark": { "$value": "1.5", "$type": "borderWidth", "$description": "Contorno de un elemento activo" },
+      "focus": { "$value": "3", "$type": "borderWidth", "$description": "Anillo de foco · WCAG 2.2" }
+    },
+    "font": {
+      "display": { "$value": "EB Garamond", "$type": "fontFamilies", "$description": "El registro de la norma escrita" },
+      "body": { "$value": "Atkinson Hyperlegible", "$type": "fontFamilies", "$description": "Tipografía del Braille Institute para baja visión: la tesis de accesibilidad hecha material" },
+      "mono": { "$value": "IBM Plex Mono", "$type": "fontFamilies", "$description": "Citas normativas y cifras" }
+    },
+    "size": {
+      "micro": { "$value": "10", "$type": "fontSizes" },
+      "caption": { "$value": "13", "$type": "fontSizes" },
+      "body": { "$value": "16", "$type": "fontSizes" },
+      "lead": { "$value": "19", "$type": "fontSizes" },
+      "title": { "$value": "27", "$type": "fontSizes" },
+      "hero": { "$value": "52", "$type": "fontSizes" }
+    },
+    "weight": {
+      "regular": { "$value": "400", "$type": "fontWeights" },
+      "semibold": { "$value": "600", "$type": "fontWeights" },
+      "bold": { "$value": "700", "$type": "fontWeights" }
+    },
+    "leading": {
+      "tight": { "$value": "1.15", "$type": "lineHeights" },
+      "snug": { "$value": "1.35", "$type": "lineHeights" },
+      "relaxed": { "$value": "1.6", "$type": "lineHeights" }
+    },
+    "tracking": {
+      "eyebrow": { "$value": "0.13em", "$type": "letterSpacing" },
+      "normal": { "$value": "0", "$type": "letterSpacing" },
+      "tight": { "$value": "-0.015em", "$type": "letterSpacing" }
+    }
+  },
+
+  "papel-de-trabajo/claro": {
+    "bg": {
+      "ground": { "$value": "#EAEDE6", "$type": "color", "$description": "Papel columnar de contabilidad, frío y desaturado" },
+      "sheet": { "$value": "#F8FAF5", "$type": "color", "$description": "La hoja levantada sobre el escritorio" },
+      "sunk": { "$value": "#DCE2D6", "$type": "color", "$description": "Canaletas y encabezados de tabla" }
+    },
+    "fg": {
+      "ink": { "$value": "#191E1A", "$type": "color", "$description": "Grafito · 14.30:1 sobre ground" },
+      "ink-2": { "$value": "#3E4741", "$type": "color", "$description": "8.14:1 sobre ground" },
+      "muted": { "$value": "#5E685D", "$type": "color", "$description": "4.91:1 sobre ground · mínimo AA para texto" }
+    },
+    "line": {
+      "rule": { "$value": "#CCD4C6", "$type": "color" },
+      "rule-2": { "$value": "#B0BAA9", "$type": "color" }
+    },
+    "accent": {
+      "mark": { "$value": "#3A3A8F", "$type": "color", "$description": "Tinta índigo de pluma: la marca del auditor. 8.14:1" },
+      "mark-soft": { "$value": "#E3E3F4", "$type": "color" }
+    },
+    "state": {
+      "ok": { "$value": "#1D6B4E", "$type": "color", "$description": "Reservado · nunca se usa como acento" },
+      "ok-soft": { "$value": "#DCEBE3", "$type": "color" },
+      "no": { "$value": "#973421", "$type": "color", "$description": "Reservado · siempre acompañado de glifo y palabra" },
+      "no-soft": { "$value": "#F5E3DE", "$type": "color" }
+    }
+  },
+
+  "papel-de-trabajo/oscuro": {
+    "bg": {
+      "ground": { "$value": "#111410", "$type": "color" },
+      "sheet": { "$value": "#191D17", "$type": "color" },
+      "sunk": { "$value": "#0D100B", "$type": "color" }
+    },
+    "fg": {
+      "ink": { "$value": "#E6EAE2", "$type": "color", "$description": "15.23:1 sobre ground" },
+      "ink-2": { "$value": "#C2C9BF", "$type": "color" },
+      "muted": { "$value": "#8B9489", "$type": "color", "$description": "5.92:1 sobre ground" }
+    },
+    "line": {
+      "rule": { "$value": "#262B22", "$type": "color" },
+      "rule-2": { "$value": "#363E33", "$type": "color" }
+    },
+    "accent": {
+      "mark": { "$value": "#9A9AF0", "$type": "color", "$description": "Índigo levantado para fondo oscuro. 7.30:1" },
+      "mark-soft": { "$value": "#1E1E3A", "$type": "color" }
+    },
+    "state": {
+      "ok": { "$value": "#5FBF97", "$type": "color" },
+      "ok-soft": { "$value": "#12241C", "$type": "color" },
+      "no": { "$value": "#E0866B", "$type": "color" },
+      "no-soft": { "$value": "#2B1712", "$type": "color" }
+    }
+  },
+
+  "$themes": [
+    {
+      "id": "papel-claro",
+      "name": "Papel de trabajo · claro",
+      "group": "Cuentas Públicas",
+      "selectedTokenSets": { "core": "source", "papel-de-trabajo/claro": "enabled" }
+    },
+    {
+      "id": "papel-oscuro",
+      "name": "Papel de trabajo · oscuro",
+      "group": "Cuentas Públicas",
+      "selectedTokenSets": { "core": "source", "papel-de-trabajo/oscuro": "enabled" }
+    }
+  ],
+
+  "$metadata": {
+    "tokenSetOrder": ["core", "papel-de-trabajo/claro", "papel-de-trabajo/oscuro"]
+  }
+}

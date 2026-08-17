@@ -20,11 +20,15 @@ export function Dashboard({
   saved,
   onOpenChapter,
   onResume,
+  skin,
+  onSkin,
 }: {
   chapters: Chapter[]
   saved: Record<string, ChapterSave>
   onOpenChapter: (chapterId: string) => void
   onResume: (chapterId: string, articleId: string, step: number) => void
+  skin: 'workpaper' | 'record'
+  onSkin: (s: 'workpaper' | 'record') => void
 }) {
   const t = totals(chapters, saved)
   const next = nextUp(chapters, saved)
@@ -218,6 +222,40 @@ export function Dashboard({
           )}
         </section>
       )}
+
+      {/* ------------------------------ skin ----------------------------- */}
+      <section data-panel-card>
+        <h2 className="mb-1 font-mono text-[10.5px] uppercase tracking-[0.13em] text-muted">Apariencia</h2>
+        <p className="mb-3 text-[13px] leading-snug text-muted">
+          Dos identidades completas. Cambian los tokens, no la estructura.
+        </p>
+        <div role="radiogroup" aria-label="Apariencia" className="grid grid-cols-2 gap-2.5">
+          {([
+            ['workpaper', 'Papel de trabajo', 'Papel columnar y tinta índigo. Donde ocurre el trabajo.'],
+            ['record', 'Registro público', 'Papel bond y azul de sello. El informe terminado.'],
+          ] as const).map(([id, name, desc]) => (
+            <button
+              key={id}
+              role="radio"
+              aria-checked={skin === id}
+              onClick={() => onSkin(id)}
+              className={cn(
+                'rounded-xl border p-3 text-left',
+                skin === id ? 'border-seal bg-sealsoft' : 'border-rule bg-sheet',
+              )}
+            >
+              <span className="flex items-center gap-1.5">
+                <span
+                  aria-hidden="true"
+                  className={cn('h-3 w-3 flex-none rounded-full border', skin === id ? 'border-seal bg-seal' : 'border-rule2')}
+                />
+                <b className={cn('text-[13.5px] leading-tight', skin === id && 'text-seal')}>{name}</b>
+              </span>
+              <span className="mt-1 block text-[11.5px] leading-snug text-muted">{desc}</span>
+            </button>
+          ))}
+        </div>
+      </section>
 
       {/* ---------------------------- review list ------------------------ */}
       {weak.length > 0 && (
