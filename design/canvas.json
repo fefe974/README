@@ -1,0 +1,34 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html",     "title": "Hoy · panel",                 "x": 0,    "y": 0,    "w": 390, "h": 902 },
+    { "file": "A-Panel.dc.html",  "title": "A · Cátedra nocturna — panel", "x": 470,  "y": 0,    "w": 390, "h": 914 },
+    { "file": "B-Panel.dc.html",  "title": "B · Libro mayor — panel",      "x": 940,  "y": 0,    "w": 390, "h": 984 },
+    { "file": "C-Panel.dc.html",  "title": "C · La ruta — panel",          "x": 1410, "y": 0,    "w": 390, "h": 943 },
+    { "file": "A-Leccion.dc.html","title": "A · Cátedra nocturna — lección","x": 470, "y": 1060, "w": 390, "h": 1135 },
+    { "file": "B-Leccion.dc.html","title": "B · Libro mayor — lección",    "x": 940,  "y": 1060, "w": 390, "h": 989 },
+    { "file": "C-Leccion.dc.html","title": "C · La ruta — lección",        "x": 1410, "y": 1060, "w": 390, "h": 1112 }
+  ],
+  "annotations": [
+    {
+      "id": "nota-actual",
+      "x": 0, "y": -250, "w": 400,
+      "text": "REFERENCIA — lo que hay hoy\n\nPiel «papel de trabajo»: EB Garamond + Atkinson Hyperlegible, tarjetas sobre papel columnar, un solo acento índigo.\n\nEstá aquí para comparar, no para elegir. Las tres columnas de la derecha son direcciones distintas, no versiones de esta."
+    },
+    {
+      "id": "nota-a",
+      "x": 470, "y": -250, "w": 400,
+      "text": "A · CÁTEDRA NOCTURNA — cambia el TONO\n\nMismo esqueleto, otra voz: noche, serif de alto contraste (Instrument Serif), cifras enormes, oro en vez de índigo. Se van las tarjetas: todo se apoya en filetes, como un periódico.\n\nA favor: memorable, adulto, serio. El 68 se ve desde lejos.\nEn contra: fondo oscuro para leer párrafos largos cansa, y aleja el app del papel de un despacho contable."
+    },
+    {
+      "id": "nota-b",
+      "x": 940, "y": -250, "w": 400,
+      "text": "B · LIBRO MAYOR — cambia la DENSIDAD\n\nEl curso se lee como un estado financiero: registro rayado, columnas Ejerc. / Dom., banda verde, doble raya en totales. IBM Plex Sans Condensed + mono, oxblood.\n\nA favor: todos los artículos caben en una pantalla; le habla al contador en su propio idioma.\nEn contra: intimida a quien empieza, y la densidad topa con el mínimo de 44 px de área táctil."
+    },
+    {
+      "id": "nota-c",
+      "x": 1410, "y": -250, "w": 400,
+      "text": "C · LA RUTA — cambia la ARQUITECTURA\n\nDeja de ser tablero y pasa a ser una ruta: una sola cosa que hacer hoy, y debajo el camino con estaciones. Las métricas bajan a una franja. La lección se vuelve conversación con el tutor.\n\nA favor: elimina la parálisis de «¿por dónde sigo?»; la más cálida de las tres.\nEn contra: contradice el «diseña el app como un dashboard» — la vista de conjunto queda en segundo plano."
+    }
+  ],
+  "launch": { "view": "canvas" }
+}

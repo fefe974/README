@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+  <style>
+    body { margin: 0; }
+    a { color: #8E2C1B; } a:hover { color: #6E1F11; }
+    .c { font-family: 'IBM Plex Sans Condensed', system-ui, sans-serif; }
+    .m { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+    .hd { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: #6B6D5C; }
+  </style>
+</helmet>
+
+<div style="width: 390px; background: #F6F4EC; color: #16170F; font-family: 'IBM Plex Sans Condensed', system-ui, sans-serif; -webkit-font-smoothing: antialiased;">
+
+  <div style="display: flex; align-items: center; gap: 10px; background: #16170F; color: #F6F4EC; padding: 10px 14px;">
+    <span aria-hidden="true" style="flex: none;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F6F4EC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6"></path><path d="m12 19-7-7 7-7"></path></svg>
+    </span>
+    <b class="m" style="font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase; font-weight: 500;">Partida 2-III-03</b>
+    <span class="m" style="margin-left: auto; font-size: 10px; opacity: 0.7;">3 / 5</span>
+  </div>
+
+  <div style="border-bottom: 2px solid #16170F; padding: 14px;">
+    <p class="hd" style="margin: 0;">Enunciado</p>
+    <b class="c" style="display: block; margin-top: 3px; font-size: 19px; line-height: 1.18;">Un camión de basura, dos cifras</b>
+    <p class="c" style="margin: 8px 0 0; font-size: 14.5px; line-height: 1.45; color: #4A4C3E;">Valle Verde compra un camión de basura de $240&nbsp;000 en efectivo. Vida útil: 8 años, sin valor residual.</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 96px 96px; gap: 6px; background: #EDEADC; border-bottom: 1px solid #16170F; padding: 7px 14px;">
+    <span class="hd">Año</span>
+    <span class="hd" style="text-align: right;">En el fondo</span>
+    <span class="hd" style="text-align: right;">Todo el gob.</span>
+  </div>
+  <div style="display: grid; grid-template-columns: 1fr 96px 96px; gap: 6px; padding: 10px 14px; border-bottom: 1px solid #DAD7C6;">
+    <span class="c" style="font-size: 14px;">Año 1</span>
+    <span class="m" style="text-align: right; font-size: 13px;">$240 000</span>
+    <span class="m" style="text-align: right; font-size: 13px;">$30 000</span>
+  </div>
+  <div style="display: grid; grid-template-columns: 1fr 96px 96px; gap: 6px; padding: 10px 14px; border-bottom: 1px solid #DAD7C6; background: #FDFCF7;">
+    <span class="c" style="font-size: 14px;">Año 2</span>
+    <span class="m" style="text-align: right; font-size: 13px;">$0</span>
+    <span class="m" style="text-align: right; font-size: 13px;">$30 000</span>
+  </div>
+  <div style="display: grid; grid-template-columns: 1fr 96px 96px; gap: 6px; padding: 10px 14px; border-bottom: 1px solid #DAD7C6;">
+    <span class="c" style="font-size: 14px;">Años 3 a 8</span>
+    <span class="m" style="text-align: right; font-size: 13px;">$0</span>
+    <span class="m" style="text-align: right; font-size: 13px;">$30 000 c/u</span>
+  </div>
+  <div style="display: grid; grid-template-columns: 1fr 96px 96px; gap: 6px; padding: 10px 14px; border-top: 1px solid #16170F; border-bottom: 3px double #16170F;">
+    <b class="c" style="font-size: 14px;">Total 8 años</b>
+    <b class="m" style="text-align: right; font-size: 13px;">$240 000</b>
+    <b class="m" style="text-align: right; font-size: 13px;">$240 000</b>
+  </div>
+
+  <div style="padding: 16px 14px 0;">
+    <p class="hd" style="margin: 0;">Se pide</p>
+    <p class="c" style="margin: 4px 0 0; font-size: 16px; line-height: 1.3; font-weight: 600;">El camión cuesta $240&nbsp;000 y dura 8 años. ¿Cuánto se registra <i>en el fondo</i> el año&nbsp;1?</p>
+  </div>
+
+  <div style="margin-top: 14px; border-top: 1px solid #16170F;">
+    <div style="display: flex; align-items: center; gap: 12px; padding: 13px 14px; border-bottom: 1px solid #DAD7C6;">
+      <span style="display: grid; place-items: center; width: 20px; height: 20px; flex: none; border: 1px solid #B9B6A2; background: #FDFCF7;"></span>
+      <span class="m" style="flex: 1; font-size: 14.5px;">$30 000</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 12px; padding: 13px 14px; border-bottom: 1px solid #DAD7C6; background: #F1E4E0; border-left: 3px solid #8E2C1B;">
+      <span style="display: grid; place-items: center; width: 20px; height: 20px; flex: none; border: 1px solid #8E2C1B; background: #8E2C1B;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FDFCF7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12.5 5.5 5.5L20 7"></path></svg>
+      </span>
+      <span class="m" style="flex: 1; font-size: 14.5px; font-weight: 600;">$240 000</span>
+      <span class="m" style="flex: none; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: #8E2C1B;">tu asiento</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 12px; padding: 13px 14px; border-bottom: 1px solid #DAD7C6;">
+      <span style="display: grid; place-items: center; width: 20px; height: 20px; flex: none; border: 1px solid #B9B6A2; background: #FDFCF7;"></span>
+      <span class="m" style="flex: 1; font-size: 14.5px;">$0</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 12px; padding: 13px 14px; border-bottom: 1px solid #16170F;">
+      <span style="display: grid; place-items: center; width: 20px; height: 20px; flex: none; border: 1px solid #B9B6A2; background: #FDFCF7;"></span>
+      <span class="m" style="flex: 1; font-size: 14.5px;">$210 000</span>
+    </div>
+  </div>
+
+  <div style="padding: 16px 14px;">
+    <div style="display: flex; align-items: center; justify-content: center; background: #16170F; color: #F6F4EC; padding: 14px;">
+      <b class="m" style="font-size: 12px; letter-spacing: 0.13em; text-transform: uppercase; font-weight: 500;">Asentar respuesta</b>
+    </div>
+  </div>
+
+  <div style="border-top: 1px solid #16170F; padding: 14px 14px 34px;">
+    <p class="hd" style="margin: 0 0 10px;">Papel de trabajo</p>
+    <div style="display: grid; grid-template-columns: 22px 1fr; gap: 8px 10px; align-items: start;">
+      <span class="m" style="font-size: 11px; color: #8E2C1B;">01</span>
+      <span class="c" style="font-size: 13.5px; line-height: 1.45; color: #4A4C3E;">En el fondo se registra un <i>expenditure</i> de $240&nbsp;000 el año 1: salió todo el recurso corriente.</span>
+      <span class="m" style="font-size: 11px; color: #8E2C1B;">02</span>
+      <span class="c" style="font-size: 13.5px; line-height: 1.45; color: #4A4C3E;">Arriba se registra un activo, y el <i>expense</i> es la depreciación: $30&nbsp;000 al año.</span>
+      <span class="m" style="font-size: 11px; color: #B9B6A2;">03</span>
+      <span class="c" style="font-size: 13.5px; line-height: 1.45; color: #B9B6A2;">El año 1 las dos cifras difieren en $210&nbsp;000.</span>
+      <span class="m" style="font-size: 11px; color: #B9B6A2;">04</span>
+      <span class="c" style="font-size: 13.5px; line-height: 1.45; color: #B9B6A2;">A ocho años suman lo mismo. Lo que cambia es <i>cuándo</i>.</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

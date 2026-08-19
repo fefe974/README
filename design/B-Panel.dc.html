@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+  <style>
+    body { margin: 0; }
+    a { color: #8E2C1B; } a:hover { color: #6E1F11; }
+    .c { font-family: 'IBM Plex Sans Condensed', system-ui, sans-serif; }
+    .m { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+    .hd { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: #6B6D5C; }
+  </style>
+</helmet>
+
+<div style="width: 390px; background: #F6F4EC; color: #16170F; font-family: 'IBM Plex Sans Condensed', system-ui, sans-serif; -webkit-font-smoothing: antialiased;">
+
+  <div style="display: flex; align-items: baseline; gap: 10px; background: #16170F; color: #F6F4EC; padding: 11px 14px;">
+    <b class="m" style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600;">Cuentas Públicas</b>
+    <span class="m" style="margin-left: auto; font-size: 10px; letter-spacing: 0.1em; opacity: 0.65;">EJ. 2026</span>
+  </div>
+
+  <div style="display: flex; align-items: baseline; gap: 8px; border-bottom: 2px solid #16170F; padding: 12px 14px 9px;">
+    <b class="c" style="font-size: 17px; letter-spacing: -0.005em;">Estado de avance</b>
+    <span class="m" style="margin-left: auto; font-size: 10px; color: #6B6D5C;">al 19-08-2026</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid #B9B6A2;">
+    <div style="border-right: 1px solid #DAD7C6; padding: 11px 14px;">
+      <p class="hd" style="margin: 0;">Resueltos</p>
+      <p class="m" style="margin: 3px 0 0; font-size: 26px; line-height: 1; font-weight: 500;">26<span style="font-size: 13px; color: #6B6D5C;">/38</span></p>
+    </div>
+    <div style="border-right: 1px solid #DAD7C6; padding: 11px 14px;">
+      <p class="hd" style="margin: 0;">Correctos</p>
+      <p class="m" style="margin: 3px 0 0; font-size: 26px; line-height: 1; font-weight: 500;">68<span style="font-size: 13px; color: #6B6D5C;">%</span></p>
+    </div>
+    <div style="padding: 11px 14px;">
+      <p class="hd" style="margin: 0;">Por repasar</p>
+      <p class="m" style="margin: 3px 0 0; font-size: 26px; line-height: 1; font-weight: 500; color: #8E2C1B;">5</p>
+    </div>
+  </div>
+
+  <div style="display: flex; align-items: center; gap: 10px; background: #8E2C1B; color: #FDFCF7; padding: 13px 14px;">
+    <div style="min-width: 0; flex: 1;">
+      <p class="m" style="margin: 0; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.75;">Partida abierta · 2-III-03</p>
+      <b class="c" style="display: block; margin-top: 1px; font-size: 16px; line-height: 1.15;">Expenditures no es expenses</b>
+    </div>
+    <span aria-hidden="true" style="flex: none;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FDFCF7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"></path><path d="m12 5 7 7-7 7"></path></svg>
+    </span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 46px 1fr 52px 40px; border-bottom: 1px solid #16170F; background: #EDEADC; padding: 7px 14px; gap: 6px;">
+    <span class="hd">Ref.</span>
+    <span class="hd">Concepto</span>
+    <span class="hd" style="text-align: right;">Ejerc.</span>
+    <span class="hd" style="text-align: right;">Dom.</span>
+  </div>
+
+  <div>
+    <div style="display: grid; grid-template-columns: 46px 1fr 52px 40px; align-items: center; gap: 6px; padding: 8px 14px; border-bottom: 1px solid #DAD7C6; background: #E4EADC;">
+      <b class="m" style="grid-column: 1 / -1; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;">Cap. 1 · Introducción al reporte</b>
+    </div>
+    <div style="display: grid; grid-template-columns: 46px 1fr 52px 40px; align-items: center; gap: 6px; padding: 14px; border-bottom: 1px solid #DAD7C6; min-height: 20px;">
+      <span class="m" style="font-size: 11px; color: #6B6D5C;">1-I</span>
+      <span class="c" style="font-size: 14px; line-height: 1.2;">Gobierno vs. contabilidad comercial</span>
+      <span class="m" style="text-align: right; font-size: 12px;">4/4</span>
+      <span class="m" style="text-align: right; font-size: 12px;">100</span>
+    </div>
+    <div style="display: grid; grid-template-columns: 46px 1fr 52px 40px; align-items: center; gap: 6px; padding: 14px; border-bottom: 1px solid #DAD7C6; background: #FDFCF7;">
+      <span class="m" style="font-size: 11px; color: #6B6D5C;">1-II</span>
+      <span class="c" style="font-size: 14px; line-height: 1.2;">Autoridad legal y rendición de cuentas</span>
+      <span class="m" style="text-align: right; font-size: 12px;">4/4</span>
+      <span class="m" style="text-align: right; font-size: 12px;">92</span>
+    </div>
+    <div style="display: grid; grid-template-columns: 46px 1fr 52px 40px; align-items: center; gap: 6px; padding: 14px; border-bottom: 1px solid #DAD7C6;">
+      <span class="m" style="font-size: 11px; color: #6B6D5C;">1-III</span>
+      <span class="c" style="font-size: 14px; line-height: 1.2;">Jurisdicción GASB / FASB</span>
+      <span class="m" style="text-align: right; font-size: 12px;">4/4</span>
+      <span class="m" style="text-align: right; font-size: 12px;">83</span>
+    </div>
+    <div style="display: grid; grid-template-columns: 46px 1fr 52px 40px; align-items: center; gap: 6px; padding: 14px; border-bottom: 1px solid #DAD7C6; background: #FDFCF7;">
+      <span class="m" style="font-size: 11px; color: #6B6D5C;">1-IV</span>
+      <span class="c" style="font-size: 14px; line-height: 1.2;">Estructura del CAFR / ACFR</span>
+      <span class="m" style="text-align: right; font-size: 12px;">5/5</span>
+      <span class="m" style="text-align: right; font-size: 12px;">80</span>
+    </div>
+
+    <div style="display: grid; align-items: center; padding: 8px 14px; border-bottom: 1px solid #DAD7C6; background: #E4EADC;">
+      <b class="m" style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;">Cap. 2 · Principios estatales y locales</b>
+    </div>
+    <div style="display: grid; grid-template-columns: 46px 1fr 52px 40px; align-items: center; gap: 6px; padding: 14px; border-bottom: 1px solid #DAD7C6;">
+      <span class="m" style="font-size: 11px; color: #6B6D5C;">2-I</span>
+      <span class="c" style="font-size: 14px; line-height: 1.2;">El modelo integrado de reporte</span>
+      <span class="m" style="text-align: right; font-size: 12px;">5/5</span>
+      <span class="m" style="text-align: right; font-size: 12px;">80</span>
+    </div>
+    <div style="display: grid; grid-template-columns: 46px 1fr 52px 40px; align-items: center; gap: 6px; padding: 14px; border-bottom: 1px solid #DAD7C6; background: #FDFCF7;">
+      <span class="m" style="font-size: 11px; color: #6B6D5C;">2-II</span>
+      <span class="c" style="font-size: 14px; line-height: 1.2;">Las tres categorías de fondos</span>
+      <span class="m" style="text-align: right; font-size: 12px;">4/4</span>
+      <span class="m" style="text-align: right; font-size: 12px;">88</span>
+    </div>
+    <div style="display: grid; grid-template-columns: 46px 1fr 52px 40px; align-items: center; gap: 6px; padding: 14px; border-bottom: 1px solid #DAD7C6; border-left: 3px solid #8E2C1B;">
+      <span class="m" style="font-size: 11px; color: #8E2C1B; font-weight: 600;">2-III</span>
+      <span class="c" style="font-size: 14px; line-height: 1.2; font-weight: 600;">Enfoque de medición y base contable</span>
+      <span class="m" style="text-align: right; font-size: 12px;">2/5</span>
+      <span class="m" style="text-align: right; font-size: 12px; color: #8E2C1B; font-weight: 600;">45</span>
+    </div>
+    <div style="display: grid; grid-template-columns: 46px 1fr 52px 40px; align-items: center; gap: 6px; padding: 14px; border-bottom: 1px solid #DAD7C6; background: #FDFCF7;">
+      <span class="m" style="font-size: 11px; color: #6B6D5C;">2-IV</span>
+      <span class="c" style="font-size: 14px; line-height: 1.2; color: #4A4C3E;">Clasificación del fund balance</span>
+      <span class="m" style="text-align: right; font-size: 12px; color: #4A4C3E;">0/4</span>
+      <span class="m" style="text-align: right; font-size: 12px; color: #6B6D5C;">—</span>
+    </div>
+    <div style="display: grid; grid-template-columns: 46px 1fr 52px 40px; align-items: center; gap: 6px; padding: 14px; border-bottom: 1px solid #DAD7C6;">
+      <span class="m" style="font-size: 11px; color: #6B6D5C;">2-V</span>
+      <span class="c" style="font-size: 14px; line-height: 1.2; color: #4A4C3E;">Determinación de fondos mayores</span>
+      <span class="m" style="text-align: right; font-size: 12px; color: #4A4C3E;">0/3</span>
+      <span class="m" style="text-align: right; font-size: 12px; color: #6B6D5C;">—</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 46px 1fr 52px 40px; align-items: center; gap: 6px; padding: 12px 14px; border-top: 1px solid #16170F; border-bottom: 3px double #16170F;">
+      <span></span>
+      <b class="c" style="font-size: 14px;">Totales</b>
+      <b class="m" style="text-align: right; font-size: 12.5px;">26/38</b>
+      <b class="m" style="text-align: right; font-size: 12.5px;">68</b>
+    </div>
+  </div>
+
+  <div style="padding: 16px 14px 34px;">
+    <p class="hd" style="margin: 0 0 8px;">Notas al estado</p>
+    <p class="c" style="margin: 0; font-size: 13px; line-height: 1.45; color: #4A4C3E;">Cinco ejercicios quedaron mal en <b>2-III</b>. La conciliación entre <i>expenditure</i> y <i>expense</i> es donde se concentra el error.</p>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
