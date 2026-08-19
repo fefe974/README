@@ -6,6 +6,8 @@ export type Block =
   | { k: 'p'; t: string }
   | { k: 'fig'; id: string; cap: string }
   | { k: 'note'; head: string; t: string; tone?: 'seal' | 'warn' }
+  /* Drops an interactive simulator into a step. `id` keys SIMS. */
+  | { k: 'sim'; id: string }
 
 export type Tone = 'plain' | 'seal' | 'ok' | 'no'
 
@@ -59,6 +61,30 @@ export type Article = {
   quiz: Question[]
 }
 
+/* ---------------------------------------------------------------
+   Journal entries. One shape serves the simulator, the guided
+   problem and the cheat sheet, so an entry written once reads the
+   same everywhere in the app.
+   --------------------------------------------------------------- */
+
+/* 'D' debit / 'H' credit — debe y haber. */
+/* `account` is the ledger name as it appears in a chart of accounts —
+   English, because that is what the county's system says. `gloss` is
+   the Spanish reading, shown where the term is still new. */
+export type Posting = { account: string; side: 'D' | 'H'; amount: number; gloss?: string }
+
+/* One line of the chapter's journal-entry reference. */
+export type EntryRef = {
+  id: string
+  group: string
+  when: string
+  lines: Posting[]
+  note: string
+  /* Budgetary entries never touch the actual accounts; the sheet
+     marks them so the two systems stay visibly separate. */
+  budgetary?: boolean
+}
+
 export type Bin = { code: string; label: string; eyebrow: string }
 
 /* One row of a major-fund worksheet. `major` is the answer. */
@@ -94,6 +120,27 @@ export type Task =
     }
   | { kind: 'quiz'; title: string; src: string; hint: string; questions: Question[] }
   | {
+      /* The comprehensive operating problem, one entry at a time.
+         Each entry offers whole candidate journal entries rather than
+         blank lines: the exam-relevant skill is telling a correct
+         entry from the classic wrong one, not typing account names. */
+      kind: 'entries'
+      title: string
+      src: string
+      hint: string
+      fund: string
+      facts: [string, string][]
+      entries: {
+        ref: string
+        narrative: string
+        options: Posting[][]
+        answer: number
+        why: string
+        trap: string
+      }[]
+      note: string
+    }
+  | {
       kind: 'major'
       title: string
       src: string
@@ -120,4 +167,6 @@ export type Chapter = {
   tasks: Task[]
   closing: string
   glossary: [string, string, string, string][]
+  /* The chapter's journal-entry cheat sheet, if it has one. */
+  entries?: EntryRef[]
 }

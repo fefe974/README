@@ -4,6 +4,7 @@ import type { Chapter } from '@/lib/types'
 import { Article } from '@/components/Article'
 import { Capstone, type CapState } from '@/components/Capstone'
 import { Dashboard } from '@/components/Dashboard'
+import { CheatSheet } from '@/components/CheatSheet'
 import type { Verdict } from '@/components/Tutor'
 import { Stamp } from '@/components/Stamp'
 import { Card, CardContent } from '@/components/ui/card'
@@ -45,6 +46,7 @@ function capDoneIn(ch: Chapter, save: ChapterSave) {
     if (t.kind === 'sort') return Object.keys(st.sort ?? {}).length === t.items.length
     if (t.kind === 'grid') return !!st.checked
     if (t.kind === 'major') return !!st.checked
+    if (t.kind === 'entries') return t.entries.every((_, i) => (st.entries ?? {})[i] != null)
     return t.questions.every((_, qi) => (st.quiz ?? {})[qi] != null)
   })
 }
@@ -64,6 +66,9 @@ export default function App() {
     }
   })
   const [q, setQ] = useState('')
+  /* The reference screen carries the cheat sheet too, when a chapter
+     has one — a sixth tab in the bar would cost more than it earns. */
+  const [ref, setRef] = useState<'gloss' | 'entries'>('gloss')
 
   useEffect(() => {
     try {
@@ -93,6 +98,11 @@ export default function App() {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [screen, open, chId])
+
+  const chapterHasEntries = !!CHAPTERS.find((c) => c.id === chId)?.entries?.length
+  useEffect(() => {
+    if (!chapterHasEntries) setRef('gloss')
+  }, [chapterHasEntries])
 
   const chapter = CHAPTERS.find((c) => c.id === chId)!
   const save = saved[chId] ?? blank()
@@ -341,16 +351,44 @@ export default function App() {
           />
         )}
 
-        {/* ----------------------------------------------- glosario */}
+        {/* ---------------------------------------------- referencia */}
         {screen === 'glossary' && (
           <div>
             <p className="font-mono text-[10.5px] uppercase tracking-[0.13em] text-muted">
               Referencia · capítulo {chapter.num}
             </p>
-            <h2 className="mt-1.5 font-display text-[26px] leading-tight">Glosario bilingüe</h2>
+            <h2 className="mt-1.5 font-display text-[26px] leading-tight">
+              {ref === 'gloss' || !chapter.entries ? 'Glosario bilingüe' : 'Asientos del capítulo'}
+            </h2>
             <p className="mb-5 mt-2 text-[15px] leading-relaxed text-muted">
-              Los términos de este capítulo, en inglés y en español.
+              {ref === 'gloss' || !chapter.entries
+                ? 'Los términos de este capítulo, en inglés y en español.'
+                : 'Todos los asientos que el capítulo exige, en el orden en que corre el año.'}
             </p>
+
+            {chapter.entries && (
+              <div role="tablist" aria-label="Tipo de referencia" className="mb-5 flex gap-2">
+                {([['gloss', 'Glosario'], ['entries', 'Asientos']] as const).map(([v, label]) => (
+                  <button
+                    key={v}
+                    role="tab"
+                    aria-selected={ref === v}
+                    onClick={() => setRef(v)}
+                    className={cn(
+                      'min-h-[44px] flex-1 rounded-xl border px-4 py-2.5 text-[14.5px] font-bold',
+                      ref === v ? 'border-seal bg-sealsoft text-seal' : 'border-rule bg-sheet text-muted',
+                    )}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {chapter.entries && ref === 'entries' && <CheatSheet entries={chapter.entries} />}
+
+            {(ref === 'gloss' || !chapter.entries) && (
+            <>
             <input
               value={q}
               onChange={(e) => setQ(e.target.value)}
@@ -369,6 +407,8 @@ export default function App() {
               ))}
               {gloss.length === 0 && <p className="py-6 text-[15px] text-muted">Sin coincidencias para «{q}».</p>}
             </dl>
+            </>
+            )}
           </div>
         )}
       </main>
@@ -380,7 +420,7 @@ export default function App() {
             ['case', 'Caso', '❑'],
             ['articles', 'Artículos', '§'],
             ['close', 'Cierre', '✦'],
-            ['glossary', 'Glosario', '≡'],
+            ['glossary', 'Referencia', '≡'],
           ] as [Screen, string, string][]).map(([s, label, icon]) => (
             <button
               key={s}

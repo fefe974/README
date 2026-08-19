@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { FULL, gsap, useGSAP } from '@/lib/gsap'
 import type { Article as ArticleT } from '@/lib/types'
 import { Figure } from '@/lib/figures/index'
+import { EncumbranceSim } from './EncumbranceSim'
 import { exampleFor } from '@/lib/examples'
 import { Tutor, type Verdict } from './Tutor'
 import { Quiz } from './Quiz'
@@ -140,6 +141,7 @@ export function Article({
               {current.blocks.map((b, i) => {
                 if (b.k === 'p') return <p key={i} dangerouslySetInnerHTML={{ __html: b.t }} />
                 if (b.k === 'fig') return <Figure key={i} id={b.id} cap={b.cap} />
+                if (b.k === 'sim') return <EncumbranceSim key={i} id={b.id} />
                 return (
                   <aside
                     key={i}

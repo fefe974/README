@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { Chapter, Task } from '@/lib/types'
 import { Quiz } from './Quiz'
+import { EntriesTask } from './EntriesTask'
 import { Card, CardContent } from './ui/card'
 import { Progress } from './ui/progress'
 import { cn } from '@/lib/utils'
@@ -12,6 +13,7 @@ export type TaskState = {
   grid?: Record<string, 'Y' | 'N'>
   quiz?: Record<number, number>
   major?: Record<number, boolean>
+  entries?: Record<number, number>
   checked?: boolean
 }
 export type CapState = Record<number, TaskState>
@@ -53,6 +55,14 @@ function tally(task: Task, st: TaskState): { done: boolean; got: number; of: num
         done: !!st.checked,
         got: task.funds.filter((f, i) => m[i] === f.major).length,
         of: task.funds.length,
+      }
+    }
+    case 'entries': {
+      const e = st.entries ?? {}
+      return {
+        done: task.entries.every((_, i) => e[i] != null),
+        got: task.entries.filter((x, i) => e[i] === x.answer).length,
+        of: task.entries.length,
       }
     }
   }
@@ -172,6 +182,16 @@ export function Capstone({
                 checked={!!st.checked}
                 onPick={(i, v) => patch(ti, (s) => ({ ...s, major: { ...(s.major ?? {}), [i]: v } }))}
                 onCheck={() => patch(ti, (s) => ({ ...s, checked: true }))}
+              />
+            )}
+
+            {task.kind === 'entries' && (
+              <EntriesTask
+                task={task}
+                picks={st.entries ?? {}}
+                onPick={(i, opt) =>
+                  patch(ti, (s) => ({ ...s, entries: { ...(s.entries ?? {}), [i]: opt } }))
+                }
               />
             )}
 

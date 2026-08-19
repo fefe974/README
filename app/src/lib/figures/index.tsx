@@ -1,9 +1,10 @@
 import type { ReactElement } from 'react'
 import { CH1_FIGURES } from './ch1'
 import { CH2_FIGURES } from './ch2'
+import { CH3_FIGURES } from './ch3'
 import { Frame } from './kit'
 
-const ALL: Record<string, () => ReactElement> = { ...CH1_FIGURES, ...CH2_FIGURES }
+const ALL: Record<string, () => ReactElement> = { ...CH1_FIGURES, ...CH2_FIGURES, ...CH3_FIGURES }
 
 export function Figure({ id, cap }: { id: string; cap: string }) {
   const C = ALL[id]

@@ -33,7 +33,7 @@ Every chapter is anchored on a real end-of-chapter case, then taught backwards:
 
 The app trains rather than narrates. Nothing explains itself until the student has taken a position, so the explanation lands on a prediction instead of a blank page. Before they answer, the illustration deliberately withholds its colour coding — otherwise the picture would give the answer away.
 
-Three exercise kinds cover all 38 steps:
+Three exercise kinds cover all 58 steps:
 
 | Kind | The student… |
 |---|---|
@@ -41,13 +41,21 @@ Three exercise kinds cover all 38 steps:
 | `yesno` | judges each statement (does it pass the 10 % hurdle? is it in the minimum?) |
 | `choice` | picks one answer from four |
 
+Chapter 3 adds a fourth decision, in the capstone: given a transaction, pick the **whole journal entry** from three candidates. On an exam the marks are lost on expenditure-versus-encumbrance or expenditure-versus-expense — not on spelling *Vouchers Payable* — so the distractors are complete, plausible entries rather than blank lines to fill.
+
 Each is a proper `radiogroup`, so keyboard and screen-reader users get the right semantics.
 
 Verdicts persist per step and drive the **lesson map**: the rail at the top of each article turns green where the student was right and red where they weren't, and the check step lists every exercise with its score.
 
 Length is a design constraint: no paragraph past ~40 words, and the reasoning stays behind a tap.
 
-Illustrations are data-driven — four shapes (`ledger`, `flow`, `split`, `scale`) cover all 38, so they stay visually consistent and reflow on a phone instead of being 38 hand-drawn SVGs. A static check asserts every step has an exercise.
+Illustrations are data-driven — four shapes (`ledger`, `flow`, `split`, `scale`) cover all 58, so they stay visually consistent and reflow on a phone instead of being 58 hand-drawn SVGs. A static check asserts every step has an exercise.
+
+### Journal entries as one shape
+
+`Posting` (`account`, `side`, `amount`) is the only journal-entry type, and the simulator, the guided problem and the cheat sheet all render it through the same `Entry` component. An entry written once therefore reads identically wherever it appears. The simulator goes further: a step carries **only its journal entry**, and every T-account balance and the available-balance meter are replayed from those entries at render time, so a balance can never drift from the entry that produced it.
+
+An audit script walks the real data and asserts that every entry balances, every answer index is in range, every step has an exercise, and no account ends the simulation on the wrong side of its normal balance. It caught `Cash` finishing the simulation at −$48 700, because the simulator started it at zero and only ever credited it; accounts now carry an opening balance, so the ledger reads the way a real one would.
 
 ## Chapters
 
@@ -55,10 +63,17 @@ Illustrations are data-driven — four shapes (`ledger`, `flow`, `split`, `scale
 |---|---|---|---|
 | 1 | Introduction to Accounting and Financial Reporting | Problems 1–17 / 1–18 | 4 |
 | 2 | Principles of Accounting and Financial Reporting for State and Local Governments | Case 2–12 | 5 |
+| 3 | Governmental Operating Statement Accounts; Budgetary Accounting | Case 3–C | 4 |
 
 **Chapter 1** — governmental vs. commercial accounting; legal authority and public accountability; GASB vs. FASB jurisdiction; CAFR/ACFR structure. Teaches the GASB 98 (2021) CAFR→ACFR rename, which postdates the 18e.
 
 **Chapter 2** — the GASB integrated reporting model; the three fund categories and eleven fund types; measurement focus and basis of accounting; the five fund balance classifications; major fund determination. The capstone audits a county MD&A against GASB standards (case 2–12) and runs the 10%/5% major-fund test on real numbers.
+
+**Chapter 3** — budgetary accounting, the modified accrual basis, the encumbrance cycle, and dual closing entries. Each concept is taught from an analogy before any journal entry appears: the budget as a **spending permit** rather than a plan, availability as a **window** the money has to arrive through, and the encumbrance cycle as a **restaurant reservation** — reserve, eat, pay. It adds three things the earlier chapters had no use for:
+
+- an **encumbrance cycle simulator** (article III) — step through purchase order → partial delivery → completion → payment and watch five T-accounts and an available-balance meter move under your thumb;
+- a **guided journal-entry problem** (the capstone) — one year of the General Fund in seven entries: budget adoption, property tax levy, purchase orders, partial delivery, payroll, and both closing entries. Three candidate entries each, and the two wrong ones are the mistakes that actually get made;
+- a **journal-entry cheat sheet** — all twenty entries the chapter requires, in the order the year runs, filterable by budgetary vs. actual accounts. It lives on a second tab of the reference screen, which a chapter without entries simply doesn't show.
 
 ## Language
 
@@ -76,7 +91,7 @@ Built with the `frontend-design` and `ui-ux-pro-max` skills in `.claude/skills/`
 - **Motion** — every animation goes through `useGSAP` from `@gsap/react` (scoped, auto-reverting) and `gsap.matchMedia()` for `prefers-reduced-motion`, per the official `gsap-*` skills in `.claude/skills/`. Transform and opacity only, so it stays on the compositor.
 - **Themes** — light and dark defined token-level, covering all three viewer states.
 
-Thirteen hand-authored inline SVG figures carry the mechanisms.
+Nineteen hand-authored inline SVG figures carry the mechanisms.
 
 ## Structure
 
@@ -86,12 +101,15 @@ src/
   lib/course.ts        the chapter registry
   lib/progress.ts      everything the dashboard derives: totals, per-concept mastery,
                        weak spots, and where to resume
-  lib/chapters/        ch1.ts, ch2.ts — all copy, questions, capstone data
-                       ch1-examples.ts, ch2-examples.ts — one exercise per step
+  lib/chapters/        ch1.ts, ch2.ts, ch3.ts — all copy, questions, capstone data
+                       chN-examples.ts — one exercise per step
   lib/examples.ts      example registry, keyed `${articleId}-${stepIndex}`
-  lib/figures/         kit.tsx (shared drawing kit), ch1.tsx, ch2.tsx, index.tsx
+  lib/sims.ts          simulator data; balances are replayed, never stored
+  lib/figures/         kit.tsx (shared drawing kit), ch1.tsx, ch2.tsx, ch3.tsx, index.tsx
   components/ui/       shadcn-pattern primitives on Radix
-  components/          Dashboard, Article, Tutor, Quiz, Capstone, Stamp
+  components/          Dashboard, Article, Tutor, Quiz, Capstone, Stamp,
+                       Journal (one entry, drawn one way), EncumbranceSim,
+                       EntriesTask, CheatSheet
   styles/              tokens.css, fonts.css (base64 woff2, latin subset)
 ```
 
@@ -105,5 +123,10 @@ Capstone tasks are a discriminated union, so a chapter mixes kinds freely:
 - `grid` — a Y/N matrix across entity types
 - `major` — the 10%/5% major-fund worksheet, with thresholds computed from the totals
 - `quiz` — multiple choice with an explanation on every answer
+- `entries` — a guided journal-entry problem: pick the right entry from three, with the reasoning and the trap explained on the spot
+
+A chapter may also carry `entries: EntryRef[]`, which puts a journal-entry cheat sheet on a second tab of its reference screen. A chapter without one shows the glossary alone — no empty tab.
+
+A step may embed a simulator with `{ k: 'sim', id }`, keyed into `SIMS` in `lib/sims.ts`.
 
 Progress persists in `localStorage` under `cuentas-publicas`, keyed by chapter.
